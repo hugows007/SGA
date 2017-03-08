@@ -1,0 +1,20 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteMaster.master.cs" Inherits="SGA.Views.SGA.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="headInicio" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="formInicio" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolderInicio" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="LoginMaster.master.cs" Inherits="SGA.Views.LoginMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="HeadLogin" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="formLogin" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolderLogin" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>
