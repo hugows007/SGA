@@ -58,6 +58,24 @@ namespace SGA.Views.SGA.Usuario {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator TipoUsuarioValidator;
         
         /// <summary>
+        /// DropDownListAreaAtendimento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListAreaAtendimento;
+        
+        /// <summary>
+        /// RequiredFieldValidatorAreaAtendimento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorAreaAtendimento;
+        
+        /// <summary>
         /// DropDownListSetor control.
         /// </summary>
         /// <remarks>

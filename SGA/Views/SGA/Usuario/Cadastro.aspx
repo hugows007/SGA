@@ -24,7 +24,23 @@
                     </td>
                 </tr>
 
-                 <% if (DropDownListTipo.Text.Equals("Gestor") || DropDownListTipo.Text.Equals("Técnico"))
+                
+                 <% if (DropDownListTipo.Text.Equals("Cliente Físico") || DropDownListTipo.Text.Equals("Cliente Jurídico") || DropDownListTipo.Text.Equals("Técnico"))
+                     {%>
+                <tr>
+                    <td>Área de atendimento:</td>
+                    <td>
+                        <asp:DropDownList ID="DropDownListAreaAtendimento" AutoPostBack="True" runat="server">
+                        </asp:DropDownList>
+                    </td>
+                    <td>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorAreaAtendimento" runat="server"
+                            ControlToValidate="DropDownListAreaAtendimento" ForeColor="red"
+                            Display="Static" ErrorMessage="Required" />
+                    </td>
+                </tr>
+
+                 <%} if (DropDownListTipo.Text.Equals("Gestor") || DropDownListTipo.Text.Equals("Técnico"))
                     {%>
                 <tr>
                     <td>Setor:</td>

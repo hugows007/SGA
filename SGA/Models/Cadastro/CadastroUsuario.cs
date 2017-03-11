@@ -9,154 +9,14 @@ namespace SGA.Models.Usuario
 {
     public class CadastroUsuario
     {
-        string _Usuario { get; set; }
-        string _Senha { get; set; }
-        string _Email { get; set; }
-        string _Regra { get; set; }
-        string _Nome { get; set; }
-        string _Endereco { get; set; }
-        string _Numero { get; set; }
-        string _Cep { get; set; }
-        string _Telefone { get; set; }
-        string _DocIdent { get; set; }
-        string _OrgEmiss { get; set; }
-        string _Cpf { get; set; }
-        string _Cnpj { get; set; }
-        int _Setor { get; set; }
-        int _Cargo { get; set; }
-        int _Especialidade { get; set; }
-
         string UserId = null;
+        string Msg = null;
+        IUsuario ObjUsuario;
 
-        public CadastroUsuario(
-            string Usuario,
-            string Senha,
-            string Email,
-            string Regra,
-            string Nome,
-            string Endereco,
-            string Numero,
-            string Cep,
-            string Telefone)
+        public CadastroUsuario(IUsuario ObjUsr)
         {
-            _Usuario = Usuario;
-            _Senha = Senha;
-            _Email = Email;
-            _Regra = Regra;
-            _Nome = Nome;
-            _Endereco = Endereco;
-            _Numero = Numero;
-            _Cep = Cep;
-            _Telefone = Telefone;
+            ObjUsuario = ObjUsr;
         }
-
-        public CadastroUsuario(
-            string Usuario,
-            string Senha,
-            string Email,
-            string Regra,
-            string Nome,
-            string Endereco,
-            string Numero,
-            string Cep,
-            string Telefone,
-            string DocIdent,
-            string OrgEmiss,
-            string Cpf)
-        {
-            _Usuario = Usuario;
-            _Senha = Senha;
-            _Email = Email;
-            _Regra = Regra;
-            _Nome = Nome;
-            _Endereco = Endereco;
-            _Numero = Numero;
-            _Cep = Cep;
-            _Telefone = Telefone;
-            _DocIdent = DocIdent;
-            _OrgEmiss = OrgEmiss;
-            _Cpf = Cpf;
-        }
-
-        public CadastroUsuario(
-            string Usuario,
-            string Senha,
-            string Email,
-            string Regra,
-            string Nome,
-            string Endereco,
-            string Numero,
-            string Cep,
-            string Telefone,
-            string Cnpj)
-        {
-            _Usuario = Usuario;
-            _Senha = Senha;
-            _Email = Email;
-            _Regra = Regra;
-            _Nome = Nome;
-            _Endereco = Endereco;
-            _Numero = Numero;
-            _Cep = Cep;
-            _Telefone = Telefone;
-            _Cnpj = Cnpj;
-        }
-
-        public CadastroUsuario(
-            string Usuario,
-            string Senha,
-            string Email,
-            string Regra,
-            string Nome,
-            string Endereco,
-            string Numero,
-            string Cep,
-            string Telefone,
-            int Setor,
-            int Cargo)
-        {
-            _Usuario = Usuario;
-            _Senha = Senha;
-            _Email = Email;
-            _Regra = Regra;
-            _Nome = Nome;
-            _Endereco = Endereco;
-            _Numero = Numero;
-            _Cep = Cep;
-            _Telefone = Telefone;
-            _Setor = Setor;
-            _Cargo = Cargo;
-        }
-
-        public CadastroUsuario(
-            string Usuario,
-            string Senha,
-            string Email,
-            string Regra,
-            string Nome,
-            string Endereco,
-            string Numero,
-            string Cep,
-            string Telefone,
-            int Especialidade,
-            int Cargo,
-            int Setor)
-        {
-            _Usuario = Usuario;
-            _Senha = Senha;
-            _Email = Email;
-            _Regra = Regra;
-            _Nome = Nome;
-            _Endereco = Endereco;
-            _Numero = Numero;
-            _Cep = Cep;
-            _Telefone = Telefone;
-            _Especialidade = Especialidade;
-            _Cargo = Cargo;
-            _Setor = Setor;
-
-        }
-
 
         public CadastroUsuario()
         {
@@ -167,21 +27,36 @@ namespace SGA.Models.Usuario
             string[] rolesArray;
             return rolesArray = Roles.GetAllRoles();
         }
-        public string CadastroUsuarioMemberShip()
+        public string CadastrarUsuario()
         {
             try
             {
                 MembershipUser newUser = Membership.CreateUser(
-                  _Usuario,
-                  _Senha,
-                  _Email);
+                  ObjUsuario.Login,
+                  ObjUsuario.Senha,
+                  ObjUsuario.Email);
 
                 Roles.AddUserToRole(
-                    _Usuario,
-                    _Regra);
+                    ObjUsuario.Login,
+                    ObjUsuario.Regra);
 
-                return "OK";
+                if(newUser != null)
+                {
+                    MembershipUser Mu = Membership.GetUser(ObjUsuario.Login);
+                    UserId = Mu.ProviderUserKey.ToString();
 
+                    if (new CadastroDAO
+                        (ObjUsuario, UserId).InsereUsuarioDAO())
+                    {
+                        Msg = "Usuário cadastrado com sucesso!";
+                    }
+                    else
+                    {
+                        Msg = "Ocorreu um erro ao efetuar o cadastro";
+                    }
+                }
+
+                return Msg;
             }
             catch (MembershipCreateUserException ex)
             {
@@ -190,125 +65,6 @@ namespace SGA.Models.Usuario
             catch (HttpException ex)
             {
                 return ex.Message;
-            }
-        }
-
-        public string CadastroUsuarioAdministrador()
-        {
-            MembershipUser Mu = Membership.GetUser(_Usuario);
-            UserId = Mu.ProviderUserKey.ToString();
-
-            if (new CadastroDAO
-                (
-                UserId,
-                _Nome,
-                _Endereco,
-                _Numero,
-                _Cep,
-                _Telefone).InsereUsuarioAdmin())
-            {
-                return "Usuário cadastrado com sucesso!";
-            }
-            else
-            {
-                return "Ocorreu um erro ao efetuar o cadastro";
-            }
-        }
-
-        public string CadastroUsuarioClienteFisico()
-        {
-            MembershipUser Mu = Membership.GetUser(_Usuario);
-            UserId = Mu.ProviderUserKey.ToString();
-
-            if (new CadastroDAO
-                (
-                UserId,
-                _Nome,
-                _Endereco,
-                _Numero,
-                _Cep,
-                _Telefone,
-                _DocIdent,
-                _OrgEmiss,
-                _Cpf).InsereUsuarioClienteFisico())
-            {
-                return "Usuário cadastrado com sucesso!";
-            }
-            else
-            {
-                return "Ocorreu um erro ao efetuar o cadastro";
-            }
-        }
-
-        public string CadastroUsuarioClienteJuridico()
-        {
-            MembershipUser Mu = Membership.GetUser(_Usuario);
-            UserId = Mu.ProviderUserKey.ToString();
-
-            if (new CadastroDAO
-                (
-                UserId,
-                _Nome,
-                _Endereco,
-                _Numero,
-                _Cep,
-                _Telefone,
-                _Cnpj).InsereUsuarioClienteJuridico())
-            {
-                return "Usuário cadastrado com sucesso!";
-            }
-            else
-            {
-                return "Ocorreu um erro ao efetuar o cadastro";
-            }
-        }
-
-        public string CadastroUsuarioGestor()
-        {
-            MembershipUser Mu = Membership.GetUser(_Usuario);
-            UserId = Mu.ProviderUserKey.ToString();
-
-            if (new CadastroDAO
-                (
-                UserId,
-                _Nome,
-                _Endereco,
-                _Numero,
-                _Cep,
-                _Telefone,
-                _Setor,
-                _Cargo).InsereUsuarioGestor())
-            {
-                return "Usuário cadastrado com sucesso!";
-            }
-            else
-            {
-                return "Ocorreu um erro ao efetuar o cadastro";
-            }
-        }
-
-        public string CadastroUsuarioTecnico()
-        {
-            MembershipUser Mu = Membership.GetUser(_Usuario);
-            UserId = Mu.ProviderUserKey.ToString();
-
-            if (new CadastroDAO
-                (
-                UserId,
-                _Nome,
-                _Endereco,
-                _Numero,
-                _Cep,
-                _Telefone,
-                _Especialidade,
-                _Cargo,
-                _Setor).InsereUsuarioTecnico())
-            {
-                return "Usuário cadastrado com sucesso!";
-            }
-            else
-            {
-                return "Ocorreu um erro ao efetuar o cadastro";
             }
         }
 

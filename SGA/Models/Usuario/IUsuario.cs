@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace SGA.Models.Usuario
 {
-    interface IUsuario
+    public interface IUsuario
     {
-        string Usuario { get; set; }
+        string Login { get; set; }
+        string Senha { get; set; }
+        string Email { get; set; }
+        string Regra { get; set; }
         string Nome { get; set; }
         string Endereco { get; set; }
         string Numero { get; set; }
@@ -21,5 +24,6 @@ namespace SGA.Models.Usuario
         int Setor { get; set; }
         int Cargo { get; set; }
         int Especialidade { get; set; }
+        int IdAreaAtendimento { get; set; }
     }
 }
