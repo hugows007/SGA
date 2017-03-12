@@ -14,34 +14,12 @@ namespace SGA.Views.SGA.Usuario
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            IUsuario Usuario = FactoryClass.GetNew(TipoFactory.Usuario);
 
-            DataTable dt = new DataTable();
-            DataRow dr = dt.NewRow();
-
-            if (!IsPostBack)
+            foreach (var Result in new CadastroUsuarios(Usuario).ConsultaUsuarios())
             {
-                dt.Columns.Add("Nome", System.Type.GetType("System.String"));
-                dt.Columns.Add("Endereco", System.Type.GetType("System.String"));
-                dt.Columns.Add("Numero", System.Type.GetType("System.String"));
-                dt.Columns.Add("Cep", System.Type.GetType("System.String"));
-                dt.Columns.Add("Telefone", System.Type.GetType("System.String"));
+                LitUsrList.Text += Result;
             }
-
-            IUsuario Usuario = null;
-            Usuario = FactoryClass.GetNew(TipoFactory.Usuario);
-
-            foreach (var a in new CadastroUsuarios(Usuario).ConsultaUsuarios())
-            {
-                dr["Nome"] = a.Nome;
-                dr["Endereco"] = a.Endereco;
-                dr["Numero"] = a.Numero;
-                dr["Cep"] = a.Cep;
-                dr["Telefone"] = a.Telefone;
-                dt.ImportRow(dr);
-            }
-            GridViewUsuarios.DataSource = new CadastroUsuarios(Usuario).ConsultaUsuarios();
-            GridViewUsuarios.DataBind();
-
         }
     }
 }

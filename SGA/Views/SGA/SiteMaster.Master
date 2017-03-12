@@ -23,18 +23,18 @@
 	      <span class="icon-bar"></span>
 	      <span class="icon-bar"></span>
 	    </a>
-        <a class="navbar-brand" href="#">SGA</a>
+        <a class="navbar-brand" href="/Views/SGA/Inicio.aspx">SGA</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="/Views/SGA/Usuario/ConsultaUsuarios.aspx">Usuario</a></li>
           </ul>
         </div>
     </div>
   </div><!-- /container -->
 </div><!-- /navbar wrapper -->
 
-    <form id="formInicio" runat="server">
+    <form id="formInicio" runat="server" class="form">
     <div>
         <asp:ContentPlaceHolder ID="ContentPlaceHolderInicio" runat="server">
         

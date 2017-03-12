@@ -3,16 +3,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="headInicio" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
-    
-    
-    <asp:GridView ID="GridViewUsuarios" runat="server" CaptionAlign="Top" AutoGenerateColumns="false">
-        <Columns>
-            <asp:BoundField DataField="Nome" HeaderText="Nome"/>
-            <asp:BoundField DataField="Endereco" HeaderText="Endereço"/>
-            <asp:BoundField DataField="Numero" HeaderText="Número"/>
-            <asp:BoundField DataField="Cep" HeaderText="CEP"/>
-            <asp:BoundField DataField="Telefone" HeaderText="Telefone"/>
-        </Columns>
-    </asp:GridView>
-
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Número</th>
+            <th>CEP</th>
+            <th>Telefone</th>
+            <th>Perfil</th>
+        </tr>
+        <asp:Literal ID="LitUsrList" runat="server"></asp:Literal>
+    </table>
 </asp:Content>

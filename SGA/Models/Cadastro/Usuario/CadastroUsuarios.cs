@@ -12,7 +12,7 @@ namespace SGA.Models.Usuario
     {
         string UserId = null;
         string Msg = null;
-        IUsuario ObjUsuario;
+        IUsuario ObjUsuario = null;
 
         public CadastroUsuarios(IUsuario ObjUsr)
         {
@@ -66,9 +66,57 @@ namespace SGA.Models.Usuario
                 return ex.Message;
             }
         }
-        public List<IUsuario> ConsultaUsuarios()
+        public List<string> ConsultaUsuarios()
         {
-            return new CadastroUsuariosDAO(ObjUsuario).ConsultaUsuariosDAO();
+            List<string> ListaUsrSelect = new List<string>();
+
+            foreach (var ObjListUsr in new CadastroUsuariosDAO(ObjUsuario).ConsultaUsuariosDAO())
+            {
+                ListaUsrSelect.Add(string.Format(
+                    "<tr>" +
+                        "<td><a href=\"ModificarUsuario.aspx?Id={0}\">{0}</td>" +
+                        "<td>{1}</td>" +
+                        "<td>{2}</td>" +
+                        "<td>{3}</td>" +
+                        "<td>{4}</td>" +
+                        "<td>{5}</td>" +
+                        "<td>{6}</td>" +
+                    "</tr>",
+                    ObjListUsr.Id,
+                    ObjListUsr.Nome,
+                    ObjListUsr.Endereco,
+                    ObjListUsr.Numero,
+                    ObjListUsr.Cep,
+                    ObjListUsr.Telefone,
+                    ObjListUsr.Regra));
+            }
+            return ListaUsrSelect;
+        }
+        public List<string> ConsultaUsuarioById()
+        {
+            List<string> ListaUsrSelect = new List<string>();
+
+            foreach (var ObjListUsr in new CadastroUsuariosDAO(ObjUsuario).ConsultaUsuariosDAOById())
+            {
+                ListaUsrSelect.Add(string.Format(
+                    "<tr>" +
+                        "<td>{0}</td>" +
+                        "<td>{1}</td>" +
+                        "<td>{2}</td>" +
+                        "<td>{3}</td>" +
+                        "<td>{4}</td>" +
+                        "<td>{5}</td>" +
+                        "<td>{6}</td>" +
+                    "</tr>",
+                    ObjListUsr.Id,
+                    ObjListUsr.Nome,
+                    ObjListUsr.Endereco,
+                    ObjListUsr.Numero,
+                    ObjListUsr.Cep,
+                    ObjListUsr.Telefone,
+                    ObjListUsr.Regra));
+            }
+            return ListaUsrSelect;
         }
         public string GetMensagemErro(MembershipCreateStatus Status)
         {

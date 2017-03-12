@@ -8,6 +8,7 @@ namespace SGA.Models.Usuario
 {
     public interface IUsuario
     {
+        int Id { get; set; }
         string Login { get; set; }
         string Senha { get; set; }
         string Email { get; set; }
