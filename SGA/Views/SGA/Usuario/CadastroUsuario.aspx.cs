@@ -1,7 +1,7 @@
 ﻿using SGA.Models;
 using SGA.Models.DAO.AreaDeAtendimento;
 using SGA.Models.DAO.Setor;
-using SGA.Models.DAO.Usuario;
+using SGA.Models.DAO.UsuarioDAO;
 using SGA.Models.Usuario;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace SGA.Views.SGA.Usuario
         {
             if (!Page.IsPostBack)
             {
-                DropDownListTipo.DataSource = new CadastroUsuario().RegrasUsuario();
+                DropDownListTipo.DataSource = new CadastroUsuarios().RegrasUsuario();
                 DropDownListTipo.DataBind();
                 DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
 
@@ -77,9 +77,9 @@ namespace SGA.Views.SGA.Usuario
                 Usuario.Cargo = DropDownListCargo.SelectedIndex;
                 Usuario.Setor = DropDownListSetor.SelectedIndex;
 
-                CadastroUsuario Cd = new CadastroUsuario(Usuario);
+                CadastroUsuarios Cd = new CadastroUsuarios(Usuario);
 
-                Msg.Text = Cd.CadastrarUsuario();
+                Msg.Text = Cd.CadastraUsuario();
             }
 
             catch (Exception)

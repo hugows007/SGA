@@ -12,11 +12,11 @@ namespace SGA.Views.Site
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            UsuarioLogado.Text = Membership.GetUser().ToString();
+            /*UsuarioLogado.Text = Membership.GetUser().ToString();
             MembershipUser mu = Membership.GetUser(UsuarioLogado.Text);
             string userId = mu.ProviderUserKey.ToString();
             UsuarioLogado.Text += " " + userId;
-            Usuario.Text = Membership.GetUser(mu.ProviderUserKey).ToString();
+            Usuario.Text = Membership.GetUser(mu.ProviderUserKey).ToString();*/
 
         }
     }

@@ -7,23 +7,30 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace SGA.Models.DAO.Usuario
+namespace SGA.Models.DAO.UsuarioDAO
 {
-    public class CadastroDAO
+    public class CadastroUsuariosDAO
     {
+
         string LastId;
         string MembershipId;
         IUsuario ObjUsuario;
 
-        public CadastroDAO(IUsuario ObjUsr, string MbId)
+        public CadastroUsuariosDAO(IUsuario ObjUsr, string MbId)
         {
             ObjUsuario = ObjUsr;
             MembershipId = MbId;
         }
 
-        public CadastroDAO() { }
+        public CadastroUsuariosDAO(IUsuario ObjUsr)
+        {
+            ObjUsuario = ObjUsr;
 
-        public bool InsereUsuarioDAO()
+        }
+
+        public CadastroUsuariosDAO() { }
+
+        public bool CadastraUsuarioDAO()
         {
             try
             {
@@ -35,13 +42,17 @@ namespace SGA.Models.DAO.Usuario
                 ,[endereco]
                 ,[numero]
                 ,[cep]
-                ,[telefone])
+                ,[telefone]
+                ,[idStatusUsuario]
+                ,[idAreaAtendimento])
             VALUES
                 ('" + ObjUsuario.Nome +
                     "','" + ObjUsuario.Endereco +
                     "','" + ObjUsuario.Numero +
                     "','" + ObjUsuario.Cep +
                     "','" + ObjUsuario.Telefone +
+                    "','" + 1 +
+                    "','" + ObjUsuario.IdAreaAtendimento +
                     "');", Con);
 
                 CmdUsr.ExecuteNonQuery();
@@ -150,6 +161,49 @@ namespace SGA.Models.DAO.Usuario
             }
         }
 
+        public List<IUsuario> ConsultaUsuariosDAO()
+        {
+            List<IUsuario> UsrList = new List<IUsuario>();
+
+            SqlDataReader Dr = null;
+
+            try
+            {
+                SqlConnection Con = new Conexao().ConexaoDB();
+
+                SqlCommand CmdUsrs = new SqlCommand(@"
+                SELECT *
+                  FROM [SAS].[dbo].[Usuario]", Con);
+
+                Dr = CmdUsrs.ExecuteReader();
+
+                while (Dr.Read())
+                {
+                    SGA.Models.Usuario.Usuario Usr = new SGA.Models.Usuario.Usuario();
+
+                    Usr.Nome = Dr.GetString(1);
+                    Usr.Endereco = Dr.GetString(2);
+                    Usr.Numero = Dr.GetString(3);
+                    Usr.Cep = Dr.GetString(4);
+                    Usr.Telefone = Dr.GetString(5);
+
+                    UsrList.Add(Usr);
+                }
+            }
+            catch (SqlException)
+            {
+                return null;
+            }
+            finally
+            {
+                if (Dr != null)
+                    Dr.Close();
+            }
+            
+            return UsrList;
+
+        }
+
         public string GetUltimoId(string Tabela, string Campo)
         {
             try
@@ -163,10 +217,10 @@ namespace SGA.Models.DAO.Usuario
             }
             catch (SqlException)
             {
-                return "";
+                return null;
             }
         }
 
-       
+
     }
 }

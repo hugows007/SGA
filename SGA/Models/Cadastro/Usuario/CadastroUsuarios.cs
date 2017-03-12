@@ -1,33 +1,32 @@
-﻿using SGA.Models.DAO.Usuario;
+﻿using SGA.Models.DAO.UsuarioDAO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
 
 namespace SGA.Models.Usuario
 {
-    public class CadastroUsuario
+    public class CadastroUsuarios
     {
         string UserId = null;
         string Msg = null;
         IUsuario ObjUsuario;
 
-        public CadastroUsuario(IUsuario ObjUsr)
+        public CadastroUsuarios(IUsuario ObjUsr)
         {
             ObjUsuario = ObjUsr;
         }
-
-        public CadastroUsuario()
+        public CadastroUsuarios()
         {
         }
-
         public string[] RegrasUsuario()
         {
             string[] rolesArray;
             return rolesArray = Roles.GetAllRoles();
         }
-        public string CadastrarUsuario()
+        public string CadastraUsuario()
         {
             try
             {
@@ -45,8 +44,8 @@ namespace SGA.Models.Usuario
                     MembershipUser Mu = Membership.GetUser(ObjUsuario.Login);
                     UserId = Mu.ProviderUserKey.ToString();
 
-                    if (new CadastroDAO
-                        (ObjUsuario, UserId).InsereUsuarioDAO())
+                    if (new CadastroUsuariosDAO
+                        (ObjUsuario, UserId).CadastraUsuarioDAO())
                     {
                         Msg = "Usuário cadastrado com sucesso!";
                     }
@@ -67,7 +66,10 @@ namespace SGA.Models.Usuario
                 return ex.Message;
             }
         }
-
+        public List<IUsuario> ConsultaUsuarios()
+        {
+            return new CadastroUsuariosDAO(ObjUsuario).ConsultaUsuariosDAO();
+        }
         public string GetMensagemErro(MembershipCreateStatus Status)
         {
             switch (Status)

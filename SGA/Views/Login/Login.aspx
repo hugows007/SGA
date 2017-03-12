@@ -2,17 +2,13 @@
 
 <asp:Content ID="ContentHead" ContentPlaceHolderID="HeadLogin" runat="server">
 </asp:Content>
-
-
 <asp:Content ID="ContentBody" ContentPlaceHolderID="ContentPlaceHolderLogin" runat="server">
 
-    <asp:Label ID="LabelBemVindo" runat="server" Text="Label">Bem vindo!</asp:Label>
-   
     <table cellpadding="3" border="0">
         <tr>
             <td>Username:</td>
             <td>
-                <asp:TextBox ID="TxtLogin" runat="server" />
+                <asp:TextBox ID="TxtLogin" runat="server" CssClass="form-control" />
             </td>
             <td>
                 <asp:RequiredFieldValidator ID="UsernameRequiredValidator" runat="server"
@@ -23,7 +19,7 @@
         <tr>
             <td>Password:</td>
             <td>
-                <asp:TextBox ID="TxtSenha" runat="server" TextMode="Password" />
+                <asp:TextBox ID="TxtSenha" runat="server" TextMode="Password" CssClass="form-control" />
             </td>
             <td>
                 <asp:RequiredFieldValidator ID="PasswordRequiredValidator" runat="server"

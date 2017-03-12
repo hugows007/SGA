@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Cadastro.aspx.cs" Inherits="SGA.Views.SGA.Usuario.Cadastro" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="CadastroUsuario.aspx.cs" Inherits="SGA.Views.SGA.Usuario.Cadastro" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="headInicio" runat="server">
 </asp:Content>
