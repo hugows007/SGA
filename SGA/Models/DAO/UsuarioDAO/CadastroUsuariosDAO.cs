@@ -241,6 +241,38 @@ namespace SGA.Models.DAO.UsuarioDAO
             }
             return UsrList;
         }
+        public bool AlteraUsuarioDAO()
+        {
+            SqlConnection Con = null;
+
+            try
+            {
+                Con = new Conexao().ConexaoDB();
+
+                SqlCommand CmdUsr = new SqlCommand(@"
+                UPDATE 
+	                [SAS].[dbo].[Usuario] SET 
+	                    NOME='" + ObjUsuario.Nome + "'," +
+                        "ENDERECO ='" + ObjUsuario.Endereco + "'," +
+                        "NUMERO='" + ObjUsuario.Numero + "'," +
+                        "CEP='" + ObjUsuario.Cep + "'," +
+                        "TELEFONE='" + ObjUsuario.Telefone + "' " +
+                        "WHERE idUsuario='" + ObjUsuario.Id + "'" +
+                        ";", Con);
+
+                CmdUsr.ExecuteNonQuery();
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return true;
+        }
+
         public string GetRegraUser(int Id)
         {
             List<IUsuario> UsrList = new List<IUsuario>();

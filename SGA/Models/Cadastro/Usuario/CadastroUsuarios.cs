@@ -92,8 +92,10 @@ namespace SGA.Models.Usuario
             }
             return ListaUsrSelect;
         }
-        public List<string> ConsultaUsuarioById()
+        public List<IUsuario> ConsultaUsuarioById()
         {
+            return new CadastroUsuariosDAO(ObjUsuario).ConsultaUsuariosDAOById();
+            /*
             List<string> ListaUsrSelect = new List<string>();
 
             foreach (var ObjListUsr in new CadastroUsuariosDAO(ObjUsuario).ConsultaUsuariosDAOById())
@@ -116,7 +118,21 @@ namespace SGA.Models.Usuario
                     ObjListUsr.Telefone,
                     ObjListUsr.Regra));
             }
-            return ListaUsrSelect;
+            return ListaUsrSelect;*/
+        }
+        public string AlteraUsuario()
+        {
+            if (new CadastroUsuariosDAO
+                       (ObjUsuario).AlteraUsuarioDAO())
+            {
+                Msg = "Usuário atualizado com sucesso!";
+            }
+            else
+            {
+                Msg = "Ocorreu um erro ao atualizar o usuário!";
+            }
+
+            return Msg;
         }
         public string GetMensagemErro(MembershipCreateStatus Status)
         {

@@ -3,35 +3,41 @@
 <asp:Content ID="ContentHead" ContentPlaceHolderID="HeadLogin" runat="server">
 </asp:Content>
 <asp:Content ID="ContentBody" ContentPlaceHolderID="ContentPlaceHolderLogin" runat="server">
-
-    <table cellpadding="3" border="0">
-        <tr>
-            <td>Username:</td>
-            <td>
-                <asp:TextBox ID="TxtLogin" runat="server" CssClass="form-control" />
-            </td>
-            <td>
-                <asp:RequiredFieldValidator ID="UsernameRequiredValidator" runat="server"
-                    ControlToValidate="TxtLogin" ForeColor="red"
-                    Display="Static" ErrorMessage="Required" />
-            </td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td>
-                <asp:TextBox ID="TxtSenha" runat="server" TextMode="Password" CssClass="form-control" />
-            </td>
-            <td>
-                <asp:RequiredFieldValidator ID="PasswordRequiredValidator" runat="server"
-                    ControlToValidate="TxtSenha" ForeColor="red"
-                    Display="Static" ErrorMessage="Required" />
-            </td>
-        </tr>
-         <tr>
-            <td></td>
-            <td>
-                <asp:button id="BotaoEntrar" text="Entrar" onclick="BotaoEntrar_Click" runat="server" />
-            </td>
-        </tr>
-    </table>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">Bem vindo ao SGA!</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p class="text-center">Favor inserir seu usuário e senha para se autenticar no sistema</p>
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <label for="inputEmail3" class="control-label">Usuário</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <asp:TextBox ID="TxtLogin" runat="server" CssClass="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <label for="inputPassword3" class="control-label">Senha</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <asp:TextBox ID="TxtSenha" runat="server" TextMode="Password" CssClass="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <asp:Button ID="BotaoEntrar" Text="Entrar" OnClick="BotaoEntrar_Click" runat="server" class="btn btn-default" />
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
