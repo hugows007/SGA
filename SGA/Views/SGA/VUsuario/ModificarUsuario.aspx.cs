@@ -6,21 +6,23 @@ namespace SGA.Views.SGA.VUsuario
 {
     public partial class ModificarUsuario : System.Web.UI.Page
     {
+        Usuario Usuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         protected void Page_Load(object sender, EventArgs e)
         {
-            Usuario Usuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-
-            if (Request.QueryString["Id"] != null)
+            if (!Page.IsPostBack)
             {
-                Usuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
-
-                foreach (var Result in new ManterUsuario(Usuario).ConsultaUsuarioById())
+                if (Request.QueryString["Id"] != null)
                 {
-                    NomeTextBox.Text = Result.Nome;
-                    EndTextBox.Text = Result.Endereco;
-                    TelTextBox.Text = Result.Telefone;
-                    NumTextBox.Text = Result.Numero;
-                    CEPTextBox.Text = Result.Cep;
+                    Usuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
+
+                    foreach (var Result in new ManterUsuario(Usuario).ConsultaUsuarioById())
+                    {
+                        NomeTextBox.Text = Result.Nome;
+                        EndTextBox.Text = Result.Endereco;
+                        TelTextBox.Text = Result.Telefone;
+                        NumTextBox.Text = Result.Numero;
+                        CEPTextBox.Text = Result.Cep;
+                    }
                 }
             }
         }
@@ -31,16 +33,14 @@ namespace SGA.Views.SGA.VUsuario
             {
                 if (Request.QueryString["Id"] != null)
                 {
-                    Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                    Usuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                    Usuario.Nome = NomeTextBox.Text;
+                    Usuario.Endereco = EndTextBox.Text;
+                    Usuario.Telefone = TelTextBox.Text;
+                    Usuario.Numero = NumTextBox.Text;
+                    Usuario.Cep = CEPTextBox.Text;
 
-                    Usr.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    Usr.Nome = NomeTextBox.Text;
-                    Usr.Endereco = EndTextBox.Text;
-                    Usr.Telefone = TelTextBox.Text;
-                    Usr.Numero = NumTextBox.Text;
-                    Usr.Cep = CEPTextBox.Text;
-                    
-                    MsgLabel.Text = new ManterUsuario(Usr).AlteraUsuario();
+                    MsgLabel.Text = new ManterUsuario(Usuario).AlteraUsuario();
                 }
             }
 

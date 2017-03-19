@@ -11,9 +11,9 @@ namespace SGA.Views.SGA.VUsuario
 {
     public partial class InativarUsuario : System.Web.UI.Page
     {
+        Usuario ObjUsr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         protected void Page_Load(object sender, EventArgs e)
         {
-            Usuario ObjUsr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
             bool OperInativar = false;
 
             try
@@ -22,7 +22,7 @@ namespace SGA.Views.SGA.VUsuario
                 {
                     ObjUsr.Id = Convert.ToInt32(Request.QueryString["Id"]);
                     OperInativar = new ManterUsuario(ObjUsr).InativaUsuario();
-                    Response.Redirect("\\Views\\SGA\\VUsuario\\ConsultaUsuarios.aspx?OpInat=" + OperInativar.ToString());
+                    Response.Redirect("\\Views\\SGA\\VUsuario\\ConsultaUsuarios.aspx?OpInatUsr=" + OperInativar.ToString());
                 }
             }
             catch (Exception)

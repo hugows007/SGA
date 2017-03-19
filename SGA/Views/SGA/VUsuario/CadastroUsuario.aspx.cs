@@ -39,7 +39,7 @@ namespace SGA.Views.SGA.VUsuario
                 DropDownListEspec.DataBind();
                 DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
 
-                DropDownListAreaAtendimento.DataSource = new ManterAreaAtendimento().ConsultaAreaAtendimentos();
+                DropDownListAreaAtendimento.DataSource = new ManterAreaAtendimento().ConsultaAreaAtendimentosDataReader();
                 DropDownListAreaAtendimento.DataTextField = "regiao";
                 DropDownListAreaAtendimento.DataValueField = "idAreaAtendimento";
                 DropDownListAreaAtendimento.DataBind();

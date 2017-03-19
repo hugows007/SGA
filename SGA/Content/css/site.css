@@ -42,3 +42,10 @@
 .dropdown:hover .dropbtn {
     background-color: #e8e8e8;
 }
+
+.f-dropdown .divider {
+  border-top: solid 1px #1a1a1a;
+  clear: both;
+  height: 1px;
+  width: 100%;
+}

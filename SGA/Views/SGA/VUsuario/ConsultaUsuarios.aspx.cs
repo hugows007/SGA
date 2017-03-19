@@ -14,16 +14,15 @@ namespace SGA.Views.SGA.VUsuario
     public partial class ConsultaUsuario : System.Web.UI.Page
     {
         public List<Usuario> ListaUsrSelect = new List<Usuario>();
+        Usuario Usuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         protected void Page_Load(object sender, EventArgs e)
         {
-            Usuario Usuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-
             foreach (var ObjUsr in new ManterUsuario(Usuario).ConsultaUsuarios())
             {
                 ListaUsrSelect.Add(ObjUsr);
             }
 
-            if (Request.QueryString["OpInat"] != null && Request.QueryString["OpInat"].Equals("True"))
+            if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("True"))
             {
                 MsgLabel.Text = "Usuário inativado com sucesso!";
             }

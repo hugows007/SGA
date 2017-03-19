@@ -31,13 +31,16 @@
                 </button>
                 <a class="navbar-brand" href="/Views/SGA/Inicio.aspx"><span>SGA</span></a>
             </div>
+
             <div class="collapse navbar-collapse" id="navbar-ex-collapse_usr">
                 <ul class="nav navbar-nav navbar-right"></ul>
                 <div class="dropdown" style="float: left;">
-                    <button class="dropbtn">Usuários</button>
+                    <button class="dropbtn">Gerenciamento</button>
                     <div class="dropdown-content">
-                        <a href="/Views/SGA/VUsuario/ConsultaUsuarios.aspx">Consultar Usuários</a>
                         <a href="/Views/SGA/VUsuario/CadastroUsuario.aspx">Cadastrar Usuário</a>
+                        <a href="/Views/SGA/VUsuario/ConsultaUsuarios.aspx">Consultar Usuários</a>
+                        <a href="/Views/SGA/VAreaAtendimento/CadastroAreaAtendimento.aspx">Cadastrar Área de Atendimento</a>
+                        <a href="/Views/SGA/VAreaAtendimento/ConsultaAreaAtendimentos.aspx">Consultar Área de Atendimento</a>
                     </div>
                 </div>
                 <ul class="nav navbar-nav navbar-right"></ul>
