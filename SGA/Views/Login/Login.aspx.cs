@@ -22,6 +22,8 @@ namespace SGA
 
         protected void BotaoEntrar_Click(object sender, EventArgs e)
         {
+
+
             if (new Models.Login.Login().Logar(TxtLogin.Text, TxtSenha.Text))
             {
                 TxtLogin.Visible = true;

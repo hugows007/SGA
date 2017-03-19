@@ -1,4 +1,5 @@
-﻿using SGA.Models.DAO.UsuarioDAO;
+﻿using SGA.Models.DAO.ManterDAO;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,19 +7,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 
-namespace SGA.Models.Usuario
+namespace SGA.Models.Manter
 {
-    public class CadastroUsuarios
+    public class ManterUsuario
     {
         string UserId = null;
         string Msg = null;
-        IUsuario ObjUsuario = null;
+        Usuario ObjUsuario = null;
 
-        public CadastroUsuarios(IUsuario ObjUsr)
+        public ManterUsuario(Usuario ObjUsr)
         {
             ObjUsuario = ObjUsr;
         }
-        public CadastroUsuarios()
+        public ManterUsuario()
         {
         }
         public string[] RegrasUsuario()
@@ -44,7 +45,7 @@ namespace SGA.Models.Usuario
                     MembershipUser Mu = Membership.GetUser(ObjUsuario.Login);
                     UserId = Mu.ProviderUserKey.ToString();
 
-                    if (new CadastroUsuariosDAO
+                    if (new ManterUsuarioDAO
                         (ObjUsuario, UserId).CadastraUsuarioDAO())
                     {
                         Msg = "Usuário cadastrado com sucesso!";
@@ -66,63 +67,17 @@ namespace SGA.Models.Usuario
                 return ex.Message;
             }
         }
-        public List<string> ConsultaUsuarios()
+        public List<Usuario> ConsultaUsuarios()
         {
-            List<string> ListaUsrSelect = new List<string>();
-
-            foreach (var ObjListUsr in new CadastroUsuariosDAO(ObjUsuario).ConsultaUsuariosDAO())
-            {
-                ListaUsrSelect.Add(string.Format(
-                    "<tr>" +
-                        "<td><a href=\"ModificarUsuario.aspx?Id={0}\">{0}</td>" +
-                        "<td>{1}</td>" +
-                        "<td>{2}</td>" +
-                        "<td>{3}</td>" +
-                        "<td>{4}</td>" +
-                        "<td>{5}</td>" +
-                        "<td>{6}</td>" +
-                    "</tr>",
-                    ObjListUsr.Id,
-                    ObjListUsr.Nome,
-                    ObjListUsr.Endereco,
-                    ObjListUsr.Numero,
-                    ObjListUsr.Cep,
-                    ObjListUsr.Telefone,
-                    ObjListUsr.Regra));
-            }
-            return ListaUsrSelect;
+            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosDAO();
         }
-        public List<IUsuario> ConsultaUsuarioById()
+        public List<Usuario> ConsultaUsuarioById()
         {
-            return new CadastroUsuariosDAO(ObjUsuario).ConsultaUsuariosDAOById();
-            /*
-            List<string> ListaUsrSelect = new List<string>();
-
-            foreach (var ObjListUsr in new CadastroUsuariosDAO(ObjUsuario).ConsultaUsuariosDAOById())
-            {
-                ListaUsrSelect.Add(string.Format(
-                    "<tr>" +
-                        "<td>{0}</td>" +
-                        "<td>{1}</td>" +
-                        "<td>{2}</td>" +
-                        "<td>{3}</td>" +
-                        "<td>{4}</td>" +
-                        "<td>{5}</td>" +
-                        "<td>{6}</td>" +
-                    "</tr>",
-                    ObjListUsr.Id,
-                    ObjListUsr.Nome,
-                    ObjListUsr.Endereco,
-                    ObjListUsr.Numero,
-                    ObjListUsr.Cep,
-                    ObjListUsr.Telefone,
-                    ObjListUsr.Regra));
-            }
-            return ListaUsrSelect;*/
+            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosDAOById();
         }
         public string AlteraUsuario()
         {
-            if (new CadastroUsuariosDAO
+            if (new ManterUsuarioDAO
                        (ObjUsuario).AlteraUsuarioDAO())
             {
                 Msg = "Usuário atualizado com sucesso!";
@@ -133,6 +88,18 @@ namespace SGA.Models.Usuario
             }
 
             return Msg;
+        }
+        public bool InativaUsuario()
+        {
+            if (new ManterUsuarioDAO
+           (ObjUsuario).InativaUsuarioDAO())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public string GetMensagemErro(MembershipCreateStatus Status)
         {

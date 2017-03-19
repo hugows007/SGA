@@ -5,11 +5,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace SGA.Models.DAO.Setor
+namespace SGA.Models.DAO.ManterDAO
 {
-    public class SetorDAO
+    public class ManterSetorDAO
     {
-        public SqlDataReader GetSetor()
+        public SqlDataReader ConsultaSetoresDAO()
         {
             try
             {

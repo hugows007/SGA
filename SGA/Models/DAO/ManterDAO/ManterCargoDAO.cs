@@ -5,24 +5,24 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace SGA.Models.DAO.AreaDeAtendimento
+namespace SGA.Models.DAO.ManterDAO
 {
-    public class AreaAtendimentoDAO
+    public class ManterCargoDAO
     {
-        public SqlDataReader GetAreaDeAtendimento()
+        public SqlDataReader ConsultaCargosDAO()
         {
             try
             {
                 SqlConnection Con = new Conexao().ConexaoDB();
 
-                SqlCommand CmdGetArea = new SqlCommand(@"
-                 SELECT [idAreaAtendimento]
-                      ,[regiao]
-                 FROM [SAS].[dbo].[AreaDeAtendimento]
+                SqlCommand CmdGetCargo = new SqlCommand(@"
+                 SELECT [idCargo]
+                      ,[cargo]
+                 FROM [SAS].[dbo].[Cargo]
                  WHERE ativo = 1
-                 ORDER BY regiao", Con);
+                 ORDER BY cargo", Con);
 
-                SqlDataReader Result = CmdGetArea.ExecuteReader();
+                SqlDataReader Result = CmdGetCargo.ExecuteReader();
                 return Result;
             }
             catch (SqlException)

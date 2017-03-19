@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SGA.Models.Usuario
+namespace SGA.Models.Usuarios
 {
-    public class Usuario : IUsuario
+    public class Usuario
     {
         public int Id { get; set; }
         public string Login { get; set; }
@@ -16,14 +16,11 @@ namespace SGA.Models.Usuario
         public string Endereco { get; set; }
         public string Numero { get; set; }
         public string Cep { get; set; }
-        public string Telefone { get; set; } 
-        public string DocIdent { get; set; }
-        public string OrgEmiss { get; set; }
-        public string Cpf { get; set; }
-        public string Cnpj { get; set; }
-        public int Setor { get; set; }
-        public int Cargo { get; set; }
-        public int Especialidade { get; set; }
+        public string Telefone { get; set; }
         public int IdAreaAtendimento { get; set; }
+        public UsuarioClienteFisico ObjCF { get; set; }
+        public UsuarioClienteJuridico ObjCJ { get; set; }
+        public UsuarioGestor ObjG { get; set; }
+        public UsuarioTecnico ObjT { get; set; }
     }
 }

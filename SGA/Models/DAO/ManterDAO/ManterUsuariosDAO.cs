@@ -1,5 +1,5 @@
 ﻿using SGA.DAO;
-using SGA.Models.Usuario;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,26 +8,26 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 
-namespace SGA.Models.DAO.UsuarioDAO
+namespace SGA.Models.DAO.ManterDAO
 {
-    public class CadastroUsuariosDAO
+    public class ManterUsuarioDAO
     {
         string LastId;
         string MembershipId;
-        IUsuario ObjUsuario;
+        Usuario ObjUsuario = null;
         string RegraForUSer;
 
-        public CadastroUsuariosDAO(IUsuario ObjUsr, string MbId)
+        public ManterUsuarioDAO(Usuario ObjUsr, string MbId)
         {
             ObjUsuario = ObjUsr;
             MembershipId = MbId;
         }
-        public CadastroUsuariosDAO(IUsuario ObjUsr)
+        public ManterUsuarioDAO(Usuario ObjUsr)
         {
             ObjUsuario = ObjUsr;
 
         }
-        public CadastroUsuariosDAO() { }
+        public ManterUsuarioDAO() { }
         public bool CadastraUsuarioDAO()
         {
             try
@@ -82,9 +82,9 @@ namespace SGA.Models.DAO.UsuarioDAO
                   ,[idSetor])
             VALUES
                 ('" + LastId +
-                            "','" + ObjUsuario.Especialidade +
-                            "','" + ObjUsuario.Cargo +
-                            "','" + ObjUsuario.Setor +
+                            "','" + ObjUsuario.ObjT.Especialidade +
+                            "','" + ObjUsuario.ObjT.Cargo +
+                            "','" + ObjUsuario.ObjT.Setor +
                             "');", Con);
 
                         CmdUsrT.ExecuteNonQuery();
@@ -102,8 +102,8 @@ namespace SGA.Models.DAO.UsuarioDAO
                   ,[idCargo])
             VALUES
                 ('" + LastId +
-                            "','" + ObjUsuario.Setor +
-                            "','" + ObjUsuario.Cargo +
+                            "','" + ObjUsuario.ObjG.Setor +
+                            "','" + ObjUsuario.ObjG.Cargo +
                             "');", Con);
 
                         CmdUsrG.ExecuteNonQuery();
@@ -120,7 +120,7 @@ namespace SGA.Models.DAO.UsuarioDAO
                   ,[cnpj])
             VALUES
                 ('" + LastId +
-                            "','" + ObjUsuario.Cnpj +
+                            "','" + ObjUsuario.ObjCJ.Cnpj +
                             "');", Con);
 
                         CmdUsrCJ.ExecuteNonQuery();
@@ -139,9 +139,9 @@ namespace SGA.Models.DAO.UsuarioDAO
                   ,[cpf])
             VALUES
                 ('" + LastId +
-                            "','" + ObjUsuario.DocIdent +
-                            "','" + ObjUsuario.OrgEmiss +
-                            "','" + ObjUsuario.Cpf +
+                            "','" + ObjUsuario.ObjCF.DocIdent +
+                            "','" + ObjUsuario.ObjCF.OrgEmiss +
+                            "','" + ObjUsuario.ObjCF.Cpf +
                             "');", Con);
 
                         CmdUsrCF.ExecuteNonQuery();
@@ -158,9 +158,9 @@ namespace SGA.Models.DAO.UsuarioDAO
                 return false;
             }
         }
-        public List<IUsuario> ConsultaUsuariosDAO()
+        public List<Usuario> ConsultaUsuariosDAO()
         {
-            List<IUsuario> UsrList = new List<IUsuario>();
+            List<Usuario> UsrList = new List<Usuario>();
 
             SqlDataReader Dr = null;
 
@@ -170,13 +170,14 @@ namespace SGA.Models.DAO.UsuarioDAO
 
                 SqlCommand CmdUsrs = new SqlCommand(@"
                 SELECT *
-                  FROM [SAS].[dbo].[Usuario]", Con);
+                  FROM [SAS].[dbo].[Usuario]
+                  WHERE idStatusUsuario = 1", Con);
 
                 Dr = CmdUsrs.ExecuteReader();
 
                 while (Dr.Read())
                 {
-                    SGA.Models.Usuario.Usuario Usr = new SGA.Models.Usuario.Usuario();
+                    Usuario Usr = new Usuario();
 
                     Usr.Id = Dr.GetInt32(0);
                     Usr.Nome = Dr.GetString(1);
@@ -200,9 +201,9 @@ namespace SGA.Models.DAO.UsuarioDAO
             }
             return UsrList;
         }
-        public List<IUsuario> ConsultaUsuariosDAOById()
+        public List<Usuario> ConsultaUsuariosDAOById()
         {
-            List<IUsuario> UsrList = new List<IUsuario>();
+            List<Usuario> UsrList = new List<Usuario>();
             SqlDataReader DrUsr = null;
 
             try
@@ -212,13 +213,13 @@ namespace SGA.Models.DAO.UsuarioDAO
                 SqlCommand CmdUsrs = new SqlCommand(@"
                 SELECT *
                   FROM [SAS].[dbo].[Usuario]
-                  WHERE idUsuario =" + ObjUsuario.Id, ConUsr);
+                  WHERE idStatusUsuario = 1 and idUsuario =" + ObjUsuario.Id, ConUsr);
 
                 DrUsr = CmdUsrs.ExecuteReader();
 
                 while (DrUsr.Read())
                 {
-                    SGA.Models.Usuario.Usuario Usr = new SGA.Models.Usuario.Usuario();
+                    Usuario Usr = new Usuario();
 
                     Usr.Id = DrUsr.GetInt32(0);
                     Usr.Nome = DrUsr.GetString(1);
@@ -272,10 +273,36 @@ namespace SGA.Models.DAO.UsuarioDAO
             }
             return true;
         }
+        public bool InativaUsuarioDAO()
+        {
+            SqlConnection Con = null;
 
+            try
+            {
+                Con = new Conexao().ConexaoDB();
+
+                SqlCommand CmdUsr = new SqlCommand(@"
+                UPDATE 
+	                [SAS].[dbo].[Usuario] SET
+                        IDSTATUSUSUARIO=0 " + 
+                        "WHERE idUsuario='" + ObjUsuario.Id + "'" +
+                        ";", Con);
+
+                CmdUsr.ExecuteNonQuery();
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return true;
+        }
         public string GetRegraUser(int Id)
         {
-            List<IUsuario> UsrList = new List<IUsuario>();
+            List<Usuario> UsrList = new List<Usuario>();
             SqlDataReader DrRol = null;
 
             try
@@ -292,7 +319,7 @@ namespace SGA.Models.DAO.UsuarioDAO
 
                 while (DrRol.Read())
                 {
-                    SGA.Models.Usuario.Usuario Usr = new SGA.Models.Usuario.Usuario();
+                    Usuario Usr = new Usuario();
 
                     RegraForUSer = Roles.GetRolesForUser(DrRol.GetString(0))[0].ToString();
                 }

@@ -7,19 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SGA.Views.SGA.Usuario {
+namespace SGA.Views.SGA.VUsuario {
     
     
     public partial class ModificarUsuario {
-        
-        /// <summary>
-        /// NomeLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label NomeLabel;
         
         /// <summary>
         /// NomeTextBox control.
@@ -31,15 +22,6 @@ namespace SGA.Views.SGA.Usuario {
         protected global::System.Web.UI.WebControls.TextBox NomeTextBox;
         
         /// <summary>
-        /// EndLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label EndLabel;
-        
-        /// <summary>
         /// EndTextBox control.
         /// </summary>
         /// <remarks>
@@ -47,15 +29,6 @@ namespace SGA.Views.SGA.Usuario {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox EndTextBox;
-        
-        /// <summary>
-        /// NumLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label NumLabel;
         
         /// <summary>
         /// NumTextBox control.
@@ -67,15 +40,6 @@ namespace SGA.Views.SGA.Usuario {
         protected global::System.Web.UI.WebControls.TextBox NumTextBox;
         
         /// <summary>
-        /// CEPLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label CEPLabel;
-        
-        /// <summary>
         /// CEPTextBox control.
         /// </summary>
         /// <remarks>
@@ -83,15 +47,6 @@ namespace SGA.Views.SGA.Usuario {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox CEPTextBox;
-        
-        /// <summary>
-        /// TelLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label TelLabel;
         
         /// <summary>
         /// TelTextBox control.

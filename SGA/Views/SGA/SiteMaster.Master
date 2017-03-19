@@ -15,6 +15,7 @@
     <link href="../../Content/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../../Content/css/bootstrap-select.css" rel="stylesheet" />
     <link href="../../Content/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="../../Content/css/site.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="headInicio" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -30,32 +31,23 @@
                 </button>
                 <a class="navbar-brand" href="/Views/SGA/Inicio.aspx"><span>SGA</span></a>
             </div>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="/Views/SGA/Usuario/ConsultaUsuarios.aspx" class="dropdown-toggle" data-toggle="dropdown">Usuários  <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="/Views/SGA/Usuario/ConsultaUsuarios.aspx">Consultar Usuários</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li>
-                            <a href="#">Separated link</a>
-                        </li>
-                        <li>
-                            <a href="#">One more separated link</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <div class="collapse navbar-collapse" id="navbar-ex-collapse_usr">
                 <ul class="nav navbar-nav navbar-right"></ul>
-                <p class="navbar-text navbar-right">
-                    Você está logado como 
-            <a href="#" class="navbar-link">
-                <asp:Literal ID="LiteralUsuario" runat="server"></asp:Literal>
-            </a>
-                </p>
+                <div class="dropdown" style="float: left;">
+                    <button class="dropbtn">Usuários</button>
+                    <div class="dropdown-content">
+                        <a href="/Views/SGA/VUsuario/ConsultaUsuarios.aspx">Consultar Usuários</a>
+                        <a href="/Views/SGA/VUsuario/CadastroUsuario.aspx">Cadastrar Usuário</a>
+                    </div>
+                </div>
+                <ul class="nav navbar-nav navbar-right"></ul>
+                <div class="dropdown" style="float: right;">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <button class="dropbtn"><%=UsuarioLogado %></button>
+                    <div class="dropdown-content">
+                        <a href="/Views/SGA/Logout.aspx">Logout</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -5,11 +5,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace SGA.Models.DAO.AreaDeAtendimento
+namespace SGA.Models.DAO.ManterDAO
 {
-    public class EspecialidadeDAO
+    public class ManterEspecialidadeDAO
     {
-        public SqlDataReader GetEspecialidade()
+        public SqlDataReader ConsultaEspecialidadesDAO()
         {
             try
             {

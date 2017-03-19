@@ -8,12 +8,12 @@ using System.Web.UI.WebControls;
 
 namespace SGA.Views.SGA
 {
-    public partial class SiteMaster : System.Web.UI.MasterPage
+    public partial class Logout : System.Web.UI.Page
     {
-        public string UsuarioLogado;
         protected void Page_Load(object sender, EventArgs e)
         {
-            UsuarioLogado = Membership.GetUser().ToString();
+            FormsAuthentication.SignOut();
+            Response.Redirect("\\Views\\Login\\Login.aspx");
         }
     }
 }
