@@ -12,7 +12,7 @@ namespace SGA.DAO
         public SqlConnection ConexaoDB()
         {
             SqlConnection Cn = new SqlConnection();
-            Cn.ConnectionString = ConfigurationManager.ConnectionStrings["SASBdConnection"].ConnectionString;
+            Cn.ConnectionString = ConfigurationManager.ConnectionStrings["SASConnectionString"].ConnectionString;
             Cn.Open();
 
             return Cn;

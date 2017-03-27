@@ -15,6 +15,12 @@
     <link href="../../Content/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../../Content/css/bootstrap-select.css" rel="stylesheet" />
     <link href="../../Content/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="../../scripts/vendor/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    <link href="../../scripts/dist/css/sb-admin-2.css" rel="stylesheet" />
+    <link href="../../scripts/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <script src="../../scripts/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../../scripts/dist/js/sb-admin-2.js"></script>
+    <link href="../../Content/css/site.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="HeadLogin" runat="server">
     </asp:ContentPlaceHolder>
 </head>

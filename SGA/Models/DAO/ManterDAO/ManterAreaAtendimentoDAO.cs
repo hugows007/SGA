@@ -10,7 +10,7 @@ namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterAreaAtendimentoDAO
     {
-        public AreaAtendimento ObjArea = null;
+        private AreaAtendimento ObjArea;
         public ManterAreaAtendimentoDAO()
         {
 
@@ -111,7 +111,7 @@ namespace SGA.Models.DAO.ManterDAO
                 Con.Close();
             }
         }
-        public List<AreaAtendimento> ConsultaAreaAtendimentoById()
+        public List<AreaAtendimento> ConsultaAreaAtendimentoByIdDAO()
         {
             List<AreaAtendimento> AreaList = new List<AreaAtendimento>();
             SqlDataReader DrArea = null;

@@ -13,6 +13,7 @@ namespace SGA.Views.SGA
         public string UsuarioLogado;
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.Header.DataBind();
             UsuarioLogado = Membership.GetUser().ToString();
         }
     }

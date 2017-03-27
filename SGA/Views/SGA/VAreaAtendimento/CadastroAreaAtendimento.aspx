@@ -3,14 +3,20 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="headInicio" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Cadastrar área de atendimento</h3>
-                        </div>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Cadastrar Área de atendimento
+                        <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
+                    </div>
+                    <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="RegiaoTextBox" class="control-label">Região: </label>
@@ -29,7 +35,6 @@
                         </div>
                         <div class="panel-footer">
                             Favor alterar os campos e clicar em salvar.<br />
-                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
                         </div>
                     </div>
                 </div>

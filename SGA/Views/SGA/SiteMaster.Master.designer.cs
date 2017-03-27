@@ -22,15 +22,6 @@ namespace SGA.Views.SGA {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder headInicio;
         
         /// <summary>
-        /// formInicio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formInicio;
-        
-        /// <summary>
         /// ContentPlaceHolderInicio control.
         /// </summary>
         /// <remarks>

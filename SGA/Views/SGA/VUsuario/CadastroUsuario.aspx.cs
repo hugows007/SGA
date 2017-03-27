@@ -21,19 +21,19 @@ namespace SGA.Views.SGA.VUsuario
                 DropDownListTipo.DataBind();
                 DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
 
-                DropDownListSetor.DataSource = new ManterSetor().ConsultaSetores();
+                DropDownListSetor.DataSource = new ManterSetor().ConsultaSetoresDataReader();
                 DropDownListSetor.DataTextField = "setor";
                 DropDownListSetor.DataValueField = "idSetor";
                 DropDownListSetor.DataBind();
                 DropDownListSetor.Items.Insert(0, new ListItem("Selecione o setor", "0"));
 
-                DropDownListCargo.DataSource = new ManterCargo().ConsultaCargos();
+                DropDownListCargo.DataSource = new ManterCargo().ConsultaCargosDataReader();
                 DropDownListCargo.DataTextField = "cargo";
                 DropDownListCargo.DataValueField = "idCargo";
                 DropDownListCargo.DataBind();
                 DropDownListCargo.Items.Insert(0, new ListItem("Selecione o cargo", "0"));
 
-                DropDownListEspec.DataSource = new ManterEspecialidade().ConsultaEspecialidades();
+                DropDownListEspec.DataSource = new ManterEspecialidade().ConsultaEspecialidadesDataReader();
                 DropDownListEspec.DataTextField = "especialidade";
                 DropDownListEspec.DataValueField = "idEspecialidade";
                 DropDownListEspec.DataBind();

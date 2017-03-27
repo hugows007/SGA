@@ -13,6 +13,15 @@ namespace SGA.Views.SGA.VAreaAtendimento {
     public partial class ModificarAreaAtendimento {
         
         /// <summary>
+        /// MsgLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label MsgLabel;
+        
+        /// <summary>
         /// RegiaoTextBox control.
         /// </summary>
         /// <remarks>
@@ -47,14 +56,5 @@ namespace SGA.Views.SGA.VAreaAtendimento {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button AlterarButton;
-        
-        /// <summary>
-        /// MsgLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label MsgLabel;
     }
 }

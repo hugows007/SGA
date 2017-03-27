@@ -31,6 +31,8 @@ namespace SGA.Views.SGA.VAreaAtendimento
             {
                 Msg = "Erro ao efetuar o cadastro - Código 1";
             }
+
+            MsgLabel.Text = Msg;
         }
     }
 }
