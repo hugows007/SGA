@@ -24,6 +24,10 @@ namespace SGA.Views.SGA.VAreaAtendimento
             {
                 MsgLabel.Text = "Área inativada com sucesso!";
             }
+            else if (Request.QueryString["OpInatArea"] != null && Request.QueryString["OpInatArea"].Equals("False"))
+            {
+                MsgLabel.Text = "Ocorreu um erro ao inativar a área!";
+            }
         }
     }
 }

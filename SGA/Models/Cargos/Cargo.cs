@@ -9,7 +9,7 @@ namespace SGA.Models.Cargos
     {
         public int Id { get; set; }
         public string CargoDesc { get; set; }
-        public double Salario { get; set; }
+        public decimal Salario { get; set; }
         public int Status { get; set; }
     }
 }

@@ -27,15 +27,13 @@
     <script src="<%= ResolveClientUrl("~/Scripts/jquery.dataTables.min.js") %>"></script>
     <link href="<%= ResolveClientUrl("~/Content/Site.css") %>" rel="stylesheet" />
 
-    <link href="<%= ResolveClientUrl("~/Scripts/vendor/bootstrap/css/bootstrap.css") %>" rel="stylesheet" />
     <script src="<%= ResolveClientUrl("~/Scripts/vendor/metisMenu/metisMenu.min.js") %>"></script>
     <link href="<%= ResolveClientUrl("~/Scripts/vendor/metisMenu/metisMenu.min.css") %>" rel="stylesheet" />
-    <script src="<%= ResolveClientUrl("~/Scripts/vendor/raphael/raphael.min.js") %>"></script>
-    <script src="<%= ResolveClientUrl("~/Scripts/vendor/morrisjs/morris.min.js") %>"></script>
-    <link href="<%= ResolveClientUrl("~/Scripts/vendor/morrisjs/morris.css") %>" rel="stylesheet" />
     <script src="<%= ResolveClientUrl("~/Scripts/dist/js/sb-admin-2.js") %>"></script>
     <link href="<%= ResolveClientUrl("~/Scripts/dist/css/sb-admin-2.css") %>" rel="stylesheet" />
     <link href="<%= ResolveClientUrl("~/Scripts/vendor/font-awesome/css/font-awesome.min.css") %>" rel="stylesheet" />
+
+    <script src="<%= ResolveClientUrl("https://maps.googleapis.com/maps/api/js?key=AIzaSyD_XiNDomhpttOx_RPV50jQlvWum2ocXbg&callback=myMap") %>"></script>
 
     <asp:ContentPlaceHolder ID="headInicio" runat="server">
     </asp:ContentPlaceHolder>
@@ -190,16 +188,20 @@
                                         </button>
                                     </span>
                                 </div>
+                                <br />
+                                <a href="/Views/SGA/VChamado/AbrirChamado.aspx">
+                                    <button type="button" class="btn btn-primary btn-lg btn-block">Abrir chamado</button>
+                                </a>
                                 <!-- /input-group -->
                             </li>
                             <li>
-                                <a href="/Views/SGA/Inicio.aspx"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                <a href="/Views/SGA/Inicio.aspx"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
                             </li>
                             <li>
-                                <a href="#"><i class="glyphicon glyphicon-cog"></i> Manutenção<span class="fa arrow"></span></a>
+                                <a href="#"><i class="glyphicon glyphicon-cog"></i>Manutenção<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Usuários <span class="fa arrow"></span></a>
+                                        <a href="#">Usuários do sistema<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VUsuario/ConsultaUsuarios.aspx">Consultar Usuários</a>
@@ -212,7 +214,7 @@
                                 </ul>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Áreas de atendimentos <span class="fa arrow"></span></a>
+                                        <a href="#">Áreas de atendimentos da empresa<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VAreaAtendimento/ConsultaAreaAtendimentos.aspx">Consultar áreas de atendimentos</a>
@@ -223,9 +225,9 @@
                                         </ul>
                                     </li>
                                 </ul>
-                                 <ul class="nav nav-second-level">
+                                <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Cargos <span class="fa arrow"></span></a>
+                                        <a href="#">Cargos da empresa<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VCargo/ConsultaCargos.aspx">Consultar cargos</a>
@@ -234,6 +236,53 @@
                                                 <a href="/Views/SGA/VCargo/CadastroCargo.aspx">Cadastrar cargo</a>
                                             </li>
                                         </ul>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">Setores da empresa <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="/Views/SGA/VSetor/ConsultaSetores.aspx">Consultar setores</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VSetor/CadastroSetor.aspx">Cadastrar setor</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">Especialidades da empresa <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="/Views/SGA/VEspecialidade/ConsultaEspecialidades.aspx">Consultar especialidades</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VEspecialidade/CadastroEspecialidade.aspx">Cadastrar especialidade</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">Serviços da empresa <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="/Views/SGA/VServico/ConsultaServicos.aspx">Consultar serviços</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VServico/CadastroServico.aspx">Cadastrar serviço</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-briefcase fa-fw"></i>Chamados<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="/Views/SGA/VUsuario/ConsultaUsuarios.aspx">Consultar chamados</a>
                                     </li>
                                 </ul>
                             </li>
@@ -252,6 +301,7 @@
             $('#example').DataTable();
         });
     </script>
+    <script src="<%= ResolveClientUrl("~/Scripts/google.js") %>"></script>
 </body>
 </html>
 

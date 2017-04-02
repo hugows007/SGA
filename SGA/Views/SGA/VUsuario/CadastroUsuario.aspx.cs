@@ -61,15 +61,15 @@ namespace SGA.Views.SGA.VUsuario
                 else if (TpUsuario.Equals("Técnico"))
                 {
                     Usr = FactoryUsuario.GetNew(TipoUsuario.UsuarioTecnico);
-                    Usr.ObjT.Especialidade = DropDownListEspec.SelectedIndex;
-                    Usr.ObjT.Cargo = DropDownListCargo.SelectedIndex;
-                    Usr.ObjT.Setor = DropDownListSetor.SelectedIndex;
+                    Usr.ObjT.Especialidade = Convert.ToInt32(DropDownListEspec.SelectedValue);
+                    Usr.ObjT.Cargo = Convert.ToInt32(DropDownListCargo.SelectedValue);
+                    Usr.ObjT.Setor = Convert.ToInt32(DropDownListSetor.SelectedValue);
                 }
                 else if(TpUsuario.Equals("Gestor"))
                 {
                     Usr = FactoryUsuario.GetNew(TipoUsuario.UsuarioGestor);
-                    Usr.ObjT.Cargo = DropDownListCargo.SelectedIndex;
-                    Usr.ObjT.Setor = DropDownListSetor.SelectedIndex;
+                    Usr.ObjT.Cargo = Convert.ToInt32(DropDownListCargo.SelectedValue);
+                    Usr.ObjT.Setor = Convert.ToInt32(DropDownListSetor.SelectedValue);
                 }
                 else if(TpUsuario.Equals("Cliente Físico"))
                 {
@@ -93,7 +93,7 @@ namespace SGA.Views.SGA.VUsuario
                 Usr.Numero = NumeroTextBox.Text;
                 Usr.Cep = CEPTextBox.Text;
                 Usr.Telefone = TelefoneTextBox.Text;
-                Usr.IdAreaAtendimento = DropDownListAreaAtendimento.SelectedIndex;
+                Usr.AreaAtendimento = DropDownListAreaAtendimento.SelectedIndex;
 
                 Msg.Text = new ManterUsuario(Usr).CadastraUsuario();
             }

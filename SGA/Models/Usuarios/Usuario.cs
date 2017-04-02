@@ -17,7 +17,8 @@ namespace SGA.Models.Usuarios
         public string Numero { get; set; }
         public string Cep { get; set; }
         public string Telefone { get; set; }
-        public int IdAreaAtendimento { get; set; }
+        public int Status { get; set; }
+        public int AreaAtendimento { get; set; }
         public UsuarioClienteFisico ObjCF { get; set; }
         public UsuarioClienteJuridico ObjCJ { get; set; }
         public UsuarioGestor ObjG { get; set; }

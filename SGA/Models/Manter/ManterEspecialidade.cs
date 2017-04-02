@@ -31,12 +31,16 @@ namespace SGA.Models.Manter
             {
                 if (new ManterEspecialidadeDAO(ObjEspec).CadastraEspecialidadeDAO())
                 {
-                    Msg = "Área de atendimento cadastrada com sucesso!";
+                    Msg = "Especialidade cadastrada com sucesso!";
+                }
+                else
+                {
+                    Msg = "Ocorreu um erro ao cadastrar a especialidade!";
                 }
             }
             catch (Exception)
             {
-                Msg = "Houve um problema ao efetuar o cadastro da área de atendimento.";
+                Msg = "Houve um problema ao efetuar o cadastro da especialidade.";
             }
 
             return Msg;
@@ -45,7 +49,7 @@ namespace SGA.Models.Manter
         {
             return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadesDAO();
         }
-        public List<Especialidade> ConsultaAreaAtendimentoById()
+        public List<Especialidade> ConsultaEspecialidadeById()
         {
             return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadeByIdDAO();
         }
@@ -54,11 +58,11 @@ namespace SGA.Models.Manter
             if (new ManterEspecialidadeDAO
                        (ObjEspec).AlteraEspecialidadeDAO())
             {
-                Msg = "Especialidade atualizado com sucesso!";
+                Msg = "Especialidade atualizada com sucesso!";
             }
             else
             {
-                Msg = "Ocorreu um erro ao atualizar o Especialidade!";
+                Msg = "Ocorreu um erro ao atualizar a especialidade!";
             }
 
             return Msg;

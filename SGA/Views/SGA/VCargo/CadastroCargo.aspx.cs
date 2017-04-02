@@ -23,7 +23,7 @@ namespace SGA.Views.SGA.VCargo
             {
                 Cargo ObjCargo = FactoryCargo.GetNew();
                 ObjCargo.CargoDesc = CargoDescTextBox.Text;
-                ObjCargo.Salario = Convert.ToDouble(SalarioTextBox.Text);
+                ObjCargo.Salario = Convert.ToDecimal(SalarioTextBox.Text);
 
                 Msg = new ManterCargo(ObjCargo).CadastraCargo();
             }

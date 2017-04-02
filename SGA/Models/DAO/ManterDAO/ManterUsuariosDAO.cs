@@ -50,7 +50,7 @@ namespace SGA.Models.DAO.ManterDAO
                     "','" + ObjUsuario.Cep +
                     "','" + ObjUsuario.Telefone +
                     "','" + 1 +
-                    "','" + ObjUsuario.IdAreaAtendimento +
+                    "','" + ObjUsuario.AreaAtendimento +
                     "');", Con);
 
                 CmdUsr.ExecuteNonQuery();
@@ -149,6 +149,9 @@ namespace SGA.Models.DAO.ManterDAO
                         Con.Close();
                         return true;
 
+                    case "Administrador":
+                        return true;
+
                     default:
                         return false;
                 }
@@ -205,15 +208,37 @@ namespace SGA.Models.DAO.ManterDAO
         {
             List<Usuario> UsrList = new List<Usuario>();
             SqlDataReader DrUsr = null;
+            SqlCommand CmdUsrs = null;
 
             try
             {
                 SqlConnection ConUsr = new Conexao().ConexaoDB();
 
-                SqlCommand CmdUsrs = new SqlCommand(@"
-                SELECT *
-                  FROM [SAS].[dbo].[Usuario]
-                  WHERE idStatusUsuario = 1 and idUsuario =" + ObjUsuario.Id, ConUsr);
+                if (!0.Equals(ObjUsuario.Id))
+                {
+                    CmdUsrs = new SqlCommand(@"
+                    SELECT *
+                      FROM [SAS].[dbo].[Usuario]
+                      WHERE idStatusUsuario = 1 and idUsuario =" + ObjUsuario.Id, ConUsr);
+
+                }
+                else if (!ObjUsuario.Nome.Equals("null"))
+                {
+                    CmdUsrs = new SqlCommand(@"
+                    SELECT 
+                        usr.idUsuario
+                        ,usr.nome
+                        ,usr.endereco
+                        ,usr.numero
+                        ,usr.cep
+                        ,usr.telefone
+                        ,usr.idStatusUsuario
+                        ,usr.idAreaAtendimento FROM 
+                        Usuario usr inner join 
+                        UsuarioXMemberShipUser membxusr on (usr.idUsuario = membxusr.idUsuario) inner join
+                        aspnet_Users membusr on (membxusr.IdUsrMemberShip = membusr.UserId) WHERE
+                        membusr.UserName = '" + ObjUsuario.Nome + "'", ConUsr);
+                }
 
                 DrUsr = CmdUsrs.ExecuteReader();
 
@@ -227,6 +252,8 @@ namespace SGA.Models.DAO.ManterDAO
                     Usr.Numero = DrUsr.GetString(3);
                     Usr.Cep = DrUsr.GetString(4);
                     Usr.Telefone = DrUsr.GetString(5);
+                    Usr.Status = DrUsr.GetInt32(6);
+                    Usr.AreaAtendimento = DrUsr.GetInt32(7);
                     Usr.Regra = GetRegraUser(Usr.Id);
                     UsrList.Add(Usr);
                 }
@@ -284,7 +311,7 @@ namespace SGA.Models.DAO.ManterDAO
                 SqlCommand CmdUsr = new SqlCommand(@"
                 UPDATE 
 	                [SAS].[dbo].[Usuario] SET
-                        IDSTATUSUSUARIO=0 " + 
+                        IDSTATUSUSUARIO=0 " +
                         "WHERE idUsuario='" + ObjUsuario.Id + "'" +
                         ";", Con);
 

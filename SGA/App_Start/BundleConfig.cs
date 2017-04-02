@@ -40,7 +40,8 @@ namespace SGA
                             "~/Scripts/jquery-3.1.1.js",
                             "~/Scripts/jquery-1.10.2.intellisense.js",
                             "~/Scripts/dataTables.bootstrap.min.js",
-                            "~/Scripts/jquery.dataTables.min.js"
+                            "~/Scripts/jquery.dataTables.min.js",
+                            "~/Scripts/google.js"
                             ));
 
             ScriptManager.ScriptResourceMapping.AddDefinition(

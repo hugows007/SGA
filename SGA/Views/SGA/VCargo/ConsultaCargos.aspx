@@ -12,7 +12,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Cargos cadastrados
-                        <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
+                        <b><br><asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <table id="example" class="table table-striped table-bordered table-hover">
@@ -21,16 +21,17 @@
                                     <th>#</th>
                                     <th>Cargo</th>
                                     <th>Salário</th>
+                                    <th>Inativar</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <%foreach (var Cargo in ListaCargoSelect)
                                     {%>
                                 <tr>
-                                    <td><a href="ModificarCargoAtendimento.aspx?Id=<%=Cargo.Id %>"><%=Cargo.Id %></a></td>
+                                    <td><a href="ModificarCargo.aspx?Id=<%=Cargo.Id %>"><%=Cargo.Id %></a></td>
                                     <td><%=Cargo.CargoDesc%></td>
                                     <td><%=Cargo.Salario %></td>
-                                    <td><a href="InativarCargoAtendimento.aspx?Id=<%=Cargo.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td><a href="InativarCargo.aspx?Id=<%=Cargo.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>
                                 <% } %>
                             </tbody>

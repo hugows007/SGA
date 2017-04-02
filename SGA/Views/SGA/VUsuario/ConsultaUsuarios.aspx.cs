@@ -26,6 +26,10 @@ namespace SGA.Views.SGA.VUsuario
             {
                 MsgLabel.Text = "Usuário inativado com sucesso!";
             }
+            else if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("False"))
+            {
+                MsgLabel.Text = "Ocorreu um erro ao inativar o usuário!";
+            }
         }
     }
 }

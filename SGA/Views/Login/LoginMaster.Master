@@ -2,25 +2,39 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head runat="server">
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="../../Content/css/bootstrap.css" rel="stylesheet" />
-    <link href="../../Content/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="../../scripts/bootstrap.min.js"></script>
-    <script src="../../scripts/bootstrap-select.js"></script>
-    <script src="../../scripts/bootstrap.js"></script>
-    <script src="../../scripts/jquery-1.9.1.min.js"></script>
-    <link href="../../Content/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../../Content/css/bootstrap-select.css" rel="stylesheet" />
-    <link href="../../Content/css/bootstrap-select.min.css" rel="stylesheet" />
-    <link href="../../scripts/vendor/metisMenu/metisMenu.min.css" rel="stylesheet" />
-    <link href="../../scripts/dist/css/sb-admin-2.css" rel="stylesheet" />
-    <link href="../../scripts/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../../scripts/vendor/metisMenu/metisMenu.min.js"></script>
-    <script src="../../scripts/dist/js/sb-admin-2.js"></script>
-    <link href="../../Content/css/site.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bem vindo!</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="<%= ResolveClientUrl("~/Content/bootstrap.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveClientUrl("~/Content/bootstrap-theme.css") %>" rel="stylesheet" />
+    <script src="<%= ResolveClientUrl("~/Scripts/jquery-1.10.2.intellisense.js") %>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/jquery-3.1.1.js") %>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/bootstrap.js") %>"></script>
+    <link href="<%= ResolveClientUrl("~/Scripts/bootstrap.min.css") %>" rel="stylesheet" />
+
+    <script src="<%= ResolveClientUrl("~/Scripts/dataTables.bootstrap.min.js") %>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/jquery.dataTables.min.js") %>"></script>
+    <link href="<%= ResolveClientUrl("~/Content/Site.css") %>" rel="stylesheet" />
+
+    <link href="<%= ResolveClientUrl("~/Scripts/vendor/bootstrap/css/bootstrap.css") %>" rel="stylesheet" />
+    <script src="<%= ResolveClientUrl("~/Scripts/vendor/metisMenu/metisMenu.min.js") %>"></script>
+    <link href="<%= ResolveClientUrl("~/Scripts/vendor/metisMenu/metisMenu.min.css") %>" rel="stylesheet" />
+    <script src="<%= ResolveClientUrl("~/Scripts/vendor/raphael/raphael.min.js") %>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/vendor/morrisjs/morris.min.js") %>"></script>
+    <link href="<%= ResolveClientUrl("~/Scripts/vendor/morrisjs/morris.css") %>" rel="stylesheet" />
+    <script src="<%= ResolveClientUrl("~/Scripts/dist/js/sb-admin-2.js") %>"></script>
+    <link href="<%= ResolveClientUrl("~/Scripts/dist/css/sb-admin-2.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveClientUrl("~/Scripts/vendor/font-awesome/css/font-awesome.min.css") %>" rel="stylesheet" />
+
     <asp:ContentPlaceHolder ID="HeadLogin" runat="server">
     </asp:ContentPlaceHolder>
 </head>

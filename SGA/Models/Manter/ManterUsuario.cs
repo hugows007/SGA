@@ -14,7 +14,7 @@ namespace SGA.Models.Manter
         string UserId = null;
         string Msg = null;
         Usuario ObjUsuario = null;
-
+        bool Result;
         public ManterUsuario(Usuario ObjUsr)
         {
             ObjUsuario = ObjUsr;
@@ -52,7 +52,7 @@ namespace SGA.Models.Manter
                     }
                     else
                     {
-                        Msg = "Ocorreu um erro ao efetuar o cadastro";
+                        Msg = "Ocorreu um erro ao efetuar o cadastro do usuário!";
                     }
                 }
 
@@ -135,6 +135,24 @@ namespace SGA.Models.Manter
                 default:
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
+        }
+        public bool GetUsuariosGestOuAdm()
+        {
+            string[] RegraUsr = Roles.GetRolesForUser(Membership.GetUser().ToString());
+
+            foreach(var Regra in RegraUsr)
+            {
+                if (Regra.Equals("Administrador") || Regra.Equals("Gestor"))
+                {
+                    Result = true;
+                }
+                else
+                {
+                    Result = false;
+                }
+            }
+
+            return Result;            
         }
     }
 }

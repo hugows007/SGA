@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Inicio.aspx.cs" Inherits="SGA.Views.Site.Inicio" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
+    <script>
+        var locations = [
+     ['Centro', -22.905392, -43.181294, 1],
+        ];
+    </script>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -102,36 +107,15 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i>Area Chart Example
-                           
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    Actions
-                                       
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu pull-right" role="menu">
-                                    <li><a href="#">Action</a>
-                                    </li>
-                                    <li><a href="#">Another action</a>
-                                    </li>
-                                    <li><a href="#">Something else here</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a>
-                                    </li>
-                                </ul>
-                            </div>
+                <div class="section">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i>Técnicos em campo
+                        </div>
+                        <div class="panel-body google-maps" id="map" width="600" height="600" frameborder="0" style="border: 0 width: 600px; height: 600px;">
                         </div>
                     </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div id="morris-area-chart"></div>
-                    </div>
-                    <!-- /.panel-body -->
                 </div>
                 <!-- /.panel -->
                 <div class="panel panel-default">
@@ -453,28 +437,28 @@
                                 <li>
                                     <a href="#">
                                         <i class="fa fa-refresh fa-fw"></i>Refresh
-                                        </a>
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="#">
                                         <i class="fa fa-check-circle fa-fw"></i>Available
-                                        </a>
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="#">
                                         <i class="fa fa-times fa-fw"></i>Busy
-                                        </a>
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="#">
                                         <i class="fa fa-clock-o fa-fw"></i>Away
-                                        </a>
+                                    </a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="#">
                                         <i class="fa fa-sign-out fa-fw"></i>Sign Out
-                                        </a>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -491,7 +475,7 @@
                                         <strong class="primary-font">Jack Sparrow</strong>
                                         <small class="pull-right text-muted">
                                             <i class="fa fa-clock-o fa-fw"></i>12 mins ago
-                                            </small>
+                                        </small>
                                     </div>
                                     <p>
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.

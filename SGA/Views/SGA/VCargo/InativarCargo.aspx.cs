@@ -22,7 +22,7 @@ namespace SGA.Views.SGA.VCargo
                 {
                     ObjCargo.Id = Convert.ToInt32(Request.QueryString["Id"]);
                     OperInativar = new ManterCargo(ObjCargo).InativarCargo();
-                    Response.Redirect("\\Views\\SGA\\VCargos\\ConsultaCargos.aspx?OpInatCargo=" + OperInativar.ToString());
+                    Response.Redirect("\\Views\\SGA\\VCargo\\ConsultaCargos.aspx?OpInatCargo=" + OperInativar.ToString());
                 }
             }
             catch (Exception)

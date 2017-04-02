@@ -155,8 +155,8 @@ namespace SGA.Models.DAO.ManterDAO
                 SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Setor] SET 
-                        Estado='" + ObjSetor.SetorDesc + "' " +
-                        "WHERE idAreaAtendimento='" + ObjSetor.Id + "'" +
+                        Setor='" + ObjSetor.SetorDesc + "' " +
+                        "WHERE idSetor='" + ObjSetor.Id + "'" +
                         ";", Con);
 
                 Cmd.ExecuteNonQuery();
@@ -183,7 +183,7 @@ namespace SGA.Models.DAO.ManterDAO
                 UPDATE 
 	                [dbo].[Setor] SET
                         ativo=0 " +
-                        "WHERE idStatus='" + ObjSetor.Id + "'" +
+                        "WHERE idSetor='" + ObjSetor.Id + "'" +
                         ";", Con);
 
                 Cmd.ExecuteNonQuery();

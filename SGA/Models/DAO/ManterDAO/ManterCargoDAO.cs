@@ -62,7 +62,7 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cargos.Id = Dr.GetInt32(0);
                     Cargos.CargoDesc = Dr.GetString(1);
-                    Cargos.Salario = Dr.GetDouble(2);
+                    Cargos.Salario = Dr.GetDecimal(2);
 
                     CargoList.Add(Cargos);
                 }
@@ -130,7 +130,7 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cargos.Id = Dr.GetInt32(0);
                     Cargos.CargoDesc = Dr.GetString(1);
-                    Cargos.Salario = Dr.GetDouble(2);
+                    Cargos.Salario = Dr.GetDecimal(2);
                     CargoList.Add(Cargos);
                 }
             }

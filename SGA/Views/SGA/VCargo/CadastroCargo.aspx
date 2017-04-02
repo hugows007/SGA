@@ -12,7 +12,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Cadastrar cargo
-                        <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
+                        <b><br><asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
@@ -25,7 +25,7 @@
                                 <asp:TextBox ID="SalarioTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
                             </div>
                             <asp:Button ID="Cadastrar" runat="server" Text="Cadastrar" class="btn btn-default" OnClick="CadastrarButton_Click" />
-                            <a class="btn btn-default" href="/Views/SGA/Inicio.aspx">Cancelar</a>
+                            <a class="btn btn-default" href="/Views/SGA/VCargo/ConsultaCargos.aspx">Voltar</a>
                         </div>
                         <div class="panel-footer">
                             Favor alterar os campos e clicar em salvar.<br />

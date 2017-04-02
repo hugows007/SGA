@@ -37,7 +37,7 @@ namespace SGA.Views.SGA.VCargo
                 {
                     ObjCargo.Id = Convert.ToInt32(Request.QueryString["Id"]);
                     ObjCargo.CargoDesc = CargoDescTextBox.Text;
-                    ObjCargo.Salario = Convert.ToDouble(SalarioTextBox.Text);
+                    ObjCargo.Salario = Convert.ToDecimal(SalarioTextBox.Text);
 
                     MsgLabel.Text = new ManterCargo(ObjCargo).AlteraCargo();
                 }

@@ -25,6 +25,10 @@ namespace SGA.Views.SGA.VCargo
             {
                 MsgLabel.Text = "Cargo inativado com sucesso!";
             }
+            else if (Request.QueryString["OpInatCargo"] != null && Request.QueryString["OpInatCargo"].Equals("False"))
+            {
+                MsgLabel.Text = "Ocorreu um erro ao inativar o cargo!";
+            }
         }
     }
 }
