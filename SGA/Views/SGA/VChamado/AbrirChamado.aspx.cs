@@ -15,13 +15,12 @@ namespace SGA.Views.SGA.VChamado
     public partial class AbrirChamado : System.Web.UI.Page
     {
         Servico ObjServico = FactoryServico.GetNew();
-        Chamado ObjChamado = FactoryChamado.GetNew();
+        public Chamado ObjChamado = FactoryChamado.GetNew();
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
 
         public bool PerfilUsr = new ManterUsuario().GetUsuariosGestOuAdm();
         protected void Page_Load(object sender, EventArgs e)
         {
-            MsgLabel.Text = "";
 
             if (!Page.IsPostBack)
             {
@@ -73,6 +72,7 @@ namespace SGA.Views.SGA.VChamado
             ObjChamado.Servico = Convert.ToInt32(DropDownListServico.SelectedValue);
 
             MsgLabel.Text = new ManterChamado(ObjChamado).AbreChamado();
+            ObjChamado.Id = new ManterChamado().GetUltIdChamado();
         }
     }
 }

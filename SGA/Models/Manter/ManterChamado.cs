@@ -10,7 +10,6 @@ namespace SGA.Models.Manter
     public class ManterChamado
     {
         public Chamado ObjChamado = null;
-        public string Msg;
         public ManterChamado()
         {
 
@@ -25,19 +24,17 @@ namespace SGA.Models.Manter
             {
                 if (new ManterChamadoDAO(ObjChamado).AbreChamadoDAO())
                 {
-                    Msg = "Chamado aberto com sucesso - O código do chamado é: " + new ManterChamadoDAO().GetUltIdChamado();
+                    return "Chamado aberto com sucesso! Guarde o número do seu chamado: ";
                 }
                 else
                 {
-                    Msg = "Ocorreu um erro ao abrir o chamado.";
+                    return "Ocorreu um erro ao abrir o chamado. Favor entrar em contato com o suporte técnico.";
                 }
             }
             catch (Exception)
             {
-                Msg = "Houve um problema ao efetuar a abertura de chamado.";
+                return "Ocorreu um problem não esperado.";
             }
-
-            return Msg;
         }
         public List<Chamado> ConsultaChamados()
         {
@@ -49,17 +46,22 @@ namespace SGA.Models.Manter
         }
         public string AlteraChamado()
         {
-            if (new ManterChamadoDAO
-                       (ObjChamado).AlteraChamadoDAO())
+            try
             {
-                Msg = "Chamado atualizado com sucesso!";
+                if (new ManterChamadoDAO
+                           (ObjChamado).AlteraChamadoDAO())
+                {
+                    return "Chamado atualizado com sucesso!";
+                }
+                else
+                {
+                    return "Ocorreu um erro ao atualizar o chamado!";
+                }
             }
-            else
+            catch (Exception)
             {
-                Msg = "Ocorreu um erro ao atualizar o chamado!";
+                return "Ocorreu um erro não esperado.";
             }
-
-            return Msg;
         }
         public bool CancelaChamado()
         {
@@ -72,6 +74,10 @@ namespace SGA.Models.Manter
             {
                 return false;
             }
+        }
+        public int GetUltIdChamado()
+        {
+            return new ManterChamadoDAO().GetUltIdChamadoDAO();
         }
     }
 }

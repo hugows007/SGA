@@ -197,7 +197,7 @@ namespace SGA.Models.DAO.ManterDAO
             }
             return true;
         }
-        public int GetUltIdChamado()
+        public int GetUltIdChamadoDAO()
         {
             SqlDataReader Dr = null;
 

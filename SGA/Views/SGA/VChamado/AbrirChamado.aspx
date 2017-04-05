@@ -14,7 +14,13 @@
                         Abrir chamado
                         <b>
                             <br>
-                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
+                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
+                            <%if (!0.Equals(ObjChamado.Id))
+                                {
+                            %>
+                            <a href="ConsultaChamado.aspx?Id=<%=ObjChamado.Id%>"><%=ObjChamado.Id%></a>
+                            <%} %>
+                        </b>
                     </div>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
