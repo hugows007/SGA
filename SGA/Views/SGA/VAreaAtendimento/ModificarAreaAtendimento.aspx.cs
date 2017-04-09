@@ -20,12 +20,11 @@ namespace SGA.Views.SGA.VAreaAtendimento
                 {
                     ObjArea.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
-                    foreach (var Result in new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById())
-                    {
-                        RegiaoTextBox.Text = Result.Regiao;
-                        CidadeTextBox.Text = Result.Cidade;
-                        EstadoTextBox.Text = Result.Estado;
-                    }
+                    ObjArea = new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById();
+
+                    RegiaoTextBox.Text = ObjArea.Regiao;
+                    CidadeTextBox.Text = ObjArea.Cidade;
+                    EstadoTextBox.Text = ObjArea.Estado;
                 }
             }
         }

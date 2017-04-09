@@ -9,7 +9,8 @@ namespace SGA.Models.Manter
 {
     public class ManterChamado
     {
-        public Chamado ObjChamado = null;
+        Chamado ObjChamado = null;
+        public string Msg;
         public ManterChamado()
         {
 
@@ -40,9 +41,19 @@ namespace SGA.Models.Manter
         {
             return new ManterChamadoDAO(ObjChamado).ConsultaChamadosDAO();
         }
-        public List<Chamado> ConsultaChamadoById()
+        public Chamado ConsultaChamadoById()
         {
-            return new ManterChamadoDAO(ObjChamado).ConsultaChamadoByIdDAO();
+            this.ObjChamado = new ManterChamadoDAO(ObjChamado).ConsultaChamadoByIdDAO();
+
+            if (!0.Equals(ObjChamado.Id))
+            {
+                return this.ObjChamado;
+            }
+            else
+            {
+                Msg = "Chamado não encontrado";
+                return null;
+            }
         }
         public string AlteraChamado()
         {

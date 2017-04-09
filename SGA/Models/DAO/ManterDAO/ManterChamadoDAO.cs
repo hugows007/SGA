@@ -75,6 +75,7 @@ namespace SGA.Models.DAO.ManterDAO
                   ,[descricao]
                   ,[idStatusChamado]
                   ,[dataAbertura]
+                  ,[dataFechamento]
                   ,[idAreaAtendimento]
                   ,[idServico])
             VALUES
@@ -82,6 +83,7 @@ namespace SGA.Models.DAO.ManterDAO
                     "','" + ObjChamado.Descricao +
                     "','" + 1 +
                     "','" + DateTime.Now +
+                    "','" + DateTime.Parse("2000-01-01 00:00:00.000") +
                     "','" + ObjChamado.AreaAtendimento +
                     "','" + ObjChamado.Servico +
                     "');", Con);
@@ -98,36 +100,32 @@ namespace SGA.Models.DAO.ManterDAO
                 Con.Close();
             }
         }
-        public List<Chamado> ConsultaChamadoByIdDAO()
+        public Chamado ConsultaChamadoByIdDAO()
         {
-            List<Chamado> ChamList = new List<Chamado>();
+            Chamado Obj = FactoryChamado.GetNew();
             SqlDataReader Dr = null;
 
             try
             {
-                SqlConnection ConArea = new Conexao().ConexaoDB();
+                SqlConnection Con = new Conexao().ConexaoDB();
 
                 SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Chamado]
-                  WHERE idChamado =" + ObjChamado.Id, ConArea);
+                  WHERE idChamado =" + ObjChamado.Id, Con);
 
                 Dr = Cmd.ExecuteReader();
 
                 while (Dr.Read())
                 {
-                    Chamado Cham = FactoryChamado.GetNew();
-
-                    Cham.Id = Dr.GetInt32(0);
-                    Cham.Assunto = Dr.GetString(1);
-                    Cham.Descricao = Dr.GetString(2);
-                    Cham.Status = Dr.GetInt32(3);
-                    Cham.DataAbertura = Dr.GetDateTime(4);
-                    Cham.DataFechamento = Dr.GetDateTime(5);
-                    Cham.AreaAtendimento = Dr.GetInt32(6);
-                    Cham.Servico = Dr.GetInt32(7);
-
-                    ChamList.Add(Cham);
+                    Obj.Id = Dr.GetInt32(0);
+                    Obj.Assunto = Dr.GetString(1);
+                    Obj.Descricao = Dr.GetString(2);
+                    Obj.Status = Dr.GetInt32(3);
+                    Obj.DataAbertura = Dr.GetDateTime(4);
+                    Obj.DataFechamento = Dr.GetDateTime(5);
+                    Obj.AreaAtendimento = Dr.GetInt32(6);
+                    Obj.Servico = Dr.GetInt32(7);
                 }
             }
             catch (SqlException)
@@ -139,7 +137,7 @@ namespace SGA.Models.DAO.ManterDAO
                 if (Dr != null)
                     Dr.Close();
             }
-            return ChamList;
+            return Obj;
         }
         public bool AlteraChamadoDAO()
         {
@@ -226,7 +224,7 @@ namespace SGA.Models.DAO.ManterDAO
                     Dr.Close();
             }
             return UltimoId;
-            
+
         }
     }
 }

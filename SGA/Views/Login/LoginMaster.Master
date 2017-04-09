@@ -53,10 +53,30 @@
                 <div class="collapse navbar-collapse" id="navbar-ex-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">Contacts</a>
+                            <a href="#" data-toggle="modal" data-target="#myModal">Contato</a>
                         </li>
                     </ul>
                 </div>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Contato para nosso sistema:</h4>
+                            </div>
+                            <div class="modal-body">
+                                Favor entrar em contato com o número (21) 2222-3333
+                                Obrigado pelo interesse em utilizar a nossa ferramenta de gestão.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
             </div>
         </div>
     </div>

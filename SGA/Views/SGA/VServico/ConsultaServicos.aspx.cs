@@ -13,16 +13,16 @@ namespace SGA.Views.SGA.VServico
     public partial class ConsultaServicos : System.Web.UI.Page
     {
         public List<Servico> ListaServicoSelect = new List<Servico>();
-        public string NomeServico;
+        public List<string> NomeServico = new List<string>();
 
         Servico ObjServico = FactoryServico.GetNew();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            foreach (var ObjAT in new ManterServico(ObjServico).ConsultaServicos())
+            foreach (var Result in new ManterServico(ObjServico).ConsultaServicos())
             {
-                NomeServico = new ManterServico(ObjAT).ConsultaTpServicoById();
-                ListaServicoSelect.Add(ObjAT);
+                NomeServico.Add(new ManterServico(Result).ConsultaTpServicoById());
+                ListaServicoSelect.Add(Result);
             }
 
             if (Request.QueryString["OpInatServico"] != null && Request.QueryString["OpInatServico"].Equals("True"))

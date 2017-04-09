@@ -18,7 +18,7 @@
                             <%if (!0.Equals(ObjChamado.Id))
                                 {
                             %>
-                            <a href="ConsultaChamado.aspx?Id=<%=ObjChamado.Id%>"><%=ObjChamado.Id%></a>
+                            <a href="ConsultaChamado.aspx?IdChamado=<%=ObjChamado.Id%>"><%=ObjChamado.Id%></a>
                             <%} %>
                         </b>
                     </div>

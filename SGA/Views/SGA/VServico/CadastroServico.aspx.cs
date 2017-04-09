@@ -12,6 +12,7 @@ namespace SGA.Views.SGA.VServico
     public partial class CadastroServico : System.Web.UI.Page
     {
         public string Msg;
+        Servico ObjServico = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -28,7 +29,7 @@ namespace SGA.Views.SGA.VServico
         {
             try
             {
-                Servico ObjServico = FactoryServico.GetNew();
+                ObjServico = FactoryServico.GetNew();
                 ObjServico.Tipo = Convert.ToInt32(DropDownListTpServico.SelectedValue);
                 ObjServico.Nome = NomeTextBox.Text;
                 ObjServico.Descricao = DescServTextBox.Text;

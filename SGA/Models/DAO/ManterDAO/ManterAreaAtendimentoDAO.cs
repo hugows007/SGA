@@ -111,9 +111,8 @@ namespace SGA.Models.DAO.ManterDAO
                 Con.Close();
             }
         }
-        public List<AreaAtendimento> ConsultaAreaAtendimentoByIdDAO()
+        public AreaAtendimento ConsultaAreaAtendimentoByIdDAO()
         {
-            List<AreaAtendimento> AreaList = new List<AreaAtendimento>();
             SqlDataReader DrArea = null;
 
             try
@@ -129,13 +128,10 @@ namespace SGA.Models.DAO.ManterDAO
 
                 while (DrArea.Read())
                 {
-                    AreaAtendimento Area = FactoryArea.GetNew();
-
-                    Area.Id = DrArea.GetInt32(0);
-                    Area.Regiao = DrArea.GetString(1);
-                    Area.Cidade = DrArea.GetString(2);
-                    Area.Estado = DrArea.GetString(3);
-                    AreaList.Add(Area);
+                    ObjArea.Id = DrArea.GetInt32(0);
+                    ObjArea.Regiao = DrArea.GetString(1);
+                    ObjArea.Cidade = DrArea.GetString(2);
+                    ObjArea.Estado = DrArea.GetString(3);
                 }
             }
             catch (SqlException)
@@ -147,7 +143,7 @@ namespace SGA.Models.DAO.ManterDAO
                 if (DrArea != null)
                     DrArea.Close();
             }
-            return AreaList;
+            return ObjArea;
         }
         public bool AlteraAreaAtendimentoDAO()
         {

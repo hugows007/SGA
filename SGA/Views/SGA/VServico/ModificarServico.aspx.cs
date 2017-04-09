@@ -20,21 +20,19 @@ namespace SGA.Views.SGA.VServico
                 {
                     ObjServico.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
-                    foreach (var Result in new ManterServico(ObjServico).ConsultaServicoById())
-                    {
-                        ObjServico.Tipo = Result.Tipo;
+                    ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
 
-                        DropDownListTpServico.DataSource = new ManterServico(ObjServico).ConsultaTpServicosDataReader();
-                        DropDownListTpServico.DataTextField = "tipo";
-                        DropDownListTpServico.DataValueField = "idTipoServ";
-                        DropDownListTpServico.DataBind();
-                        DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
+                    DropDownListTpServico.DataSource = new ManterServico(ObjServico).ConsultaTpServicosDataReader();
+                    DropDownListTpServico.DataTextField = "tipo";
+                    DropDownListTpServico.DataValueField = "idTipoServ";
+                    DropDownListTpServico.DataBind();
+                    DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
 
-                        DropDownListTpServico.SelectedValue = Convert.ToString(Result.Tipo);
-                        NomeTextBox.Text = Result.Nome;
-                        DescServTextBox.Text = Result.Descricao;
-                        SLATextBox.Text = Result.Sla.ToString();
-                    }
+                    DropDownListTpServico.SelectedValue = Convert.ToString(ObjServico.Tipo);
+                    NomeTextBox.Text = ObjServico.Nome;
+                    DescServTextBox.Text = ObjServico.Descricao;
+                    SLATextBox.Text = ObjServico.Sla.ToString();
+
                 }
             }
         }

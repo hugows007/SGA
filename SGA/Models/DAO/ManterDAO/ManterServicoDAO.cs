@@ -196,9 +196,8 @@ namespace SGA.Models.DAO.ManterDAO
             }
             return ServicoList;
         }
-        public List<Servico> ConsultaServicoByIdDAO()
+        public Servico ConsultaServicoByIdDAO()
         {
-            List<Servico> ServicoList = new List<Servico>();
             SqlDataReader Dr = null;
 
             try
@@ -214,16 +213,12 @@ namespace SGA.Models.DAO.ManterDAO
 
                 while (Dr.Read())
                 {
-                    Servico Servicos = FactoryServico.GetNew();
-
-                    Servicos.Id = Dr.GetInt32(0);
-                    Servicos.Tipo = Dr.GetInt32(1);
-                    Servicos.Nome = Dr.GetString(2);
-                    Servicos.Descricao = Dr.GetString(3);
-                    Servicos.Sla = Dr.GetInt32(4);
-                    Servicos.Status = Dr.GetInt32(5);
-
-                    ServicoList.Add(Servicos);
+                    ObjServico.Id = Dr.GetInt32(0);
+                    ObjServico.Tipo = Dr.GetInt32(1);
+                    ObjServico.Nome = Dr.GetString(2);
+                    ObjServico.Descricao = Dr.GetString(3);
+                    ObjServico.Sla = Dr.GetInt32(4);
+                    ObjServico.Status = Dr.GetInt32(5);
                 }
             }
             catch (SqlException)
@@ -235,7 +230,7 @@ namespace SGA.Models.DAO.ManterDAO
                 if (Dr != null)
                     Dr.Close();
             }
-            return ServicoList;
+            return ObjServico;
         }
         public bool AlteraServicoDAO()
         {

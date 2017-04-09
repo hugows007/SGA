@@ -29,17 +29,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%foreach (var Servico in ListaServicoSelect)
-                                    {%>
+                                <%  int QtdServ = 0;
+                                    foreach (var Servico in ListaServicoSelect)
+                                    {
+                                %>
                                 <tr>
                                     <td><a href="ModificarServico.aspx?Id=<%=Servico.Id %>"><%=Servico.Id %></a></td>
-                                    <td><%=NomeServico%></td>
+                                    <td><%=NomeServico[QtdServ]%></td>
                                     <td><%=Servico.Nome %></td>
                                     <td><%=Servico.Descricao %></td>
                                     <td><%=Servico.Sla %></td>
                                     <td><a href="InativarServico.aspx?Id=<%=Servico.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>
-                                <% } %>
+                                <% QtdServ += 1;
+                                    } %>
                             </tbody>
                         </table>
                     </div>
