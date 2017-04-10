@@ -31,6 +31,24 @@ namespace SGA.Views.SGA {
         protected global::System.Web.UI.WebControls.TextBox IdChamado;
         
         /// <summary>
+        /// PesqButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton PesqButton;
+        
+        /// <summary>
+        /// AbrirButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AbrirButton;
+        
+        /// <summary>
         /// ContentPlaceHolderInicio control.
         /// </summary>
         /// <remarks>

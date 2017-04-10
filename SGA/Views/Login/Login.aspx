@@ -1,12 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Login/LoginMaster.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SGA.Login" %>
 
-<asp:Content ID="ContentHead" ContentPlaceHolderID="HeadLogin" runat="server">
-</asp:Content>
 <asp:Content ID="ContentBody" ContentPlaceHolderID="ContentPlaceHolderLogin" runat="server">
     <div class="container">
         <div id="loginbox" style="margin-top: 50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <center><img src="../../Image/Logo.jpeg"/></center>
             <div class="panel panel-info">
-                <div class="panel-heading"> 
+                <div class="panel-heading">
                     <div class="panel-title">Bem vindo! Favor efetuar o login</div>
                 </div>
 
@@ -45,4 +44,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </asp:Content>

@@ -1,5 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="LoginMaster.master.cs" Inherits="SGA.Views.LoginMaster" %>
 
+<%@ Import Namespace="System.Web.Optimization" %>
+
 <!DOCTYPE html>
 
 <html lang="en">
