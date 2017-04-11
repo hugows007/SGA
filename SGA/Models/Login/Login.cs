@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGA.Models.DAO.Log;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,13 +11,38 @@ namespace SGA.Models.Login
     {
         public bool Logar(string Login, string Senha)
         {
-            if (Membership.ValidateUser(Login, Senha) && !Roles.GetRolesForUser(Login).Equals(null))
+            try
             {
-                return true;
+                if (Membership.ValidateUser(Login, Senha) && !Roles.GetRolesForUser(Login).Equals(null))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (InvalidOperationException Ex)
             {
-                return false;
+                new LogException(
+                    Ex.Message.ToString(),
+                    Ex.Source.ToString(),
+                    Ex.StackTrace.ToString(),
+                    Ex.TargetSite.ToString()
+                    );
+
+                throw;
+            }
+            catch (System.Data.SqlClient.SqlException Ex)
+            {
+                new LogException(
+                    Ex.Message.ToString(),
+                    Ex.Source.ToString(),
+                    Ex.StackTrace.ToString(),
+                    Ex.TargetSite.ToString()
+                    );
+
+                throw;
             }
         }
     }

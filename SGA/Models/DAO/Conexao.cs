@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGA.Models.DAO.Log;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -11,11 +12,27 @@ namespace SGA.DAO
     {
         public SqlConnection ConexaoDB()
         {
-            SqlConnection Cn = new SqlConnection();
-            Cn.ConnectionString = ConfigurationManager.ConnectionStrings["SASConnectionString"].ConnectionString;
-            Cn.Open();
+            SqlConnection Cn = null;
 
-            return Cn;
+            try
+            {
+                Cn = new SqlConnection();
+                Cn.ConnectionString = ConfigurationManager.ConnectionStrings["SASConnectionString"].ConnectionString;
+                Cn.Open();
+
+                return Cn;
+            }
+            catch (SqlException Ex)
+            {
+                new LogException(
+                    Ex.Message.ToString(),
+                    Ex.Source.ToString(),
+                    Ex.StackTrace.ToString(),
+                    Ex.TargetSite.ToString()
+                    );
+
+                throw;
+            }
         }
     }
 }

@@ -12,28 +12,33 @@ namespace SGA
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-             /*Membership.CreateUser("Admin", "123$$Abc");
-             Roles.CreateRole("Administrador");
-             Roles.CreateRole("Técnico");
-             Roles.CreateRole("Gestor");
-             Roles.CreateRole("Cliente Físico");
-             Roles.CreateRole("Cliente Jurídico");*/
+            /*Membership.CreateUser("Admin", "123$$Abc");
+            Roles.CreateRole("Administrador");
+            Roles.CreateRole("Técnico");
+            Roles.CreateRole("Gestor");
+            Roles.CreateRole("Cliente Físico");
+            Roles.CreateRole("Cliente Jurídico");*/
         }
 
         protected void BotaoEntrar_Click(object sender, EventArgs e)
         {
-
-
-            if (new Models.Login.Login().Logar(TxtLogin.Text, TxtSenha.Text))
+            try
             {
-                TxtLogin.Visible = true;
-                Session["user"] = User.Identity.Name;
-                FormsAuthentication.RedirectFromLoginPage(TxtLogin.Text, true);
-                Response.Redirect("\\Views\\SGA\\Inicio.aspx");
+                if (new Models.Login.Login().Logar(TxtLogin.Text, TxtSenha.Text))
+                {
+                    TxtLogin.Visible = true;
+                    Session["user"] = User.Identity.Name;
+                    FormsAuthentication.RedirectFromLoginPage(TxtLogin.Text, true);
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx");
+                }
+                else
+                {
+                    Response.Write("Invalid Login");
+                }
             }
-            else
+            catch (Exception)
             {
-                Response.Write("Invalid Login");
+                Response.Write("Sistem Error");
             }
         }
     }
