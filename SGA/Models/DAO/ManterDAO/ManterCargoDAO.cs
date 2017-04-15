@@ -1,16 +1,19 @@
 ﻿using SGA.DAO;
 using SGA.Models.Cargos;
+using SGA.Models.DAO.Log;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterCargoDAO
     {
         public Cargo ObjCargo = null;
+        SqlConnection Con = null;
         public ManterCargoDAO()
         {
 
@@ -21,91 +24,26 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public SqlDataReader ConsultaCargosDataReaderDAO()
         {
-            try
-            {
-                SqlConnection Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-                 SELECT [idCargo]
-                      ,[cargo]
-                 FROM [SAS].[dbo].[Cargo]
-                 WHERE ativo = 1
-                 ORDER BY cargo", Con);
-
-                SqlDataReader Result = Cmd.ExecuteReader();
-                return Result;
-            }
-            catch (SqlException)
-            {
-                return null;
-            }
-        }
-        public List<Cargo> ConsultaCargosDAO()
-        {
-            List<Cargo> CargoList = new List<Cargo>();
             SqlDataReader Dr = null;
 
-            try
-            {
-                SqlConnection Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-                SELECT *
-                  FROM [SAS].[dbo].[Cargo]
-                  WHERE ativo = 1", Con);
-
-                Dr = Cmd.ExecuteReader();
-
-                while (Dr.Read())
-                {
-                    Cargo Cargos = FactoryCargo.GetNew();
-
-                    Cargos.Id = Dr.GetInt32(0);
-                    Cargos.CargoDesc = Dr.GetString(1);
-                    Cargos.Salario = Dr.GetDecimal(2);
-
-                    CargoList.Add(Cargos);
-                }
-            }
-            catch (SqlException)
-            {
-                return null;
-            }
-            finally
-            {
-                if (Dr != null)
-                    Dr.Close();
-            }
-            return CargoList;
-        }
-        public bool CadastraCargoDAO()
-        {
-            SqlConnection Con = null;
             try
             {
                 Con = new Conexao().ConexaoDB();
 
                 SqlCommand Cmd = new SqlCommand(@"
-            INSERT INTO [dbo].[Cargo]
-                ([cargo]
-                  ,[salario]
-                  ,[ativo])
-            VALUES
-                ('" + ObjCargo.CargoDesc +
-                    "','" + ObjCargo.Salario +
-                    "','" + 1 +
-                    "');", Con);
+                 SELECT [idCargo]
+                      ,[cargo]
+                 FROM [dbo].[Cargo]
+                 WHERE ativo = 1
+                 ORDER BY cargo;", Con);
 
-                Cmd.ExecuteNonQuery();
-                return true;
+                Dr = Cmd.ExecuteReader();
+                return Dr;
             }
-            catch (SqlException)
+            catch (SqlException Ex)
             {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
         }
         public List<Cargo> ConsultaCargoByIdDAO()
@@ -113,92 +51,171 @@ namespace SGA.Models.DAO.ManterDAO
             List<Cargo> CargoList = new List<Cargo>();
             SqlDataReader Dr = null;
 
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                SqlConnection Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-                SELECT *
-                  FROM [SAS].[dbo].[Cargo]
-                  WHERE ativo = 1 and idCargo =" + ObjCargo.Id, Con);
-
-                Dr = Cmd.ExecuteReader();
-
-                while (Dr.Read())
+                try
                 {
-                    Cargo Cargos = FactoryCargo.GetNew();
 
-                    Cargos.Id = Dr.GetInt32(0);
-                    Cargos.CargoDesc = Dr.GetString(1);
-                    Cargos.Salario = Dr.GetDecimal(2);
-                    CargoList.Add(Cargos);
+                    SqlCommand Cmd = new SqlCommand(@"
+                SELECT *
+                  FROM [dbo].[Cargo] WHERE
+                    ativo = 1 and 
+                    idCargo = @Id;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Id", ObjCargo.Id);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Cargo Cargos = FactoryCargo.GetNew();
+
+                        Cargos.Id = Dr.GetInt32(0);
+                        Cargos.CargoDesc = Dr.GetString(1);
+                        Cargos.Salario = Dr.GetDecimal(2);
+                        CargoList.Add(Cargos);
+                    }
+
+                    return CargoList;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
                 }
             }
-            catch (SqlException)
+        }
+        public List<Cargo> ConsultaCargosDAO()
+        {
+            List<Cargo> CargoList = new List<Cargo>();
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                return null;
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                SELECT *
+                  FROM [dbo].[Cargo]
+                  WHERE ativo = 1", Con);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Cargo Cargos = FactoryCargo.GetNew();
+
+                        Cargos.Id = Dr.GetInt32(0);
+                        Cargos.CargoDesc = Dr.GetString(1);
+                        Cargos.Salario = Dr.GetDecimal(2);
+
+                        CargoList.Add(Cargos);
+                    }
+
+                    return CargoList;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            finally
+        }
+        public bool CadastraCargoDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                if (Dr != null)
-                    Dr.Close();
+                try
+                {
+
+                    SqlCommand Cmd = new SqlCommand(@"
+            INSERT INTO [dbo].[Cargo]
+                ([cargo]
+                  ,[salario]
+                  ,[dataRegistro]
+                  ,[usuarioRegistro]
+                  ,[ativo])
+            VALUES
+                (@Cargo
+                ,@Salario
+                ,@Data
+                ,@Usuario
+                ,1;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Cargo", ObjCargo.CargoDesc);
+                    Cmd.Parameters.AddWithValue("@Salario", ObjCargo.Salario);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            return CargoList;
         }
         public bool AlteraCargoDAO()
         {
-            SqlConnection Con = null;
-
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
-	                [dbo].[Cargo] SET 
-	                    Cargo='" + ObjCargo.CargoDesc + "'," +
-                        "Salario='" + ObjCargo.Salario + "' " +
-                        "WHERE idCargo='" + ObjCargo.Id + "'" +
-                        ";", Con);
+	                [dbo].[Cargo] SET
+                        Cargo = @Cargo
+                       ,Salario = @Salario
+                       ,dataRegistro = @Data
+                       ,usuarioRegistro = @Usuario   
+                        WHERE idCargo = @Id;", Con);
 
-                Cmd.ExecuteNonQuery();
+                    Cmd.Parameters.AddWithValue("@Cargo", ObjCargo.CargoDesc);
+                    Cmd.Parameters.AddWithValue("@Salario", ObjCargo.Salario);
+                    Cmd.Parameters.AddWithValue("@Id", ObjCargo.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
-            }
-            return true;
         }
         public bool InativarCargoDAO()
         {
-            SqlConnection Con = null;
-
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                  [dbo].[Cargo] SET
-                        ativo=0 " +
-                        "WHERE idCargo='" + ObjCargo.Id + "'" +
-                        ";", Con);
+                        ativo = 0 
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario   
+                        WHERE idCargo = @Id;", Con);
 
-                Cmd.ExecuteNonQuery();
+                    Cmd.Parameters.AddWithValue("@Id", ObjCargo.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
-            }
-            return true;
         }
     }
 }

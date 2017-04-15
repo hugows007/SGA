@@ -1,4 +1,5 @@
 ﻿using SGA.Models.AreaAtendimentos;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,22 @@ namespace SGA.Views.SGA.VAreaAtendimento
         {
             if (!Page.IsPostBack)
             {
-                if (Request.QueryString["Id"] != null)
+                try
                 {
-                    ObjArea.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                    if (Request.QueryString["Id"] != null)
+                    {
+                        ObjArea.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
-                    ObjArea = new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById();
+                        ObjArea = new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById();
 
-                    RegiaoTextBox.Text = ObjArea.Regiao;
-                    CidadeTextBox.Text = ObjArea.Cidade;
-                    EstadoTextBox.Text = ObjArea.Estado;
+                        RegiaoTextBox.Text = ObjArea.Regiao;
+                        CidadeTextBox.Text = ObjArea.Cidade;
+                        EstadoTextBox.Text = ObjArea.Estado;
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
                 }
             }
         }
@@ -43,10 +51,10 @@ namespace SGA.Views.SGA.VAreaAtendimento
                     MsgLabel.Text = new ManterAreaAtendimento(ObjArea).AlteraAreaAtendimento();
                 }
             }
-
-            catch (Exception)
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Erro ao alterar - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

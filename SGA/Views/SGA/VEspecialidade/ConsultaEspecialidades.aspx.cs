@@ -1,4 +1,5 @@
-﻿using SGA.Models.Especialidades;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Especialidades;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,26 @@ namespace SGA.Views.SGA.VEspecialidade
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            foreach (var ObjAT in new ManterEspecialidade(ObjEspec).ConsultaEspecialidades())
+            try
             {
-                ListaEspecSelect.Add(ObjAT);
-            }
+                foreach (var ObjAT in new ManterEspecialidade(ObjEspec).ConsultaEspecialidades())
+                {
+                    ListaEspecSelect.Add(ObjAT);
+                }
 
-            if (Request.QueryString["OpInatEspecialidade"] != null && Request.QueryString["OpInatEspecialidade"].Equals("True"))
-            {
-                MsgLabel.Text = "Especialidade inativada com sucesso!";
+                if (Request.QueryString["OpInatEspecialidade"] != null && Request.QueryString["OpInatEspecialidade"].Equals("True"))
+                {
+                    MsgLabel.Text = "Especialidade inativada com sucesso!";
+                }
+                else if (Request.QueryString["OpInatEspecialidade"] != null && Request.QueryString["OpInatEspecialidade"].Equals("False"))
+                {
+                    MsgLabel.Text = "Ocorreu um erro ao inativar a especialidade!";
+                }
             }
-            else if (Request.QueryString["OpInatEspecialidade"] != null && Request.QueryString["OpInatEspecialidade"].Equals("False"))
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Ocorreu um erro ao inativar a especialidade!";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

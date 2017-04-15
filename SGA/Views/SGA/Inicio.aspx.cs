@@ -17,7 +17,6 @@ namespace SGA.Views.Site
             string userId = mu.ProviderUserKey.ToString();
             UsuarioLogado.Text += " " + userId;
             Usuario.Text = Membership.GetUser(mu.ProviderUserKey).ToString();*/
-
         }
     }
 }

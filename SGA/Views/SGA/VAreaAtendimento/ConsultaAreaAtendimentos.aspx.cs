@@ -1,4 +1,5 @@
 ﻿using SGA.Models.AreaAtendimentos;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,26 @@ namespace SGA.Views.SGA.VAreaAtendimento
         AreaAtendimento ObjArea = FactoryArea.GetNew();
         protected void Page_Load(object sender, EventArgs e)
         {
-            foreach (var ObjAT in new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentos())
+            try
             {
-                ListaAreaSelect.Add(ObjAT);
-            }
+                foreach (var ObjAT in new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentos())
+                {
+                    ListaAreaSelect.Add(ObjAT);
+                }
 
-            if (Request.QueryString["OpInatArea"] != null && Request.QueryString["OpInatArea"].Equals("True"))
-            {
-                MsgLabel.Text = "Área inativada com sucesso!";
+                if (Request.QueryString["OpInatArea"] != null && Request.QueryString["OpInatArea"].Equals("True"))
+                {
+                    MsgLabel.Text = "Área inativada com sucesso!";
+                }
+                else if (Request.QueryString["OpInatArea"] != null && Request.QueryString["OpInatArea"].Equals("False"))
+                {
+                    MsgLabel.Text = "Ocorreu um erro ao inativar a área!";
+                }
             }
-            else if (Request.QueryString["OpInatArea"] != null && Request.QueryString["OpInatArea"].Equals("False"))
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Ocorreu um erro ao inativar a área!";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using SGA.Models.Manter;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
@@ -16,23 +17,34 @@ namespace SGA.Views.SGA.VServico
         {
             if (!Page.IsPostBack)
             {
-                if (Request.QueryString["Id"] != null)
+                try
                 {
-                    ObjServico.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                    if (Request.QueryString["Id"] != null)
+                    {
 
-                    ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
+                        ObjServico.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
-                    DropDownListTpServico.DataSource = new ManterServico(ObjServico).ConsultaTpServicosDataReader();
-                    DropDownListTpServico.DataTextField = "tipo";
-                    DropDownListTpServico.DataValueField = "idTipoServ";
-                    DropDownListTpServico.DataBind();
-                    DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
+                        ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
 
-                    DropDownListTpServico.SelectedValue = Convert.ToString(ObjServico.Tipo);
-                    NomeTextBox.Text = ObjServico.Nome;
-                    DescServTextBox.Text = ObjServico.Descricao;
-                    SLATextBox.Text = ObjServico.Sla.ToString();
+                        using (var Servico = new ManterServico(ObjServico).ConsultaTpServicosDataReader())
+                        {
+                            DropDownListTpServico.DataSource = Servico;
+                            DropDownListTpServico.DataTextField = "tipo";
+                            DropDownListTpServico.DataValueField = "idTipoServ";
+                            DropDownListTpServico.DataBind();
+                            DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
+                        }
 
+                        DropDownListTpServico.SelectedValue = Convert.ToString(ObjServico.Tipo);
+                        NomeTextBox.Text = ObjServico.Nome;
+                        DescServTextBox.Text = ObjServico.Descricao;
+                        SLATextBox.Text = ObjServico.Sla.ToString();
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
                 }
             }
         }
@@ -52,10 +64,10 @@ namespace SGA.Views.SGA.VServico
                     MsgLabel.Text = new ManterServico(ObjServico).AlteraServico();
                 }
             }
-
-            catch (Exception)
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Erro ao alterar - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

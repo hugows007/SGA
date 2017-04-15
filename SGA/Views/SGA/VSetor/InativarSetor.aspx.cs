@@ -1,4 +1,5 @@
-﻿using SGA.Models.Manter;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Setores;
 using System;
 
@@ -20,9 +21,9 @@ namespace SGA.Views.SGA.VSetor
                     Response.Redirect("\\Views\\SGA\\VSetor\\ConsultaSetores.aspx?OpInatSetor=" + OperInativar.ToString());
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-
+                new LogException(Ex).InsereLogBd();
             }
         }
     }

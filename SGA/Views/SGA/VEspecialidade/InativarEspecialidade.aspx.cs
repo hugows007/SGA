@@ -1,4 +1,5 @@
-﻿using SGA.Models.Especialidades;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Especialidades;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace SGA.Views.SGA.VEspecialidade
                     Response.Redirect("\\Views\\SGA\\VEspecialidade\\ConsultaEspecialidades.aspx?OpInatEspecialidade=" + OperInativar.ToString());
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-
+                new LogException(Ex).InsereLogBd();
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using SGA.Models.Cargos;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ namespace SGA.Views.SGA.VCargo
 {
     public partial class CadastroCargo : System.Web.UI.Page
     {
-        public string Msg;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -25,14 +25,13 @@ namespace SGA.Views.SGA.VCargo
                 ObjCargo.CargoDesc = CargoDescTextBox.Text;
                 ObjCargo.Salario = Convert.ToDecimal(SalarioTextBox.Text);
 
-                Msg = new ManterCargo(ObjCargo).CadastraCargo();
+                MsgLabel.Text = new ManterCargo(ObjCargo).CadastraCargo();
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Erro ao efetuar o cadastro - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
-
-            MsgLabel.Text = Msg;
         }
     }
 }

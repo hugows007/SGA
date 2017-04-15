@@ -7,7 +7,7 @@ namespace SGA.Models.Usuarios
 {
     public class UsuarioGestor : Usuario
     {
-        public int Setor { get; set; }
-        public int Cargo { get; set; }
+        public int IdSetor { get; set; }
+        public int IdCargo { get; set; }
     }
 }

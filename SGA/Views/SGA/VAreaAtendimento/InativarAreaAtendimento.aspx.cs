@@ -1,4 +1,5 @@
 ﻿using SGA.Models.AreaAtendimentos;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace SGA.Views.SGA.VAreaAtendimento
                     Response.Redirect("\\Views\\SGA\\VAreaAtendimento\\ConsultaAreaAtendimentos.aspx?OpInatArea=" + OperInativar.ToString());
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-
+                new LogException(Ex).InsereLogBd();
             }
         }
     }

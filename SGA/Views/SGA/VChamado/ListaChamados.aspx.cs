@@ -1,5 +1,6 @@
 ﻿using SGA.Models.AreaAtendimentos;
 using SGA.Models.Chamados;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using SGA.Models.Servicos;
 using SGA.Models.StatusChamados;
@@ -26,16 +27,24 @@ namespace SGA.Views.SGA.VChamado
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            foreach (var Result in new ManterChamado(ObjChamado).ConsultaChamados())
+            try
             {
-                ObjArea.Id = Result.AreaAtendimento;
-                ObjServico.Id = Result.Servico;
-                ObjStatusChm.Id = Result.Status;
+                foreach (var Result in new ManterChamado(ObjChamado).ConsultaChamados())
+                {
+                    ObjArea.Id = Result.IdAreaAtendimento;
+                    ObjServico.Id = Result.IdServico;
+                    ObjStatusChm.Id = Result.IdStatus;
 
-                NomeAreaAtendimento.Add(new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById().Regiao);
-                NomeServico.Add(new ManterServico(ObjServico).ConsultaServicoById().Nome);
-                NomeStatus.Add(new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById().NomeStatus);
-                ListaChamado.Add(Result);
+                    NomeAreaAtendimento.Add(new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById().Regiao);
+                    NomeServico.Add(new ManterServico(ObjServico).ConsultaServicoById().Nome);
+                    NomeStatus.Add(new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById().NomeStatus);
+                    ListaChamado.Add(Result);
+                }
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

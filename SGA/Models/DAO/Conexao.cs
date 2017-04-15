@@ -17,20 +17,14 @@ namespace SGA.DAO
             try
             {
                 Cn = new SqlConnection();
-                Cn.ConnectionString = ConfigurationManager.ConnectionStrings["SASConnectionString"].ConnectionString;
+                Cn.ConnectionString = ConfigurationManager.ConnectionStrings["SGAConnectionString"].ConnectionString;
                 Cn.Open();
 
                 return Cn;
             }
             catch (SqlException Ex)
             {
-                new LogException(
-                    Ex.Message.ToString(),
-                    Ex.Source.ToString(),
-                    Ex.StackTrace.ToString(),
-                    Ex.TargetSite.ToString()
-                    );
-
+                new LogException(Ex);
                 throw;
             }
         }

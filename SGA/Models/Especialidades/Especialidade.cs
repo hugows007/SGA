@@ -10,6 +10,6 @@ namespace SGA.Models.Especialidades
         public int Id { get; set; }
         public string EspecialidadeDesc { get; set; }
         public string DetalheEspec { get; set; }
-        public int Status { get; set; }
+        public int IdStatus { get; set; }
     }
 }

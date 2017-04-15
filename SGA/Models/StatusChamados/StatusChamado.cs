@@ -10,7 +10,7 @@ namespace SGA.Models.StatusChamados
         public int Id { get; set; }
         public string NomeStatus { get; set; }
         public string DescStatus { get; set; }
-        public int Status { get; set; }
+        public int IdStatus { get; set; }
 
     }
 }

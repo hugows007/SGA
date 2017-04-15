@@ -7,6 +7,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SGA.Models.Manter;
+using SGA.Models.DAO.Log;
 
 namespace SGA.Views.SGA.VUsuario
 {
@@ -17,33 +18,53 @@ namespace SGA.Views.SGA.VUsuario
         {
             if (!Page.IsPostBack)
             {
-                DropDownListTipo.DataSource = new ManterUsuario().RegrasUsuario();
-                DropDownListTipo.DataBind();
-                DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
+                try
+                {
+                    DropDownListTipo.DataSource = new ManterUsuario().RegrasUsuario();
+                    DropDownListTipo.DataBind();
+                    DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
 
-                DropDownListSetor.DataSource = new ManterSetor().ConsultaSetoresDataReader();
-                DropDownListSetor.DataTextField = "setor";
-                DropDownListSetor.DataValueField = "idSetor";
-                DropDownListSetor.DataBind();
-                DropDownListSetor.Items.Insert(0, new ListItem("Selecione o setor", "0"));
+                    using (var Setor = new ManterSetor().ConsultaSetoresDataReader())
+                    {
+                        DropDownListSetor.DataSource = Setor;
+                        DropDownListSetor.DataTextField = "setor";
+                        DropDownListSetor.DataValueField = "idSetor";
+                        DropDownListSetor.DataBind();
+                        DropDownListSetor.Items.Insert(0, new ListItem("Selecione o setor", "0"));
+                    }
 
-                DropDownListCargo.DataSource = new ManterCargo().ConsultaCargosDataReader();
-                DropDownListCargo.DataTextField = "cargo";
-                DropDownListCargo.DataValueField = "idCargo";
-                DropDownListCargo.DataBind();
-                DropDownListCargo.Items.Insert(0, new ListItem("Selecione o cargo", "0"));
+                    using (var Cargo = new ManterCargo().ConsultaCargosDataReader())
+                    {
+                        DropDownListCargo.DataSource = Cargo;
+                        DropDownListCargo.DataTextField = "cargo";
+                        DropDownListCargo.DataValueField = "idCargo";
+                        DropDownListCargo.DataBind();
+                        DropDownListCargo.Items.Insert(0, new ListItem("Selecione o cargo", "0"));
+                    }
 
-                DropDownListEspec.DataSource = new ManterEspecialidade().ConsultaEspecialidadesDataReader();
-                DropDownListEspec.DataTextField = "especialidade";
-                DropDownListEspec.DataValueField = "idEspecialidade";
-                DropDownListEspec.DataBind();
-                DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
+                    using (var Espec = new ManterEspecialidade().ConsultaEspecialidadesDataReader())
+                    {
+                        DropDownListEspec.DataSource = Espec;
+                        DropDownListEspec.DataTextField = "especialidade";
+                        DropDownListEspec.DataValueField = "idEspecialidade";
+                        DropDownListEspec.DataBind();
+                        DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
+                    }
 
-                DropDownListAreaAtendimento.DataSource = new ManterAreaAtendimento().ConsultaAreaAtendimentosDataReader();
-                DropDownListAreaAtendimento.DataTextField = "regiao";
-                DropDownListAreaAtendimento.DataValueField = "idAreaAtendimento";
-                DropDownListAreaAtendimento.DataBind();
-                DropDownListAreaAtendimento.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
+                    using (var Area = new ManterAreaAtendimento().ConsultaAreaAtendimentosDataReader())
+                    {
+                        DropDownListAreaAtendimento.DataSource = Area;
+                        DropDownListAreaAtendimento.DataTextField = "regiao";
+                        DropDownListAreaAtendimento.DataValueField = "idAreaAtendimento";
+                        DropDownListAreaAtendimento.DataBind();
+                        DropDownListAreaAtendimento.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+                }
             }
         }
 
@@ -61,17 +82,17 @@ namespace SGA.Views.SGA.VUsuario
                 else if (TpUsuario.Equals("Técnico"))
                 {
                     Usr = FactoryUsuario.GetNew(TipoUsuario.UsuarioTecnico);
-                    Usr.ObjT.Especialidade = Convert.ToInt32(DropDownListEspec.SelectedValue);
-                    Usr.ObjT.Cargo = Convert.ToInt32(DropDownListCargo.SelectedValue);
-                    Usr.ObjT.Setor = Convert.ToInt32(DropDownListSetor.SelectedValue);
+                    Usr.ObjT.IdEspecialidade = Convert.ToInt32(DropDownListEspec.SelectedValue);
+                    Usr.ObjT.IdCargo = Convert.ToInt32(DropDownListCargo.SelectedValue);
+                    Usr.ObjT.IdSetor = Convert.ToInt32(DropDownListSetor.SelectedValue);
                 }
-                else if(TpUsuario.Equals("Gestor"))
+                else if (TpUsuario.Equals("Gestor"))
                 {
                     Usr = FactoryUsuario.GetNew(TipoUsuario.UsuarioGestor);
-                    Usr.ObjT.Cargo = Convert.ToInt32(DropDownListCargo.SelectedValue);
-                    Usr.ObjT.Setor = Convert.ToInt32(DropDownListSetor.SelectedValue);
+                    Usr.ObjT.IdCargo = Convert.ToInt32(DropDownListCargo.SelectedValue);
+                    Usr.ObjT.IdSetor = Convert.ToInt32(DropDownListSetor.SelectedValue);
                 }
-                else if(TpUsuario.Equals("Cliente Físico"))
+                else if (TpUsuario.Equals("Cliente Físico"))
                 {
                     Usr = FactoryUsuario.GetNew(TipoUsuario.UsuarioClienteFisico);
                     Usr.ObjCF.DocIdent = DocTextbox.Text;
@@ -93,14 +114,14 @@ namespace SGA.Views.SGA.VUsuario
                 Usr.Numero = NumeroTextBox.Text;
                 Usr.Cep = CEPTextBox.Text;
                 Usr.Telefone = TelefoneTextBox.Text;
-                Usr.AreaAtendimento = DropDownListAreaAtendimento.SelectedIndex;
+                Usr.IdAreaAtendimento = DropDownListAreaAtendimento.SelectedIndex;
 
-                Msg.Text = new ManterUsuario(Usr).CadastraUsuario();
+                MsgLabel.Text = new ManterUsuario(Usr).CadastraUsuario();
             }
-
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg.Text = "Erro ao cadastrar - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

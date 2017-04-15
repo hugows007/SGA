@@ -10,10 +10,10 @@ namespace SGA.Models.Chamados
         public int Id { get; set; }
         public string Assunto { get; set; }
         public string Descricao { get; set; }
-        public int Status { get; set; }
+        public int IdStatus { get; set; }
         public DateTime DataAbertura { get; set; }
         public DateTime DataFechamento { get; set; }
-        public int AreaAtendimento { get; set; }
-        public int Servico { get; set; }
+        public int IdAreaAtendimento { get; set; }
+        public int IdServico { get; set; }
     }
 }

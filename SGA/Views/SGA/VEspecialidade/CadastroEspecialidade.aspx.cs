@@ -1,4 +1,5 @@
-﻿using SGA.Models.Especialidades;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Especialidades;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ namespace SGA.Views.SGA.VEspecialidade
 {
     public partial class CadastroEspecialidade : System.Web.UI.Page
     {
-        public string Msg;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -25,14 +25,13 @@ namespace SGA.Views.SGA.VEspecialidade
                 ObjEspec.EspecialidadeDesc = EspecTextBox.Text;
                 ObjEspec.DetalheEspec = EspecDestTextBox.Text;
 
-                Msg = new ManterEspecialidade(ObjEspec).CadastraEspecialidade();
+                MsgLabel.Text = new ManterEspecialidade(ObjEspec).CadastraEspecialidade();
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Erro ao efetuar o cadastro - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
-
-            MsgLabel.Text = Msg;
         }
     }
 }

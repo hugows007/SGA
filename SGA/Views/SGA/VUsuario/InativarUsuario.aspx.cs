@@ -1,4 +1,5 @@
-﻿using SGA.Models.Manter;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace SGA.Views.SGA.VUsuario
                     Response.Redirect("\\Views\\SGA\\VUsuario\\ConsultaUsuarios.aspx?OpInatUsr=" + OperInativar.ToString());
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-
+                new LogException(Ex).InsereLogBd();
             }
         }
     }

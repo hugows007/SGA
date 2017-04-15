@@ -1,5 +1,6 @@
 ﻿using SGA.Models.AreaAtendimentos;
 using SGA.Models.Chamados;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using SGA.Models.Servicos;
 using SGA.Models.StatusChamados;
@@ -35,9 +36,9 @@ namespace SGA.Views.SGA.VChamado
 
                     if (ObjChamado != null)
                     {
-                        ObjArea.Id = ObjChamado.AreaAtendimento;
-                        ObjServico.Id = ObjChamado.Servico;
-                        ObjStatusChm.Id = ObjChamado.Status;
+                        ObjArea.Id = ObjChamado.IdAreaAtendimento;
+                        ObjServico.Id = ObjChamado.IdServico;
+                        ObjStatusChm.Id = ObjChamado.IdStatus;
 
                         ObjArea = new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById();
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
@@ -52,10 +53,12 @@ namespace SGA.Views.SGA.VChamado
                     MsgLabel.Text = "Nenhum número de chamado foi informado.";
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
+                new LogException(Ex).InsereLogBd();
+
                 ObjChamado = null;
-                MsgLabel.Text = "Número do chamado é inválido.";
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

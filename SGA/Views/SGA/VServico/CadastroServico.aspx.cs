@@ -1,4 +1,5 @@
-﻿using SGA.Models.Manter;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,28 @@ namespace SGA.Views.SGA.VServico
 {
     public partial class CadastroServico : System.Web.UI.Page
     {
-        public string Msg;
         Servico ObjServico = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                DropDownListTpServico.DataSource = new ManterServico().ConsultaTpServicosDataReader();
-                DropDownListTpServico.DataTextField = "tipo";
-                DropDownListTpServico.DataValueField = "idTipoServ";
-                DropDownListTpServico.DataBind();
-                DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
+                try
+                {
+                    using (var Servico = new ManterServico().ConsultaTpServicosDataReader())
+                    {
+                        DropDownListTpServico.DataSource = Servico;
+                        DropDownListTpServico.DataTextField = "tipo";
+                        DropDownListTpServico.DataValueField = "idTipoServ";
+                        DropDownListTpServico.DataBind();
+                        DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
+                    }
+
+                }
+                catch (Exception Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+                }
             }
         }
 
@@ -35,14 +47,13 @@ namespace SGA.Views.SGA.VServico
                 ObjServico.Descricao = DescServTextBox.Text;
                 ObjServico.Sla = Convert.ToDouble(SLATextBox.Text);
 
-                Msg = new ManterServico(ObjServico).CadastraServico();
+                MsgLabel.Text = new ManterServico(ObjServico).CadastraServico();
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Erro ao efetuar o cadastro - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
-
-            MsgLabel.Text = Msg;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace SGA.Models.AreaAtendimentos
         public string Regiao { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
-        public int Status { get; set; }
+        public int IdStatus { get; set; }
 
     }
 }

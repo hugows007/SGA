@@ -1,4 +1,5 @@
 ﻿using SGA.Models.Cargos;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,22 @@ namespace SGA.Views.SGA.VCargo
         {
             if (!Page.IsPostBack)
             {
-                if (Request.QueryString["Id"] != null)
+                try
                 {
-                    ObjCargo.Id = Convert.ToInt32(Request.QueryString["Id"]);
-
-                    foreach (var Result in new ManterCargo(ObjCargo).ConsultaCargosById())
+                    if (Request.QueryString["Id"] != null)
                     {
-                        CargoDescTextBox.Text = Result.CargoDesc;
-                        SalarioTextBox.Text = Result.Salario.ToString();
+                        ObjCargo.Id = Convert.ToInt32(Request.QueryString["Id"]);
+
+                        foreach (var Result in new ManterCargo(ObjCargo).ConsultaCargosById())
+                        {
+                            CargoDescTextBox.Text = Result.CargoDesc;
+                            SalarioTextBox.Text = Result.Salario.ToString();
+                        }
                     }
+                }
+                catch (Exception Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
                 }
             }
         }
@@ -42,10 +50,10 @@ namespace SGA.Views.SGA.VCargo
                     MsgLabel.Text = new ManterCargo(ObjCargo).AlteraCargo();
                 }
             }
-
-            catch (Exception)
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Erro ao alterar - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

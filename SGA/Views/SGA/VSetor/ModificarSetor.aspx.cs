@@ -1,4 +1,5 @@
-﻿using SGA.Models.Manter;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Setores;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,23 @@ namespace SGA.Views.SGA.VSetor
         {
             if (!Page.IsPostBack)
             {
-                if (Request.QueryString["Id"] != null)
+                try
                 {
-                    ObjSetor.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
-                    foreach (var Result in new ManterSetor(ObjSetor).ConsultaSetorById())
+                    if (Request.QueryString["Id"] != null)
                     {
-                        SetorTextBox.Text = Result.SetorDesc;
+                        ObjSetor.Id = Convert.ToInt32(Request.QueryString["Id"]);
+
+                        foreach (var Result in new ManterSetor(ObjSetor).ConsultaSetorById())
+                        {
+                            SetorTextBox.Text = Result.SetorDesc;
+                        }
                     }
+                }
+                catch (Exception Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
                 }
             }
         }
@@ -40,10 +50,10 @@ namespace SGA.Views.SGA.VSetor
                     MsgLabel.Text = new ManterSetor(ObjSetor).AlteraSetor();
                 }
             }
-
-            catch (Exception)
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Erro ao alterar - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

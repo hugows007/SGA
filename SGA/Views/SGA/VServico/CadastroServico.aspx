@@ -47,9 +47,9 @@
                             <asp:Button ID="Cadastrar" runat="server" Text="Cadastrar" class="btn btn-default" OnClick="CadastrarButton_Click" />
                             <a class="btn btn-default" href="/Views/SGA/VServico/ConsultaServicos.aspx">Voltar</a>
                         </div>
-                        <div class="panel-footer">
-                            Favor alterar os campos e clicar em salvar.<br />
-                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Favor alterar os campos e clicar em salvar.<br />
                     </div>
                 </div>
             </div>

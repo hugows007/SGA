@@ -1,4 +1,5 @@
-﻿using SGA.Models.Manter;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace SGA.Views.SGA.VServico
                     Response.Redirect("\\Views\\SGA\\VServico\\ConsultaServicos.aspx?OpInatServico=" + OperInativar.ToString());
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-
+                new LogException(Ex).InsereLogBd();
             }
         }
     }

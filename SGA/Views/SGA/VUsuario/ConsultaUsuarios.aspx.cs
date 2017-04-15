@@ -1,4 +1,5 @@
 ﻿using SGA.Models;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using SGA.Models.Usuarios;
 using System;
@@ -17,18 +18,26 @@ namespace SGA.Views.SGA.VUsuario
         Usuario Usuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         protected void Page_Load(object sender, EventArgs e)
         {
-            foreach (var ObjUsr in new ManterUsuario(Usuario).ConsultaUsuarios())
+            try
             {
-                ListaUsrSelect.Add(ObjUsr);
-            }
+                foreach (var ObjUsr in new ManterUsuario(Usuario).ConsultaUsuarios())
+                {
+                    ListaUsrSelect.Add(ObjUsr);
+                }
 
-            if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("True"))
-            {
-                MsgLabel.Text = "Usuário inativado com sucesso!";
+                if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("True"))
+                {
+                    MsgLabel.Text = "Usuário inativado com sucesso!";
+                }
+                else if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("False"))
+                {
+                    MsgLabel.Text = "Ocorreu um erro ao inativar o usuário!";
+                }
             }
-            else if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("False"))
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Ocorreu um erro ao inativar o usuário!";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

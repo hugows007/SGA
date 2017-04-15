@@ -5,12 +5,15 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using SGA.Models.Setores;
+using SGA.Models.DAO.Log;
+using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterSetorDAO
     {
         private Setor ObjSetor;
+        SqlConnection Con = null;
 
         public ManterSetorDAO()
         {
@@ -22,23 +25,26 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public SqlDataReader ConsultaSetoresDataReaderDAO()
         {
+            SqlDataReader Dr = null;
+
             try
             {
-                SqlConnection Con = new Conexao().ConexaoDB();
+                Con = new Conexao().ConexaoDB();
 
                 SqlCommand Cmd = new SqlCommand(@"
                  SELECT [idSetor]
                       ,[setor]
-                 FROM [SAS].[dbo].[Setor]
+                 FROM [dbo].[Setor]
                  WHERE ativo = 1
                  ORDER BY setor", Con);
 
-                SqlDataReader Result = Cmd.ExecuteReader();
-                return Result;
+                Dr = Cmd.ExecuteReader();
+                return Dr;
             }
-            catch (SqlException)
+            catch (SqlException Ex)
             {
-                return null;
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
         }
         public List<Setor> ConsultaSetoresDAO()
@@ -46,65 +52,35 @@ namespace SGA.Models.DAO.ManterDAO
             List<Setor> SetorList = new List<Setor>();
             SqlDataReader Dr = null;
 
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                SqlConnection Con = new Conexao().ConexaoDB();
-
-                SqlCommand CmdArea = new SqlCommand(@"
+                try
+                {
+                    SqlCommand CmdArea = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Setor]
                   WHERE ativo = 1", Con);
 
-                Dr = CmdArea.ExecuteReader();
+                    Dr = CmdArea.ExecuteReader();
 
-                while (Dr.Read())
-                {
-                    Setor Usr = FactorySetor.GetNew();
+                    while (Dr.Read())
+                    {
+                        Setor Usr = FactorySetor.GetNew();
 
-                    Usr.Id = Dr.GetInt32(0);
-                    Usr.SetorDesc = Dr.GetString(1);
-                    Usr.Status = Dr.GetInt32(2);
+                        Usr.Id = Dr.GetInt32(0);
+                        Usr.SetorDesc = Dr.GetString(1);
+                        Usr.IdStatus = Dr.GetInt32(2);
 
-                    SetorList.Add(Usr);
+                        SetorList.Add(Usr);
+                    }
+
+                    return SetorList;
                 }
-            }
-            catch (SqlException)
-            {
-                return null;
-            }
-            finally
-            {
-                if (Dr != null)
-                    Dr.Close();
-            }
-            return SetorList;
-        }
-        public bool CadastraSetorDAO()
-        {
-            SqlConnection Con = null;
-            try
-            {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-            INSERT INTO [dbo].[Setor]
-                ([setor]
-                  ,[ativo])
-            VALUES
-                ('" + ObjSetor.SetorDesc +
-                    "','" + 1 +
-                    "');", Con);
-
-                Cmd.ExecuteNonQuery();
-                return true;
-            }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
         }
         public List<Setor> ConsultaSetorByIdDAO()
@@ -112,91 +88,130 @@ namespace SGA.Models.DAO.ManterDAO
             List<Setor> SetorList = new List<Setor>();
             SqlDataReader Dr = null;
 
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                SqlConnection Con = new Conexao().ConexaoDB();
+                try
+                {
 
-                SqlCommand Cmd = new SqlCommand(@"
+                    SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Setor]
-                  WHERE ativo = 1 and idSetor =" + ObjSetor.Id, Con);
+                  WHERE ativo = 1 and idSetor = @Id;", Con);
 
-                Dr = Cmd.ExecuteReader();
+                    Cmd.Parameters.AddWithValue("@Id", ObjSetor.Id);
 
-                while (Dr.Read())
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Setor Setor = FactorySetor.GetNew();
+
+                        Setor.Id = Dr.GetInt32(0);
+                        Setor.SetorDesc = Dr.GetString(1);
+                        Setor.IdStatus = Dr.GetInt32(2);
+                        SetorList.Add(Setor);
+                    }
+
+                    return SetorList;
+                }
+                catch (SqlException Ex)
                 {
-                    Setor Setor = FactorySetor.GetNew();
-
-                    Setor.Id = Dr.GetInt32(0);
-                    Setor.SetorDesc = Dr.GetString(1);
-                    Setor.Status = Dr.GetInt32(2);
-                    SetorList.Add(Setor);
+                    new LogException(Ex).InsereLogBd();
+                    throw;
                 }
             }
-            catch (SqlException)
+        }
+        public bool CadastraSetorDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                return null;
+                try
+                {
+
+                    SqlCommand Cmd = new SqlCommand(@"
+            INSERT INTO [dbo].[Setor]
+                ([setor]
+                  ,[dataRegistro]
+                  ,[usuarioRegistro]
+                  ,[ativo])
+            VALUES
+                (@Setor
+                 ,@Data
+                 ,@Usuario 
+                 ,1);", Con);
+
+                    Cmd.Parameters.AddWithValue("@Setor", ObjSetor.SetorDesc);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            finally
-            {
-                if (Dr != null)
-                    Dr.Close();
-            }
-            return SetorList;
         }
         public bool AlteraSetorDAO()
         {
-            SqlConnection Con = null;
-
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Setor] SET 
-                        Setor='" + ObjSetor.SetorDesc + "' " +
-                        "WHERE idSetor='" + ObjSetor.Id + "'" +
-                        ";", Con);
+                       Setor = @Setor
+                      ,dataRegistro = @Data
+                      ,usuarioRegistro = @Usuario
+                       WHERE idSetor = @Id;", Con);
 
-                Cmd.ExecuteNonQuery();
+                    Cmd.Parameters.AddWithValue("@Setor", ObjSetor.SetorDesc);
+                    Cmd.Parameters.AddWithValue("@Id", ObjSetor.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
-            }
-            return true;
         }
         public bool InativaSetorDAO()
         {
-            SqlConnection Con = null;
-
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Setor] SET
-                        ativo=0 " +
-                        "WHERE idSetor='" + ObjSetor.Id + "'" +
-                        ";", Con);
+                        ativo = 0
+                       ,dataRegistro = @Data
+                       ,usuarioRegistro = @Usuario
+                        WHERE idSetor = @Id;", Con);
 
-                Cmd.ExecuteNonQuery();
+                    Cmd.Parameters.AddWithValue("@Id", ObjSetor.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
-            }
-            return true;
         }
     }
 }

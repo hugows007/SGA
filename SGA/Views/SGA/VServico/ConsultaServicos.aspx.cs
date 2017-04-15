@@ -1,4 +1,5 @@
-﻿using SGA.Models.Manter;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
@@ -19,19 +20,27 @@ namespace SGA.Views.SGA.VServico
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            foreach (var Result in new ManterServico(ObjServico).ConsultaServicos())
+            try
             {
-                NomeServico.Add(new ManterServico(Result).ConsultaTpServicoById());
-                ListaServicoSelect.Add(Result);
-            }
+                foreach (var Result in new ManterServico(ObjServico).ConsultaServicos())
+                {
+                    NomeServico.Add(new ManterServico(Result).ConsultaTpServicoById());
+                    ListaServicoSelect.Add(Result);
+                }
 
-            if (Request.QueryString["OpInatServico"] != null && Request.QueryString["OpInatServico"].Equals("True"))
-            {
-                MsgLabel.Text = "Serviço inativado com sucesso!";
+                if (Request.QueryString["OpInatServico"] != null && Request.QueryString["OpInatServico"].Equals("True"))
+                {
+                    MsgLabel.Text = "Serviço inativado com sucesso!";
+                }
+                else if (Request.QueryString["OpInatServico"] != null && Request.QueryString["OpInatServico"].Equals("False"))
+                {
+                    MsgLabel.Text = "Ocorreu um erro ao inativar o serviço!";
+                }
             }
-            else if (Request.QueryString["OpInatServico"] != null && Request.QueryString["OpInatServico"].Equals("False"))
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Ocorreu um erro ao inativar o serviço!";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

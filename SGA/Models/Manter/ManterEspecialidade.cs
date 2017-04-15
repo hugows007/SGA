@@ -25,26 +25,6 @@ namespace SGA.Models.Manter
         {
             return new ManterEspecialidadeDAO().ConsultaEspecialidadesDataReaderDAO();
         }
-        public string CadastraEspecialidade()
-        {
-            try
-            {
-                if (new ManterEspecialidadeDAO(ObjEspec).CadastraEspecialidadeDAO())
-                {
-                    Msg = "Especialidade cadastrada com sucesso!";
-                }
-                else
-                {
-                    Msg = "Ocorreu um erro ao cadastrar a especialidade!";
-                }
-            }
-            catch (Exception)
-            {
-                Msg = "Houve um problema ao efetuar o cadastro da especialidade.";
-            }
-
-            return Msg;
-        }
         public List<Especialidade> ConsultaEspecialidades()
         {
             return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadesDAO();
@@ -53,28 +33,45 @@ namespace SGA.Models.Manter
         {
             return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadeByIdDAO();
         }
+        public string CadastraEspecialidade()
+        {
+            try
+            {
+                if (new ManterEspecialidadeDAO(ObjEspec).CadastraEspecialidadeDAO())
+                {
+                    Msg = "Especialidade cadastrada com sucesso!";
+                }
+            }
+            catch (Exception)
+            {
+                Msg = "Ocorreu um erro ao cadastrar a especialidade.";
+            }
+
+            return Msg;
+        }
         public string AlteraEspecialidade()
         {
-            if (new ManterEspecialidadeDAO
-                       (ObjEspec).AlteraEspecialidadeDAO())
+            try
             {
-                Msg = "Especialidade atualizada com sucesso!";
+                if (new ManterEspecialidadeDAO(ObjEspec).AlteraEspecialidadeDAO())
+                {
+                    Msg = "Especialidade atualizada com sucesso!";
+                }
             }
-            else
+            catch (Exception)
             {
-                Msg = "Ocorreu um erro ao atualizar a especialidade!";
+                Msg = "Ocorreu um erro ao atualizar a especialidade.";
             }
 
             return Msg;
         }
         public bool InativaEspecialidade()
         {
-            if (new ManterEspecialidadeDAO
-          (ObjEspec).InativaEspecialidadeDAO())
+            try
             {
-                return true;
+                return new ManterEspecialidadeDAO(ObjEspec).InativaEspecialidadeDAO();
             }
-            else
+            catch (Exception)
             {
                 return false;
             }

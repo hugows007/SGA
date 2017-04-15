@@ -1,4 +1,5 @@
-﻿using SGA.Models.DAO.ManterDAO;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,17 @@ namespace SGA.Models.Manter
         }
         public string[] RegrasUsuario()
         {
-            string[] rolesArray;
-            return rolesArray = Roles.GetAllRoles();
+            try
+            {
+                string[] rolesArray;
+                return rolesArray = Roles.GetAllRoles();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                return null;
+            }
+
         }
         public string CadastraUsuario()
         {
@@ -40,7 +50,7 @@ namespace SGA.Models.Manter
                     ObjUsuario.Login,
                     ObjUsuario.Regra);
 
-                if(newUser != null)
+                if (newUser != null)
                 {
                     MembershipUser Mu = Membership.GetUser(ObjUsuario.Login);
                     UserId = Mu.ProviderUserKey.ToString();
@@ -77,12 +87,14 @@ namespace SGA.Models.Manter
         }
         public string AlteraUsuario()
         {
-            if (new ManterUsuarioDAO
-                       (ObjUsuario).AlteraUsuarioDAO())
+            try
             {
-                Msg = "Usuário atualizado com sucesso!";
+                if (new ManterUsuarioDAO(ObjUsuario).AlteraUsuarioDAO())
+                {
+                    Msg = "Usuário atualizado com sucesso!";
+                }
             }
-            else
+            catch (Exception)
             {
                 Msg = "Ocorreu um erro ao atualizar o usuário!";
             }
@@ -91,12 +103,11 @@ namespace SGA.Models.Manter
         }
         public bool InativaUsuario()
         {
-            if (new ManterUsuarioDAO
-           (ObjUsuario).InativaUsuarioDAO())
+            try
             {
-                return true;
+                return new ManterUsuarioDAO(ObjUsuario).InativaUsuarioDAO();
             }
-            else
+            catch (Exception)
             {
                 return false;
             }
@@ -138,21 +149,41 @@ namespace SGA.Models.Manter
         }
         public bool GetUsuariosGestOuAdm()
         {
-            string[] RegraUsr = Roles.GetRolesForUser(Membership.GetUser().ToString());
-
-            foreach(var Regra in RegraUsr)
+            try
             {
-                if (Regra.Equals("Administrador") || Regra.Equals("Gestor"))
-                {
-                    Result = true;
-                }
-                else
-                {
-                    Result = false;
-                }
-            }
+                string[] RegraUsr = Roles.GetRolesForUser(Membership.GetUser().ToString());
 
-            return Result;            
+                foreach (var Regra in RegraUsr)
+                {
+                    if (Regra.Equals("Administrador") || Regra.Equals("Gestor"))
+                    {
+                        Result = true;
+                    }
+                    else
+                    {
+                        Result = false;
+                    }
+                }
+
+                return Result;
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public string GetUsuarioLogado()
+        {
+            try
+            {
+                return Membership.GetUser().ToString();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
         }
     }
 }

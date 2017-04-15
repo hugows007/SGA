@@ -1,4 +1,5 @@
 ﻿using SGA.Models.Cargos;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace SGA.Views.SGA.VCargo
                     Response.Redirect("\\Views\\SGA\\VCargo\\ConsultaCargos.aspx?OpInatCargo=" + OperInativar.ToString());
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-
+                new LogException(Ex).InsereLogBd();
             }
         }
     }

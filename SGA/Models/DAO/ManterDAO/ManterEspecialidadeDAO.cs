@@ -1,16 +1,19 @@
 ﻿using SGA.DAO;
+using SGA.Models.DAO.Log;
 using SGA.Models.Especialidades;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterEspecialidadeDAO
     {
         private Especialidade ObjEspec;
+        SqlConnection Con = null;
         public ManterEspecialidadeDAO(Especialidade objEspec)
         {
             ObjEspec = objEspec;
@@ -20,23 +23,26 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public SqlDataReader ConsultaEspecialidadesDataReaderDAO()
         {
+            SqlDataReader Dr = null;
+
             try
             {
-                SqlConnection Con = new Conexao().ConexaoDB();
+                Con = new Conexao().ConexaoDB();
 
                 SqlCommand Cmd = new SqlCommand(@"
                  SELECT [idEspecialidade]
-                      ,[especialidade]
-                 FROM [SAS].[dbo].[Especialidade]
+                       ,[especialidade]
+                 FROM [dbo].[Especialidade]
                  WHERE ativo = 1
                  ORDER BY especialidade", Con);
 
-                SqlDataReader Result = Cmd.ExecuteReader();
-                return Result;
+                Dr = Cmd.ExecuteReader();
+                return Dr;
             }
-            catch (SqlException)
+            catch (SqlException Ex)
             {
-                return null;
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
         }
         public List<Especialidade> ConsultaEspecialidadesDAO()
@@ -44,67 +50,35 @@ namespace SGA.Models.DAO.ManterDAO
             List<Especialidade> EspecialidadeList = new List<Especialidade>();
             SqlDataReader Dr = null;
 
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                SqlConnection Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Especialidade]
                   WHERE ativo = 1", Con);
 
-                Dr = Cmd.ExecuteReader();
+                    Dr = Cmd.ExecuteReader();
 
-                while (Dr.Read())
-                {
-                    Especialidade Especialidades = FactoryEspecialidade.GetNew();
+                    while (Dr.Read())
+                    {
+                        Especialidade Especialidades = FactoryEspecialidade.GetNew();
 
-                    Especialidades.Id = Dr.GetInt32(0);
-                    Especialidades.EspecialidadeDesc = Dr.GetString(1);
-                    Especialidades.DetalheEspec = Dr.GetString(2);
+                        Especialidades.Id = Dr.GetInt32(0);
+                        Especialidades.EspecialidadeDesc = Dr.GetString(1);
+                        Especialidades.DetalheEspec = Dr.GetString(2);
 
-                    EspecialidadeList.Add(Especialidades);
+                        EspecialidadeList.Add(Especialidades);
+                    }
+
+                    return EspecialidadeList;
                 }
-            }
-            catch (SqlException)
-            {
-                return null;
-            }
-            finally
-            {
-                if (Dr != null)
-                    Dr.Close();
-            }
-            return EspecialidadeList;
-        }
-        public bool CadastraEspecialidadeDAO()
-        {
-            SqlConnection Con = null;
-            try
-            {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-            INSERT INTO [dbo].[especialidade]
-                ([especialidade]
-                  ,[detalhes]
-                  ,[ativo])
-            VALUES
-                ('" + ObjEspec.EspecialidadeDesc +
-                    "','" + ObjEspec.DetalheEspec +
-                    "','" + 1 +
-                    "');", Con);
-
-                Cmd.ExecuteNonQuery();
-                return true;
-            }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
         }
         public List<Especialidade> ConsultaEspecialidadeByIdDAO()
@@ -112,92 +86,134 @@ namespace SGA.Models.DAO.ManterDAO
             List<Especialidade> EspecialidadeList = new List<Especialidade>();
             SqlDataReader Dr = null;
 
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                SqlConnection Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-                SELECT *
-                  FROM [SAS].[dbo].[especialidade]
-                  WHERE ativo = 1 and idEspecialidade =" + ObjEspec.Id, Con);
-
-                Dr = Cmd.ExecuteReader();
-
-                while (Dr.Read())
+                try
                 {
-                    Especialidade Especialidades = FactoryEspecialidade.GetNew();
+                    SqlCommand Cmd = new SqlCommand(@"
+                SELECT *
+                  FROM [dbo].[especialidade] WHERE
+                   ativo = 1 and 
+                   idEspecialidade = @Id", Con);
 
-                    Especialidades.Id = Dr.GetInt32(0);
-                    Especialidades.EspecialidadeDesc = Dr.GetString(1);
-                    Especialidades.DetalheEspec = Dr.GetString(2);
-                    EspecialidadeList.Add(Especialidades);
+                    Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Especialidade Especialidades = FactoryEspecialidade.GetNew();
+
+                        Especialidades.Id = Dr.GetInt32(0);
+                        Especialidades.EspecialidadeDesc = Dr.GetString(1);
+                        Especialidades.DetalheEspec = Dr.GetString(2);
+                        EspecialidadeList.Add(Especialidades);
+                    }
+
+                    return EspecialidadeList;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
                 }
             }
-            catch (SqlException)
+        }
+        public bool CadastraEspecialidadeDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                return null;
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+            INSERT INTO [dbo].[especialidade]
+                  ([especialidade]
+                  ,[detalhes]
+                  ,[dataRegistro]
+                  ,[usuarioRegistro]
+                  ,[ativo])
+            VALUES
+                (@Espec
+                ,@Detalhe
+                ,@Data
+                ,@Usuario  
+                ,1);", Con);
+
+                    Cmd.Parameters.AddWithValue("@Espec", ObjEspec.EspecialidadeDesc);
+                    Cmd.Parameters.AddWithValue("@Detalhe", ObjEspec.DetalheEspec);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            finally
-            {
-                if (Dr != null)
-                    Dr.Close();
-            }
-            return EspecialidadeList;
         }
         public bool AlteraEspecialidadeDAO()
         {
-            SqlConnection Con = null;
-
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[especialidade] SET 
-	                    especialidade='" + ObjEspec.EspecialidadeDesc + "'," +
-                        "detalhes='" + ObjEspec.DetalheEspec + "' " +
-                        "WHERE idEspecialidade='" + ObjEspec.Id + "'" +
-                        ";", Con);
+	                    especialidade = @Espec
+                        ,detalhes= @Detalhe
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario  
+                        WHERE idEspecialidade= @Id;", Con);
 
-                Cmd.ExecuteNonQuery();
+                    Cmd.Parameters.AddWithValue("@Espec", ObjEspec.EspecialidadeDesc);
+                    Cmd.Parameters.AddWithValue("@Detalhe", ObjEspec.DetalheEspec);
+                    Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
-            }
-            return true;
         }
         public bool InativaEspecialidadeDAO()
         {
-            SqlConnection Con = null;
-
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
+                try
+                {
 
-                SqlCommand Cmd = new SqlCommand(@"
+                    SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                  [dbo].[Especialidade] SET
-                        ativo=0 " +
-                        "WHERE idEspecialidade='" + ObjEspec.Id + "'" +
-                        ";", Con);
+                        ativo = 0
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario
+                        WHERE idEspecialidade = @Id;", Con);
 
-                Cmd.ExecuteNonQuery();
+                    Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
-            }
-            return true;
         }
     }
 }

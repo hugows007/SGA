@@ -1,4 +1,5 @@
 ﻿using SGA.Models.Cargos;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,28 @@ namespace SGA.Views.SGA.VCargo
     {
         public List<Cargo> ListaCargoSelect = new List<Cargo>();
         Cargo ObjCargo = FactoryCargo.GetNew();
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            foreach (var ObjAT in new ManterCargo(ObjCargo).ConsultaCargos())
+            try
             {
-                ListaCargoSelect.Add(ObjAT);
-            }
+                foreach (var ObjAT in new ManterCargo(ObjCargo).ConsultaCargos())
+                {
+                    ListaCargoSelect.Add(ObjAT);
+                }
 
-            if (Request.QueryString["OpInatCargo"] != null && Request.QueryString["OpInatCargo"].Equals("True"))
-            {
-                MsgLabel.Text = "Cargo inativado com sucesso!";
+                if (Request.QueryString["OpInatCargo"] != null && Request.QueryString["OpInatCargo"].Equals("True"))
+                {
+                    MsgLabel.Text = "Cargo inativado com sucesso!";
+                }
+                else if (Request.QueryString["OpInatCargo"] != null && Request.QueryString["OpInatCargo"].Equals("False"))
+                {
+                    MsgLabel.Text = "Ocorreu um erro ao inativar o cargo!";
+                }
             }
-            else if (Request.QueryString["OpInatCargo"] != null && Request.QueryString["OpInatCargo"].Equals("False"))
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Ocorreu um erro ao inativar o cargo!";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

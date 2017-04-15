@@ -9,6 +9,6 @@ namespace SGA.Models.Setores
     {
         public int Id { get; set; }
         public string SetorDesc { get; set; }
-        public int Status { get; set; }
+        public int IdStatus { get; set; }
     }
 }

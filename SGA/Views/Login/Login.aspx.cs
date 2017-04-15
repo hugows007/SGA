@@ -33,12 +33,12 @@ namespace SGA
                 }
                 else
                 {
-                    Response.Write("Invalid Login");
+                    Response.Write("Login inválido");
                 }
             }
             catch (Exception)
             {
-                Response.Write("Sistem Error");
+                Response.Write("Erro sistêmico");
             }
         }
     }

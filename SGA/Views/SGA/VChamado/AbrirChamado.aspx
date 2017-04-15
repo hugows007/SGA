@@ -36,6 +36,8 @@
                                                     <asp:DropDownList ID="DropDownListTpServico" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListTpServico_SelectedIndexChanged"></asp:DropDownList>
                                                 </td>
                                             </tr>
+                                            <%if (DropDownListTpServico.SelectedIndex > 0)
+                                                { %>
                                             <tr>
                                                 <td>
                                                     <label for="DropDownListServico" class="control-label">Descrição do serviço:</label>
@@ -44,6 +46,7 @@
                                                     <asp:DropDownList ID="DropDownListServico" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                                 </td>
                                             </tr>
+                                            <%} %>
                                             <%if (PerfilUsr)
                                                 {%>
                                             <tr>

@@ -1,16 +1,20 @@
 ﻿using SGA.DAO;
 using SGA.Models.AreaAtendimentos;
+using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterAreaAtendimentoDAO
     {
         private AreaAtendimento ObjArea;
+        SqlConnection Con = null;
         public ManterAreaAtendimentoDAO()
         {
 
@@ -21,204 +25,204 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public SqlDataReader ConsultaAreaAtendimentosDataReaderDAO()
         {
-            SqlConnection Con = new Conexao().ConexaoDB();
-            SqlDataReader Result = null;
+            SqlDataReader Dr = null;
 
             try
             {
+                Con = new Conexao().ConexaoDB();
+
                 SqlCommand CmdGetArea = new SqlCommand(@"
                  SELECT [idAreaAtendimento]
-                      ,[regiao]
+                       ,[regiao]
                  FROM [dbo].[AreaDeAtendimento]
                  WHERE ativo = 1
                  ORDER BY regiao", Con);
 
-                Result = CmdGetArea.ExecuteReader();
-                return Result;
+                Dr = CmdGetArea.ExecuteReader();
+                return Dr;
             }
-            catch (SqlException)
+            catch (SqlException Ex)
             {
-                return null;
-            }
-            finally
-            {
-                Con.Close();
-                Result.Close();
+                new LogException(Ex).InsereLogBd();
+
+                throw;
             }
         }
         public List<AreaAtendimento> ConsultaAreaAtendimentosDAO()
         {
             List<AreaAtendimento> AreaList = new List<AreaAtendimento>();
             SqlDataReader Dr = null;
-            SqlConnection Con = new Conexao().ConexaoDB();
 
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                SqlCommand CmdArea = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
-                  FROM [SAS].[dbo].[AreaDeAtendimento]
+                  FROM [dbo].[AreaDeAtendimento]
                   WHERE ativo = 1", Con);
 
-                Dr = CmdArea.ExecuteReader();
+                    Dr = Cmd.ExecuteReader();
 
-                while (Dr.Read())
-                {
-                    AreaAtendimento Usr = FactoryArea.GetNew();
+                    while (Dr.Read())
+                    {
+                        AreaAtendimento Usr = FactoryArea.GetNew();
 
-                    Usr.Id = Dr.GetInt32(0);
-                    Usr.Regiao = Dr.GetString(1);
-                    Usr.Cidade = Dr.GetString(2);
-                    Usr.Estado = Dr.GetString(3);
+                        Usr.Id = Dr.GetInt32(0);
+                        Usr.Regiao = Dr.GetString(1);
+                        Usr.Cidade = Dr.GetString(2);
+                        Usr.Estado = Dr.GetString(3);
 
-                    AreaList.Add(Usr);
+                        AreaList.Add(Usr);
+                    }
+
+                    return AreaList;
                 }
-            }
-            catch (SqlException)
-            {
-                return null;
-            }
-            finally
-            {
-                Dr.Close();
-                Con.Close();
-            }
-            return AreaList;
-        }
-        public bool CadastraAreaAtendimentoDAO()
-        {
-            SqlConnection Con = null;
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
 
-            try
-            {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-            INSERT INTO [dbo].[AreaDeAtendimento]
-                ([regiao]
-                  ,[cidade]
-                  ,[estado]
-                  ,[ativo])
-            VALUES
-                (@Regiao
-                ,@Cidade
-                ,@Estado    
-                ,1);", Con);
-
-                Cmd.Parameters.AddWithValue("@Regiao", ObjArea.Regiao);
-                Cmd.Parameters.AddWithValue("@Cidade", ObjArea.Cidade);
-                Cmd.Parameters.AddWithValue("@Estado", ObjArea.Estado);
-
-                Cmd.ExecuteNonQuery();
-                return true;
-            }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
+                    throw;
+                }
             }
         }
         public AreaAtendimento ConsultaAreaAtendimentoByIdDAO()
         {
             SqlDataReader Dr = null;
-            SqlConnection Con = null;
 
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[AreaDeAtendimento]
                   WHERE ativo = 1 and idAreaAtendimento = @Id", Con);
 
-                Cmd.Parameters.AddWithValue("@Id", ObjArea.Id);
+                    Cmd.Parameters.AddWithValue("@Id", ObjArea.Id);
 
-                Dr = Cmd.ExecuteReader();
+                    Dr = Cmd.ExecuteReader();
 
-                while (Dr.Read())
-                {
-                    ObjArea.Id = Dr.GetInt32(0);
-                    ObjArea.Regiao = Dr.GetString(1);
-                    ObjArea.Cidade = Dr.GetString(2);
-                    ObjArea.Estado = Dr.GetString(3);
+                    while (Dr.Read())
+                    {
+                        ObjArea.Id = Dr.GetInt32(0);
+                        ObjArea.Regiao = Dr.GetString(1);
+                        ObjArea.Cidade = Dr.GetString(2);
+                        ObjArea.Estado = Dr.GetString(3);
+                    }
+
+                    return ObjArea;
                 }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
 
-                return ObjArea;
+                    throw;
+                }
             }
-            catch (SqlException)
+        }
+        public bool CadastraAreaAtendimentoDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                return null;
-            }
-            finally
-            {
-                Dr.Close();
-                Con.Close();
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+            INSERT INTO [dbo].[AreaDeAtendimento]
+                ([regiao]
+                  ,[cidade]
+                  ,[estado]
+                  ,[dataRegistro]
+                  ,[usuarioRegistro]
+                  ,[ativo])
+            VALUES
+                (@Regiao
+                ,@Cidade
+                ,@Estado
+                ,@Data 
+                ,@Usuario    
+                ,1);", Con);
+
+                    Cmd.Parameters.AddWithValue("@Regiao", ObjArea.Regiao);
+                    Cmd.Parameters.AddWithValue("@Cidade", ObjArea.Cidade);
+                    Cmd.Parameters.AddWithValue("@Estado", ObjArea.Estado);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
             }
         }
         public bool AlteraAreaAtendimentoDAO()
         {
-            SqlConnection Con = null;
-
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[AreaDeAtendimento] SET 
 	                    Regiao = @Regiao
-                        Cidade = @Cidade
-                        Estado = @Estado
+                        ,Cidade = @Cidade
+                        ,Estado = @Estado
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario
                         WHERE idAreaAtendimento = @Id;", Con);
 
-                Cmd.Parameters.AddWithValue("@Regiao", ObjArea.Regiao);
-                Cmd.Parameters.AddWithValue("@Cidade", ObjArea.Cidade);
-                Cmd.Parameters.AddWithValue("@Estado", ObjArea.Estado);
-                Cmd.Parameters.AddWithValue("@Id", ObjArea.Id);
+                    Cmd.Parameters.AddWithValue("@Regiao", ObjArea.Regiao);
+                    Cmd.Parameters.AddWithValue("@Cidade", ObjArea.Cidade);
+                    Cmd.Parameters.AddWithValue("@Estado", ObjArea.Estado);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+                    Cmd.Parameters.AddWithValue("@Id", ObjArea.Id);
 
-                Cmd.ExecuteNonQuery();
+                    Cmd.ExecuteNonQuery();
 
-                return true;
-            }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
             }
         }
         public bool InativarAreaAtendimentoDAO()
         {
-            SqlConnection Con = null;
-
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
-	                [SAS].[dbo].[AreaDeAtendimento] SET
-                        ativo = 0                         
+	                [dbo].[AreaDeAtendimento] SET
+                        ativo = 0
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario                         
                     WHERE idAreaAtendimento = @Id;", Con);
 
-                Cmd.Parameters.AddWithValue("@Id", ObjArea.Id);
-                    
-                Cmd.ExecuteNonQuery();
+                    Cmd.Parameters.AddWithValue("@Id", ObjArea.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
             }
-            catch (SqlException)
-            {
-                return false;
-            }
-            finally
-            {
-                Con.Close();
-            }
-            return true;
         }
     }
 }

@@ -24,23 +24,13 @@ namespace SGA.Models.Login
             }
             catch (InvalidOperationException Ex)
             {
-                new LogException(
-                    Ex.Message.ToString(),
-                    Ex.Source.ToString(),
-                    Ex.StackTrace.ToString(),
-                    Ex.TargetSite.ToString()
-                    );
+                new LogException(Ex);
 
                 throw;
             }
             catch (System.Data.SqlClient.SqlException Ex)
             {
-                new LogException(
-                    Ex.Message.ToString(),
-                    Ex.Source.ToString(),
-                    Ex.StackTrace.ToString(),
-                    Ex.TargetSite.ToString()
-                    );
+                new LogException(Ex);
 
                 throw;
             }

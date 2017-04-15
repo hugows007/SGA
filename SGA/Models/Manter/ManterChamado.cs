@@ -25,17 +25,15 @@ namespace SGA.Models.Manter
             {
                 if (new ManterChamadoDAO(ObjChamado).AbreChamadoDAO())
                 {
-                    return "Chamado aberto com sucesso! Guarde o número do seu chamado: ";
-                }
-                else
-                {
-                    return "Ocorreu um erro ao abrir o chamado. Favor entrar em contato com o suporte técnico.";
+                    Msg = "Chamado aberto com sucesso! Guarde o número do seu chamado: ";
                 }
             }
             catch (Exception)
             {
-                return "Ocorreu um problem não esperado.";
+                Msg = "Ocorreu um erro ao abrir o chamado.";
             }
+
+            return Msg;
         }
         public List<Chamado> ConsultaChamados()
         {
@@ -43,15 +41,22 @@ namespace SGA.Models.Manter
         }
         public Chamado ConsultaChamadoById()
         {
-            this.ObjChamado = new ManterChamadoDAO(ObjChamado).ConsultaChamadoByIdDAO();
+            try
+            {
+                this.ObjChamado = new ManterChamadoDAO(ObjChamado).ConsultaChamadoByIdDAO();
 
-            if (!0.Equals(ObjChamado.Id))
-            {
-                return this.ObjChamado;
+                if (!0.Equals(ObjChamado.Id))
+                {
+                    return this.ObjChamado;
+                }
+                else
+                {
+                    Msg = "Chamado não encontrado";
+                    return null;
+                }
             }
-            else
+            catch (Exception)
             {
-                Msg = "Chamado não encontrado";
                 return null;
             }
         }
@@ -59,29 +64,25 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterChamadoDAO
-                           (ObjChamado).AlteraChamadoDAO())
+                if (new ManterChamadoDAO(ObjChamado).AlteraChamadoDAO())
                 {
-                    return "Chamado atualizado com sucesso!";
-                }
-                else
-                {
-                    return "Ocorreu um erro ao atualizar o chamado!";
+                    Msg = "Chamado atualizado com sucesso!";
                 }
             }
             catch (Exception)
             {
-                return "Ocorreu um erro não esperado.";
+                Msg = "Ocorreu um erro ao atualizar o chamado.";
             }
+
+            return Msg;
         }
         public bool CancelaChamado()
         {
-            if (new ManterChamadoDAO
-          (ObjChamado).CancelaChamadoDAO())
+            try
             {
-                return true;
+                return new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO();
             }
-            else
+            catch(Exception)
             {
                 return false;
             }

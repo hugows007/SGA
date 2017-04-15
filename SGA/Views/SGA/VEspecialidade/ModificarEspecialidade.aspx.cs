@@ -1,4 +1,5 @@
-﻿using SGA.Models.Especialidades;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Especialidades;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,23 @@ namespace SGA.Views.SGA.VEspecialidade
         {
             if (!Page.IsPostBack)
             {
-                if (Request.QueryString["Id"] != null)
+                try
                 {
-                    ObjEspec.Id = Convert.ToInt32(Request.QueryString["Id"]);
-
-                    foreach (var Result in new ManterEspecialidade(ObjEspec).ConsultaEspecialidadeById())
+                    if (Request.QueryString["Id"] != null)
                     {
-                        EspecTextBox.Text = Result.EspecialidadeDesc;
-                        EspecDestTextBox.Text = Result.DetalheEspec;
+                        ObjEspec.Id = Convert.ToInt32(Request.QueryString["Id"]);
+
+                        foreach (var Result in new ManterEspecialidade(ObjEspec).ConsultaEspecialidadeById())
+                        {
+                            EspecTextBox.Text = Result.EspecialidadeDesc;
+                            EspecDestTextBox.Text = Result.DetalheEspec;
+                        }
                     }
+                }
+                catch (Exception Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
                 }
             }
         }
@@ -42,10 +51,10 @@ namespace SGA.Views.SGA.VEspecialidade
                     MsgLabel.Text = new ManterEspecialidade(ObjEspec).AlteraEspecialidade();
                 }
             }
-
-            catch (Exception)
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Erro ao alterar - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

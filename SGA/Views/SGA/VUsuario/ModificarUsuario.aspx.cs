@@ -1,4 +1,5 @@
-﻿using SGA.Models.Manter;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Usuarios;
 using System;
 
@@ -11,18 +12,26 @@ namespace SGA.Views.SGA.VUsuario
         {
             if (!Page.IsPostBack)
             {
-                if (Request.QueryString["Id"] != null)
+                try
                 {
-                    Usuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
-
-                    foreach (var Result in new ManterUsuario(Usuario).ConsultaUsuarioById())
+                    if (Request.QueryString["Id"] != null)
                     {
-                        NomeTextBox.Text = Result.Nome;
-                        EndTextBox.Text = Result.Endereco;
-                        TelTextBox.Text = Result.Telefone;
-                        NumTextBox.Text = Result.Numero;
-                        CEPTextBox.Text = Result.Cep;
+                        Usuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
+
+                        foreach (var Result in new ManterUsuario(Usuario).ConsultaUsuarioById())
+                        {
+                            NomeTextBox.Text = Result.Nome;
+                            EndTextBox.Text = Result.Endereco;
+                            TelTextBox.Text = Result.Telefone;
+                            NumTextBox.Text = Result.Numero;
+                            CEPTextBox.Text = Result.Cep;
+                        }
                     }
+                }
+                catch (Exception Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
                 }
             }
         }
@@ -43,10 +52,10 @@ namespace SGA.Views.SGA.VUsuario
                     MsgLabel.Text = new ManterUsuario(Usuario).AlteraUsuario();
                 }
             }
-
-            catch (Exception)
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Erro ao cadastrar - Código 1";
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

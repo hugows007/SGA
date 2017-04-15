@@ -22,13 +22,13 @@ namespace SGA.Views.SGA.VUsuario {
         protected global::System.Web.UI.UpdatePanel UpdatePanel2;
         
         /// <summary>
-        /// Msg control.
+        /// MsgLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Msg;
+        protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
         /// DropDownListTipo control.
