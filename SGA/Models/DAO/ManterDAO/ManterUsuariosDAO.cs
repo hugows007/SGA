@@ -16,7 +16,10 @@ namespace SGA.Models.DAO.ManterDAO
         string LastId;
         string MembershipId;
         Usuario ObjUsuario = null;
-        string RegraForUSer;
+        string RegraForUser;
+        string RegraMb1;
+        string RegraMb2;
+
 
         public ManterUsuarioDAO(Usuario ObjUsr, string MbId)
         {
@@ -47,7 +50,7 @@ namespace SGA.Models.DAO.ManterDAO
 
                     while (Dr.Read())
                     {
-                        Usuario Usr = new Usuario();
+                        Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
 
                         Usr.Id = Dr.GetInt32(0);
                         Usr.Nome = Dr.GetString(1);
@@ -70,9 +73,71 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public List<Usuario> ConsultaUsuariosDAOById()
+        public List<Usuario> ConsultaUsuariosByPerfilDAO(string Perfil)
         {
             List<Usuario> UsrList = new List<Usuario>();
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    switch (Perfil)
+                    {
+                        case "Administrador":
+                            RegraMb1 = "06AE01F4-0570-4C5D-87C6-5E3BDA7A9FC4";
+                            break;
+                        case "Cliente":
+                            RegraMb1 = "ECBD651F-AA68-481F-BCEA-55D3ED9D0456";
+                            RegraMb2 = "1E193EFC-95B0-4B28-8F53-02E0C7EBCEF6";
+                            break;
+                        case "Gestor":
+                            RegraMb1 = "8D511875-4B63-4960-9550-1D304B1D4D7B";
+                            break;
+                        case "Técnico":
+                            RegraMb1 = "9BC49B5E-0865-41B2-ACE3-058849D4A9F5";
+                            break;
+                    }
+
+                    SqlCommand Cmd = new SqlCommand(@"
+                    SELECT * 
+                    FROM Usuario Usr INNER JOIN 
+                    UsuarioXMemberShipUser UsrMb ON (Usr.idUsuario = UsrMb.idUsuario) INNER JOIN
+                    aspnet_UsersInRoles UsrRoles ON (UsrMb.IdUsrMemberShip = UsrRoles.UserId)
+                    WHERE UsrRoles.RoleId in (@IdRole1, @IdRole2)", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdRole1", RegraMb1);
+                    Cmd.Parameters.AddWithValue("@IdRole2", RegraMb2);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+
+                        Usr.Id = Dr.GetInt32(0);
+                        Usr.Nome = Dr.GetString(1);
+                        Usr.Endereco = Dr.GetString(2);
+                        Usr.Numero = Dr.GetString(3);
+                        Usr.Cep = Dr.GetString(4);
+                        Usr.Telefone = Dr.GetString(5);
+                        Usr.Regra = GetRegraUserDAO(Usr.Id);
+
+                        UsrList.Add(Usr);
+                    }
+
+                    return UsrList;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
+        public Usuario ConsultaUsuariosByIdDAO()
+        {
             SqlCommand Cmd = null;
             SqlDataReader Dr = null;
 
@@ -114,21 +179,18 @@ namespace SGA.Models.DAO.ManterDAO
 
                     while (Dr.Read())
                     {
-                        Usuario Usr = new Usuario();
-
-                        Usr.Id = Dr.GetInt32(0);
-                        Usr.Nome = Dr.GetString(1);
-                        Usr.Endereco = Dr.GetString(2);
-                        Usr.Numero = Dr.GetString(3);
-                        Usr.Cep = Dr.GetString(4);
-                        Usr.Telefone = Dr.GetString(5);
-                        Usr.IdStatus = Dr.GetInt32(6);
-                        Usr.IdAreaAtendimento = Dr.GetInt32(7);
-                        Usr.Regra = GetRegraUserDAO(Usr.Id);
-                        UsrList.Add(Usr);
+                        ObjUsuario.Id = Dr.GetInt32(0);
+                        ObjUsuario.Nome = Dr.GetString(1);
+                        ObjUsuario.Endereco = Dr.GetString(2);
+                        ObjUsuario.Numero = Dr.GetString(3);
+                        ObjUsuario.Cep = Dr.GetString(4);
+                        ObjUsuario.Telefone = Dr.GetString(5);
+                        ObjUsuario.IdStatus = Dr.GetInt32(6);
+                        ObjUsuario.IdAreaAtendimento = Dr.GetInt32(7);
+                        ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
                     }
 
-                    return UsrList;
+                    return ObjUsuario;
                 }
                 catch (SqlException Ex)
                 {
@@ -366,7 +428,6 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public string GetRegraUserDAO(int Id)
         {
-            List<Usuario> UsrList = new List<Usuario>();
             SqlDataReader Dr = null;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -379,7 +440,7 @@ namespace SGA.Models.DAO.ManterDAO
                   INNER JOIN [dbo].[aspnet_Users] Usr ON (UsMb.IdUsrMemberShip = Usr.UserId)
                   WHERE UsMb.idUsuario = @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Id", ObjUsuario.Id);
+                    Cmd.Parameters.AddWithValue("@Id", Id);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -387,10 +448,10 @@ namespace SGA.Models.DAO.ManterDAO
                     {
                         Usuario Usr = new Usuario();
 
-                        RegraForUSer = Roles.GetRolesForUser(Dr.GetString(0))[0].ToString();
+                        RegraForUser = Roles.GetRolesForUser(Dr.GetString(0))[0].ToString();
                     }
 
-                    return RegraForUSer;
+                    return RegraForUser;
 
                 }
                 catch (SqlException Ex)

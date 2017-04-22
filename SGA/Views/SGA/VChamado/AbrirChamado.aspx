@@ -51,10 +51,10 @@
                                                 {%>
                                             <tr>
                                                 <td>
-                                                    <label for="DropDownListAreaAtendimento" class="control-label">Área de atendimento:</label>
+                                                    <label for="DropDownListCliente" class="control-label">Cliente do chamado:</label>
                                                 </td>
                                                 <td>
-                                                    <asp:DropDownList ID="DropDownListAreaAtendimento" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
+                                                    <asp:DropDownList ID="DropDownListCliente" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                                 </td>
                                             </tr>
                                             <%}%>

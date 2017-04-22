@@ -45,13 +45,13 @@ namespace SGA.Models.Manter
             {
                 this.ObjChamado = new ManterChamadoDAO(ObjChamado).ConsultaChamadoByIdDAO();
 
-                if (!0.Equals(ObjChamado.Id))
+                if (!0.Equals(ObjChamado.Id) && !0.Equals(ObjChamado.IdStatus))
                 {
                     return this.ObjChamado;
                 }
                 else
                 {
-                    Msg = "Chamado não encontrado";
+                    Msg = "Chamado não encontrado ou inexistente.";
                     return null;
                 }
             }

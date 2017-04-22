@@ -24,41 +24,29 @@ namespace SGA.Views.SGA.VUsuario
                     DropDownListTipo.DataBind();
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
 
-                    using (var Setor = new ManterSetor().ConsultaSetoresDataReader())
-                    {
-                        DropDownListSetor.DataSource = Setor;
-                        DropDownListSetor.DataTextField = "setor";
-                        DropDownListSetor.DataValueField = "idSetor";
-                        DropDownListSetor.DataBind();
-                        DropDownListSetor.Items.Insert(0, new ListItem("Selecione o setor", "0"));
-                    }
+                    DropDownListSetor.DataSource = new ManterSetor().ConsultaSetores();
+                    DropDownListSetor.DataTextField = "NomeSetor";
+                    DropDownListSetor.DataValueField = "Id";
+                    DropDownListSetor.DataBind();
+                    DropDownListSetor.Items.Insert(0, new ListItem("Selecione o setor", "0"));
 
-                    using (var Cargo = new ManterCargo().ConsultaCargosDataReader())
-                    {
-                        DropDownListCargo.DataSource = Cargo;
-                        DropDownListCargo.DataTextField = "cargo";
-                        DropDownListCargo.DataValueField = "idCargo";
-                        DropDownListCargo.DataBind();
-                        DropDownListCargo.Items.Insert(0, new ListItem("Selecione o cargo", "0"));
-                    }
+                    DropDownListCargo.DataSource = new ManterCargo().ConsultaCargos();
+                    DropDownListCargo.DataTextField = "NomeCargo";
+                    DropDownListCargo.DataValueField = "Id";
+                    DropDownListCargo.DataBind();
+                    DropDownListCargo.Items.Insert(0, new ListItem("Selecione o cargo", "0"));
 
-                    using (var Espec = new ManterEspecialidade().ConsultaEspecialidadesDataReader())
-                    {
-                        DropDownListEspec.DataSource = Espec;
-                        DropDownListEspec.DataTextField = "especialidade";
-                        DropDownListEspec.DataValueField = "idEspecialidade";
-                        DropDownListEspec.DataBind();
-                        DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
-                    }
+                    DropDownListEspec.DataSource = new ManterEspecialidade().ConsultaEspecialidades();
+                    DropDownListEspec.DataTextField = "NomeEspec";
+                    DropDownListEspec.DataValueField = "Id";
+                    DropDownListEspec.DataBind();
+                    DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
 
-                    using (var Area = new ManterAreaAtendimento().ConsultaAreaAtendimentosDataReader())
-                    {
-                        DropDownListAreaAtendimento.DataSource = Area;
-                        DropDownListAreaAtendimento.DataTextField = "regiao";
-                        DropDownListAreaAtendimento.DataValueField = "idAreaAtendimento";
-                        DropDownListAreaAtendimento.DataBind();
-                        DropDownListAreaAtendimento.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
-                    }
+                    DropDownListAreaAtendimento.DataSource = new ManterAreaAtendimento().ConsultaAreaAtendimentos();
+                    DropDownListAreaAtendimento.DataTextField = "Regiao";
+                    DropDownListAreaAtendimento.DataValueField = "Id";
+                    DropDownListAreaAtendimento.DataBind();
+                    DropDownListAreaAtendimento.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
                 }
                 catch (Exception Ex)
                 {
@@ -89,8 +77,8 @@ namespace SGA.Views.SGA.VUsuario
                 else if (TpUsuario.Equals("Gestor"))
                 {
                     Usr = FactoryUsuario.GetNew(TipoUsuario.UsuarioGestor);
-                    Usr.ObjT.IdCargo = Convert.ToInt32(DropDownListCargo.SelectedValue);
-                    Usr.ObjT.IdSetor = Convert.ToInt32(DropDownListSetor.SelectedValue);
+                    Usr.ObjG.IdCargo = Convert.ToInt32(DropDownListCargo.SelectedValue);
+                    Usr.ObjG.IdSetor = Convert.ToInt32(DropDownListSetor.SelectedValue);
                 }
                 else if (TpUsuario.Equals("Cliente Físico"))
                 {
@@ -114,7 +102,7 @@ namespace SGA.Views.SGA.VUsuario
                 Usr.Numero = NumeroTextBox.Text;
                 Usr.Cep = CEPTextBox.Text;
                 Usr.Telefone = TelefoneTextBox.Text;
-                Usr.IdAreaAtendimento = DropDownListAreaAtendimento.SelectedIndex;
+                Usr.IdAreaAtendimento = Convert.ToInt32(DropDownListAreaAtendimento.SelectedValue);
 
                 MsgLabel.Text = new ManterUsuario(Usr).CadastraUsuario();
             }

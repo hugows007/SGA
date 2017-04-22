@@ -16,7 +16,8 @@ namespace SGA.Views.SGA.VServico
         public List<Servico> ListaServicoSelect = new List<Servico>();
         public List<string> NomeServico = new List<string>();
 
-        Servico ObjServico = FactoryServico.GetNew();
+        Servico ObjServico = FactoryServico.GetNewServico();
+        TipoServico ObjTpServico = FactoryServico.GetNewTpServico();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,7 +25,8 @@ namespace SGA.Views.SGA.VServico
             {
                 foreach (var Result in new ManterServico(ObjServico).ConsultaServicos())
                 {
-                    NomeServico.Add(new ManterServico(Result).ConsultaTpServicoById());
+                    ObjTpServico.Id = Result.IdTipo;
+                    NomeServico.Add(new ManterServico(ObjServico, ObjTpServico).ConsultaTpServicoById().NomeTipoServ);
                     ListaServicoSelect.Add(Result);
                 }
 

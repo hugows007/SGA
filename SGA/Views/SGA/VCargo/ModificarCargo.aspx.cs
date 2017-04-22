@@ -22,12 +22,10 @@ namespace SGA.Views.SGA.VCargo
                     if (Request.QueryString["Id"] != null)
                     {
                         ObjCargo.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                        ObjCargo = new ManterCargo(ObjCargo).ConsultaCargosById();
 
-                        foreach (var Result in new ManterCargo(ObjCargo).ConsultaCargosById())
-                        {
-                            CargoDescTextBox.Text = Result.CargoDesc;
-                            SalarioTextBox.Text = Result.Salario.ToString();
-                        }
+                        CargoDescTextBox.Text = ObjCargo.NomeCargo;
+                        SalarioTextBox.Text = ObjCargo.Salario.ToString();
                     }
                 }
                 catch (Exception Ex)
@@ -44,7 +42,7 @@ namespace SGA.Views.SGA.VCargo
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjCargo.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    ObjCargo.CargoDesc = CargoDescTextBox.Text;
+                    ObjCargo.NomeCargo = CargoDescTextBox.Text;
                     ObjCargo.Salario = Convert.ToDecimal(SalarioTextBox.Text);
 
                     MsgLabel.Text = new ManterCargo(ObjCargo).AlteraCargo();

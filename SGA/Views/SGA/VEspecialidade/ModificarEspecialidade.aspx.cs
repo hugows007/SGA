@@ -22,12 +22,10 @@ namespace SGA.Views.SGA.VEspecialidade
                     if (Request.QueryString["Id"] != null)
                     {
                         ObjEspec.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                        ObjEspec = new ManterEspecialidade(ObjEspec).ConsultaEspecialidadeById();
 
-                        foreach (var Result in new ManterEspecialidade(ObjEspec).ConsultaEspecialidadeById())
-                        {
-                            EspecTextBox.Text = Result.EspecialidadeDesc;
-                            EspecDestTextBox.Text = Result.DetalheEspec;
-                        }
+                        EspecTextBox.Text = ObjEspec.NomeEspec;
+                        EspecDestTextBox.Text = ObjEspec.DetalheEspec;
                     }
                 }
                 catch (Exception Ex)
@@ -45,7 +43,7 @@ namespace SGA.Views.SGA.VEspecialidade
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjEspec.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    ObjEspec.EspecialidadeDesc = EspecTextBox.Text;
+                    ObjEspec.NomeEspec = EspecTextBox.Text;
                     ObjEspec.DetalheEspec = EspecDestTextBox.Text;
 
                     MsgLabel.Text = new ManterEspecialidade(ObjEspec).AlteraEspecialidade();

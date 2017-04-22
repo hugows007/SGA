@@ -12,9 +12,9 @@ namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterServicoDAO
     {
-        string ServicoNome = null;
         public Servico ObjServico = null;
-        SqlConnection Con = null;
+        public TipoServico ObjTpServico = null;
+
         public ManterServicoDAO()
         {
 
@@ -23,85 +23,54 @@ namespace SGA.Models.DAO.ManterDAO
         {
             this.ObjServico = ObjServico;
         }
-        public SqlDataReader ConsultaServicosDataReaderDAO()
+        public ManterServicoDAO(TipoServico ObjTpServico)
         {
-            SqlDataReader Dr = null;
-
-            try
-            {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-                 SELECT [idServico]
-                      ,[tipo]
-                      ,[nome]
-                      ,[descricao]
-                 FROM [dbo].[Servico]
-                 WHERE ativo = 1
-                 ORDER BY Tipo", Con);
-
-                Dr = Cmd.ExecuteReader();
-                return Dr;
-            }
-            catch (SqlException Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                throw;
-            }
+            this.ObjTpServico = ObjTpServico;
         }
-        public SqlDataReader ConsultaServicosDataReaderByIdTpDAO()
+        public ManterServicoDAO(Servico ObjServico, TipoServico ObjTpServico)
         {
-            SqlDataReader Dr = null;
-
-            try
-            {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-                 SELECT [idServico]
-                      ,[idTipo]
-                      ,[nome]
-                      ,[descricao]
-                 FROM [dbo].[Servico]
-                 WHERE ativo = 1 and idTipo = @Tipo
-                 ORDER BY nome;", Con);
-
-                Cmd.Parameters.AddWithValue("@Tipo", ObjServico.Tipo);
-
-                Dr = Cmd.ExecuteReader();
-                return Dr;
-            }
-            catch (SqlException Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                throw;
-            }
+            this.ObjServico = ObjServico;
+            this.ObjTpServico = ObjTpServico;
         }
-        public SqlDataReader ConsultaTpServicosDataReaderDAO()
+        public List<TipoServico> ConsultaTpServicosDAO()
         {
+            List<TipoServico> ServicoTpList = new List<TipoServico>();
             SqlDataReader Dr = null;
 
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
+                try
+                {
 
-                SqlCommand Cmd = new SqlCommand(@"
+                    SqlCommand Cmd = new SqlCommand(@"
                  SELECT [idTipoServ]
                       ,[tipo]
                  FROM [dbo].[TipoServico]
                  WHERE ativo = 1
                  ORDER BY Tipo;", Con);
 
-                Dr = Cmd.ExecuteReader();
-                return Dr;
-            }
-            catch (SqlException Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                throw;
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        TipoServico TpServ = FactoryServico.GetNewTpServico();
+
+                        TpServ.Id = Dr.GetInt32(0);
+                        TpServ.NomeTipoServ = Dr.GetString(1);
+
+                        ServicoTpList.Add(TpServ);
+                    }
+
+                    return ServicoTpList;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
             }
         }
-        public string ConsultaTpServicoByIdDAO()
+        public TipoServico ConsultaTpServicoByIdDAO()
         {
             SqlDataReader Dr = null;
 
@@ -110,23 +79,24 @@ namespace SGA.Models.DAO.ManterDAO
                 try
                 {
                     SqlCommand Cmd = new SqlCommand(@"
-                SELECT [idTipoServ]
-                      ,[tipo]
+                SELECT *
                  FROM [dbo].[TipoServico]
                  WHERE idTipoServ = @Tipo
                  and ativo = 1
                  ORDER BY Tipo;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Tipo", ObjServico.Tipo);
+                    Cmd.Parameters.AddWithValue("@Tipo", ObjTpServico.Id);
 
                     Dr = Cmd.ExecuteReader();
 
                     while (Dr.Read())
                     {
-                        ServicoNome = Dr.GetString(1);
+                        ObjTpServico.Id = Dr.GetInt32(0);
+                        ObjTpServico.NomeTipoServ = Dr.GetString(1);
+                        ObjTpServico.IdStatus = Dr.GetInt32(2);
                     }
 
-                    return ServicoNome;
+                    return ObjTpServico;
                 }
                 catch (SqlException Ex)
                 {
@@ -139,28 +109,41 @@ namespace SGA.Models.DAO.ManterDAO
         {
             List<Servico> ServicoList = new List<Servico>();
             SqlDataReader Dr = null;
+            SqlCommand Cmd = null;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
-                    SqlCommand Cmd = new SqlCommand(@"
+                    if (ObjServico.Id.Equals(0))
+                    {
+                        Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Servico]
                   WHERE ativo = 1", Con);
+                    }
+                    else
+                    {
+                        Cmd = new SqlCommand(@"
+                SELECT *
+                  FROM [dbo].[Servico]
+                  WHERE ativo = 1 and IdServico = @Id", Con);
+
+                        Cmd.Parameters.AddWithValue("@Id", ObjServico.Id);
+                    }
 
                     Dr = Cmd.ExecuteReader();
 
                     while (Dr.Read())
                     {
-                        Servico Servicos = FactoryServico.GetNew();
+                        Servico Servicos = FactoryServico.GetNewServico();
 
                         Servicos.Id = Dr.GetInt32(0);
-                        Servicos.Tipo = Dr.GetInt32(1);
-                        Servicos.Nome = Dr.GetString(2);
-                        Servicos.Descricao = Dr.GetString(3);
+                        Servicos.IdTipo = Dr.GetInt32(1);
+                        Servicos.NomeServ = Dr.GetString(2);
+                        Servicos.DescServ = Dr.GetString(3);
                         Servicos.Sla = Dr.GetInt32(4);
-                        Servicos.Status = Dr.GetInt32(5);
+                        Servicos.IdStatus = Dr.GetInt32(5);
 
                         ServicoList.Add(Servicos);
                     }
@@ -177,6 +160,7 @@ namespace SGA.Models.DAO.ManterDAO
         public Servico ConsultaServicoByIdDAO()
         {
             SqlDataReader Dr = null;
+
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
@@ -194,11 +178,11 @@ namespace SGA.Models.DAO.ManterDAO
                     while (Dr.Read())
                     {
                         ObjServico.Id = Dr.GetInt32(0);
-                        ObjServico.Tipo = Dr.GetInt32(1);
-                        ObjServico.Nome = Dr.GetString(2);
-                        ObjServico.Descricao = Dr.GetString(3);
+                        ObjServico.IdTipo = Dr.GetInt32(1);
+                        ObjServico.NomeServ = Dr.GetString(2);
+                        ObjServico.DescServ = Dr.GetString(3);
                         ObjServico.Sla = Dr.GetInt32(4);
-                        ObjServico.Status = Dr.GetInt32(5);
+                        ObjServico.IdStatus = Dr.GetInt32(5);
                     }
 
                     return ObjServico;
@@ -212,11 +196,12 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public bool CadastraServicoDAO()
         {
-            try
+            using (SqlConnection Con = new Conexao().ConexaoDB())
             {
-                Con = new Conexao().ConexaoDB();
+                try
+                {
 
-                SqlCommand Cmd = new SqlCommand(@"
+                    SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[Servico]
                 ([idTipo]
                   ,[nome]
@@ -234,26 +219,20 @@ namespace SGA.Models.DAO.ManterDAO
                 ,@Usuario
                 ,1)", Con);
 
-                Cmd.Parameters.AddWithValue("@Tipo", ObjServico.Tipo);
-                Cmd.Parameters.AddWithValue("@Nome", ObjServico.Nome);
-                Cmd.Parameters.AddWithValue("@Desc", ObjServico.Descricao);
-                Cmd.Parameters.AddWithValue("@Sla", ObjServico.Sla);
-                Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
-                Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+                    Cmd.Parameters.AddWithValue("@Tipo", ObjServico.IdTipo);
+                    Cmd.Parameters.AddWithValue("@Nome", ObjServico.NomeServ);
+                    Cmd.Parameters.AddWithValue("@Desc", ObjServico.DescServ);
+                    Cmd.Parameters.AddWithValue("@Sla", ObjServico.Sla);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
-                Cmd.ExecuteNonQuery();
-                return true;
-            }
-            catch (SqlException Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                throw;
-            }
-            finally
-            {
-                if (Con != null)
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
                 {
-                    Con.Close();
+                    new LogException(Ex).InsereLogBd();
+                    throw;
                 }
             }
         }
@@ -275,9 +254,9 @@ namespace SGA.Models.DAO.ManterDAO
                         ,usuarioRegistro = @Usuario  
                         WHERE idServico = @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Tipo", ObjServico.Tipo);
-                    Cmd.Parameters.AddWithValue("@Nome", ObjServico.Nome);
-                    Cmd.Parameters.AddWithValue("@Desc", ObjServico.Descricao);
+                    Cmd.Parameters.AddWithValue("@Tipo", ObjServico.IdTipo);
+                    Cmd.Parameters.AddWithValue("@Nome", ObjServico.NomeServ);
+                    Cmd.Parameters.AddWithValue("@Desc", ObjServico.DescServ);
                     Cmd.Parameters.AddWithValue("@Sla", ObjServico.Sla);
                     Cmd.Parameters.AddWithValue("@Id", ObjServico.Id);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);

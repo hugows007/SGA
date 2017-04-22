@@ -26,7 +26,7 @@ namespace SGA.Views.SGA.VSetor
 
                         foreach (var Result in new ManterSetor(ObjSetor).ConsultaSetorById())
                         {
-                            SetorTextBox.Text = Result.SetorDesc;
+                            SetorTextBox.Text = Result.NomeSetor;
                         }
                     }
                 }
@@ -45,7 +45,7 @@ namespace SGA.Views.SGA.VSetor
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjSetor.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    ObjSetor.SetorDesc = SetorTextBox.Text;
+                    ObjSetor.NomeSetor = SetorTextBox.Text;
 
                     MsgLabel.Text = new ManterSetor(ObjSetor).AlteraSetor();
                 }

@@ -29,7 +29,7 @@
                                     {%>
                                 <tr>
                                     <td><a href="ModificarEspecialidade.aspx?Id=<%=Espec.Id %>"><%=Espec.Id %></a></td>
-                                    <td><%=Espec.EspecialidadeDesc%></td>
+                                    <td><%=Espec.NomeEspec%></td>
                                     <td><%=Espec.DetalheEspec %></td>
                                     <td><a href="InativarEspecialidade.aspx?Id=<%=Espec.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>

@@ -21,15 +21,11 @@ namespace SGA.Models.Manter
         {
             this.ObjEspec = ObjEspec;
         }
-        public SqlDataReader ConsultaEspecialidadesDataReader()
-        {
-            return new ManterEspecialidadeDAO().ConsultaEspecialidadesDataReaderDAO();
-        }
         public List<Especialidade> ConsultaEspecialidades()
         {
             return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadesDAO();
         }
-        public List<Especialidade> ConsultaEspecialidadeById()
+        public Especialidade ConsultaEspecialidadeById()
         {
             return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadeByIdDAO();
         }

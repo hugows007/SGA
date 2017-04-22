@@ -29,7 +29,7 @@
                                     {%>
                                 <tr>
                                     <td><a href="ModificarCargo.aspx?Id=<%=Cargo.Id %>"><%=Cargo.Id %></a></td>
-                                    <td><%=Cargo.CargoDesc%></td>
+                                    <td><%=Cargo.NomeCargo%></td>
                                     <td><%=Cargo.Salario %></td>
                                     <td><a href="InativarCargo.aspx?Id=<%=Cargo.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>

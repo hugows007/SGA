@@ -8,6 +8,7 @@ namespace SGA.Models.Chamados
     public class Chamado
     {
         public int Id { get; set; }
+        public int IdCliente { get; set; }
         public string Assunto { get; set; }
         public string Descricao { get; set; }
         public int IdStatus { get; set; }

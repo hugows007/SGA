@@ -40,13 +40,13 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.WebControls.DropDownList DropDownListServico;
         
         /// <summary>
-        /// DropDownListAreaAtendimento control.
+        /// DropDownListCliente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListAreaAtendimento;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListCliente;
         
         /// <summary>
         /// AssuntoTextBox control.

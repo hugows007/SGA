@@ -14,7 +14,6 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterAreaAtendimentoDAO
     {
         private AreaAtendimento ObjArea;
-        SqlConnection Con = null;
         public ManterAreaAtendimentoDAO()
         {
 
@@ -22,31 +21,6 @@ namespace SGA.Models.DAO.ManterDAO
         public ManterAreaAtendimentoDAO(AreaAtendimento ObjArea)
         {
             this.ObjArea = ObjArea;
-        }
-        public SqlDataReader ConsultaAreaAtendimentosDataReaderDAO()
-        {
-            SqlDataReader Dr = null;
-
-            try
-            {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand CmdGetArea = new SqlCommand(@"
-                 SELECT [idAreaAtendimento]
-                       ,[regiao]
-                 FROM [dbo].[AreaDeAtendimento]
-                 WHERE ativo = 1
-                 ORDER BY regiao", Con);
-
-                Dr = CmdGetArea.ExecuteReader();
-                return Dr;
-            }
-            catch (SqlException Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-
-                throw;
-            }
         }
         public List<AreaAtendimento> ConsultaAreaAtendimentosDAO()
         {

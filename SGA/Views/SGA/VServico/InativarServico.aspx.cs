@@ -12,7 +12,7 @@ namespace SGA.Views.SGA.VServico
 {
     public partial class InativarServico : System.Web.UI.Page
     {
-        Servico ObjServico = FactoryServico.GetNew();
+        Servico ObjServico = FactoryServico.GetNewServico();
         protected void Page_Load(object sender, EventArgs e)
         {
             bool OperInativar = false;

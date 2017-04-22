@@ -15,12 +15,12 @@ namespace SGA.Views.SGA.VUsuario
     public partial class ConsultaUsuario : System.Web.UI.Page
     {
         public List<Usuario> ListaUsrSelect = new List<Usuario>();
-        Usuario Usuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+        Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                foreach (var ObjUsr in new ManterUsuario(Usuario).ConsultaUsuarios())
+                foreach (var ObjUsr in new ManterUsuario(ObjUsuario).ConsultaUsuarios())
                 {
                     ListaUsrSelect.Add(ObjUsr);
                 }

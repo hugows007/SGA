@@ -15,35 +15,30 @@ namespace SGA.Views.SGA.VChamado
 {
     public partial class AbrirChamado : System.Web.UI.Page
     {
-        Servico ObjServico = FactoryServico.GetNew();
-        public Chamado ObjChamado = FactoryChamado.GetNew();
+        Servico ObjServico = FactoryServico.GetNewServico();
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+        public Chamado ObjChamado = FactoryChamado.GetNew();
         public bool PerfilUsr = new ManterUsuario().GetUsuariosGestOuAdm();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 try
                 {
-                    using (var Servico = new ManterServico().ConsultaTpServicosDataReader())
-                    {
-                        DropDownListTpServico.DataSource = Servico;
-                        DropDownListTpServico.DataTextField = "tipo";
-                        DropDownListTpServico.DataValueField = "idTipoServ";
-                        DropDownListTpServico.DataBind();
-                        DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
-                    }
+                    DropDownListTpServico.DataSource = new ManterServico().ConsultaTpServicos();
+                    DropDownListTpServico.DataTextField = "NomeTipoServ";
+                    DropDownListTpServico.DataValueField = "Id";
+                    DropDownListTpServico.DataBind();
+                    DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
 
                     if (PerfilUsr)
                     {
-                        using (var Area = new ManterAreaAtendimento().ConsultaAreaAtendimentosDataReader())
-                        {
-                            DropDownListAreaAtendimento.DataSource = Area;
-                            DropDownListAreaAtendimento.DataTextField = "regiao";
-                            DropDownListAreaAtendimento.DataValueField = "idAreaAtendimento";
-                            DropDownListAreaAtendimento.DataBind();
-                            DropDownListAreaAtendimento.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
-                        }
+                        DropDownListCliente.DataSource = new ManterUsuario(ObjUsuario).ConsultaUsuariosByPerfil("Cliente");
+                        DropDownListCliente.DataTextField = "Nome";
+                        DropDownListCliente.DataValueField = "Id";
+                        DropDownListCliente.DataBind();
+                        DropDownListCliente.Items.Insert(0, new ListItem("Selecione o cliente", "0"));
                     }
                 }
                 catch (Exception Ex)
@@ -57,17 +52,13 @@ namespace SGA.Views.SGA.VChamado
         {
             try
             {
-                ObjServico.Tipo = Convert.ToInt32(DropDownListTpServico.SelectedValue);
+                ObjServico.IdTipo = Convert.ToInt32(DropDownListTpServico.SelectedValue);
 
-                using (var Servico = new ManterServico(ObjServico).ConsultaServicosDataReaderByIdTp())
-                {
-                    DropDownListServico.DataSource = Servico;
-                    DropDownListServico.DataTextField = "nome";
-                    DropDownListServico.DataValueField = "idServico";
-                    DropDownListServico.DataBind();
-                    DropDownListServico.Items.Insert(0, new ListItem("Selecione o serviço", "0"));
-
-                }
+                DropDownListServico.DataSource = new ManterServico(ObjServico).ConsultaServicos();
+                DropDownListServico.DataTextField = "NomeServ";
+                DropDownListServico.DataValueField = "Id";
+                DropDownListServico.DataBind();
+                DropDownListServico.Items.Insert(0, new ListItem("Selecione o serviço", "0"));
             }
             catch (Exception Ex)
             {
@@ -84,14 +75,17 @@ namespace SGA.Views.SGA.VChamado
             {
                 if (PerfilUsr)
                 {
-                    ObjChamado.IdAreaAtendimento = Convert.ToInt32(DropDownListAreaAtendimento.SelectedValue);
+                    ObjChamado.IdCliente = Convert.ToInt32(DropDownListCliente.SelectedValue);
+                    ObjUsuario.Id = ObjChamado.IdCliente;
+                    ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
+                    ObjChamado.IdAreaAtendimento = ObjUsuario.IdAreaAtendimento;
                 }
                 else
                 {
-                    foreach (var ObjUsr in new ManterUsuario(ObjUsuario).ConsultaUsuarioById())
-                    {
-                        ObjChamado.IdAreaAtendimento = ObjUsr.IdAreaAtendimento;
-                    }
+                    ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
+
+                    ObjChamado.IdCliente = ObjUsuario.Id;
+                    ObjChamado.IdAreaAtendimento = ObjUsuario.IdAreaAtendimento;
                 }
 
                 ObjChamado.Assunto = AssuntoTextBox.Text;

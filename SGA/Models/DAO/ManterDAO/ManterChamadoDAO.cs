@@ -42,13 +42,14 @@ namespace SGA.Models.DAO.ManterDAO
                         Chamado Cham = FactoryChamado.GetNew();
 
                         Cham.Id = Dr.GetInt32(0);
-                        Cham.Assunto = Dr.GetString(1);
-                        Cham.Descricao = Dr.GetString(2);
-                        Cham.IdStatus = Dr.GetInt32(3);
-                        Cham.DataAbertura = Dr.GetDateTime(4);
-                        Cham.DataFechamento = Dr.GetDateTime(5);
-                        Cham.IdAreaAtendimento = Dr.GetInt32(6);
-                        Cham.IdServico = Dr.GetInt32(7);
+                        Cham.IdCliente = Dr.GetInt32(1);
+                        Cham.Assunto = Dr.GetString(2);
+                        Cham.Descricao = Dr.GetString(3);
+                        Cham.IdStatus = Dr.GetInt32(4);
+                        Cham.DataAbertura = Dr.GetDateTime(5);
+                        Cham.DataFechamento = Dr.GetDateTime(6);
+                        Cham.IdAreaAtendimento = Dr.GetInt32(7);
+                        Cham.IdServico = Dr.GetInt32(8);
 
                         ChamList.Add(Cham);
                     }
@@ -71,6 +72,7 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[Chamado]
                 ([assunto]
+                  ,[idCliente]
                   ,[descricao]
                   ,[idStatusChamado]
                   ,[dataAbertura]
@@ -81,6 +83,7 @@ namespace SGA.Models.DAO.ManterDAO
                   ,[usuarioRegistro])
             VALUES
                 (@Assunto
+                ,@IdCliente
                 ,@Desc
                 ,1
                 ,@DataAber
@@ -91,6 +94,7 @@ namespace SGA.Models.DAO.ManterDAO
                 ,@Usuario);", Con);
 
                     Cmd.Parameters.AddWithValue("@Assunto", ObjChamado.Assunto);
+                    Cmd.Parameters.AddWithValue("@IdCliente", ObjChamado.IdCliente);
                     Cmd.Parameters.AddWithValue("@Desc", ObjChamado.Descricao);
                     Cmd.Parameters.AddWithValue("@DataAber", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@DataFech", DateTime.Parse("2000-01-01 00:00:00.000"));
@@ -111,7 +115,6 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public Chamado ConsultaChamadoByIdDAO()
         {
-            Chamado Obj = FactoryChamado.GetNew();
             SqlDataReader Dr = null;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -129,17 +132,18 @@ namespace SGA.Models.DAO.ManterDAO
 
                     while (Dr.Read())
                     {
-                        Obj.Id = Dr.GetInt32(0);
-                        Obj.Assunto = Dr.GetString(1);
-                        Obj.Descricao = Dr.GetString(2);
-                        Obj.IdStatus = Dr.GetInt32(3);
-                        Obj.DataAbertura = Dr.GetDateTime(4);
-                        Obj.DataFechamento = Dr.GetDateTime(5);
-                        Obj.IdAreaAtendimento = Dr.GetInt32(6);
-                        Obj.IdServico = Dr.GetInt32(7);
+                        ObjChamado.Id = Dr.GetInt32(0);
+                        ObjChamado.IdCliente = Dr.GetInt32(1);
+                        ObjChamado.Assunto = Dr.GetString(2);
+                        ObjChamado.Descricao = Dr.GetString(3);
+                        ObjChamado.IdStatus = Dr.GetInt32(4);
+                        ObjChamado.DataAbertura = Dr.GetDateTime(5);
+                        ObjChamado.DataFechamento = Dr.GetDateTime(6);
+                        ObjChamado.IdAreaAtendimento = Dr.GetInt32(7);
+                        ObjChamado.IdServico = Dr.GetInt32(8);
                     }
 
-                    return Obj;
+                    return ObjChamado;
                 }
                 catch (SqlException Ex)
                 {

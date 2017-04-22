@@ -62,6 +62,8 @@ namespace SGA.Models.Manter
                     }
                     else
                     {
+                        newUser.IsApproved = false;
+                        Membership.UpdateUser(newUser);
                         Msg = "Ocorreu um erro ao efetuar o cadastro do usuário!";
                     }
                 }
@@ -81,9 +83,13 @@ namespace SGA.Models.Manter
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosDAO();
         }
-        public List<Usuario> ConsultaUsuarioById()
+        public List<Usuario> ConsultaUsuariosByPerfil(string Perfil)
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosDAOById();
+            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosByPerfilDAO(Perfil);
+        }
+        public Usuario ConsultaUsuarioById()
+        {
+            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosByIdDAO();
         }
         public string AlteraUsuario()
         {

@@ -22,7 +22,7 @@ namespace SGA.Views.SGA.VEspecialidade
             try
             {
                 Especialidade ObjEspec = FactoryEspecialidade.GetNew();
-                ObjEspec.EspecialidadeDesc = EspecTextBox.Text;
+                ObjEspec.NomeEspec = EspecTextBox.Text;
                 ObjEspec.DetalheEspec = EspecDestTextBox.Text;
 
                 MsgLabel.Text = new ManterEspecialidade(ObjEspec).CadastraEspecialidade();

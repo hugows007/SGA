@@ -13,7 +13,6 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterCargoDAO
     {
         public Cargo ObjCargo = null;
-        SqlConnection Con = null;
         public ManterCargoDAO()
         {
 
@@ -22,33 +21,8 @@ namespace SGA.Models.DAO.ManterDAO
         {
             this.ObjCargo = ObjCargo;
         }
-        public SqlDataReader ConsultaCargosDataReaderDAO()
+        public Cargo ConsultaCargoByIdDAO()
         {
-            SqlDataReader Dr = null;
-
-            try
-            {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-                 SELECT [idCargo]
-                      ,[cargo]
-                 FROM [dbo].[Cargo]
-                 WHERE ativo = 1
-                 ORDER BY cargo;", Con);
-
-                Dr = Cmd.ExecuteReader();
-                return Dr;
-            }
-            catch (SqlException Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                throw;
-            }
-        }
-        public List<Cargo> ConsultaCargoByIdDAO()
-        {
-            List<Cargo> CargoList = new List<Cargo>();
             SqlDataReader Dr = null;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -68,15 +42,12 @@ namespace SGA.Models.DAO.ManterDAO
 
                     while (Dr.Read())
                     {
-                        Cargo Cargos = FactoryCargo.GetNew();
-
-                        Cargos.Id = Dr.GetInt32(0);
-                        Cargos.CargoDesc = Dr.GetString(1);
-                        Cargos.Salario = Dr.GetDecimal(2);
-                        CargoList.Add(Cargos);
+                        ObjCargo.Id = Dr.GetInt32(0);
+                        ObjCargo.NomeCargo = Dr.GetString(1);
+                        ObjCargo.Salario = Dr.GetDecimal(2);
                     }
 
-                    return CargoList;
+                    return ObjCargo;
                 }
                 catch (SqlException Ex)
                 {
@@ -106,7 +77,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Cargo Cargos = FactoryCargo.GetNew();
 
                         Cargos.Id = Dr.GetInt32(0);
-                        Cargos.CargoDesc = Dr.GetString(1);
+                        Cargos.NomeCargo = Dr.GetString(1);
                         Cargos.Salario = Dr.GetDecimal(2);
 
                         CargoList.Add(Cargos);
@@ -142,7 +113,7 @@ namespace SGA.Models.DAO.ManterDAO
                 ,@Usuario
                 ,1;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Cargo", ObjCargo.CargoDesc);
+                    Cmd.Parameters.AddWithValue("@Cargo", ObjCargo.NomeCargo);
                     Cmd.Parameters.AddWithValue("@Salario", ObjCargo.Salario);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
@@ -172,7 +143,7 @@ namespace SGA.Models.DAO.ManterDAO
                        ,usuarioRegistro = @Usuario   
                         WHERE idCargo = @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Cargo", ObjCargo.CargoDesc);
+                    Cmd.Parameters.AddWithValue("@Cargo", ObjCargo.NomeCargo);
                     Cmd.Parameters.AddWithValue("@Salario", ObjCargo.Salario);
                     Cmd.Parameters.AddWithValue("@Id", ObjCargo.Id);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);

@@ -17,7 +17,7 @@ namespace SGA.Views.SGA.VChamado
     {
         public Chamado ObjChamado = null;
         public AreaAtendimento ObjArea = FactoryArea.GetNew();
-        public Servico ObjServico = FactoryServico.GetNew();
+        public Servico ObjServico = FactoryServico.GetNewServico();
         public StatusChamado ObjStatusChm = FactoryStatusChamado.GetNew();
 
         ManterChamado MChamado;
@@ -43,9 +43,12 @@ namespace SGA.Views.SGA.VChamado
                         ObjArea = new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById();
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
                         ObjStatusChm = new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById();
-
-
                     }
+                    else
+                    {
+                        ObjChamado = null;
+                    }
+
                     MsgLabel.Text = MChamado.Msg;
                 }
                 else

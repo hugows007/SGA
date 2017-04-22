@@ -13,37 +13,12 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterEspecialidadeDAO
     {
         private Especialidade ObjEspec;
-        SqlConnection Con = null;
         public ManterEspecialidadeDAO(Especialidade objEspec)
         {
             ObjEspec = objEspec;
         }
         public ManterEspecialidadeDAO()
         {
-        }
-        public SqlDataReader ConsultaEspecialidadesDataReaderDAO()
-        {
-            SqlDataReader Dr = null;
-
-            try
-            {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-                 SELECT [idEspecialidade]
-                       ,[especialidade]
-                 FROM [dbo].[Especialidade]
-                 WHERE ativo = 1
-                 ORDER BY especialidade", Con);
-
-                Dr = Cmd.ExecuteReader();
-                return Dr;
-            }
-            catch (SqlException Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                throw;
-            }
         }
         public List<Especialidade> ConsultaEspecialidadesDAO()
         {
@@ -66,7 +41,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Especialidade Especialidades = FactoryEspecialidade.GetNew();
 
                         Especialidades.Id = Dr.GetInt32(0);
-                        Especialidades.EspecialidadeDesc = Dr.GetString(1);
+                        Especialidades.NomeEspec = Dr.GetString(1);
                         Especialidades.DetalheEspec = Dr.GetString(2);
 
                         EspecialidadeList.Add(Especialidades);
@@ -81,9 +56,8 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public List<Especialidade> ConsultaEspecialidadeByIdDAO()
+        public Especialidade ConsultaEspecialidadeByIdDAO()
         {
-            List<Especialidade> EspecialidadeList = new List<Especialidade>();
             SqlDataReader Dr = null;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -102,15 +76,12 @@ namespace SGA.Models.DAO.ManterDAO
 
                     while (Dr.Read())
                     {
-                        Especialidade Especialidades = FactoryEspecialidade.GetNew();
-
-                        Especialidades.Id = Dr.GetInt32(0);
-                        Especialidades.EspecialidadeDesc = Dr.GetString(1);
-                        Especialidades.DetalheEspec = Dr.GetString(2);
-                        EspecialidadeList.Add(Especialidades);
+                        ObjEspec.Id = Dr.GetInt32(0);
+                        ObjEspec.NomeEspec = Dr.GetString(1);
+                        ObjEspec.DetalheEspec = Dr.GetString(2);
                     }
 
-                    return EspecialidadeList;
+                    return ObjEspec;
                 }
                 catch (SqlException Ex)
                 {
@@ -139,7 +110,7 @@ namespace SGA.Models.DAO.ManterDAO
                 ,@Usuario  
                 ,1);", Con);
 
-                    Cmd.Parameters.AddWithValue("@Espec", ObjEspec.EspecialidadeDesc);
+                    Cmd.Parameters.AddWithValue("@Espec", ObjEspec.NomeEspec);
                     Cmd.Parameters.AddWithValue("@Detalhe", ObjEspec.DetalheEspec);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
@@ -169,7 +140,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ,usuarioRegistro = @Usuario  
                         WHERE idEspecialidade= @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Espec", ObjEspec.EspecialidadeDesc);
+                    Cmd.Parameters.AddWithValue("@Espec", ObjEspec.NomeEspec);
                     Cmd.Parameters.AddWithValue("@Detalhe", ObjEspec.DetalheEspec);
                     Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);

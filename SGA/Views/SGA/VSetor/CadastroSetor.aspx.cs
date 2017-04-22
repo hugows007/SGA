@@ -16,7 +16,7 @@ namespace SGA.Views.SGA.VSetor
             try
             {
                 Setor ObjSetor = FactorySetor.GetNew();
-                ObjSetor.SetorDesc = SetorTextBox.Text;
+                ObjSetor.NomeSetor = SetorTextBox.Text;
 
                 MsgLabel.Text = new ManterSetor(ObjSetor).CadastraSetor();
             }

@@ -13,8 +13,6 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterSetorDAO
     {
         private Setor ObjSetor;
-        SqlConnection Con = null;
-
         public ManterSetorDAO()
         {
 
@@ -22,30 +20,6 @@ namespace SGA.Models.DAO.ManterDAO
         public ManterSetorDAO(Setor objSetor)
         {
             this.ObjSetor = objSetor;
-        }
-        public SqlDataReader ConsultaSetoresDataReaderDAO()
-        {
-            SqlDataReader Dr = null;
-
-            try
-            {
-                Con = new Conexao().ConexaoDB();
-
-                SqlCommand Cmd = new SqlCommand(@"
-                 SELECT [idSetor]
-                      ,[setor]
-                 FROM [dbo].[Setor]
-                 WHERE ativo = 1
-                 ORDER BY setor", Con);
-
-                Dr = Cmd.ExecuteReader();
-                return Dr;
-            }
-            catch (SqlException Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                throw;
-            }
         }
         public List<Setor> ConsultaSetoresDAO()
         {
@@ -68,7 +42,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Setor Usr = FactorySetor.GetNew();
 
                         Usr.Id = Dr.GetInt32(0);
-                        Usr.SetorDesc = Dr.GetString(1);
+                        Usr.NomeSetor = Dr.GetString(1);
                         Usr.IdStatus = Dr.GetInt32(2);
 
                         SetorList.Add(Usr);
@@ -107,7 +81,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Setor Setor = FactorySetor.GetNew();
 
                         Setor.Id = Dr.GetInt32(0);
-                        Setor.SetorDesc = Dr.GetString(1);
+                        Setor.NomeSetor = Dr.GetString(1);
                         Setor.IdStatus = Dr.GetInt32(2);
                         SetorList.Add(Setor);
                     }
@@ -140,7 +114,7 @@ namespace SGA.Models.DAO.ManterDAO
                  ,@Usuario 
                  ,1);", Con);
 
-                    Cmd.Parameters.AddWithValue("@Setor", ObjSetor.SetorDesc);
+                    Cmd.Parameters.AddWithValue("@Setor", ObjSetor.NomeSetor);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -168,7 +142,7 @@ namespace SGA.Models.DAO.ManterDAO
                       ,usuarioRegistro = @Usuario
                        WHERE idSetor = @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Setor", ObjSetor.SetorDesc);
+                    Cmd.Parameters.AddWithValue("@Setor", ObjSetor.NomeSetor);
                     Cmd.Parameters.AddWithValue("@Id", ObjSetor.Id);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());

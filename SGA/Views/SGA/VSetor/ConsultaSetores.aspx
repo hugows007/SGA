@@ -28,7 +28,7 @@
                                     {%>
                                 <tr>
                                     <td><a href="ModificarSetor.aspx?Id=<%=Setor.Id %>"><%=Setor.Id %></a></td>
-                                    <td><%=Setor.SetorDesc%></td>
+                                    <td><%=Setor.NomeSetor%></td>
                                     <td><a href="InativarSetor.aspx?Id=<%=Setor.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>
                                 <% } %>

@@ -8,10 +8,10 @@ namespace SGA.Models.Servicos
     public class Servico
     {
         public int Id { get; set; }
-        public int Tipo { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
+        public int IdTipo { get; set; }
+        public string NomeServ { get; set; }
+        public string DescServ { get; set; }
         public double Sla { get; set; }
-        public int Status { get; set; }
+        public int IdStatus { get; set; }
     }
 }
