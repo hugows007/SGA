@@ -481,5 +481,55 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public Usuario GetTecnicoByRegiaoDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                    SELECT 
+                        usr.idUsuario
+                        ,usr.nome
+                        ,usr.endereco
+                        ,usr.numero
+                        ,usr.cep
+                        ,usr.telefone
+                        ,usr.idStatusUsuario
+                        ,usr.idAreaAtendimento FROM 
+                        Usuario usr inner join 
+                        UsuarioXMemberShipUser membxusr on (usr.idUsuario = membxusr.idUsuario) inner join
+                        aspnet_Users membusr on (membxusr.IdUsrMemberShip = membusr.UserId) WHERE
+                        membusr.UserName = @Nome", Con);
+
+                    Cmd.Parameters.AddWithValue("@Nome", ObjUsuario.Nome);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjUsuario.Id = Dr.GetInt32(0);
+                        ObjUsuario.Nome = Dr.GetString(1);
+                        ObjUsuario.Endereco = Dr.GetString(2);
+                        ObjUsuario.Numero = Dr.GetString(3);
+                        ObjUsuario.Cep = Dr.GetString(4);
+                        ObjUsuario.Telefone = Dr.GetString(5);
+                        ObjUsuario.IdStatus = Dr.GetInt32(6);
+                        ObjUsuario.IdAreaAtendimento = Dr.GetInt32(7);
+                        ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
+                    }
+
+                    return ObjUsuario;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
     }
 }

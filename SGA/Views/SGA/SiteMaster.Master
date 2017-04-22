@@ -223,6 +223,19 @@
                                 </ul>
                                 <ul class="nav nav-second-level">
                                     <li>
+                                        <a href="#">Grupo de atendimento da empresa <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="/Views/SGA/VGrupoAtendimento/ConsultaGpAtendimentos.aspx">Consultar grupo de atendimento</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VGrupoAtendimento/CadastroGpAtendimento.aspx">Cadastrar grupo de atendimento</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-second-level">
+                                    <li>
                                         <a href="#">Cargos da empresa<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>

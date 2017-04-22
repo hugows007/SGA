@@ -1,5 +1,5 @@
 ﻿using SGA.Models.DAO.Log;
-using SGA.Models.Especialidades;
+using SGA.Models.GrupoAtendimentos;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SGA.Views.SGA.VEspecialidade
+namespace SGA.Views.SGA.VGrupoAtendimento
 {
-    public partial class CadastroEspecialidade : System.Web.UI.Page
+    public partial class CadastroGpAtendimento : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,11 +21,11 @@ namespace SGA.Views.SGA.VEspecialidade
         {
             try
             {
-                Especialidade ObjEspec = FactoryEspecialidade.GetNew();
-                ObjEspec.NomeEspec = EspecTextBox.Text;
-                ObjEspec.DescEspec = EspecDestTextBox.Text;
+                GrupoAtendimento ObjGpAtend = FactoryGrupoAtendimento.GetNew();
+                ObjGpAtend.NomeGpAtendimento = NomeGpTextBox.Text;
+                ObjGpAtend.DescGpAtendimento = DescGpTextBox.Text;
 
-                MsgLabel.Text = new ManterEspecialidade(ObjEspec).CadastraEspecialidade();
+                MsgLabel.Text = new ManterGrupoAtendimento(ObjGpAtend).CadastraGrupoAtendimento();
             }
             catch (Exception Ex)
             {

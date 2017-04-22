@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ConsultaEspecialidades.aspx.cs" Inherits="SGA.Views.SGA.VEspecialidade.ConsultaEspecialidades" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ConsultaGpAtendimentos.aspx.cs" Inherits="SGA.Views.SGA.VGrupoAtendimento.ConsultaGpsAtendimentos" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
     <div id="page-wrapper">
@@ -11,34 +11,36 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Especialidades cadastradas
-                        <b><br><asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
+                        Grupos de atendimentos cadastrados
+                        <b>
+                            <br>
+                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <table id="example" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Especialidade</th>
-                                    <th>Detalhes da especialidade</th>
+                                    <th>Grupo</th>
+                                    <th>Descrição do grupo</th>
                                     <th>Inativar</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <%foreach (var Espec in ListaEspecSelect)
+                                <%foreach (var Grupo in ListaGpSelect)
                                     {%>
                                 <tr>
-                                    <td><a href="ModificarEspecialidade.aspx?Id=<%=Espec.Id %>"><%=Espec.Id %></a></td>
-                                    <td><%=Espec.NomeEspec%></td>
-                                    <td><%=Espec.DescEspec %></td>
-                                    <td><a href="InativarEspecialidade.aspx?Id=<%=Espec.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td><a href="ModificarGpAtendimento.aspx?Id=<%=Grupo.Id %>"><%=Grupo.Id %></a></td>
+                                    <td><%=Grupo.NomeGpAtendimento%></td>
+                                    <td><%=Grupo.DescGpAtendimento%></td>
+                                    <td><a href="InativarGpAtendimento.aspx?Id=<%=Grupo.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>
                                 <% } %>
                             </tbody>
                         </table>
                     </div>
                     <div class="panel-footer">
-                        Clique no número da especialidade para edita-la.<br />
+                        Clique no número do grupo para edita-lo.<br />
                     </div>
                 </div>
             </div>

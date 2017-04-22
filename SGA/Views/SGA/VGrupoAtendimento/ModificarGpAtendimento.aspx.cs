@@ -1,5 +1,5 @@
 ﻿using SGA.Models.DAO.Log;
-using SGA.Models.Especialidades;
+using SGA.Models.GrupoAtendimentos;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -8,11 +8,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SGA.Views.SGA.VEspecialidade
+namespace SGA.Views.SGA.VGrupoAtendimento
 {
-    public partial class ModificarEspecialidade : System.Web.UI.Page
+    public partial class ModificarGpAtendimento : System.Web.UI.Page
     {
-        Especialidade ObjEspec = FactoryEspecialidade.GetNew();
+        GrupoAtendimento ObjGpAtend = FactoryGrupoAtendimento.GetNew();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -21,11 +21,11 @@ namespace SGA.Views.SGA.VEspecialidade
                 {
                     if (Request.QueryString["Id"] != null)
                     {
-                        ObjEspec.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                        ObjEspec = new ManterEspecialidade(ObjEspec).ConsultaEspecialidadeById();
+                        ObjGpAtend.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                        ObjGpAtend = new ManterGrupoAtendimento(ObjGpAtend).ConsultaGrupoAtendimentoById();
 
-                        EspecTextBox.Text = ObjEspec.NomeEspec;
-                        EspecDestTextBox.Text = ObjEspec.DescEspec;
+                        NomeGpTextBox.Text = ObjGpAtend.NomeGpAtendimento;
+                        DescGpTextBox.Text = ObjGpAtend.DescGpAtendimento;
                     }
                 }
                 catch (Exception Ex)
@@ -42,11 +42,11 @@ namespace SGA.Views.SGA.VEspecialidade
             {
                 if (Request.QueryString["Id"] != null)
                 {
-                    ObjEspec.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    ObjEspec.NomeEspec = EspecTextBox.Text;
-                    ObjEspec.DescEspec = EspecDestTextBox.Text;
+                    ObjGpAtend.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                    ObjGpAtend.NomeGpAtendimento = NomeGpTextBox.Text;
+                    ObjGpAtend.DescGpAtendimento = DescGpTextBox.Text;
 
-                    MsgLabel.Text = new ManterEspecialidade(ObjEspec).AlteraEspecialidade();
+                    MsgLabel.Text = new ManterGrupoAtendimento(ObjGpAtend).AlteraGrupoAtendimento();
                 }
             }
             catch (Exception Ex)

@@ -1,6 +1,6 @@
 ﻿using SGA.DAO;
+using SGA.Models.Atendimentos;
 using SGA.Models.DAO.Log;
-using SGA.Models.Especialidades;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,19 +10,20 @@ using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterEspecialidadeDAO
+    public class ManterAtendimentoDAO
     {
-        private Especialidade ObjEspec;
-        public ManterEspecialidadeDAO(Especialidade objEspec)
+        private Atendimento ObjAtendimento;
+        public ManterAtendimentoDAO()
         {
-            ObjEspec = objEspec;
+
         }
-        public ManterEspecialidadeDAO()
+        public ManterAtendimentoDAO(Atendimento ObjAtendimento)
         {
+            this.ObjAtendimento = ObjAtendimento;
         }
-        public List<Especialidade> ConsultaEspecialidadesDAO()
+        public List<Atendimento> ConsultaAtendimentosDAO()
         {
-            List<Especialidade> EspecialidadeList = new List<Especialidade>();
+            List<Atendimento> List = new List<Atendimento>();
             SqlDataReader Dr = null;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -31,32 +32,34 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
-                  FROM [dbo].[Especialidade]
+                  FROM [dbo].[DeAtendimento]
                   WHERE ativo = 1", Con);
 
                     Dr = Cmd.ExecuteReader();
 
                     while (Dr.Read())
                     {
-                        Especialidade Especialidades = FactoryEspecialidade.GetNew();
+                        Atendimento Usr = FactoryAtendimento.GetNew();
 
-                        Especialidades.Id = Dr.GetInt32(0);
-                        Especialidades.NomeEspec = Dr.GetString(1);
-                        Especialidades.DescEspec = Dr.GetString(2);
+                        Usr.Id = Dr.GetInt32(0);
+                        //Usr.Regiao = Dr.GetString(1);
+                        //Usr.Cidade = Dr.GetString(2);
+                        //Usr.Estado = Dr.GetString(3);
 
-                        EspecialidadeList.Add(Especialidades);
+                        List.Add(Usr);
                     }
 
-                    return EspecialidadeList;
+                    return List;
                 }
                 catch (SqlException Ex)
                 {
                     new LogException(Ex).InsereLogBd();
+
                     throw;
                 }
             }
         }
-        public Especialidade ConsultaEspecialidadeByIdDAO()
+        public Atendimento ConsultaAtendimentoByIdDAO()
         {
             SqlDataReader Dr = null;
 
@@ -66,54 +69,50 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
-                  FROM [dbo].[especialidade] WHERE
-                   ativo = 1 and 
-                   idEspecialidade = @Id", Con);
+                  FROM [dbo].[DeAtendimento]
+                  WHERE ativo = 1 and idAtendimento = @Id", Con);
 
-                    Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
+                    Cmd.Parameters.AddWithValue("@Id", ObjAtendimento.Id);
 
                     Dr = Cmd.ExecuteReader();
 
                     while (Dr.Read())
                     {
-                        ObjEspec.Id = Dr.GetInt32(0);
-                        ObjEspec.NomeEspec = Dr.GetString(1);
-                        ObjEspec.DescEspec = Dr.GetString(2);
+                        ObjAtendimento.Id = Dr.GetInt32(0);
+                        //ObjAtendimento.Regiao = Dr.GetString(1);
+                        //ObjAtendimento.Cidade = Dr.GetString(2);
+                        //ObjAtendimento.Estado = Dr.GetString(3);
                     }
 
-                    return ObjEspec;
+                    return ObjAtendimento;
                 }
                 catch (SqlException Ex)
                 {
                     new LogException(Ex).InsereLogBd();
+
                     throw;
                 }
             }
         }
-        public bool CadastraEspecialidadeDAO()
+        public bool CadastraAtendimentoDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
                     SqlCommand Cmd = new SqlCommand(@"
-            INSERT INTO [dbo].[especialidade]
-                  ([especialidade]
-                  ,[descricao]
-                  ,[dataRegistro]
-                  ,[usuarioRegistro]
-                  ,[ativo])
+            INSERT INTO [dbo].[Atendimento]
+                ([idChamado]
+                  ,[idTecnico]
+                  ,[idCliente])
             VALUES
-                (@Espec
-                ,@Descricao
-                ,@Data
-                ,@Usuario  
-                ,1);", Con);
+                (@IdChamado
+                ,@IdTecnico
+                ,@IdCliente);", Con);
 
-                    Cmd.Parameters.AddWithValue("@Espec", ObjEspec.NomeEspec);
-                    Cmd.Parameters.AddWithValue("@Descricao", ObjEspec.DescEspec);
-                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
-                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+                    Cmd.Parameters.AddWithValue("@IdChamado", ObjAtendimento.IdChamado);
+                    Cmd.Parameters.AddWithValue("@IdTecnico", ObjAtendimento.IdTecnico);
+                    Cmd.Parameters.AddWithValue("@IdCliente", ObjAtendimento.IdCliente);
 
                     Cmd.ExecuteNonQuery();
                     return true;
@@ -121,11 +120,12 @@ namespace SGA.Models.DAO.ManterDAO
                 catch (SqlException Ex)
                 {
                     new LogException(Ex).InsereLogBd();
+
                     throw;
                 }
             }
         }
-        public bool AlteraEspecialidadeDAO()
+        public bool AlteraAtendimentoDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
@@ -133,47 +133,20 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
-	                [dbo].[especialidade] SET 
-	                    especialidade = @Espec
-                        ,descricao= @Descricao
-                        ,dataRegistro = @Data
-                        ,usuarioRegistro = @Usuario  
-                        WHERE idEspecialidade= @Id;", Con);
-
-                    Cmd.Parameters.AddWithValue("@Espec", ObjEspec.NomeEspec);
-                    Cmd.Parameters.AddWithValue("@Descricao", ObjEspec.DescEspec);
-                    Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
-                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
-                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
-
-                    Cmd.ExecuteNonQuery();
-                    return true;
-                }
-                catch (SqlException Ex)
-                {
-                    new LogException(Ex).InsereLogBd();
-                    throw;
-                }
-            }
-        }
-        public bool InativaEspecialidadeDAO()
-        {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
-            {
-                try
-                {
-
-                    SqlCommand Cmd = new SqlCommand(@"
-                UPDATE 
-	                  [dbo].[Especialidade] SET
-                        ativo = 0
+	                [dbo].[DeAtendimento] SET 
+	                    Regiao = @Regiao
+                        ,Cidade = @Cidade
+                        ,Estado = @Estado
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario
-                        WHERE idEspecialidade = @Id;", Con);
+                        WHERE idAtendimento = @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
+                    //Cmd.Parameters.AddWithValue("@Regiao", ObjAtendimento.Regiao);
+                    //Cmd.Parameters.AddWithValue("@Cidade", ObjAtendimento.Cidade);
+                    //Cmd.Parameters.AddWithValue("@Estado", ObjAtendimento.Estado);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+                    Cmd.Parameters.AddWithValue("@Id", ObjAtendimento.Id);
 
                     Cmd.ExecuteNonQuery();
 
@@ -182,6 +155,36 @@ namespace SGA.Models.DAO.ManterDAO
                 catch (SqlException Ex)
                 {
                     new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
+        public bool CancelaAtendimentoDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[DeAtendimento] SET
+                        ativo = 0
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario                         
+                    WHERE idAtendimento = @Id;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Id", ObjAtendimento.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
                     throw;
                 }
             }
