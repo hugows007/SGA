@@ -1,4 +1,5 @@
-﻿using SGA.Models.DAO.Log;
+﻿using SGA.Models.AreaAtendimentos;
+using SGA.Models.DAO.Log;
 using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Usuarios;
 using System;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using SGA.Models.GrupoAtendimentos;
 
 namespace SGA.Models.Manter
 {
@@ -15,10 +17,22 @@ namespace SGA.Models.Manter
         string UserId = null;
         string Msg = null;
         Usuario ObjUsuario = null;
+        AreaAtendimento ObjArea = null;
+        GrupoAtendimento ObjGpAtend = null;
         bool Result;
         public ManterUsuario(Usuario ObjUsr)
         {
             ObjUsuario = ObjUsr;
+        }
+        public ManterUsuario(Usuario ObjUsuario, AreaAtendimento ObjArea)
+        {
+            this.ObjUsuario = ObjUsuario;
+            this.ObjArea = ObjArea;
+        }
+        public ManterUsuario(Usuario ObjUsuario, GrupoAtendimento ObjGpAtend)
+        {
+            this.ObjUsuario = ObjUsuario;
+            this.ObjGpAtend = ObjGpAtend;
         }
         public ManterUsuario()
         {
@@ -79,11 +93,43 @@ namespace SGA.Models.Manter
                 return ex.Message;
             }
         }
+        public string RelacionaUsuarioAreaAtendimento()
+        {
+            try
+            {
+                if (new ManterUsuarioDAO(ObjUsuario, ObjArea).RelacionaUsuarioAreaAtendimentoDAO())
+                {
+                    Msg = "Usuário relacionado com sucesso!";
+                }
+            }
+            catch (Exception)
+            {
+                Msg = "Ocorreu um erro ao relacionar o usuário!";
+            }
+
+            return Msg;
+        }
+        public string RelacionaUsuarioGrupoAtendimento()
+        {
+            try
+            {
+                if (new ManterUsuarioDAO(ObjUsuario, ObjGpAtend).RelacionaUsuarioGrupoAtendimentoDAO())
+                {
+                    Msg = "Usuário relacionado com sucesso!";
+                }
+            }
+            catch (Exception)
+            {
+                Msg = "Ocorreu um erro ao relacionar o usuário!";
+            }
+
+            return Msg;
+        }
         public List<Usuario> ConsultaUsuarios()
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosDAO();
         }
-        public List<Usuario> ConsultaUsuariosByPerfil(string Perfil)
+        public List<Usuario> ConsultaUsuariosByPerfil(List<string> Perfil)
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosByPerfilDAO(Perfil);
         }

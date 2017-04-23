@@ -40,15 +40,6 @@ namespace SGA.Views.SGA.VUsuario {
         protected global::System.Web.UI.WebControls.DropDownList DropDownListTipo;
         
         /// <summary>
-        /// DropDownListAreaAtendimento control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListAreaAtendimento;
-        
-        /// <summary>
         /// DropDownListSetor control.
         /// </summary>
         /// <remarks>
@@ -65,15 +56,6 @@ namespace SGA.Views.SGA.VUsuario {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DropDownListCargo;
-        
-        /// <summary>
-        /// DropDownListEspec control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListEspec;
         
         /// <summary>
         /// UserNameTextbox control.

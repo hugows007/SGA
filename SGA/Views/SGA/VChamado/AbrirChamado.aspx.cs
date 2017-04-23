@@ -19,6 +19,7 @@ namespace SGA.Views.SGA.VChamado
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         public Chamado ObjChamado = FactoryChamado.GetNew();
         public bool PerfilUsr = new ManterUsuario().GetUsuariosGestOuAdm();
+        List<string> Perfis = new List<string>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -34,7 +35,9 @@ namespace SGA.Views.SGA.VChamado
 
                     if (PerfilUsr)
                     {
-                        DropDownListCliente.DataSource = new ManterUsuario(ObjUsuario).ConsultaUsuariosByPerfil("Cliente");
+                        Perfis.Add("Cliente");
+
+                        DropDownListCliente.DataSource = new ManterUsuario(ObjUsuario).ConsultaUsuariosByPerfil(Perfis);
                         DropDownListCliente.DataTextField = "Nome";
                         DropDownListCliente.DataValueField = "Id";
                         DropDownListCliente.DataBind();
@@ -78,14 +81,14 @@ namespace SGA.Views.SGA.VChamado
                     ObjChamado.IdCliente = Convert.ToInt32(DropDownListCliente.SelectedValue);
                     ObjUsuario.Id = ObjChamado.IdCliente;
                     ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
-                    ObjChamado.IdAreaAtendimento = ObjUsuario.IdAreaAtendimento;
+                    //ObjChamado.IdAreaAtendimento = ObjUsuario.IdAreaAtendimento;
                 }
                 else
                 {
                     ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
 
                     ObjChamado.IdCliente = ObjUsuario.Id;
-                    ObjChamado.IdAreaAtendimento = ObjUsuario.IdAreaAtendimento;
+                    //ObjChamado.IdAreaAtendimento = ObjUsuario.IdAreaAtendimento;
                 }
 
                 ObjChamado.Assunto = AssuntoTextBox.Text;

@@ -194,6 +194,14 @@
                                 <a href="/Views/SGA/Inicio.aspx"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
                             </li>
                             <li>
+                                <a href="#"><i class="fa fa-briefcase fa-fw"></i>Chamados<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="/Views/SGA/VChamado/ListaChamados.aspx">Consultar chamados</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
                                 <a href="#"><i class="glyphicon glyphicon-cog"></i>Manutenção<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
@@ -205,12 +213,18 @@
                                             <li>
                                                 <a href="/Views/SGA/VUsuario/CadastroUsuario.aspx">Cadastrar usuário</a>
                                             </li>
+                                            <li>
+                                                <a href="/Views/SGA/VUsuario/RelacionamentoUsrArea.aspx">Relacionar usuário e área de atendimento</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VUsuario/RelacionamentoUsrGpAtend.aspx">Relacionar usuário e grupo de atendimento</a>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Áreas de atendimentos da empresa<span class="fa arrow"></span></a>
+                                        <a href="#">Áreas de atendimentos<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VAreaAtendimento/ConsultaAreaAtendimentos.aspx">Consultar áreas de atendimentos</a>
@@ -223,7 +237,7 @@
                                 </ul>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Grupo de atendimento da empresa <span class="fa arrow"></span></a>
+                                        <a href="#">Grupo de atendimento<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VGrupoAtendimento/ConsultaGpAtendimentos.aspx">Consultar grupo de atendimento</a>
@@ -236,7 +250,7 @@
                                 </ul>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Cargos da empresa<span class="fa arrow"></span></a>
+                                        <a href="#">Cargos<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VCargo/ConsultaCargos.aspx">Consultar cargos</a>
@@ -249,7 +263,7 @@
                                 </ul>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Setores da empresa <span class="fa arrow"></span></a>
+                                        <a href="#">Setores<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VSetor/ConsultaSetores.aspx">Consultar setores</a>
@@ -262,7 +276,7 @@
                                 </ul>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Especialidades da empresa <span class="fa arrow"></span></a>
+                                        <a href="#">Especialidades<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VEspecialidade/ConsultaEspecialidades.aspx">Consultar especialidades</a>
@@ -275,7 +289,7 @@
                                 </ul>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Serviços da empresa <span class="fa arrow"></span></a>
+                                        <a href="#">Serviços<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VServico/ConsultaServicos.aspx">Consultar serviços</a>
@@ -284,14 +298,6 @@
                                                 <a href="/Views/SGA/VServico/CadastroServico.aspx">Cadastrar serviço</a>
                                             </li>
                                         </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-briefcase fa-fw"></i>Chamados<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="/Views/SGA/VChamado/ListaChamados.aspx">Consultar chamados</a>
                                     </li>
                                 </ul>
                             </li>

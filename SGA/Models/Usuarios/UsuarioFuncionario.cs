@@ -5,10 +5,9 @@ using System.Web;
 
 namespace SGA.Models.Usuarios
 {
-    public class UsuarioTecnico : Usuario
+    public class UsuarioFuncionario : Usuario
     {
         public int IdSetor { get; set; }
         public int IdCargo { get; set; }
-        public int IdEspecialidade { get; set; }
     }
 }

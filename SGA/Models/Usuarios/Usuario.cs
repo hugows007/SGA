@@ -18,10 +18,8 @@ namespace SGA.Models.Usuarios
         public string Cep { get; set; }
         public string Telefone { get; set; }
         public int IdStatus { get; set; }
-        public int IdAreaAtendimento { get; set; }
         public UsuarioClienteFisico ObjCF { get; set; }
         public UsuarioClienteJuridico ObjCJ { get; set; }
-        public UsuarioGestor ObjG { get; set; }
-        public UsuarioTecnico ObjT { get; set; }
+        public UsuarioFuncionario ObjFunc { get; set; }
     }
 }

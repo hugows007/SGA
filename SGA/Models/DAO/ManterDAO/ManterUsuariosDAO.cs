@@ -1,4 +1,5 @@
 ﻿using SGA.DAO;
+using SGA.Models.AreaAtendimentos;
 using SGA.Models.DAO.Log;
 using SGA.Models.Usuarios;
 using System;
@@ -8,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using SGA.Models.GrupoAtendimentos;
 
 namespace SGA.Models.DAO.ManterDAO
 {
@@ -16,22 +18,235 @@ namespace SGA.Models.DAO.ManterDAO
         string LastId;
         string MembershipId;
         Usuario ObjUsuario = null;
+        AreaAtendimento ObjArea = null;
+        GrupoAtendimento ObjGpAtend = null;
         string RegraForUser;
-        string RegraMb1;
-        string RegraMb2;
-
 
         public ManterUsuarioDAO(Usuario ObjUsr, string MbId)
         {
             ObjUsuario = ObjUsr;
             MembershipId = MbId;
         }
-        public ManterUsuarioDAO(Usuario ObjUsr)
+        public ManterUsuarioDAO(Usuario ObjUsuario)
         {
-            ObjUsuario = ObjUsr;
-
+            this.ObjUsuario = ObjUsuario;
+        }
+        public ManterUsuarioDAO(Usuario ObjUsuario, AreaAtendimento ObjArea)
+        {
+            this.ObjUsuario = ObjUsuario;
+            this.ObjArea = ObjArea;
+        }
+        public ManterUsuarioDAO(Usuario ObjUsuario, GrupoAtendimento ObjGpAtend)
+        {
+            this.ObjUsuario = ObjUsuario;
+            this.ObjGpAtend = ObjGpAtend;
         }
         public ManterUsuarioDAO() { }
+        public bool CadastraUsuarioDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+
+                    SqlCommand CmdUsr = new SqlCommand(@"
+            INSERT INTO [dbo].[Usuario]
+                ([nome]
+                ,[endereco]
+                ,[numero]
+                ,[cep]
+                ,[telefone]
+                ,[dataRegistro]
+                ,[usuarioRegistro]
+                ,[idStatusUsuario])
+            VALUES
+                (@Nome
+                ,@Endereco
+                ,@Numero
+                ,@Cep
+                ,@Telefone
+                ,@Data
+                ,@Usuario 
+                ,1);", Con);
+
+                    CmdUsr.Parameters.AddWithValue("@Nome", ObjUsuario.Nome);
+                    CmdUsr.Parameters.AddWithValue("@Endereco", ObjUsuario.Endereco);
+                    CmdUsr.Parameters.AddWithValue("@Numero", ObjUsuario.Numero);
+                    CmdUsr.Parameters.AddWithValue("@Cep", ObjUsuario.Cep);
+                    CmdUsr.Parameters.AddWithValue("@Telefone", ObjUsuario.Telefone);
+                    CmdUsr.Parameters.AddWithValue("@Data", DateTime.Now);
+                    CmdUsr.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    CmdUsr.ExecuteNonQuery();
+
+                    LastId = GetUltimoIdUsuarioDAO();
+
+                    SqlCommand CmdUsrMS = new SqlCommand(@"
+            INSERT INTO [dbo].[UsuarioXMemberShipUser]
+                ([idUsuario]
+                ,[IdUsrMemberShip])
+            VALUES
+                (@LastId
+                ,@MembId);", Con);
+
+                    CmdUsrMS.Parameters.AddWithValue("@LastId", LastId);
+                    CmdUsrMS.Parameters.AddWithValue("@MembId", MembershipId);
+
+                    CmdUsrMS.ExecuteNonQuery();
+
+                    switch (ObjUsuario.Regra)
+                    {
+                        case "Técnico":
+                        case "Gestor":
+                        case "Atendente":
+
+                            SqlCommand CmdUsrT = new SqlCommand(@"
+            INSERT INTO [dbo].[Funcionario]
+                ([idUsuario]
+                  ,[idCargo]
+                  ,[idSetor])
+            VALUES
+                (@LastId
+                ,@Cargo
+                ,@Setor);", Con);
+
+                            CmdUsrT.Parameters.AddWithValue("@LastId", LastId);
+                            CmdUsrT.Parameters.AddWithValue("@Cargo", ObjUsuario.ObjFunc.IdCargo);
+                            CmdUsrT.Parameters.AddWithValue("@Setor", ObjUsuario.ObjFunc.IdSetor);
+
+                            CmdUsrT.ExecuteNonQuery();
+
+
+                            return true;
+
+                        case "Cliente Jurídico":
+
+                            SqlCommand CmdUsrCJ = new SqlCommand(@"
+            INSERT INTO [dbo].[ClienteJuridico]
+                ([idUsuario]
+                  ,[cnpj])
+            VALUES
+                (@LastId
+                ,@Cnpj);", Con);
+
+                            CmdUsrCJ.Parameters.AddWithValue("@LastId", LastId);
+                            CmdUsrCJ.Parameters.AddWithValue("@Cnpj", ObjUsuario.ObjCJ.Cnpj);
+
+                            CmdUsrCJ.ExecuteNonQuery();
+
+                            return true;
+
+                        case "Cliente Físico":
+
+                            SqlCommand CmdUsrCF = new SqlCommand(@"
+            INSERT INTO [dbo].[ClienteFisico]
+                ([idUsuario]
+                  ,[docIdentificador]
+                  ,[orgaoEmissor]
+                  ,[cpf])
+            VALUES
+                (@LastId
+                ,@Doc
+                ,@Org
+                ,@Cpf);", Con);
+
+                            CmdUsrCF.Parameters.AddWithValue("@LastId", LastId);
+                            CmdUsrCF.Parameters.AddWithValue("@Doc", ObjUsuario.ObjCF.DocIdent);
+                            CmdUsrCF.Parameters.AddWithValue("@Org", ObjUsuario.ObjCF.OrgEmiss);
+                            CmdUsrCF.Parameters.AddWithValue("@Cpf", ObjUsuario.ObjCF.Cpf);
+
+                            CmdUsrCF.ExecuteNonQuery();
+
+                            return true;
+
+                        case "Administrador":
+                            return true;
+
+                        default:
+                            return false;
+                    }
+
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
+        public bool RelacionaUsuarioAreaAtendimentoDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+
+                    SqlCommand Cmd = new SqlCommand(@"
+            INSERT INTO [dbo].[UsuarioXAreaAtendimento]
+                ([idUsuario]
+                  ,[idAreaAtendimento]
+                  ,[ativo]
+                  ,[dataRegistro]
+                  ,[usuarioRegistro])
+            VALUES
+                (@IdUsuario
+                 ,@IdArea
+                 ,1
+                 ,@Data
+                 ,@Usuario);", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdUsuario", ObjUsuario.Id);
+                    Cmd.Parameters.AddWithValue("@IdArea", ObjArea.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
+            }
+        }
+        public bool RelacionaUsuarioGrupoAtendimentoDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+
+                    SqlCommand Cmd = new SqlCommand(@"
+            INSERT INTO [dbo].[UsuarioXGrupoAtendimento]
+                ([idUsuario]
+                  ,[idGrupoAtendimento]
+                  ,[ativo]
+                  ,[dataRegistro]
+                  ,[usuarioRegistro])
+            VALUES
+                (@IdUsuario
+                 ,@IdGrupo
+                 ,1
+                 ,@Data
+                 ,@Usuario);", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdUsuario", ObjUsuario.Id);
+                    Cmd.Parameters.AddWithValue("@IdGrupo", ObjGpAtend.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
+            }
+        }
         public List<Usuario> ConsultaUsuariosDAO()
         {
             List<Usuario> UsrList = new List<Usuario>();
@@ -73,7 +288,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public List<Usuario> ConsultaUsuariosByPerfilDAO(string Perfil)
+        public List<Usuario> ConsultaUsuariosByPerfilDAO(List<string> Perfil)
         {
             List<Usuario> UsrList = new List<Usuario>();
             SqlDataReader Dr = null;
@@ -82,48 +297,66 @@ namespace SGA.Models.DAO.ManterDAO
             {
                 try
                 {
-                    switch (Perfil)
+                    foreach (var P in Perfil)
                     {
-                        case "Administrador":
-                            RegraMb1 = "06AE01F4-0570-4C5D-87C6-5E3BDA7A9FC4";
-                            break;
-                        case "Cliente":
-                            RegraMb1 = "ECBD651F-AA68-481F-BCEA-55D3ED9D0456";
-                            RegraMb2 = "1E193EFC-95B0-4B28-8F53-02E0C7EBCEF6";
-                            break;
-                        case "Gestor":
-                            RegraMb1 = "8D511875-4B63-4960-9550-1D304B1D4D7B";
-                            break;
-                        case "Técnico":
-                            RegraMb1 = "9BC49B5E-0865-41B2-ACE3-058849D4A9F5";
-                            break;
-                    }
-
-                    SqlCommand Cmd = new SqlCommand(@"
+                        SqlCommand Cmd = new SqlCommand(@"
                     SELECT * 
                     FROM Usuario Usr INNER JOIN 
                     UsuarioXMemberShipUser UsrMb ON (Usr.idUsuario = UsrMb.idUsuario) INNER JOIN
                     aspnet_UsersInRoles UsrRoles ON (UsrMb.IdUsrMemberShip = UsrRoles.UserId)
                     WHERE UsrRoles.RoleId in (@IdRole1, @IdRole2)", Con);
 
-                    Cmd.Parameters.AddWithValue("@IdRole1", RegraMb1);
-                    Cmd.Parameters.AddWithValue("@IdRole2", RegraMb2);
 
-                    Dr = Cmd.ExecuteReader();
+                        switch (P)
+                        {
+                            case "Administrador":
+                                Cmd.Parameters.AddWithValue("@IdRole1", "06AE01F4-0570-4C5D-87C6-5E3BDA7A9FC4");
+                                Cmd.Parameters.AddWithValue("@IdRole2", "00000000-0000-0000-0000-000000000000");
+                                break;
+                            case "Cliente":
+                                Cmd.Parameters.AddWithValue("@IdRole1", "ECBD651F-AA68-481F-BCEA-55D3ED9D0456");
+                                Cmd.Parameters.AddWithValue("@IdRole2", "1E193EFC-95B0-4B28-8F53-02E0C7EBCEF6");
+                                break;
+                            case "Gestor":
+                                Cmd.Parameters.AddWithValue("@IdRole1", "8D511875-4B63-4960-9550-1D304B1D4D7B");
+                                Cmd.Parameters.AddWithValue("@IdRole2", "00000000-0000-0000-0000-000000000000");
+                                break;
+                            case "Técnico":
+                                Cmd.Parameters.AddWithValue("@IdRole1", "9BC49B5E-0865-41B2-ACE3-058849D4A9F5");
+                                Cmd.Parameters.AddWithValue("@IdRole2", "00000000-0000-0000-0000-000000000000");
+                                break;
+                            case "Atendente":
+                                Cmd.Parameters.AddWithValue("@IdRole1", "2BCF6E2E-E484-4368-AC91-DC55E3511F7C");
+                                Cmd.Parameters.AddWithValue("@IdRole2", "00000000-0000-0000-0000-000000000000");
+                                break;
+                            case "Cliente Físico":
+                                Cmd.Parameters.AddWithValue("@IdRole1", "ECBD651F-AA68-481F-BCEA-55D3ED9D0456");
+                                Cmd.Parameters.AddWithValue("@IdRole2", "00000000-0000-0000-0000-000000000000");
+                                break;
+                            case "Cliente Jurídico":
+                                Cmd.Parameters.AddWithValue("@IdRole1", "1E193EFC-95B0-4B28-8F53-02E0C7EBCEF6");
+                                Cmd.Parameters.AddWithValue("@IdRole2", "00000000-0000-0000-0000-000000000000");
+                                break;
+                        }
 
-                    while (Dr.Read())
-                    {
-                        Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                        Dr = Cmd.ExecuteReader();
 
-                        Usr.Id = Dr.GetInt32(0);
-                        Usr.Nome = Dr.GetString(1);
-                        Usr.Endereco = Dr.GetString(2);
-                        Usr.Numero = Dr.GetString(3);
-                        Usr.Cep = Dr.GetString(4);
-                        Usr.Telefone = Dr.GetString(5);
-                        Usr.Regra = GetRegraUserDAO(Usr.Id);
+                        while (Dr.Read())
+                        {
+                            Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
 
-                        UsrList.Add(Usr);
+                            Usr.Id = Dr.GetInt32(0);
+                            Usr.Nome = Dr.GetString(1);
+                            Usr.Endereco = Dr.GetString(2);
+                            Usr.Numero = Dr.GetString(3);
+                            Usr.Cep = Dr.GetString(4);
+                            Usr.Telefone = Dr.GetString(5);
+                            Usr.Regra = GetRegraUserDAO(Usr.Id);
+
+                            UsrList.Add(Usr);
+                        }
+
+                        Dr.Close();
                     }
 
                     return UsrList;
@@ -186,167 +419,10 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.Cep = Dr.GetString(4);
                         ObjUsuario.Telefone = Dr.GetString(5);
                         ObjUsuario.IdStatus = Dr.GetInt32(6);
-                        ObjUsuario.IdAreaAtendimento = Dr.GetInt32(7);
                         ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
                     }
 
                     return ObjUsuario;
-                }
-                catch (SqlException Ex)
-                {
-                    new LogException(Ex).InsereLogBd();
-
-                    throw;
-                }
-            }
-        }
-        public bool CadastraUsuarioDAO()
-        {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
-            {
-                try
-                {
-
-                    SqlCommand CmdUsr = new SqlCommand(@"
-            INSERT INTO [dbo].[Usuario]
-                ([nome]
-                ,[endereco]
-                ,[numero]
-                ,[cep]
-                ,[telefone]
-                ,[idAreaAtendimento]
-                ,[dataRegistro]
-                ,[usuarioRegistro]
-                ,[idStatusUsuario])
-            VALUES
-                (@Nome
-                ,@Endereco
-                ,@Numero
-                ,@Cep
-                ,@Telefone
-                ,@Area
-                ,@Data
-                ,@Usuario 
-                ,1);", Con);
-
-                    CmdUsr.Parameters.AddWithValue("@Nome", ObjUsuario.Nome);
-                    CmdUsr.Parameters.AddWithValue("@Endereco", ObjUsuario.Endereco);
-                    CmdUsr.Parameters.AddWithValue("@Numero", ObjUsuario.Numero);
-                    CmdUsr.Parameters.AddWithValue("@Cep", ObjUsuario.Cep);
-                    CmdUsr.Parameters.AddWithValue("@Telefone", ObjUsuario.Telefone);
-                    CmdUsr.Parameters.AddWithValue("@Area", ObjUsuario.IdAreaAtendimento);
-                    CmdUsr.Parameters.AddWithValue("@Data", DateTime.Now);
-                    CmdUsr.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
-
-                    CmdUsr.ExecuteNonQuery();
-
-                    LastId = GetUltimoIdUsuarioDAO();
-
-                    SqlCommand CmdUsrMS = new SqlCommand(@"
-            INSERT INTO [dbo].[UsuarioXMemberShipUser]
-                ([idUsuario]
-                ,[IdUsrMemberShip])
-            VALUES
-                (@LastId
-                ,@MembId);", Con);
-
-                    CmdUsrMS.Parameters.AddWithValue("@LastId", LastId);
-                    CmdUsrMS.Parameters.AddWithValue("@MembId", MembershipId);
-
-                    CmdUsrMS.ExecuteNonQuery();
-
-                    switch (ObjUsuario.Regra)
-                    {
-                        case "Técnico":
-
-                            SqlCommand CmdUsrT = new SqlCommand(@"
-            INSERT INTO [dbo].[Tecnico]
-                ([idUsuario]
-                  ,[idEspecialidade]
-                  ,[idCargo]
-                  ,[idSetor])
-            VALUES
-                (@LastId
-                ,@Espec
-                ,@Cargo
-                ,@Setor);", Con);
-
-                            CmdUsrT.Parameters.AddWithValue("@LastId", LastId);
-                            CmdUsrT.Parameters.AddWithValue("@Espec", ObjUsuario.ObjT.IdEspecialidade);
-                            CmdUsrT.Parameters.AddWithValue("@Cargo", ObjUsuario.ObjT.IdCargo);
-                            CmdUsrT.Parameters.AddWithValue("@Setor", ObjUsuario.ObjT.IdSetor);
-
-                            CmdUsrT.ExecuteNonQuery();
-
-                            return true;
-
-                        case "Gestor":
-
-                            SqlCommand CmdUsrG = new SqlCommand(@"
-            INSERT INTO [dbo].[Gestor]
-                ([idUsuario]
-                  ,[idSetor]
-                  ,[idCargo])
-            VALUES
-                (@LastId
-                ,@Setor
-                ,@Cargo);", Con);
-
-                            CmdUsrG.Parameters.AddWithValue("@LastId", LastId);
-                            CmdUsrG.Parameters.AddWithValue("@Setor", ObjUsuario.ObjG.IdSetor);
-                            CmdUsrG.Parameters.AddWithValue("@Cargo", ObjUsuario.ObjG.IdCargo);
-
-                            CmdUsrG.ExecuteNonQuery();
-
-                            return true;
-
-                        case "Cliente Jurídico":
-
-                            SqlCommand CmdUsrCJ = new SqlCommand(@"
-            INSERT INTO [dbo].[ClienteJuridico]
-                ([idUsuario]
-                  ,[cnpj])
-            VALUES
-                (@LastId
-                ,@Cnpj);", Con);
-
-                            CmdUsrCJ.Parameters.AddWithValue("@LastId", LastId);
-                            CmdUsrCJ.Parameters.AddWithValue("@Cnpj", ObjUsuario.ObjCJ.Cnpj);
-
-                            CmdUsrCJ.ExecuteNonQuery();
-
-                            return true;
-
-                        case "Cliente Físico":
-
-                            SqlCommand CmdUsrCF = new SqlCommand(@"
-            INSERT INTO [dbo].[ClienteFisico]
-                ([idUsuario]
-                  ,[docIdentificador]
-                  ,[orgaoEmissor]
-                  ,[cpf])
-            VALUES
-                (@LastId
-                ,@Doc
-                ,@Org
-                ,@Cpf);", Con);
-
-                            CmdUsrCF.Parameters.AddWithValue("@LastId", LastId);
-                            CmdUsrCF.Parameters.AddWithValue("@Doc", ObjUsuario.ObjCF.DocIdent);
-                            CmdUsrCF.Parameters.AddWithValue("@Org", ObjUsuario.ObjCF.OrgEmiss);
-                            CmdUsrCF.Parameters.AddWithValue("@Cpf", ObjUsuario.ObjCF.Cpf);
-
-                            CmdUsrCF.ExecuteNonQuery();
-
-                            return true;
-
-                        case "Administrador":
-                            return true;
-
-                        default:
-                            return false;
-                    }
-
                 }
                 catch (SqlException Ex)
                 {
@@ -517,7 +593,6 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.Cep = Dr.GetString(4);
                         ObjUsuario.Telefone = Dr.GetString(5);
                         ObjUsuario.IdStatus = Dr.GetInt32(6);
-                        ObjUsuario.IdAreaAtendimento = Dr.GetInt32(7);
                         ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
                     }
 

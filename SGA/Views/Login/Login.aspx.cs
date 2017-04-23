@@ -17,7 +17,8 @@ namespace SGA
             Roles.CreateRole("Técnico");
             Roles.CreateRole("Gestor");
             Roles.CreateRole("Cliente Físico");
-            Roles.CreateRole("Cliente Jurídico");*/
+            Roles.CreateRole("Cliente Jurídico");
+            Roles.CreateRole("Atendente");*/
         }
 
         protected void BotaoEntrar_Click(object sender, EventArgs e)

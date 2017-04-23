@@ -5,9 +5,11 @@ using System.Web;
 
 namespace SGA.Models.Usuarios
 {
-    public class UsuarioGestor : Usuario
+    public enum TipoUsuario
     {
-        public int IdSetor { get; set; }
-        public int IdCargo { get; set; }
+        Usuario,
+        UsuarioClienteFisico,
+        UsuarioClienteJuridico,
+        UsuarioFuncionario
     }
 }

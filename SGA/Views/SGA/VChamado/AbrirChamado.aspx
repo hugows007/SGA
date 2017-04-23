@@ -47,7 +47,7 @@
                                                 </td>
                                             </tr>
                                             <%} %>
-                                            <%if (PerfilUsr)
+                                            <%if (PerfilUsr && DropDownListServico.SelectedIndex > 0)
                                                 {%>
                                             <tr>
                                                 <td>
