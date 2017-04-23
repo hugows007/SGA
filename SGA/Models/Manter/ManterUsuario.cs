@@ -34,6 +34,12 @@ namespace SGA.Models.Manter
             this.ObjUsuario = ObjUsuario;
             this.ObjGpAtend = ObjGpAtend;
         }
+        public ManterUsuario(Usuario ObjUsuario, AreaAtendimento ObjArea, GrupoAtendimento ObjGpAtend)
+        {
+            this.ObjUsuario = ObjUsuario;
+            this.ObjArea = ObjArea;
+            this.ObjGpAtend = ObjGpAtend;
+        }
         public ManterUsuario()
         {
         }
@@ -72,6 +78,18 @@ namespace SGA.Models.Manter
                     if (new ManterUsuarioDAO
                         (ObjUsuario, UserId).CadastraUsuarioDAO())
                     {
+                        ObjUsuario.Id = Convert.ToInt32(new ManterUsuarioDAO().GetUltimoIdUsuarioDAO());
+
+                        if (ObjUsuario.Regra.Equals("Técnico"))
+                        {
+                            RelacionaUsuarioAreaAtendimento();
+                            RelacionaUsuarioGrupoAtendimento();
+                        }
+                        if (ObjUsuario.Regra.Equals("Cliente Físico") || ObjUsuario.Regra.Equals("Cliente Jurídico"))
+                        {
+                            RelacionaUsuarioAreaAtendimento();
+                        }
+
                         Msg = "Usuário cadastrado com sucesso!";
                     }
                     else

@@ -12,6 +12,8 @@ namespace SGA
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            GC.Collect();
+
             /*Membership.CreateUser("Admin", "123$$Abc");
             Roles.CreateRole("Administrador");
             Roles.CreateRole("Técnico");

@@ -115,7 +115,7 @@ namespace SGA.Models.DAO.ManterDAO
             {
                 try
                 {
-                    if (ObjServico.Id.Equals(0))
+                    if (ObjServico == null || ObjServico.Id.Equals(0))
                     {
                         Cmd = new SqlCommand(@"
                 SELECT *

@@ -31,6 +31,8 @@ namespace SGA.Views.SGA.VUsuario
                     DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Administrador"));
                     DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Atendente"));
                     DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Gestor"));
+                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Cliente Físico"));
+                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Cliente Jurídico"));
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
 
                     DropDownListGrupo.DataSource = new ManterGrupoAtendimento().ConsultaGrupoAtendimentos();
@@ -57,7 +59,7 @@ namespace SGA.Views.SGA.VUsuario
                 DropDownListUsuario.DataTextField = "Nome";
                 DropDownListUsuario.DataValueField = "Id";
                 DropDownListUsuario.DataBind();
-                DropDownListUsuario.Items.Insert(0, new ListItem("Selecione o cliente", "0"));
+                DropDownListUsuario.Items.Insert(0, new ListItem("Selecione o usuário", "0"));
             }
             catch (Exception Ex)
             {

@@ -1,6 +1,8 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
+using SGA.Models.Especialidades;
 using SGA.Models.GrupoAtendimentos;
+using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -12,7 +14,9 @@ namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterGrupoAtendimentoDAO
     {
-        private GrupoAtendimento ObjGpAtend;
+        GrupoAtendimento ObjGpAtend = null;
+        Especialidade ObjEspec = null;
+        Servico ObjServ = null;
         public ManterGrupoAtendimentoDAO()
         {
 
@@ -20,6 +24,13 @@ namespace SGA.Models.DAO.ManterDAO
         public ManterGrupoAtendimentoDAO(GrupoAtendimento ObjGpAtend)
         {
             this.ObjGpAtend = ObjGpAtend;
+        }
+
+        public ManterGrupoAtendimentoDAO(GrupoAtendimento ObjGpAtend, Especialidade ObjEspec, Servico ObjServ)
+        {
+            this.ObjGpAtend = ObjGpAtend;
+            this.ObjEspec = ObjEspec;
+            this.ObjServ = ObjServ;
         }
         public List<GrupoAtendimento> ConsultaGrupoAtendimentosDAO()
         {
@@ -114,6 +125,45 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.Parameters.AddWithValue("@Nome", ObjGpAtend.NomeGpAtendimento);
                     Cmd.Parameters.AddWithValue("@Desc", ObjGpAtend.DescGpAtendimento);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
+        public bool RelacionaGpServEspecDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+            INSERT INTO [dbo].[GpAtendXEspecXServ]
+                ([idGrupoAtendimento]
+                  ,[idEspecialidade]
+                  ,[idServico]
+                  ,[dataRegistro]
+                  ,[usuarioRegistro]
+                  ,[ativo])
+            VALUES
+                (@IdGrupo
+                ,@IdEspec
+                ,@IdServ
+                ,@Data 
+                ,@Usuario    
+                ,1);", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdGrupo", ObjGpAtend.Id);
+                    Cmd.Parameters.AddWithValue("@IdEspec", ObjEspec.Id);
+                    Cmd.Parameters.AddWithValue("@IdServ", ObjServ.Id);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 

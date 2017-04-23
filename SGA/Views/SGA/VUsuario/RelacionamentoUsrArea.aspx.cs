@@ -56,7 +56,7 @@ namespace SGA.Views.SGA.VUsuario
                 DropDownListUsuario.DataTextField = "Nome";
                 DropDownListUsuario.DataValueField = "Id";
                 DropDownListUsuario.DataBind();
-                DropDownListUsuario.Items.Insert(0, new ListItem("Selecione o cliente", "0"));
+                DropDownListUsuario.Items.Insert(0, new ListItem("Selecione o usuário", "0"));
             }
             catch (Exception Ex)
             {

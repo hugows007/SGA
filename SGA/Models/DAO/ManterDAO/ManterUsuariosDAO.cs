@@ -165,7 +165,6 @@ namespace SGA.Models.DAO.ManterDAO
                         default:
                             return false;
                     }
-
                 }
                 catch (SqlException Ex)
                 {
