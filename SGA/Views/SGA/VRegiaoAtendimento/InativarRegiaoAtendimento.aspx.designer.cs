@@ -7,9 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SGA.Views.SGA.VCargo {
+namespace SGA.Views.SGA.VRegiaoAtendimento {
     
     
-    public partial class InativarCargo {
+    public partial class InativarRegiaoAtendimento {
     }
 }

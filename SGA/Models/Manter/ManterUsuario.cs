@@ -1,4 +1,4 @@
-﻿using SGA.Models.AreaAtendimentos;
+﻿using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.DAO.Log;
 using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Usuarios;
@@ -8,40 +8,29 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
-using SGA.Models.GrupoAtendimentos;
+using SGA.Models.Especialidades;
+using SGA.Models.Chamados;
 
 namespace SGA.Models.Manter
 {
     public class ManterUsuario
     {
-        string UserId = null;
-        string Msg = null;
-        Usuario ObjUsuario = null;
-        AreaAtendimento ObjArea = null;
-        GrupoAtendimento ObjGpAtend = null;
+        string UserId;
+        string Msg;
+        Usuario ObjUsuario;
+        Chamado ObjChamado;
         bool Result;
-        public ManterUsuario(Usuario ObjUsr)
-        {
-            ObjUsuario = ObjUsr;
-        }
-        public ManterUsuario(Usuario ObjUsuario, AreaAtendimento ObjArea)
-        {
-            this.ObjUsuario = ObjUsuario;
-            this.ObjArea = ObjArea;
-        }
-        public ManterUsuario(Usuario ObjUsuario, GrupoAtendimento ObjGpAtend)
-        {
-            this.ObjUsuario = ObjUsuario;
-            this.ObjGpAtend = ObjGpAtend;
-        }
-        public ManterUsuario(Usuario ObjUsuario, AreaAtendimento ObjArea, GrupoAtendimento ObjGpAtend)
-        {
-            this.ObjUsuario = ObjUsuario;
-            this.ObjArea = ObjArea;
-            this.ObjGpAtend = ObjGpAtend;
-        }
         public ManterUsuario()
         {
+        }
+        public ManterUsuario(Usuario ObjUsuario)
+        {
+            this.ObjUsuario = ObjUsuario;
+        }
+        public ManterUsuario(Usuario ObjUsuario, Chamado ObjChamado)
+        {
+            this.ObjUsuario = ObjUsuario;
+            this.ObjChamado = ObjChamado;
         }
         public string[] RegrasUsuario()
         {
@@ -83,7 +72,7 @@ namespace SGA.Models.Manter
                         if (ObjUsuario.Regra.Equals("Técnico"))
                         {
                             RelacionaUsuarioAreaAtendimento();
-                            RelacionaUsuarioGrupoAtendimento();
+                            RelacionaUsuarioEspecialidade();
                         }
                         if (ObjUsuario.Regra.Equals("Cliente Físico") || ObjUsuario.Regra.Equals("Cliente Jurídico"))
                         {
@@ -102,42 +91,45 @@ namespace SGA.Models.Manter
 
                 return Msg;
             }
-            catch (MembershipCreateUserException ex)
+            catch (MembershipCreateUserException Ex)
             {
-                return GetMensagemErro(ex.StatusCode);
+                return GetMensagemErro(Ex.StatusCode);
             }
-            catch (HttpException ex)
+            catch (HttpException Ex)
             {
-                return ex.Message;
+                return Ex.Message;
             }
+
         }
         public string RelacionaUsuarioAreaAtendimento()
         {
             try
             {
-                if (new ManterUsuarioDAO(ObjUsuario, ObjArea).RelacionaUsuarioAreaAtendimentoDAO())
+                if (new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioAreaAtendimentoDAO())
                 {
                     Msg = "Usuário relacionado com sucesso!";
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
+                new LogException(Ex).InsereLogBd();
                 Msg = "Ocorreu um erro ao relacionar o usuário!";
             }
 
             return Msg;
         }
-        public string RelacionaUsuarioGrupoAtendimento()
+        public string RelacionaUsuarioEspecialidade()
         {
             try
             {
-                if (new ManterUsuarioDAO(ObjUsuario, ObjGpAtend).RelacionaUsuarioGrupoAtendimentoDAO())
+                if (new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioEspecialidadeDAO())
                 {
                     Msg = "Usuário relacionado com sucesso!";
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
+                new LogException(Ex).InsereLogBd();
                 Msg = "Ocorreu um erro ao relacionar o usuário!";
             }
 
@@ -153,7 +145,11 @@ namespace SGA.Models.Manter
         }
         public Usuario ConsultaUsuarioById()
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosByIdDAO();
+            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByIdDAO();
+        }
+        public Usuario ConsultaUsuarioByNome()
+        {
+            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByNomeDAO();
         }
         public string AlteraUsuario()
         {
@@ -164,8 +160,9 @@ namespace SGA.Models.Manter
                     Msg = "Usuário atualizado com sucesso!";
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
+                new LogException(Ex).InsereLogBd();
                 Msg = "Ocorreu um erro ao atualizar o usuário!";
             }
 
@@ -177,8 +174,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterUsuarioDAO(ObjUsuario).InativaUsuarioDAO();
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
+                new LogException(Ex).InsereLogBd();
                 return false;
             }
         }
@@ -217,7 +215,7 @@ namespace SGA.Models.Manter
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
         }
-        public bool GetUsuariosGestOuAdm()
+        public bool GetUsuariosFunc()
         {
             try
             {
@@ -225,7 +223,7 @@ namespace SGA.Models.Manter
 
                 foreach (var Regra in RegraUsr)
                 {
-                    if (Regra.Equals("Administrador") || Regra.Equals("Gestor"))
+                    if (Regra.Equals("Administrador") || Regra.Equals("Gestor") || Regra.Equals("Atendente"))
                     {
                         Result = true;
                     }
@@ -248,6 +246,30 @@ namespace SGA.Models.Manter
             try
             {
                 return Membership.GetUser().ToString();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public List<int> GetIdRegiaoAtendByUsr()
+        {
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).GetIdRegiaoAtendByUsrDAO();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public List<Usuario> GetTecnicoByRegiaoEspec()
+        {
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario, ObjChamado).GetTecnicoByRegiaoEspecDAO();
             }
             catch (Exception Ex)
             {

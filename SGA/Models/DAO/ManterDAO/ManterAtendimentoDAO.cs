@@ -1,6 +1,8 @@
 ﻿using SGA.DAO;
 using SGA.Models.Atendimentos;
+using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -12,14 +14,22 @@ namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterAtendimentoDAO
     {
-        private Atendimento ObjAtendimento;
+        Atendimento ObjAtend;
+        Usuario ObjUsuario;
+        Chamado ObjChamado;
         public ManterAtendimentoDAO()
         {
 
         }
         public ManterAtendimentoDAO(Atendimento ObjAtendimento)
         {
-            this.ObjAtendimento = ObjAtendimento;
+            this.ObjAtend = ObjAtendimento;
+        }
+        public ManterAtendimentoDAO(Atendimento ObjAtend, Usuario ObjUsuario, Chamado ObjChamado)
+        {
+            this.ObjChamado = ObjChamado;
+            this.ObjUsuario = ObjUsuario;
+            this.ObjAtend = ObjAtend;
         }
         public List<Atendimento> ConsultaAtendimentosDAO()
         {
@@ -72,19 +82,19 @@ namespace SGA.Models.DAO.ManterDAO
                   FROM [dbo].[DeAtendimento]
                   WHERE ativo = 1 and idAtendimento = @Id", Con);
 
-                    Cmd.Parameters.AddWithValue("@Id", ObjAtendimento.Id);
+                    Cmd.Parameters.AddWithValue("@Id", ObjAtend.Id);
 
                     Dr = Cmd.ExecuteReader();
 
                     while (Dr.Read())
                     {
-                        ObjAtendimento.Id = Dr.GetInt32(0);
+                        ObjAtend.Id = Dr.GetInt32(0);
                         //ObjAtendimento.Regiao = Dr.GetString(1);
                         //ObjAtendimento.Cidade = Dr.GetString(2);
                         //ObjAtendimento.Estado = Dr.GetString(3);
                     }
 
-                    return ObjAtendimento;
+                    return ObjAtend;
                 }
                 catch (SqlException Ex)
                 {
@@ -104,15 +114,18 @@ namespace SGA.Models.DAO.ManterDAO
             INSERT INTO [dbo].[Atendimento]
                 ([idChamado]
                   ,[idTecnico]
-                  ,[idCliente])
+                  ,[idCliente]
+                  ,[idRegiaoAtendimento])
             VALUES
                 (@IdChamado
                 ,@IdTecnico
-                ,@IdCliente);", Con);
+                ,@IdCliente
+                ,@IdRegiao);", Con);
 
-                    Cmd.Parameters.AddWithValue("@IdChamado", ObjAtendimento.IdChamado);
-                    Cmd.Parameters.AddWithValue("@IdTecnico", ObjAtendimento.IdTecnico);
-                    Cmd.Parameters.AddWithValue("@IdCliente", ObjAtendimento.IdCliente);
+                    Cmd.Parameters.AddWithValue("@IdChamado", ObjAtend.IdChamado);
+                    Cmd.Parameters.AddWithValue("@IdTecnico", ObjAtend.IdTecnico);
+                    Cmd.Parameters.AddWithValue("@IdCliente", ObjAtend.IdCliente);
+                    Cmd.Parameters.AddWithValue("@IdRegiao", ObjAtend.IdRegiaoAtendimento);
 
                     Cmd.ExecuteNonQuery();
                     return true;
@@ -146,7 +159,7 @@ namespace SGA.Models.DAO.ManterDAO
                     //Cmd.Parameters.AddWithValue("@Estado", ObjAtendimento.Estado);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
-                    Cmd.Parameters.AddWithValue("@Id", ObjAtendimento.Id);
+                    Cmd.Parameters.AddWithValue("@Id", ObjAtend.Id);
 
                     Cmd.ExecuteNonQuery();
 
@@ -174,7 +187,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ,usuarioRegistro = @Usuario                         
                     WHERE idAtendimento = @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Id", ObjAtendimento.Id);
+                    Cmd.Parameters.AddWithValue("@Id", ObjAtend.Id);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -189,5 +202,6 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        
     }
 }

@@ -1,4 +1,4 @@
-﻿using SGA.Models.Cargos;
+﻿using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
@@ -8,11 +8,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SGA.Views.SGA.VCargo
+namespace SGA.Views.SGA.VRegiaoAtendimento
 {
-    public partial class ModificarCargo : System.Web.UI.Page
+    public partial class ModificarRegiaoAtendimento : System.Web.UI.Page
     {
-        Cargo ObjCargo = FactoryCargo.GetNew();
+        RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -21,11 +21,13 @@ namespace SGA.Views.SGA.VCargo
                 {
                     if (Request.QueryString["Id"] != null)
                     {
-                        ObjCargo.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                        ObjCargo = new ManterCargo(ObjCargo).ConsultaCargosById();
+                        ObjRegiao.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
-                        CargoDescTextBox.Text = ObjCargo.NomeCargo;
-                        SalarioTextBox.Text = ObjCargo.Salario.ToString();
+                        ObjRegiao = new ManterRegiaoAtendimento(ObjRegiao).ConsultaRegiaoAtendimentoById();
+
+                        RegiaoTextBox.Text = ObjRegiao.Regiao;
+                        CidadeTextBox.Text = ObjRegiao.Cidade;
+                        EstadoTextBox.Text = ObjRegiao.Estado;
                     }
                 }
                 catch (Exception Ex)
@@ -41,11 +43,12 @@ namespace SGA.Views.SGA.VCargo
             {
                 if (Request.QueryString["Id"] != null)
                 {
-                    ObjCargo.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    ObjCargo.NomeCargo = CargoDescTextBox.Text;
-                    ObjCargo.Salario = Convert.ToDecimal(SalarioTextBox.Text);
+                    ObjRegiao.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                    ObjRegiao.Regiao = RegiaoTextBox.Text;
+                    ObjRegiao.Cidade = CidadeTextBox.Text;
+                    ObjRegiao.Estado = EstadoTextBox.Text;
 
-                    MsgLabel.Text = new ManterCargo(ObjCargo).AlteraCargo();
+                    MsgLabel.Text = new ManterRegiaoAtendimento(ObjRegiao).AlteraRegiaoAtendimento();
                 }
             }
             catch (Exception Ex)

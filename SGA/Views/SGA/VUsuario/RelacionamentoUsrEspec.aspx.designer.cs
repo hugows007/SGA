@@ -10,7 +10,7 @@
 namespace SGA.Views.SGA.VUsuario {
     
     
-    public partial class RelacionamentoUsrGpAtend {
+    public partial class RelacionamentoUsrEspec {
         
         /// <summary>
         /// MsgLabel control.
@@ -40,13 +40,13 @@ namespace SGA.Views.SGA.VUsuario {
         protected global::System.Web.UI.WebControls.DropDownList DropDownListUsuario;
         
         /// <summary>
-        /// DropDownListGrupo control.
+        /// DropDownListEspec control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListGrupo;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListEspec;
         
         /// <summary>
         /// RelacionarButton control.

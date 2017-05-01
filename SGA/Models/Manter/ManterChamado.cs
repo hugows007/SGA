@@ -1,5 +1,7 @@
-﻿using SGA.Models.Chamados;
+﻿using SGA.Models.Atendimentos;
+using SGA.Models.Chamados;
 using SGA.Models.DAO.ManterDAO;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,9 @@ namespace SGA.Models.Manter
 {
     public class ManterChamado
     {
-        Chamado ObjChamado = null;
+        Chamado ObjChamado;
+        Usuario ObjUsuario;
+        Atendimento ObjAtend;
         public string Msg;
         public ManterChamado()
         {
@@ -19,12 +23,21 @@ namespace SGA.Models.Manter
         {
             this.ObjChamado = ObjChamado;
         }
+        public ManterChamado(Chamado ObjChamado, Usuario ObjUsuario, Atendimento ObjAtend)
+        {
+            this.ObjChamado = ObjChamado;
+            this.ObjUsuario = ObjUsuario;
+            this.ObjAtend = ObjAtend;
+        }
         public string AbreChamado()
         {
             try
             {
                 if (new ManterChamadoDAO(ObjChamado).AbreChamadoDAO())
                 {
+                    ObjChamado.Id = new ManterChamado().GetUltIdChamado();
+
+                    new ManterAtendimento(ObjAtend, ObjUsuario, ObjChamado).CadastraAtendimento();
                     Msg = "Chamado aberto com sucesso! Guarde o número do seu chamado: ";
                 }
             }
@@ -82,7 +95,7 @@ namespace SGA.Models.Manter
             {
                 return new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }

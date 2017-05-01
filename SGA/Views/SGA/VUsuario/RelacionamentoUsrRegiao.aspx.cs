@@ -1,6 +1,5 @@
-﻿using SGA.Models.AreaAtendimentos;
+﻿using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.DAO.Log;
-using SGA.Models.GrupoAtendimentos;
 using SGA.Models.Manter;
 using SGA.Models.Usuarios;
 using System;
@@ -12,10 +11,10 @@ using System.Web.UI.WebControls;
 
 namespace SGA.Views.SGA.VUsuario
 {
-    public partial class RelacionamentoUsrGpAtend : System.Web.UI.Page
+    public partial class RelacionamentoUsrRegiao : System.Web.UI.Page
     {
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-        GrupoAtendimento ObjGpAtend = FactoryGrupoAtendimento.GetNew();
+        RegiaoAtendimento ObjArea = FactoryRegiao.GetNew();
         List<string> Perfis = new List<string>();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,15 +30,13 @@ namespace SGA.Views.SGA.VUsuario
                     DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Administrador"));
                     DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Atendente"));
                     DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Gestor"));
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Cliente Físico"));
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Cliente Jurídico"));
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
 
-                    DropDownListGrupo.DataSource = new ManterGrupoAtendimento().ConsultaGrupoAtendimentos();
-                    DropDownListGrupo.DataTextField = "NomeGpAtendimento";
-                    DropDownListGrupo.DataValueField = "Id";
-                    DropDownListGrupo.DataBind();
-                    DropDownListGrupo.Items.Insert(0, new ListItem("Selecione o grupo", "0"));
+                    DropDownListRegiao.DataSource = new ManterRegiaoAtendimento().ConsultaRegiaoAtendimentos();
+                    DropDownListRegiao.DataTextField = "Regiao";
+                    DropDownListRegiao.DataValueField = "Id";
+                    DropDownListRegiao.DataBind();
+                    DropDownListRegiao.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
                 }
                 catch (Exception Ex)
                 {
@@ -74,8 +71,8 @@ namespace SGA.Views.SGA.VUsuario
             {
                 ObjUsuario.Id = Convert.ToInt32(DropDownListUsuario.SelectedValue);
                 ObjUsuario.Regra = DropDownListTipo.SelectedValue;
-                ObjGpAtend.Id = Convert.ToInt32(DropDownListGrupo.SelectedValue);
-                MsgLabel.Text = new ManterUsuario(ObjUsuario, ObjGpAtend).RelacionaUsuarioGrupoAtendimento();
+                ObjUsuario.ObjRegiao.Id = Convert.ToInt32(DropDownListRegiao.SelectedValue);
+                MsgLabel.Text = new ManterUsuario(ObjUsuario).RelacionaUsuarioAreaAtendimento();
             }
             catch (Exception Ex)
             {

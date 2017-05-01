@@ -1,4 +1,4 @@
-﻿using SGA.Models.AreaAtendimentos;
+﻿using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
@@ -21,7 +21,7 @@ namespace SGA.Views.SGA.VChamado
         public List<string> NomeStatus = new List<string>();
 
         Chamado ObjChamado = FactoryChamado.GetNew();
-        AreaAtendimento ObjArea = FactoryArea.GetNew();
+        RegiaoAtendimento ObjArea = FactoryRegiao.GetNew();
         Servico ObjServico = FactoryServico.GetNewServico();
         StatusChamado ObjStatusChm = FactoryStatusChamado.GetNew();
 
@@ -31,11 +31,11 @@ namespace SGA.Views.SGA.VChamado
             {
                 foreach (var Result in new ManterChamado(ObjChamado).ConsultaChamados())
                 {
-                    ObjArea.Id = Result.IdAreaAtendimento;
+                    //ObjArea.Id = Result.IdAreaAtendimento;
                     ObjServico.Id = Result.IdServico;
                     ObjStatusChm.Id = Result.IdStatus;
 
-                    NomeAreaAtendimento.Add(new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById().Regiao);
+                    NomeAreaAtendimento.Add(new ManterRegiaoAtendimento(ObjArea).ConsultaRegiaoAtendimentoById().Regiao);
                     NomeServico.Add(new ManterServico(ObjServico).ConsultaServicoById().NomeServ);
                     NomeStatus.Add(new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById().NomeStatus);
                     ListaChamado.Add(Result);

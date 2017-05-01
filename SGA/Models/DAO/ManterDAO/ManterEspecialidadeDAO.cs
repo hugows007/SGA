@@ -1,6 +1,7 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
 using SGA.Models.Especialidades;
+using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,9 +14,15 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterEspecialidadeDAO
     {
         private Especialidade ObjEspec;
+        private Servico ObjServ;
         public ManterEspecialidadeDAO(Especialidade objEspec)
         {
             ObjEspec = objEspec;
+        }
+        public ManterEspecialidadeDAO(Especialidade ObjEspec, Servico ObjServ)
+        {
+            this.ObjEspec = ObjEspec;
+            this.ObjServ = ObjServ;
         }
         public ManterEspecialidadeDAO()
         {
@@ -182,6 +189,42 @@ namespace SGA.Models.DAO.ManterDAO
                 catch (SqlException Ex)
                 {
                     new LogException(Ex).InsereLogBd();
+                    throw;
+                }
+            }
+        }
+        public bool RelacionaEspecServDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+            INSERT INTO [dbo].[ServicoXEspecialidade]
+                ([idEspecialidade]
+                  ,[idServico]
+                  ,[dataRegistro]
+                  ,[usuarioRegistro]
+                  ,[ativo])
+            VALUES
+                (@IdEspec
+                ,@IdServ
+                ,@Data 
+                ,@Usuario    
+                ,1);", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdEspec", ObjEspec.Id);
+                    Cmd.Parameters.AddWithValue("@IdServ", ObjServ.Id);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
                     throw;
                 }
             }

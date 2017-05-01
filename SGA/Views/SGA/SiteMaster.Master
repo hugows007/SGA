@@ -162,7 +162,7 @@
                             <i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i><%=UsuarioLogado %></a>
+                            <li><a href="#"><i class="fa fa-user fa-fw"></i><%=UsuarioLogado%></a>
                             </li>
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i>Configurações</a>
                             </li>
@@ -215,65 +215,23 @@
                                                 <a href="/Views/SGA/VUsuario/CadastroUsuario.aspx">Cadastrar usuário</a>
                                             </li>
                                             <li>
-                                                <a href="/Views/SGA/VUsuario/RelacionamentoUsrArea.aspx">Relacionar usuário e área de atendimento</a>
+                                                <a href="/Views/SGA/VUsuario/RelacionamentoUsrRegiao.aspx">Relacionar usuário e região de atendimento</a>
                                             </li>
                                             <li>
-                                                <a href="/Views/SGA/VUsuario/RelacionamentoUsrGpAtend.aspx">Relacionar usuário e grupo de atendimento</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="#">Áreas de atendimentos<span class="fa arrow"></span></a>
-                                        <ul class="nav nav-third-level">
-                                            <li>
-                                                <a href="/Views/SGA/VAreaAtendimento/ConsultaAreaAtendimentos.aspx">Consultar áreas de atendimentos</a>
-                                            </li>
-                                            <li>
-                                                <a href="/Views/SGA/VAreaAtendimento/CadastroAreaAtendimento.aspx">Cadastrar área de atendimento</a>
+                                                <a href="/Views/SGA/VUsuario/RelacionamentoUsrEspec.aspx">Relacionar usuário técnico e especialidade</a>
                                             </li>
                                         </ul>
                                     </li>
                                 </ul>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Grupo de atendimento<span class="fa arrow"></span></a>
+                                        <a href="#">Região de atendimentos<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
-                                                <a href="/Views/SGA/VGrupoAtendimento/ConsultaGpAtendimentos.aspx">Consultar grupo de atendimento</a>
+                                                <a href="/Views/SGA/VRegiaoAtendimento/ConsultaRegiaoAtendimentos.aspx">Consultar região de atendimentos</a>
                                             </li>
                                             <li>
-                                                <a href="/Views/SGA/VGrupoAtendimento/CadastroGpAtendimento.aspx">Cadastrar grupo de atendimento</a>
-                                            </li>
-                                            <li>
-                                                <a href="/Views/SGA/VGrupoAtendimento/RelacionaGpServEspec.aspx">Relacionar grupo de atendimento a um serviço e especialização</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="#">Cargos<span class="fa arrow"></span></a>
-                                        <ul class="nav nav-third-level">
-                                            <li>
-                                                <a href="/Views/SGA/VCargo/ConsultaCargos.aspx">Consultar cargos</a>
-                                            </li>
-                                            <li>
-                                                <a href="/Views/SGA/VCargo/CadastroCargo.aspx">Cadastrar cargo</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="#">Setores<span class="fa arrow"></span></a>
-                                        <ul class="nav nav-third-level">
-                                            <li>
-                                                <a href="/Views/SGA/VSetor/ConsultaSetores.aspx">Consultar setores</a>
-                                            </li>
-                                            <li>
-                                                <a href="/Views/SGA/VSetor/CadastroSetor.aspx">Cadastrar setor</a>
+                                                <a href="/Views/SGA/VRegiaoAtendimento/CadastroRegiaoAtendimento.aspx">Cadastrar região de atendimento</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -287,6 +245,9 @@
                                             </li>
                                             <li>
                                                 <a href="/Views/SGA/VEspecialidade/CadastroEspecialidade.aspx">Cadastrar especialidade</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VEspecialidade/RelacionaEspecServ.aspx">Relacionar especialidade e serviço</a>
                                             </li>
                                         </ul>
                                     </li>

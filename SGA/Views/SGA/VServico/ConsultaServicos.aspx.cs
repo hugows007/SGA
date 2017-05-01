@@ -23,7 +23,7 @@ namespace SGA.Views.SGA.VServico
         {
             try
             {
-                foreach (var Result in new ManterServico(ObjServico).ConsultaServicos())
+                foreach (var Result in new ManterServico(ObjServico).ConsultaServicoByTipo())
                 {
                     ObjTpServico.Id = Result.IdTipo;
                     NomeServico.Add(new ManterServico(ObjServico, ObjTpServico).ConsultaTpServicoById().NomeTipoServ);

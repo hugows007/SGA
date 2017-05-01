@@ -1,5 +1,5 @@
 ﻿using SGA.DAO;
-using SGA.Models.AreaAtendimentos;
+using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
@@ -11,20 +11,20 @@ using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterAreaAtendimentoDAO
+    public class ManterRegiaoAtendimentoDAO
     {
-        private AreaAtendimento ObjArea;
-        public ManterAreaAtendimentoDAO()
+        private RegiaoAtendimento ObjRegiao;
+        public ManterRegiaoAtendimentoDAO()
         {
 
         }
-        public ManterAreaAtendimentoDAO(AreaAtendimento ObjArea)
+        public ManterRegiaoAtendimentoDAO(RegiaoAtendimento ObjRegiao)
         {
-            this.ObjArea = ObjArea;
+            this.ObjRegiao = ObjRegiao;
         }
-        public List<AreaAtendimento> ConsultaAreaAtendimentosDAO()
+        public List<RegiaoAtendimento> ConsultaRegiaoAtendimentosDAO()
         {
-            List<AreaAtendimento> AreaList = new List<AreaAtendimento>();
+            List<RegiaoAtendimento> AreaList = new List<RegiaoAtendimento>();
             SqlDataReader Dr = null;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -33,14 +33,14 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
-                  FROM [dbo].[AreaDeAtendimento]
+                  FROM [dbo].[RegiaoDeAtendimento]
                   WHERE ativo = 1", Con);
 
                     Dr = Cmd.ExecuteReader();
 
                     while (Dr.Read())
                     {
-                        AreaAtendimento Usr = FactoryArea.GetNew();
+                        RegiaoAtendimento Usr = FactoryRegiao.GetNew();
 
                         Usr.Id = Dr.GetInt32(0);
                         Usr.Regiao = Dr.GetString(1);
@@ -60,7 +60,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public AreaAtendimento ConsultaAreaAtendimentoByIdDAO()
+        public RegiaoAtendimento ConsultaRegiaoAtendimentoByIdDAO()
         {
             SqlDataReader Dr = null;
 
@@ -70,22 +70,22 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
-                  FROM [dbo].[AreaDeAtendimento]
-                  WHERE ativo = 1 and idAreaAtendimento = @Id", Con);
+                  FROM [dbo].[RegiaoDeAtendimento]
+                  WHERE ativo = 1 and idRegiaoAtendimento = @Id", Con);
 
-                    Cmd.Parameters.AddWithValue("@Id", ObjArea.Id);
+                    Cmd.Parameters.AddWithValue("@Id", ObjRegiao.Id);
 
                     Dr = Cmd.ExecuteReader();
 
                     while (Dr.Read())
                     {
-                        ObjArea.Id = Dr.GetInt32(0);
-                        ObjArea.Regiao = Dr.GetString(1);
-                        ObjArea.Cidade = Dr.GetString(2);
-                        ObjArea.Estado = Dr.GetString(3);
+                        ObjRegiao.Id = Dr.GetInt32(0);
+                        ObjRegiao.Regiao = Dr.GetString(1);
+                        ObjRegiao.Cidade = Dr.GetString(2);
+                        ObjRegiao.Estado = Dr.GetString(3);
                     }
 
-                    return ObjArea;
+                    return ObjRegiao;
                 }
                 catch (SqlException Ex)
                 {
@@ -95,14 +95,14 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public bool CadastraAreaAtendimentoDAO()
+        public bool CadastraRegiaoAtendimentoDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
                     SqlCommand Cmd = new SqlCommand(@"
-            INSERT INTO [dbo].[AreaDeAtendimento]
+            INSERT INTO [dbo].[RegiaoDeAtendimento]
                 ([regiao]
                   ,[cidade]
                   ,[estado]
@@ -117,9 +117,9 @@ namespace SGA.Models.DAO.ManterDAO
                 ,@Usuario    
                 ,1);", Con);
 
-                    Cmd.Parameters.AddWithValue("@Regiao", ObjArea.Regiao);
-                    Cmd.Parameters.AddWithValue("@Cidade", ObjArea.Cidade);
-                    Cmd.Parameters.AddWithValue("@Estado", ObjArea.Estado);
+                    Cmd.Parameters.AddWithValue("@Regiao", ObjRegiao.Regiao);
+                    Cmd.Parameters.AddWithValue("@Cidade", ObjRegiao.Cidade);
+                    Cmd.Parameters.AddWithValue("@Estado", ObjRegiao.Estado);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -134,7 +134,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public bool AlteraAreaAtendimentoDAO()
+        public bool AlteraRegiaoAtendimentoDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
@@ -142,20 +142,20 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
-	                [dbo].[AreaDeAtendimento] SET 
+	                [dbo].[RegiaoDeAtendimento] SET 
 	                    Regiao = @Regiao
                         ,Cidade = @Cidade
                         ,Estado = @Estado
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario
-                        WHERE idAreaAtendimento = @Id;", Con);
+                        WHERE idRegiaoAtendimento = @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Regiao", ObjArea.Regiao);
-                    Cmd.Parameters.AddWithValue("@Cidade", ObjArea.Cidade);
-                    Cmd.Parameters.AddWithValue("@Estado", ObjArea.Estado);
+                    Cmd.Parameters.AddWithValue("@Regiao", ObjRegiao.Regiao);
+                    Cmd.Parameters.AddWithValue("@Cidade", ObjRegiao.Cidade);
+                    Cmd.Parameters.AddWithValue("@Estado", ObjRegiao.Estado);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
-                    Cmd.Parameters.AddWithValue("@Id", ObjArea.Id);
+                    Cmd.Parameters.AddWithValue("@Id", ObjRegiao.Id);
 
                     Cmd.ExecuteNonQuery();
 
@@ -169,7 +169,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public bool InativarAreaAtendimentoDAO()
+        public bool InativarRegiaoAtendimentoDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
@@ -177,13 +177,13 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
-	                [dbo].[AreaDeAtendimento] SET
+	                [dbo].[RegiaoDeAtendimento] SET
                         ativo = 0
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario                         
-                    WHERE idAreaAtendimento = @Id;", Con);
+                    WHERE idRegiaoAtendimento = @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Id", ObjArea.Id);
+                    Cmd.Parameters.AddWithValue("@Id", ObjRegiao.Id);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 

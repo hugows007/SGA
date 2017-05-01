@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="RelacionaGpServEspec.aspx.cs" Inherits="SGA.Views.SGA.VGrupoAtendimento.RelaGpAreaServEspec" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="RelacionaEspecServ.aspx.cs" Inherits="SGA.Views.SGA.VEspecialidade.RelacionaEspecServ" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
     <div id="page-wrapper">
@@ -22,16 +22,6 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <label for="DropDownListGrupo" class="control-label">Selecione o grupo de atendimento:</label>
-                                        </td>
-                                        <td>
-                                            <asp:DropDownList ID="DropDownListGrupo" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListGrupo_SelectedIndexChanged"></asp:DropDownList>
-                                        </td>
-                                    </tr>
-                                    <%if (DropDownListGrupo.SelectedIndex > 0)
-                                        { %>
-                                    <tr>
-                                        <td>
                                             <label for="DropDownListServ" class="control-label">Serviço:</label>
                                         </td>
                                         <td>
@@ -46,7 +36,6 @@
                                             <asp:DropDownList ID="DropDownListEspec" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                         </td>
                                     </tr>
-                                    <%} %>
                                 </tbody>
                             </table>
                         </div>

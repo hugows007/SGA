@@ -8,16 +8,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SGA.Models.Manter;
 using SGA.Models.DAO.Log;
-using SGA.Models.AreaAtendimentos;
-using SGA.Models.GrupoAtendimentos;
+using SGA.Models.RegiaoAtendimentos;
+using SGA.Models.Especialidades;
 
 namespace SGA.Views.SGA.VUsuario
 {
     public partial class Cadastro : System.Web.UI.Page
     {
-        Usuario ObjUsuario = null;
-        AreaAtendimento ObjArea = null;
-        GrupoAtendimento ObjGpAtend = null;
+        Usuario ObjUsuario;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,11 +43,15 @@ namespace SGA.Views.SGA.VUsuario
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
                 }
-                else if (DropDownListTipo.Text.Equals("Técnico") || DropDownListTipo.Text.Equals("Gestor") || DropDownListTipo.Text.Equals("Atendente"))
+                else if (DropDownListTipo.Text.Equals("Técnico"))
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
-                    ObjUsuario.ObjFunc.IdSetor = Convert.ToInt32(DropDownListSetor.SelectedValue);
-                    ObjUsuario.ObjFunc.IdCargo = Convert.ToInt32(DropDownListCargo.SelectedValue);
+                    ObjUsuario.ObjFunc.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
+                    ObjUsuario.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
+                }
+                else if (DropDownListTipo.Text.Equals("Gestor") || DropDownListTipo.Text.Equals("Atendente"))
+                {
+                    ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
                 }
                 else if (DropDownListTipo.Text.Equals("Cliente Físico"))
                 {
@@ -64,9 +66,6 @@ namespace SGA.Views.SGA.VUsuario
                     ObjUsuario.ObjCJ.Cnpj = CNPJTextBox.Text;
                 }
 
-                ObjArea = FactoryArea.GetNew();
-                ObjGpAtend = FactoryGrupoAtendimento.GetNew();
-
                 ObjUsuario.Login = UserNameTextbox.Text;
                 ObjUsuario.Senha = PasswordTextbox.Text;
                 ObjUsuario.Email = EmailTextbox.Text;
@@ -76,10 +75,9 @@ namespace SGA.Views.SGA.VUsuario
                 ObjUsuario.Numero = NumeroTextBox.Text;
                 ObjUsuario.Cep = CEPTextBox.Text;
                 ObjUsuario.Telefone = TelefoneTextBox.Text;
-                ObjArea.Id = Convert.ToInt32(DropDownListArea.SelectedValue);
-                ObjGpAtend.Id = Convert.ToInt32(DropDownListGrupo.SelectedValue);
+                ObjUsuario.ObjRegiao.Id = Convert.ToInt32(DropDownListArea.SelectedValue);
 
-                MsgLabel.Text = new ManterUsuario(ObjUsuario, ObjArea, ObjGpAtend).CadastraUsuario();
+                MsgLabel.Text = new ManterUsuario(ObjUsuario).CadastraUsuario();
             }
             catch (Exception Ex)
             {
@@ -90,29 +88,17 @@ namespace SGA.Views.SGA.VUsuario
 
         protected void DropDownListTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DropDownListSetor.DataSource = new ManterSetor().ConsultaSetores();
-            DropDownListSetor.DataTextField = "NomeSetor";
-            DropDownListSetor.DataValueField = "Id";
-            DropDownListSetor.DataBind();
-            DropDownListSetor.Items.Insert(0, new ListItem("Selecione o setor", "0"));
-
-            DropDownListCargo.DataSource = new ManterCargo().ConsultaCargos();
-            DropDownListCargo.DataTextField = "NomeCargo";
-            DropDownListCargo.DataValueField = "Id";
-            DropDownListCargo.DataBind();
-            DropDownListCargo.Items.Insert(0, new ListItem("Selecione o cargo", "0"));
-
-            DropDownListArea.DataSource = new ManterAreaAtendimento().ConsultaAreaAtendimentos();
+            DropDownListArea.DataSource = new ManterRegiaoAtendimento().ConsultaRegiaoAtendimentos();
             DropDownListArea.DataTextField = "Regiao";
             DropDownListArea.DataValueField = "Id";
             DropDownListArea.DataBind();
             DropDownListArea.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
 
-            DropDownListGrupo.DataSource = new ManterGrupoAtendimento().ConsultaGrupoAtendimentos();
-            DropDownListGrupo.DataTextField = "NomeGpAtendimento";
-            DropDownListGrupo.DataValueField = "Id";
-            DropDownListGrupo.DataBind();
-            DropDownListGrupo.Items.Insert(0, new ListItem("Selecione o grupo", "0"));
+            DropDownListEspec.DataSource = new ManterEspecialidade().ConsultaEspecialidades();
+            DropDownListEspec.DataTextField = "NomeEspec";
+            DropDownListEspec.DataValueField = "Id";
+            DropDownListEspec.DataBind();
+            DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
         }
     }
 }

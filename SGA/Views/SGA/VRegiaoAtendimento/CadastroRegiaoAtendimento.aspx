@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="CadastroAreaAtendimento.aspx.cs" Inherits="SGA.Views.SGA.VAreaAtendimento.CadastroAreaAtendimento" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="CadastroRegiaoAtendimento.aspx.cs" Inherits="SGA.Views.SGA.VRegiaoAtendimento.CadastroRegiaoAtendimento" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="headInicio" runat="server">
 </asp:Content>

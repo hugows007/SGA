@@ -14,7 +14,6 @@ namespace SGA.Models.Chamados
         public int IdStatus { get; set; }
         public DateTime DataAbertura { get; set; }
         public DateTime DataFechamento { get; set; }
-        public int IdAreaAtendimento { get; set; }
         public int IdServico { get; set; }
     }
 }

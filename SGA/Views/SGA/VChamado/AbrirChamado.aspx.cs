@@ -1,4 +1,5 @@
-﻿using SGA.Models.Chamados;
+﻿using SGA.Models.Atendimentos;
+using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using SGA.Models.Servicos;
@@ -18,7 +19,8 @@ namespace SGA.Views.SGA.VChamado
         Servico ObjServico = FactoryServico.GetNewServico();
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         public Chamado ObjChamado = FactoryChamado.GetNew();
-        public bool PerfilUsr = new ManterUsuario().GetUsuariosGestOuAdm();
+        Atendimento ObjAtend = FactoryAtendimento.GetNew();
+        public bool PerfilFunc = new ManterUsuario().GetUsuariosFunc();
         List<string> Perfis = new List<string>();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -33,7 +35,7 @@ namespace SGA.Views.SGA.VChamado
                     DropDownListTpServico.DataBind();
                     DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
 
-                    if (PerfilUsr)
+                    if (PerfilFunc)
                     {
                         Perfis.Add("Cliente");
 
@@ -57,7 +59,7 @@ namespace SGA.Views.SGA.VChamado
             {
                 ObjServico.IdTipo = Convert.ToInt32(DropDownListTpServico.SelectedValue);
 
-                DropDownListServico.DataSource = new ManterServico(ObjServico).ConsultaServicos();
+                DropDownListServico.DataSource = new ManterServico(ObjServico).ConsultaServicoByTipo();
                 DropDownListServico.DataTextField = "NomeServ";
                 DropDownListServico.DataValueField = "Id";
                 DropDownListServico.DataBind();
@@ -76,26 +78,34 @@ namespace SGA.Views.SGA.VChamado
 
             try
             {
-                if (PerfilUsr)
+                if (PerfilFunc)
                 {
                     ObjChamado.IdCliente = Convert.ToInt32(DropDownListCliente.SelectedValue);
                     ObjUsuario.Id = ObjChamado.IdCliente;
+
                     ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
-                    //ObjChamado.IdAreaAtendimento = ObjUsuario.IdAreaAtendimento;
+
+                    foreach (var RegiaoUsr in new ManterUsuario(ObjUsuario).GetIdRegiaoAtendByUsr())
+                    {
+                        ObjAtend.IdRegiaoAtendimento = RegiaoUsr;
+                    }
                 }
                 else
                 {
                     ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
-
                     ObjChamado.IdCliente = ObjUsuario.Id;
-                    //ObjChamado.IdAreaAtendimento = ObjUsuario.IdAreaAtendimento;
+
+                    foreach (var RegiaoUsr in new ManterUsuario(ObjUsuario).GetIdRegiaoAtendByUsr())
+                    {
+                        ObjAtend.IdRegiaoAtendimento = RegiaoUsr;
+                    }
                 }
 
                 ObjChamado.Assunto = AssuntoTextBox.Text;
                 ObjChamado.Descricao = DescricaoTextBox.Text;
                 ObjChamado.IdServico = Convert.ToInt32(DropDownListServico.SelectedValue);
 
-                MsgLabel.Text = new ManterChamado(ObjChamado).AbreChamado();
+                MsgLabel.Text = new ManterChamado(ObjChamado, ObjUsuario, ObjAtend).AbreChamado();
                 ObjChamado.Id = new ManterChamado().GetUltIdChamado();
             }
             catch (Exception Ex)

@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SGA.Views.SGA.VAreaAtendimento {
+namespace SGA.Views.SGA.VRegiaoAtendimento {
     
     
-    public partial class ModificarAreaAtendimento {
+    public partial class ModificarRegiaoAtendimento {
         
         /// <summary>
         /// MsgLabel control.

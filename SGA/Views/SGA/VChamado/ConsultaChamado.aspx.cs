@@ -1,4 +1,4 @@
-﻿using SGA.Models.AreaAtendimentos;
+﻿using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
@@ -16,7 +16,7 @@ namespace SGA.Views.SGA.VChamado
     public partial class ConsultaChamado : System.Web.UI.Page
     {
         public Chamado ObjChamado = null;
-        public AreaAtendimento ObjArea = FactoryArea.GetNew();
+        public RegiaoAtendimento ObjArea = FactoryRegiao.GetNew();
         public Servico ObjServico = FactoryServico.GetNewServico();
         public StatusChamado ObjStatusChm = FactoryStatusChamado.GetNew();
 
@@ -36,11 +36,11 @@ namespace SGA.Views.SGA.VChamado
 
                     if (ObjChamado != null)
                     {
-                        ObjArea.Id = ObjChamado.IdAreaAtendimento;
+                        //ObjArea.Id = ObjChamado.IdAreaAtendimento;
                         ObjServico.Id = ObjChamado.IdServico;
                         ObjStatusChm.Id = ObjChamado.IdStatus;
 
-                        ObjArea = new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentoById();
+                        ObjArea = new ManterRegiaoAtendimento(ObjArea).ConsultaRegiaoAtendimentoById();
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
                         ObjStatusChm = new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById();
                     }

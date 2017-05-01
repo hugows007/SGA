@@ -1,4 +1,4 @@
-﻿using SGA.Models.AreaAtendimentos;
+﻿using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
@@ -8,11 +8,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SGA.Views.SGA.VAreaAtendimento
+namespace SGA.Views.SGA.VRegiaoAtendimento
 {
-    public partial class InativarAreaAtendimento : System.Web.UI.Page
+    public partial class InativarRegiaoAtendimento : System.Web.UI.Page
     {
-        AreaAtendimento ObjArea = FactoryArea.GetNew();
+        RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
         protected void Page_Load(object sender, EventArgs e)
         {
             bool OperInativar = false;
@@ -21,8 +21,8 @@ namespace SGA.Views.SGA.VAreaAtendimento
             {
                 if (Request.QueryString["Id"] != null)
                 {
-                    ObjArea.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    OperInativar = new ManterAreaAtendimento(ObjArea).InativarAreaAtendimento();
+                    ObjRegiao.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                    OperInativar = new ManterRegiaoAtendimento(ObjRegiao).InativarRegiaoAtendimento();
                     Response.Redirect("\\Views\\SGA\\VAreaAtendimento\\ConsultaAreaAtendimentos.aspx?OpInatArea=" + OperInativar.ToString());
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Especialidades;
+using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,7 +11,8 @@ namespace SGA.Models.Manter
 {
     public class ManterEspecialidade
     {
-        private Especialidade ObjEspec;
+        Especialidade ObjEspec;
+        Servico ObjServ;
         private string Msg;
 
         public ManterEspecialidade()
@@ -20,6 +22,11 @@ namespace SGA.Models.Manter
         public ManterEspecialidade(Especialidade ObjEspec)
         {
             this.ObjEspec = ObjEspec;
+        }
+        public ManterEspecialidade(Especialidade ObjEspec, Servico ObjServ)
+        {
+            this.ObjEspec = ObjEspec;
+            this.ObjServ = ObjServ;
         }
         public List<Especialidade> ConsultaEspecialidades()
         {
@@ -71,6 +78,22 @@ namespace SGA.Models.Manter
             {
                 return false;
             }
+        }
+        public string RelacionaEspecServ()
+        {
+            try
+            {
+                if (new ManterEspecialidadeDAO(ObjEspec, ObjServ).RelacionaEspecServDAO())
+                {
+                    Msg = "Serviço e especialidade relacionados com sucesso!";
+                }
+            }
+            catch (Exception)
+            {
+                Msg = "Ocorreu um erro ao relacionar os itens selecionados.";
+            }
+
+            return Msg;
         }
     }
 }

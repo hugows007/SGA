@@ -1,4 +1,4 @@
-﻿using SGA.Models.Cargos;
+﻿using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
@@ -8,24 +8,24 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SGA.Views.SGA.VCargo
+namespace SGA.Views.SGA.VRegiaoAtendimento
 {
-    public partial class CadastroCargo : System.Web.UI.Page
+    public partial class CadastroRegiaoAtendimento : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
-
         protected void CadastrarButton_Click(object sender, EventArgs e)
         {
             try
             {
-                Cargo ObjCargo = FactoryCargo.GetNew();
-                ObjCargo.NomeCargo = CargoDescTextBox.Text;
-                ObjCargo.Salario = Convert.ToDecimal(SalarioTextBox.Text);
+                RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
+                ObjRegiao.Regiao = RegiaoTextBox.Text;
+                ObjRegiao.Cidade = CidadeTextBox.Text;
+                ObjRegiao.Estado = EstadoTextBox.Text;
 
-                MsgLabel.Text = new ManterCargo(ObjCargo).CadastraCargo();
+                MsgLabel.Text = new ManterRegiaoAtendimento(ObjRegiao).CadastraRegiaoAtendimento();
             }
             catch (Exception Ex)
             {

@@ -1,5 +1,7 @@
 ﻿using SGA.Models.Atendimentos;
+using SGA.Models.Chamados;
 using SGA.Models.DAO.ManterDAO;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +11,46 @@ namespace SGA.Models.Manter
 {
     public class ManterAtendimento
     {
-        Atendimento ObjAtendimento = null;
+        Atendimento ObjAtend;
+        Usuario ObjUsuario;
+        Chamado ObjChamado;
         public string Msg;
         public ManterAtendimento()
         {
 
         }
-        public ManterAtendimento(Atendimento ObjAtendimento)
+        public ManterAtendimento(Atendimento ObjAtend)
         {
-            this.ObjAtendimento = ObjAtendimento;
+            this.ObjAtend = ObjAtend;
+        }
+        public ManterAtendimento(Atendimento ObjAtend, Usuario ObjUsuario, Chamado ObjChamado)
+        {
+            this.ObjChamado = ObjChamado;
+            this.ObjUsuario = ObjUsuario;
+            this.ObjAtend = ObjAtend;
         }
         public List<Atendimento> ConsultaAtendimentos()
         {
-            return new ManterAtendimentoDAO(ObjAtendimento).ConsultaAtendimentosDAO();
+            return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentosDAO();
         }
         public Atendimento ConsultaAtendimentoById()
         {
-            return new ManterAtendimentoDAO(ObjAtendimento).ConsultaAtendimentoByIdDAO();
+            return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentoByIdDAO();
         }
         public string CadastraAtendimento()
         {
             try
             {
-                if (new ManterAtendimentoDAO(ObjAtendimento).CadastraAtendimentoDAO())
+                foreach (var Tecnico in new ManterUsuario(ObjUsuario, ObjChamado).GetTecnicoByRegiaoEspec())
+                {
+                    ObjAtend.IdTecnico = Tecnico.Id;
+                }
+
+                ObjAtend.IdChamado = ObjChamado.Id;
+                ObjAtend.IdCliente = ObjChamado.IdCliente;
+                ObjAtend.IdRegiaoAtendimento = ObjUsuario.ObjRegiao.Id;
+
+                if (new ManterAtendimentoDAO(ObjAtend).CadastraAtendimentoDAO())
                 {
                     Msg = "Área de atendimento cadastrada com sucesso!";
                 }
@@ -47,7 +66,7 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterAtendimentoDAO(ObjAtendimento).AlteraAtendimentoDAO())
+                if (new ManterAtendimentoDAO(ObjAtend).AlteraAtendimentoDAO())
                 {
                     Msg = "Área atualizada com sucesso!";
                 }
@@ -63,7 +82,7 @@ namespace SGA.Models.Manter
         {
             try
             {
-                return new ManterAtendimentoDAO(ObjAtendimento).CancelaAtendimentoDAO();
+                return new ManterAtendimentoDAO(ObjAtend).CancelaAtendimentoDAO();
             }
             catch (Exception)
             {

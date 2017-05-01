@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ConsultaAreaAtendimentos.aspx.cs" Inherits="SGA.Views.SGA.VAreaAtendimento.ConsultaAreaAtendimentos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ConsultaRegiaoAtendimentos.aspx.cs" Inherits="SGA.Views.SGA.VRegiaoAtendimento.ConsultaRegiaoAtendimentos" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
     <div id="page-wrapper">

@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SGA.Views.SGA.VGrupoAtendimento {
+namespace SGA.Views.SGA.VUsuario {
     
     
-    public partial class RelaGpAreaServEspec {
+    public partial class RelacionamentoUsrRegiao {
         
         /// <summary>
         /// MsgLabel control.
@@ -22,31 +22,31 @@ namespace SGA.Views.SGA.VGrupoAtendimento {
         protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
-        /// DropDownListGrupo control.
+        /// DropDownListTipo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListGrupo;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListTipo;
         
         /// <summary>
-        /// DropDownListServ control.
+        /// DropDownListUsuario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListServ;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListUsuario;
         
         /// <summary>
-        /// DropDownListEspec control.
+        /// DropDownListRegiao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListEspec;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListRegiao;
         
         /// <summary>
         /// RelacionarButton control.

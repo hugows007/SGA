@@ -1,6 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="RelacionamentoUsrGpAtend.aspx.cs" Inherits="SGA.Views.SGA.VUsuario.RelacionamentoUsrGpAtend" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="RelacionamentoUsrRegiao.aspx.cs" Inherits="SGA.Views.SGA.VUsuario.RelacionamentoUsrRegiao" %>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
-     <div id="page-wrapper">
+    <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header"></h1>
@@ -10,7 +11,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Relacionamento de um usuário técnico a um grupo de atendimento
+                        Relacionamento de um usuário técnico ou um cliente a uma região de atendimento
                         <b>
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
@@ -39,17 +40,17 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label for="DropDownListGrupo" class="control-label">Grupo de atendimento:</label>
+                                            <label for="DropDownListRegiao" class="control-label">Região de atendimento:</label>
                                         </td>
                                         <td>
-                                            <asp:DropDownList ID="DropDownListGrupo" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
+                                            <asp:DropDownList ID="DropDownListRegiao" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                         </td>
                                     </tr>
                                     <%} %>
                                 </tbody>
                             </table>
                         </div>
-                        <asp:Button ID="RelacionarButton" runat="server" Text="Relacionar usuário e grupo de atendimento" class="btn btn-default" OnClick="RelacionarButton_Click" />
+                        <asp:Button ID="RelacionarButton" runat="server" Text="Relacionar usuário e área de atendimento" class="btn btn-default" OnClick="RelacionarButton_Click" />
                         <a class="btn btn-default" href="/Views/SGA/Inicio.aspx">Voltar para o início</a>
                     </div>
                     <div class="panel-footer">

@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SGA.Views.SGA.VAreaAtendimento {
+namespace SGA.Views.SGA.VEspecialidade {
     
     
-    public partial class CadastroAreaAtendimento {
+    public partial class RelacionaEspecServ {
         
         /// <summary>
         /// MsgLabel control.
@@ -22,39 +22,30 @@ namespace SGA.Views.SGA.VAreaAtendimento {
         protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
-        /// RegiaoTextBox control.
+        /// DropDownListServ control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RegiaoTextBox;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListServ;
         
         /// <summary>
-        /// CidadeTextBox control.
+        /// DropDownListEspec control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CidadeTextBox;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListEspec;
         
         /// <summary>
-        /// EstadoTextBox control.
+        /// RelacionarButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EstadoTextBox;
-        
-        /// <summary>
-        /// Cadastrar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Cadastrar;
+        protected global::System.Web.UI.WebControls.Button RelacionarButton;
     }
 }

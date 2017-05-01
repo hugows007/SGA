@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SGA.Models.Especialidades;
+using SGA.Models.RegiaoAtendimentos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,5 +23,7 @@ namespace SGA.Models.Usuarios
         public UsuarioClienteFisico ObjCF { get; set; }
         public UsuarioClienteJuridico ObjCJ { get; set; }
         public UsuarioFuncionario ObjFunc { get; set; }
+        public RegiaoAtendimento ObjRegiao { get; set; }
+        public Especialidade ObjEspec { get; set; }
     }
 }

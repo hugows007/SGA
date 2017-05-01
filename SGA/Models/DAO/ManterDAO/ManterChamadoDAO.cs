@@ -48,8 +48,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Cham.IdStatus = Dr.GetInt32(4);
                         Cham.DataAbertura = Dr.GetDateTime(5);
                         Cham.DataFechamento = Dr.GetDateTime(6);
-                        Cham.IdAreaAtendimento = Dr.GetInt32(7);
-                        Cham.IdServico = Dr.GetInt32(8);
+                        Cham.IdServico = Dr.GetInt32(7);
 
                         ChamList.Add(Cham);
                     }
@@ -77,7 +76,6 @@ namespace SGA.Models.DAO.ManterDAO
                   ,[idStatusChamado]
                   ,[dataAbertura]
                   ,[dataFechamento]
-                  ,[idAreaAtendimento]
                   ,[idServico]
                   ,[dataRegistro]
                   ,[usuarioRegistro])
@@ -88,7 +86,6 @@ namespace SGA.Models.DAO.ManterDAO
                 ,1
                 ,@DataAber
                 ,@DataFech
-                ,@Area
                 ,@Servico
                 ,@Data
                 ,@Usuario);", Con);
@@ -98,7 +95,6 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.Parameters.AddWithValue("@Desc", ObjChamado.Descricao);
                     Cmd.Parameters.AddWithValue("@DataAber", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@DataFech", DateTime.Parse("2000-01-01 00:00:00.000"));
-                    Cmd.Parameters.AddWithValue("@Area", ObjChamado.IdAreaAtendimento);
                     Cmd.Parameters.AddWithValue("@Servico", ObjChamado.IdServico);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
@@ -139,8 +135,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjChamado.IdStatus = Dr.GetInt32(4);
                         ObjChamado.DataAbertura = Dr.GetDateTime(5);
                         ObjChamado.DataFechamento = Dr.GetDateTime(6);
-                        ObjChamado.IdAreaAtendimento = Dr.GetInt32(7);
-                        ObjChamado.IdServico = Dr.GetInt32(8);
+                        ObjChamado.IdServico = Dr.GetInt32(7);
                     }
 
                     return ObjChamado;

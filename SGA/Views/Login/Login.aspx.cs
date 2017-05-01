@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGA.Models.DAO.Log;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,15 +13,23 @@ namespace SGA
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            GC.Collect();
+            try
+            {
+                /*GC.Collect();
 
-            /*Membership.CreateUser("Admin", "123$$Abc");
-            Roles.CreateRole("Administrador");
-            Roles.CreateRole("Técnico");
-            Roles.CreateRole("Gestor");
-            Roles.CreateRole("Cliente Físico");
-            Roles.CreateRole("Cliente Jurídico");
-            Roles.CreateRole("Atendente");*/
+                Membership.CreateUser("Admin", "123$$Abc");
+                Roles.CreateRole("Administrador");
+                Roles.CreateRole("Técnico");
+                Roles.CreateRole("Gestor");
+                Roles.CreateRole("Cliente Físico");
+                Roles.CreateRole("Cliente Jurídico");
+                Roles.CreateRole("Atendente");*/
+
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+            }
         }
 
         protected void BotaoEntrar_Click(object sender, EventArgs e)
@@ -32,15 +41,16 @@ namespace SGA
                     TxtLogin.Visible = true;
                     Session["user"] = User.Identity.Name;
                     FormsAuthentication.RedirectFromLoginPage(TxtLogin.Text, true);
-                    Response.Redirect("\\Views\\SGA\\Inicio.aspx");
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }
                 else
                 {
-                    Response.Write("Login inválido");
+                    Response.Write("Login ou senha inválidos");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
+                new LogException(Ex).InsereLogBd();
                 Response.Write("Erro sistêmico");
             }
         }

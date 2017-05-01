@@ -1,4 +1,4 @@
-﻿using SGA.Models.AreaAtendimentos;
+﻿using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
@@ -8,17 +8,17 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SGA.Views.SGA.VAreaAtendimento
+namespace SGA.Views.SGA.VRegiaoAtendimento
 {
-    public partial class ConsultaAreaAtendimentos : System.Web.UI.Page
+    public partial class ConsultaRegiaoAtendimentos : System.Web.UI.Page
     {
-        public List<AreaAtendimento> ListaAreaSelect = new List<AreaAtendimento>();
-        AreaAtendimento ObjArea = FactoryArea.GetNew();
+        public List<RegiaoAtendimento> ListaAreaSelect = new List<RegiaoAtendimento>();
+        RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                foreach (var ObjAT in new ManterAreaAtendimento(ObjArea).ConsultaAreaAtendimentos())
+                foreach (var ObjAT in new ManterRegiaoAtendimento(ObjRegiao).ConsultaRegiaoAtendimentos())
                 {
                     ListaAreaSelect.Add(ObjAT);
                 }

@@ -12,8 +12,8 @@ namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterServicoDAO
     {
-        public Servico ObjServico = null;
-        public TipoServico ObjTpServico = null;
+        public Servico ObjServico;
+        public TipoServico ObjTpServico;
 
         public ManterServicoDAO()
         {
@@ -105,6 +105,48 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public List<Servico> ConsultaServicoByTipoDAO()
+        {
+            SqlDataReader Dr;
+            SqlCommand Cmd;
+            List<Servico> ServicoList = new List<Servico>();
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                        SELECT *
+                          FROM [dbo].[Servico]
+                          WHERE ativo = 1 and idTipo = @IdTipo", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdTipo", ObjServico.IdTipo);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Servico Servicos = FactoryServico.GetNewServico();
+
+                        Servicos.Id = Dr.GetInt32(0);
+                        Servicos.IdTipo = Dr.GetInt32(1);
+                        Servicos.NomeServ = Dr.GetString(2);
+                        Servicos.DescServ = Dr.GetString(3);
+                        Servicos.Sla = Dr.GetInt32(4);
+                        Servicos.IdStatus = Dr.GetInt32(5);
+
+                        ServicoList.Add(Servicos);
+                    }
+
+                    return ServicoList;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
+            }
+        }
         public List<Servico> ConsultaServicosDAO()
         {
             List<Servico> ServicoList = new List<Servico>();
@@ -115,22 +157,10 @@ namespace SGA.Models.DAO.ManterDAO
             {
                 try
                 {
-                    if (ObjServico == null || ObjServico.Id.Equals(0))
-                    {
-                        Cmd = new SqlCommand(@"
-                SELECT *
-                  FROM [dbo].[Servico]
-                  WHERE ativo = 1", Con);
-                    }
-                    else
-                    {
-                        Cmd = new SqlCommand(@"
-                SELECT *
-                  FROM [dbo].[Servico]
-                  WHERE ativo = 1 and IdServico = @Id", Con);
-
-                        Cmd.Parameters.AddWithValue("@Id", ObjServico.Id);
-                    }
+                    Cmd = new SqlCommand(@"
+                        SELECT *
+                          FROM [dbo].[Servico]
+                          WHERE ativo = 1", Con);
 
                     Dr = Cmd.ExecuteReader();
 
