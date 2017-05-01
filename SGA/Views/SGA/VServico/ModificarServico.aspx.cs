@@ -59,7 +59,14 @@ namespace SGA.Views.SGA.VServico
                     ObjServico.DescServ = DescServTextBox.Text;
                     ObjServico.Sla = Convert.ToDouble(SLATextBox.Text);
 
-                    MsgLabel.Text = new ManterServico(ObjServico).AlteraServico();
+                    if (new ManterServico(ObjServico).AlteraServico())
+                    {
+                        MsgLabel.Text = "Serviço modificado com sucesso.";
+                    }
+                    else
+                    {
+                        MsgLabel.Text = "Não foi possível modificar o serviço.";
+                    }
                 }
             }
             catch (Exception Ex)

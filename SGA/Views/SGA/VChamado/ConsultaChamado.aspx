@@ -41,15 +41,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="AreaAtendimento" class="control-label">Região de atendimento:</label>
-                                <input id="AreaAtendimento" type="text" class="form-control input-sm" disabled="disabled" value=" <%=ObjArea.Regiao %>" />
+                                <input id="AreaAtendimento" type="text" class="form-control input-sm" disabled="disabled" value=" <%=ObjRegiao.Regiao %>" />
                             </div>
                             <div class="form-group">
                                 <label for="Servico" class="control-label">Serviço:</label>
                                 <input id="Servico" type="text" class="form-control input-sm" disabled="disabled" value=" <%=ObjServico.NomeServ%>" />
                             </div>
                             <div class="form-group">
+                                <label for="Cliente" class="control-label">Cliente:</label>
+                                <input id="Cliente" type="text" class="form-control input-sm" disabled="disabled" value="<%=NomeCliente %>" />
+                            </div>
+                            <div class="form-group">
                                 <label for="TecnicoResp" class="control-label">Técnico responsável:</label>
-                                <input id="TecnicoResp" type="text" class="form-control input-sm" disabled="disabled" value="" />
+                                <input id="TecnicoResp" type="text" class="form-control input-sm" disabled="disabled" value="<%=NomeTecnico %>" />
                             </div>
                             <%} %>
                             <b>

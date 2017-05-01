@@ -43,7 +43,14 @@ namespace SGA.Views.SGA.VServico
                 ObjServico.DescServ = DescServTextBox.Text;
                 ObjServico.Sla = Convert.ToDouble(SLATextBox.Text);
 
-                MsgLabel.Text = new ManterServico(ObjServico).CadastraServico();
+                if(new ManterServico(ObjServico).CadastraServico())
+                {
+                    MsgLabel.Text = "Serviço cadastrado com sucesso.";
+                }
+                else
+                {
+                    MsgLabel.Text = "Não foi possível cadastrar o serviço";
+                }
             }
             catch (Exception Ex)
             {

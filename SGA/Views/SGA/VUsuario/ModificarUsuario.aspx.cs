@@ -48,7 +48,14 @@ namespace SGA.Views.SGA.VUsuario
                     ObjUsuario.Numero = NumTextBox.Text;
                     ObjUsuario.Cep = CEPTextBox.Text;
 
-                    MsgLabel.Text = new ManterUsuario(ObjUsuario).AlteraUsuario();
+                    if (new ManterUsuario(ObjUsuario).AlteraUsuario())
+                    {
+                        MsgLabel.Text = "Usuário alterado com sucesso.";
+                    }
+                    else
+                    {
+                        MsgLabel.Text = "Não foi possível alterar o usuário";
+                    }
                 }
             }
             catch (Exception Ex)

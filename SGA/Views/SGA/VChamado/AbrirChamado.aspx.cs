@@ -59,7 +59,7 @@ namespace SGA.Views.SGA.VChamado
             {
                 ObjServico.IdTipo = Convert.ToInt32(DropDownListTpServico.SelectedValue);
 
-                DropDownListServico.DataSource = new ManterServico(ObjServico).ConsultaServicoByTipo();
+                DropDownListServico.DataSource = new ManterServico(ObjServico).ConsultaServicosByTipo();
                 DropDownListServico.DataTextField = "NomeServ";
                 DropDownListServico.DataValueField = "Id";
                 DropDownListServico.DataBind();
@@ -105,8 +105,11 @@ namespace SGA.Views.SGA.VChamado
                 ObjChamado.Descricao = DescricaoTextBox.Text;
                 ObjChamado.IdServico = Convert.ToInt32(DropDownListServico.SelectedValue);
 
-                MsgLabel.Text = new ManterChamado(ObjChamado, ObjUsuario, ObjAtend).AbreChamado();
-                ObjChamado.Id = new ManterChamado().GetUltIdChamado();
+                if(new ManterChamado(ObjChamado, ObjUsuario, ObjAtend).AbreChamado())
+                {
+                    MsgLabel.Text = "Chamado aberto com sucesso! Guarde o número de seu chamado: ";
+                    ObjChamado.Id = new ManterChamado().GetUltIdChamado();
+                }
             }
             catch (Exception Ex)
             {

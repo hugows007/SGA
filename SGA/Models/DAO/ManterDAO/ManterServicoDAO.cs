@@ -105,7 +105,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public List<Servico> ConsultaServicoByTipoDAO()
+        public List<Servico> ConsultaServicosByTipoDAO()
         {
             SqlDataReader Dr;
             SqlCommand Cmd;

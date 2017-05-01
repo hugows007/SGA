@@ -26,7 +26,7 @@ namespace SGA.Views.SGA.VUsuario
                     Perfis.Add("Técnico");
                     Perfis.Add("Cliente");
 
-                    DropDownListTipo.DataSource = new ManterUsuario().RegrasUsuario();
+                    DropDownListTipo.DataSource = new ManterUsuario().GetRegrasUsuario();
                     DropDownListTipo.DataBind();
                     DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Administrador"));
                     DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Atendente"));
@@ -75,7 +75,14 @@ namespace SGA.Views.SGA.VUsuario
                 ObjUsuario.Id = Convert.ToInt32(DropDownListUsuario.SelectedValue);
                 ObjUsuario.Regra = DropDownListTipo.SelectedValue;
                 ObjUsuario.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
-                MsgLabel.Text = new ManterUsuario(ObjUsuario).RelacionaUsuarioEspecialidade();
+                if(new ManterUsuario(ObjUsuario).RelacionaUsuarioEspecialidade())
+                {
+                    MsgLabel.Text = "Usuário e especialidade relacionados com sucesso.";
+                }
+                else
+                {
+                    MsgLabel.Text = "Não foi possível relacionar usuário e especialidade.";
+                }
             }
             catch (Exception Ex)
             {

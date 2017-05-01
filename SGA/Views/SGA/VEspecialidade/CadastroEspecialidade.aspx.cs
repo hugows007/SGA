@@ -25,7 +25,15 @@ namespace SGA.Views.SGA.VEspecialidade
                 ObjEspec.NomeEspec = EspecTextBox.Text;
                 ObjEspec.DescEspec = EspecDestTextBox.Text;
 
-                MsgLabel.Text = new ManterEspecialidade(ObjEspec).CadastraEspecialidade();
+                if(new ManterEspecialidade(ObjEspec).CadastraEspecialidade())
+                {
+                    MsgLabel.Text = "Especialidade cadastrada com sucesso.";
+                }
+                else
+                {
+                    MsgLabel.Text = "Não foi possível cadastrar a especialidade.";
+                }
+                
             }
             catch (Exception Ex)
             {

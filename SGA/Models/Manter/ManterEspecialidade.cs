@@ -1,4 +1,5 @@
-﻿using SGA.Models.DAO.ManterDAO;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Especialidades;
 using SGA.Models.Servicos;
 using System;
@@ -13,8 +14,6 @@ namespace SGA.Models.Manter
     {
         Especialidade ObjEspec;
         Servico ObjServ;
-        private string Msg;
-
         public ManterEspecialidade()
         {
 
@@ -36,37 +35,43 @@ namespace SGA.Models.Manter
         {
             return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadeByIdDAO();
         }
-        public string CadastraEspecialidade()
+        public bool CadastraEspecialidade()
         {
             try
             {
                 if (new ManterEspecialidadeDAO(ObjEspec).CadastraEspecialidadeDAO())
                 {
-                    Msg = "Especialidade cadastrada com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Ocorreu um erro ao cadastrar a especialidade.";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
-        public string AlteraEspecialidade()
+        public bool AlteraEspecialidade()
         {
             try
             {
                 if (new ManterEspecialidadeDAO(ObjEspec).AlteraEspecialidadeDAO())
                 {
-                    Msg = "Especialidade atualizada com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Ocorreu um erro ao atualizar a especialidade.";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
         public bool InativaEspecialidade()
         {
@@ -74,26 +79,30 @@ namespace SGA.Models.Manter
             {
                 return new ManterEspecialidadeDAO(ObjEspec).InativaEspecialidadeDAO();
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                return false;
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
         }
-        public string RelacionaEspecServ()
+        public bool RelacionaEspecServ()
         {
             try
             {
                 if (new ManterEspecialidadeDAO(ObjEspec, ObjServ).RelacionaEspecServDAO())
                 {
-                    Msg = "Serviço e especialidade relacionados com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Ocorreu um erro ao relacionar os itens selecionados.";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
     }
 }

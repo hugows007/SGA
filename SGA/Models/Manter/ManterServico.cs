@@ -1,4 +1,5 @@
-﻿using SGA.Models.DAO.ManterDAO;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,6 @@ namespace SGA.Models.Manter
     {
         private Servico ObjServico;
         private TipoServico ObjTpServico;
-        public string Msg;
-
         public ManterServico()
         {
 
@@ -39,49 +38,55 @@ namespace SGA.Models.Manter
         {
             return new ManterServicoDAO(ObjServico, ObjTpServico).ConsultaTpServicoByIdDAO();
         }
-        public string CadastraServico()
-        {
-            try
-            {
-                if (new ManterServicoDAO(ObjServico).CadastraServicoDAO())
-                {
-                    Msg = "Serviço cadastrado com sucesso!";
-                }
-            }
-            catch (Exception)
-            {
-                Msg = "Ocorreu um erro ao cadastrar o serviço.";
-            }
-
-            return Msg;
-        }
         public List<Servico> ConsultaServicos()
         {
             return new ManterServicoDAO().ConsultaServicosDAO();
         }
-        public List<Servico> ConsultaServicoByTipo()
+        public List<Servico> ConsultaServicosByTipo()
         {
-            return new ManterServicoDAO(ObjServico).ConsultaServicoByTipoDAO();
+            return new ManterServicoDAO(ObjServico).ConsultaServicosByTipoDAO();
         }
         public Servico ConsultaServicoById()
         {
             return new ManterServicoDAO(ObjServico).ConsultaServicoByIdDAO();
         }
-        public string AlteraServico()
+        public bool CadastraServico()
+        {
+            try
+            {
+                if (new ManterServicoDAO(ObjServico).CadastraServicoDAO())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public bool AlteraServico()
         {
             try
             {
                 if (new ManterServicoDAO(ObjServico).AlteraServicoDAO())
                 {
-                    Msg = "Serviço atualizado com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Ocorreu um erro ao atualizar o serviço!";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
         public bool InativaServico()
         {
@@ -89,11 +94,11 @@ namespace SGA.Models.Manter
             {
                 return new ManterServicoDAO(ObjServico).InativaServicoDAO();
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                return false;
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
         }
     }
 }

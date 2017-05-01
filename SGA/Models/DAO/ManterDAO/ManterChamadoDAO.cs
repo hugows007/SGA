@@ -13,6 +13,7 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterChamadoDAO
     {
         private Chamado ObjChamado;
+        int QtdChamAbertos;
         int UltimoId;
         public ManterChamadoDAO()
         {
@@ -228,6 +229,35 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return UltimoId;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
+            }
+        }
+        public int GetQtdChamadosStatusAbertosDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                select count(*) 
+                    from chamado 
+                    where idStatusChamado = 1;", Con);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        QtdChamAbertos =  Dr.GetInt32(0);
+                    }
+
+                    return QtdChamAbertos;
                 }
                 catch (SqlException Ex)
                 {

@@ -23,7 +23,7 @@ namespace SGA.Views.SGA.VServico
         {
             try
             {
-                foreach (var Result in new ManterServico(ObjServico).ConsultaServicoByTipo())
+                foreach (var Result in new ManterServico().ConsultaServicos())
                 {
                     ObjTpServico.Id = Result.IdTipo;
                     NomeServico.Add(new ManterServico(ObjServico, ObjTpServico).ConsultaTpServicoById().NomeTipoServ);
@@ -32,11 +32,11 @@ namespace SGA.Views.SGA.VServico
 
                 if (Request.QueryString["OpInatServico"] != null && Request.QueryString["OpInatServico"].Equals("True"))
                 {
-                    MsgLabel.Text = "Serviço inativado com sucesso!";
+                    MsgLabel.Text = "Serviço inativado com sucesso.";
                 }
                 else if (Request.QueryString["OpInatServico"] != null && Request.QueryString["OpInatServico"].Equals("False"))
                 {
-                    MsgLabel.Text = "Ocorreu um erro ao inativar o serviço!";
+                    MsgLabel.Text = "Ocorreu um erro ao inativar o serviço.";
                 }
             }
             catch (Exception Ex)

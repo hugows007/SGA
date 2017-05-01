@@ -1,5 +1,6 @@
 ﻿using SGA.Models.Atendimentos;
 using SGA.Models.Chamados;
+using SGA.Models.DAO.Log;
 using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Usuarios;
 using System;
@@ -37,7 +38,11 @@ namespace SGA.Models.Manter
         {
             return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentoByIdDAO();
         }
-        public string CadastraAtendimento()
+        public Atendimento ConsultaAtendimentoByIdChamado()
+        {
+            return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentoByIdChamadoDAO();
+        }
+        public bool CadastraAtendimento()
         {
             try
             {
@@ -52,31 +57,37 @@ namespace SGA.Models.Manter
 
                 if (new ManterAtendimentoDAO(ObjAtend).CadastraAtendimentoDAO())
                 {
-                    Msg = "Área de atendimento cadastrada com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Houve um problema ao efetuar o cadastro da área de atendimento.";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
-        public string AlteraAtendimento()
+        public bool AlteraAtendimento()
         {
             try
             {
                 if (new ManterAtendimentoDAO(ObjAtend).AlteraAtendimentoDAO())
                 {
-                    Msg = "Área atualizada com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Ocorreu um erro ao atualizar a área!";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
         public bool CancelaAtendimento()
         {
@@ -84,9 +95,10 @@ namespace SGA.Models.Manter
             {
                 return new ManterAtendimentoDAO(ObjAtend).CancelaAtendimentoDAO();
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                return false;
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
         }
     }

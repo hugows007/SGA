@@ -23,7 +23,7 @@ namespace SGA.Views.SGA.VUsuario
             {
                 try
                 {
-                    DropDownListTipo.DataSource = new ManterUsuario().RegrasUsuario();
+                    DropDownListTipo.DataSource = new ManterUsuario().GetRegrasUsuario();
                     DropDownListTipo.DataBind();
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
                 }

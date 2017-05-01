@@ -1,5 +1,6 @@
 ﻿using SGA.Models.Atendimentos;
 using SGA.Models.Chamados;
+using SGA.Models.DAO.Log;
 using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Usuarios;
 using System;
@@ -14,7 +15,6 @@ namespace SGA.Models.Manter
         Chamado ObjChamado;
         Usuario ObjUsuario;
         Atendimento ObjAtend;
-        public string Msg;
         public ManterChamado()
         {
 
@@ -29,7 +29,7 @@ namespace SGA.Models.Manter
             this.ObjUsuario = ObjUsuario;
             this.ObjAtend = ObjAtend;
         }
-        public string AbreChamado()
+        public bool AbreChamado()
         {
             try
             {
@@ -37,16 +37,25 @@ namespace SGA.Models.Manter
                 {
                     ObjChamado.Id = new ManterChamado().GetUltIdChamado();
 
-                    new ManterAtendimento(ObjAtend, ObjUsuario, ObjChamado).CadastraAtendimento();
-                    Msg = "Chamado aberto com sucesso! Guarde o número do seu chamado: ";
+                    if(new ManterAtendimento(ObjAtend, ObjUsuario, ObjChamado).CadastraAtendimento())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Ocorreu um erro ao abrir o chamado.";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
         public List<Chamado> ConsultaChamados()
         {
@@ -56,38 +65,41 @@ namespace SGA.Models.Manter
         {
             try
             {
-                this.ObjChamado = new ManterChamadoDAO(ObjChamado).ConsultaChamadoByIdDAO();
+                ObjChamado = new ManterChamadoDAO(ObjChamado).ConsultaChamadoByIdDAO();
 
                 if (!0.Equals(ObjChamado.Id) && !0.Equals(ObjChamado.IdStatus))
                 {
-                    return this.ObjChamado;
+                    return ObjChamado;
                 }
                 else
                 {
-                    Msg = "Chamado não encontrado ou inexistente.";
                     return null;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                return null;
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
         }
-        public string AlteraChamado()
+        public bool AlteraChamado()
         {
             try
             {
                 if (new ManterChamadoDAO(ObjChamado).AlteraChamadoDAO())
                 {
-                    Msg = "Chamado atualizado com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Ocorreu um erro ao atualizar o chamado.";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
         public bool CancelaChamado()
         {
@@ -95,14 +107,19 @@ namespace SGA.Models.Manter
             {
                 return new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO();
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                return false;
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
         }
         public int GetUltIdChamado()
         {
             return new ManterChamadoDAO().GetUltIdChamadoDAO();
+        }
+        public int GetQtdChamadosStatusAbertos()
+        {
+            return new ManterChamadoDAO().GetQtdChamadosStatusAbertosDAO();
         }
     }
 }

@@ -25,7 +25,15 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
                 ObjRegiao.Cidade = CidadeTextBox.Text;
                 ObjRegiao.Estado = EstadoTextBox.Text;
 
-                MsgLabel.Text = new ManterRegiaoAtendimento(ObjRegiao).CadastraRegiaoAtendimento();
+                if(new ManterRegiaoAtendimento(ObjRegiao).CadastraRegiaoAtendimento())
+                {
+                    MsgLabel.Text = "Região de atendimento cadastrada com sucesso.";
+                }
+                else
+                {
+                    MsgLabel.Text = "Não foi possível cadastrar a região de atendimento.";
+                }
+                
             }
             catch (Exception Ex)
             {

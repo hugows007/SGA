@@ -46,7 +46,14 @@ namespace SGA.Views.SGA.VEspecialidade
                     ObjEspec.NomeEspec = EspecTextBox.Text;
                     ObjEspec.DescEspec = EspecDestTextBox.Text;
 
-                    MsgLabel.Text = new ManterEspecialidade(ObjEspec).AlteraEspecialidade();
+                    if(new ManterEspecialidade(ObjEspec).AlteraEspecialidade())
+                    {
+                        MsgLabel.Text = "Especialidade alterada com sucesso.";
+                    }
+                    else
+                    {
+                        MsgLabel.Text = "Não foi possível alterar a especialidade.";
+                    }
                 }
             }
             catch (Exception Ex)

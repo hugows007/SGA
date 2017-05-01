@@ -48,7 +48,15 @@ namespace SGA.Views.SGA.VEspecialidade
                 ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
                 ObjServ.Id = Convert.ToInt32(DropDownListServ.SelectedValue);
 
-                MsgLabel.Text = new ManterEspecialidade(ObjEspec, ObjServ).RelacionaEspecServ();
+                if(new ManterEspecialidade(ObjEspec, ObjServ).RelacionaEspecServ())
+                {
+                    MsgLabel.Text = "Especialidade e serviço relacionados com sucesso.";
+                }
+                else
+                {
+                    MsgLabel.Text = "Não foi possível relacionar a especialidade e o serviço";
+                }
+                
             }
             catch (Exception Ex)
             {

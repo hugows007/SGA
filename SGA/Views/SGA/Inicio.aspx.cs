@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGA.Models.Manter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ namespace SGA.Views.Site
 {
     public partial class Inicio : System.Web.UI.Page
     {
+        public int QtdChamAbertos;
         protected void Page_Load(object sender, EventArgs e)
         {
             /*UsuarioLogado.Text = Membership.GetUser().ToString();
@@ -17,6 +19,8 @@ namespace SGA.Views.Site
             string userId = mu.ProviderUserKey.ToString();
             UsuarioLogado.Text += " " + userId;
             Usuario.Text = Membership.GetUser(mu.ProviderUserKey).ToString();*/
+
+            QtdChamAbertos = new ManterChamado().GetQtdChamadosStatusAbertos();
         }
     }
 }

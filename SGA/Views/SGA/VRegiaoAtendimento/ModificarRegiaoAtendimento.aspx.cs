@@ -48,7 +48,14 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
                     ObjRegiao.Cidade = CidadeTextBox.Text;
                     ObjRegiao.Estado = EstadoTextBox.Text;
 
-                    MsgLabel.Text = new ManterRegiaoAtendimento(ObjRegiao).AlteraRegiaoAtendimento();
+                    if(new ManterRegiaoAtendimento(ObjRegiao).AlteraRegiaoAtendimento())
+                    {
+                        MsgLabel.Text = "Região de atendimento alterada com sucesso.";
+                    }
+                    else
+                    {
+                        MsgLabel.Text = "Não foi possível alterar a região de atendimento.";
+                    }
                 }
             }
             catch (Exception Ex)

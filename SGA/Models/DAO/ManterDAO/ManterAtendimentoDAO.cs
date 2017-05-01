@@ -79,8 +79,8 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
-                  FROM [dbo].[DeAtendimento]
-                  WHERE ativo = 1 and idAtendimento = @Id", Con);
+                  FROM [dbo].[Atendimento]
+                  WHERE idAtendimento = @Id", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjAtend.Id);
 
@@ -89,9 +89,46 @@ namespace SGA.Models.DAO.ManterDAO
                     while (Dr.Read())
                     {
                         ObjAtend.Id = Dr.GetInt32(0);
-                        //ObjAtendimento.Regiao = Dr.GetString(1);
-                        //ObjAtendimento.Cidade = Dr.GetString(2);
-                        //ObjAtendimento.Estado = Dr.GetString(3);
+                        ObjAtend.IdChamado = Dr.GetInt32(4);
+                        ObjAtend.IdTecnico = Dr.GetInt32(5);
+                        ObjAtend.IdCliente = Dr.GetInt32(6);
+                        ObjAtend.IdRegiaoAtendimento = Dr.GetInt32(7);
+                    }
+
+                    return ObjAtend;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
+        public Atendimento ConsultaAtendimentoByIdChamadoDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                SELECT *
+                  FROM [dbo].[Atendimento]
+                  WHERE idChamado = @IdChamado", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdChamado", ObjAtend.IdChamado);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjAtend.Id = Dr.GetInt32(0);
+                        ObjAtend.IdChamado = Dr.GetInt32(4);
+                        ObjAtend.IdTecnico = Dr.GetInt32(5);
+                        ObjAtend.IdCliente = Dr.GetInt32(6);
+                        ObjAtend.IdRegiaoAtendimento = Dr.GetInt32(7);
                     }
 
                     return ObjAtend;

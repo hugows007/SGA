@@ -32,20 +32,6 @@ namespace SGA.Models.Manter
             this.ObjUsuario = ObjUsuario;
             this.ObjChamado = ObjChamado;
         }
-        public string[] RegrasUsuario()
-        {
-            try
-            {
-                string[] rolesArray;
-                return rolesArray = Roles.GetAllRoles();
-            }
-            catch (Exception Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                return null;
-            }
-
-        }
         public string CadastraUsuario()
         {
             try
@@ -101,40 +87,6 @@ namespace SGA.Models.Manter
             }
 
         }
-        public string RelacionaUsuarioAreaAtendimento()
-        {
-            try
-            {
-                if (new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioAreaAtendimentoDAO())
-                {
-                    Msg = "Usuário relacionado com sucesso!";
-                }
-            }
-            catch (Exception Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                Msg = "Ocorreu um erro ao relacionar o usuário!";
-            }
-
-            return Msg;
-        }
-        public string RelacionaUsuarioEspecialidade()
-        {
-            try
-            {
-                if (new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioEspecialidadeDAO())
-                {
-                    Msg = "Usuário relacionado com sucesso!";
-                }
-            }
-            catch (Exception Ex)
-            {
-                new LogException(Ex).InsereLogBd();
-                Msg = "Ocorreu um erro ao relacionar o usuário!";
-            }
-
-            return Msg;
-        }
         public List<Usuario> ConsultaUsuarios()
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosDAO();
@@ -151,22 +103,24 @@ namespace SGA.Models.Manter
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByNomeDAO();
         }
-        public string AlteraUsuario()
+        public bool AlteraUsuario()
         {
             try
             {
                 if (new ManterUsuarioDAO(ObjUsuario).AlteraUsuarioDAO())
                 {
-                    Msg = "Usuário atualizado com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             catch (Exception Ex)
             {
                 new LogException(Ex).InsereLogBd();
-                Msg = "Ocorreu um erro ao atualizar o usuário!";
+                throw;
             }
-
-            return Msg;
         }
         public bool InativaUsuario()
         {
@@ -177,7 +131,45 @@ namespace SGA.Models.Manter
             catch (Exception Ex)
             {
                 new LogException(Ex).InsereLogBd();
-                return false;
+                throw;
+            }
+        }
+        public bool RelacionaUsuarioAreaAtendimento()
+        {
+            try
+            {
+                if (new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioAreaAtendimentoDAO())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public bool RelacionaUsuarioEspecialidade()
+        {
+            try
+            {
+                if (new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioEspecialidadeDAO())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
         }
         public string GetMensagemErro(MembershipCreateStatus Status)
@@ -214,6 +206,20 @@ namespace SGA.Models.Manter
                 default:
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
+        }
+        public string[] GetRegrasUsuario()
+        {
+            try
+            {
+                string[] rolesArray;
+                return rolesArray = Roles.GetAllRoles();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+
         }
         public bool GetUsuariosFunc()
         {

@@ -1,4 +1,5 @@
-﻿using SGA.Models.DAO.ManterDAO;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.DAO.ManterDAO;
 using SGA.Models.RegiaoAtendimentos;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,7 @@ namespace SGA.Models.Manter
 {
     public class ManterRegiaoAtendimento
     {
-        public RegiaoAtendimento ObjRegiao = null;
-        public string Msg;
+        public RegiaoAtendimento ObjRegiao;
         public ManterRegiaoAtendimento()
         {
 
@@ -28,37 +28,43 @@ namespace SGA.Models.Manter
         {
             return new ManterRegiaoAtendimentoDAO(ObjRegiao).ConsultaRegiaoAtendimentoByIdDAO();
         }
-        public string CadastraRegiaoAtendimento()
+        public bool CadastraRegiaoAtendimento()
         {
             try
             {
                 if (new ManterRegiaoAtendimentoDAO(ObjRegiao).CadastraRegiaoAtendimentoDAO())
                 {
-                    Msg = "Região de atendimento cadastrada com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Houve um problema ao efetuar o cadastro da região de atendimento.";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
-        public string AlteraRegiaoAtendimento()
+        public bool AlteraRegiaoAtendimento()
         {
             try
             {
                 if (new ManterRegiaoAtendimentoDAO(ObjRegiao).AlteraRegiaoAtendimentoDAO())
                 {
-                    Msg = "Região atualizada com sucesso!";
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Msg = "Ocorreu um erro ao atualizar a região!";
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
-
-            return Msg;
         }
         public bool InativarRegiaoAtendimento()
         {
@@ -66,9 +72,10 @@ namespace SGA.Models.Manter
             {
                 return new ManterRegiaoAtendimentoDAO(ObjRegiao).InativarRegiaoAtendimentoDAO();
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                return false;
+                new LogException(Ex).InsereLogBd();
+                throw;
             }
         }
     }
