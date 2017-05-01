@@ -15,7 +15,7 @@
                         <b>
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
-                            <%if (!0.Equals(ObjChamado.Id))
+                            <%if (ObjChamado != null)
                                 {
                             %>
                             <a href="ConsultaChamado.aspx?IdChamado=<%=ObjChamado.Id%>"><%=ObjChamado.Id%></a>
@@ -44,6 +44,14 @@
                                                 </td>
                                                 <td>
                                                     <asp:DropDownList ID="DropDownListServico" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label for="DropDownListPrioridade" class="control-label">Prioridade do chamado:</label>
+                                                </td>
+                                                <td>
+                                                    <asp:DropDownList ID="DropDownListPrioridade" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                                 </td>
                                             </tr>
                                             <%} %>

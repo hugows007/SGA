@@ -96,7 +96,7 @@ namespace SGA.Models.DAO.ManterDAO
                             SqlCommand CmdUsrT = new SqlCommand(@"
             INSERT INTO [dbo].[Funcionario]
                 ([idUsuario]
-                ,[idDisponibilidade)
+                ,[idDisponibilidade])
             VALUES
                 (@LastId
                 ,1);", Con);

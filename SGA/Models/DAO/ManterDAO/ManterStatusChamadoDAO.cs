@@ -1,6 +1,6 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
-using SGA.Models.StatusChamados;
+using SGA.Models.Chamados.StatusChamados;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -11,7 +11,7 @@ namespace SGA.Models.DAO.ManterDAO
 {
     public class ManterStatusChamadoDAO
     {
-        StatusChamado ObjStatusChm = null;
+        StatusChamado ObjStatusChm;
         public ManterStatusChamadoDAO(StatusChamado ObjStatusChm)
         {
             this.ObjStatusChm = ObjStatusChm;

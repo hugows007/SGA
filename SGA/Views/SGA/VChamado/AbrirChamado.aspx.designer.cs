@@ -40,6 +40,15 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.WebControls.DropDownList DropDownListServico;
         
         /// <summary>
+        /// DropDownListPrioridade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListPrioridade;
+        
+        /// <summary>
         /// DropDownListCliente control.
         /// </summary>
         /// <remarks>

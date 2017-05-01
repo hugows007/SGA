@@ -11,6 +11,7 @@ namespace SGA.Views.Site
 {
     public partial class Inicio : System.Web.UI.Page
     {
+        ManterChamado MntChamado = new ManterChamado();
         public int QtdChamAbertos;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -20,7 +21,7 @@ namespace SGA.Views.Site
             UsuarioLogado.Text += " " + userId;
             Usuario.Text = Membership.GetUser(mu.ProviderUserKey).ToString();*/
 
-            QtdChamAbertos = new ManterChamado().GetQtdChamadosStatusAbertos();
+            QtdChamAbertos = MntChamado.GetQtdChamadosStatusAbertos();
         }
     }
 }

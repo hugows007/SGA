@@ -50,6 +50,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Cham.DataAbertura = Dr.GetDateTime(5);
                         Cham.DataFechamento = Dr.GetDateTime(6);
                         Cham.IdServico = Dr.GetInt32(7);
+                        Cham.IdPrioridade = Dr.GetInt32(8);
 
                         ChamList.Add(Cham);
                     }
@@ -78,6 +79,7 @@ namespace SGA.Models.DAO.ManterDAO
                   ,[dataAbertura]
                   ,[dataFechamento]
                   ,[idServico]
+                  ,[idPrioridade]
                   ,[dataRegistro]
                   ,[usuarioRegistro])
             VALUES
@@ -88,6 +90,7 @@ namespace SGA.Models.DAO.ManterDAO
                 ,@DataAber
                 ,@DataFech
                 ,@Servico
+                ,@Prioridade
                 ,@Data
                 ,@Usuario);", Con);
 
@@ -97,6 +100,7 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.Parameters.AddWithValue("@DataAber", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@DataFech", DateTime.Parse("2000-01-01 00:00:00.000"));
                     Cmd.Parameters.AddWithValue("@Servico", ObjChamado.IdServico);
+                    Cmd.Parameters.AddWithValue("@Prioridade", ObjChamado.IdPrioridade);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -137,6 +141,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjChamado.DataAbertura = Dr.GetDateTime(5);
                         ObjChamado.DataFechamento = Dr.GetDateTime(6);
                         ObjChamado.IdServico = Dr.GetInt32(7);
+                        ObjChamado.IdPrioridade = Dr.GetInt32(8);
                     }
 
                     return ObjChamado;
@@ -200,6 +205,29 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
                     Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
+            }
+        }
+        public bool DeletaChamadoDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                DELETE 
+	                [dbo].[Chamado] 
+                        WHERE idChamado = @Id;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
+                    Cmd.ExecuteNonQuery();
+
                     return true;
                 }
                 catch (SqlException Ex)

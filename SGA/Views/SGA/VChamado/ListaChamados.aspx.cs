@@ -3,7 +3,7 @@ using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using SGA.Models.Servicos;
-using SGA.Models.StatusChamados;
+using SGA.Models.Chamados.StatusChamados;
 using System;
 using System.Collections.Generic;
 using System.Linq;

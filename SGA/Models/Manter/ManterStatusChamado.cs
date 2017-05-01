@@ -1,5 +1,5 @@
 ﻿using SGA.Models.DAO.ManterDAO;
-using SGA.Models.StatusChamados;
+using SGA.Models.Chamados.StatusChamados;
 using System;
 using System.Collections.Generic;
 using System.Linq;

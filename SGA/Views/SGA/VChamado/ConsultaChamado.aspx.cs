@@ -3,7 +3,7 @@ using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using SGA.Models.Servicos;
-using SGA.Models.StatusChamados;
+using SGA.Models.Chamados.StatusChamados;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SGA.Models.Atendimentos;
 using SGA.Models.Usuarios;
+using SGA.Models.Chamados.PrioridadeChamados;
 
 namespace SGA.Views.SGA.VChamado
 {
@@ -19,12 +20,15 @@ namespace SGA.Views.SGA.VChamado
     {
         public Chamado ObjChamado;
         public RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
+        public PrioridadeChamado ObjPrioridade = FactoryPrioridadeChm.GetNew();
         public Servico ObjServico = FactoryServico.GetNewServico();
         public StatusChamado ObjStatusChm = FactoryStatusChamado.GetNew();
         public Atendimento ObjAtend = FactoryAtendimento.GetNew();
         public Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+
         public string NomeCliente;
         public string NomeTecnico;
+        public bool CancButtonClick;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -57,6 +61,9 @@ namespace SGA.Views.SGA.VChamado
                         ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
                         NomeCliente = ObjUsuario.Nome;
 
+                        ObjPrioridade.Id = ObjChamado.IdPrioridade;
+
+                        ObjPrioridade = new ManterPrioridadeChamado(ObjPrioridade).ConsultaPrioridadeChamadoById();
                         ObjRegiao = new ManterRegiaoAtendimento(ObjRegiao).ConsultaRegiaoAtendimentoById();
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
                         ObjStatusChm = new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById();
@@ -77,6 +84,20 @@ namespace SGA.Views.SGA.VChamado
                 new LogException(Ex).InsereLogBd();
                 ObjChamado = null;
                 MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+            }
+        }
+
+        protected void CancelarButton_Click(object sender, EventArgs e)
+        {
+            CancButtonClick = true;
+
+            if (!DescCancelTextBox.Text.Equals(""))
+            {
+                MsgLabel.Text = "Chamado cancelado com sucesso.";
+            }
+            else
+            {
+                MsgLabel.Text = "Informe o motivo do cancelamento";
             }
         }
     }

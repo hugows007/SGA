@@ -24,7 +24,7 @@
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="huge">0</div>
-                                <div>Chat</div>
+                                <div>Bate-papo</div>
                             </div>
                         </div>
                     </div>

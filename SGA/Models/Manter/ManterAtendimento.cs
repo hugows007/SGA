@@ -61,11 +61,13 @@ namespace SGA.Models.Manter
                 }
                 else
                 {
+                    new ManterChamado(ObjChamado).DeletaChamado();
                     return false;
                 }
             }
             catch (Exception Ex)
             {
+                new ManterChamado(ObjChamado).DeletaChamado();
                 new LogException(Ex).InsereLogBd();
                 throw;
             }

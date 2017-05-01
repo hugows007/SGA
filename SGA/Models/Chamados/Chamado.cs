@@ -15,5 +15,6 @@ namespace SGA.Models.Chamados
         public DateTime DataAbertura { get; set; }
         public DateTime DataFechamento { get; set; }
         public int IdServico { get; set; }
+        public int IdPrioridade { get; set; }
     }
 }

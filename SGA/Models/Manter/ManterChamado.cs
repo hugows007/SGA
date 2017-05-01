@@ -43,16 +43,19 @@ namespace SGA.Models.Manter
                     }
                     else
                     {
+                        DeletaChamado();
                         return false;
                     }
                 }
                 else
                 {
+                    DeletaChamado();
                     return false;
                 }
             }
             catch (Exception Ex)
             {
+                DeletaChamado();
                 new LogException(Ex).InsereLogBd();
                 throw;
             }
@@ -106,6 +109,18 @@ namespace SGA.Models.Manter
             try
             {
                 return new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public bool DeletaChamado()
+        {
+            try
+            {
+                return new ManterChamadoDAO(ObjChamado).DeletaChamadoDAO();
             }
             catch (Exception Ex)
             {

@@ -46,7 +46,6 @@ namespace SGA.Views.SGA.VUsuario
                 else if (DropDownListTipo.Text.Equals("Técnico"))
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
-                    ObjUsuario.ObjFunc.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
                     ObjUsuario.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
                 }
                 else if (DropDownListTipo.Text.Equals("Gestor") || DropDownListTipo.Text.Equals("Atendente"))

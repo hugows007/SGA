@@ -15,9 +15,9 @@ namespace SGA
         {
             try
             {
-                /*GC.Collect();
+                GC.Collect();
 
-                Membership.CreateUser("Admin", "123$$Abc");
+                /*Membership.CreateUser("Admin", "123$$Abc");
                 Roles.CreateRole("Administrador");
                 Roles.CreateRole("Técnico");
                 Roles.CreateRole("Gestor");
@@ -45,13 +45,13 @@ namespace SGA
                 }
                 else
                 {
-                    Response.Write("Login ou senha inválidos");
+                    MsgLabel.Text = "Login ou senha inválidos.";
                 }
             }
             catch (Exception Ex)
             {
                 new LogException(Ex).InsereLogBd();
-                Response.Write("Erro sistêmico");
+                MsgLabel.Text = "Erro interno.";
             }
         }
     }

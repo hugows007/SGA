@@ -18,7 +18,7 @@ namespace SGA.Views.SGA.VChamado
     {
         Servico ObjServico = FactoryServico.GetNewServico();
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-        public Chamado ObjChamado = FactoryChamado.GetNew();
+        public Chamado ObjChamado;
         Atendimento ObjAtend = FactoryAtendimento.GetNew();
         public bool PerfilFunc = new ManterUsuario().GetUsuariosFunc();
         List<string> Perfis = new List<string>();
@@ -64,6 +64,12 @@ namespace SGA.Views.SGA.VChamado
                 DropDownListServico.DataValueField = "Id";
                 DropDownListServico.DataBind();
                 DropDownListServico.Items.Insert(0, new ListItem("Selecione o serviço", "0"));
+
+                DropDownListPrioridade.DataSource = new ManterPrioridadeChamado().ConsultaPrioridadesChamado();
+                DropDownListPrioridade.DataTextField = "DescPrioridade";
+                DropDownListPrioridade.DataValueField = "Id";
+                DropDownListPrioridade.DataBind();
+                DropDownListPrioridade.Items.Insert(0, new ListItem("Selecione a prioridade do chamado", "0"));
             }
             catch (Exception Ex)
             {
@@ -74,6 +80,7 @@ namespace SGA.Views.SGA.VChamado
 
         protected void AbrirButton_Click(object sender, EventArgs e)
         {
+            ObjChamado = FactoryChamado.GetNew();
             ObjUsuario.Nome = Membership.GetUser().ToString();
 
             try
@@ -81,6 +88,7 @@ namespace SGA.Views.SGA.VChamado
                 if (PerfilFunc)
                 {
                     ObjChamado.IdCliente = Convert.ToInt32(DropDownListCliente.SelectedValue);
+                    ObjChamado.IdPrioridade = Convert.ToInt32(DropDownListPrioridade.SelectedValue);
                     ObjUsuario.Id = ObjChamado.IdCliente;
 
                     ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
@@ -113,6 +121,7 @@ namespace SGA.Views.SGA.VChamado
             }
             catch (Exception Ex)
             {
+                ObjChamado = null;
                 new LogException(Ex).InsereLogBd();
                 MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }

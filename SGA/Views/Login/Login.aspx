@@ -9,11 +9,9 @@
                 <div class="panel-heading">
                     <div class="panel-title">Bem vindo! Favor efetuar o login</div>
                 </div>
-
+                                    
                 <div style="padding-top: 30px" class="panel-body">
-
                     <div style="display: none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-
                     <form id="loginform" class="form-horizontal" role="form">
 
                         <div style="margin-bottom: 25px" class="input-group">
@@ -37,7 +35,7 @@
                         <div class="form-group">
                             <div class="col-md-12 control">
                                 <div style="border-top: 1px solid#888; padding-top: 15px; font-size: 85%">
-                                    <!-- Mensagem de erro -->
+                                    <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
                                 </div>
                             </div>
                         </div>
