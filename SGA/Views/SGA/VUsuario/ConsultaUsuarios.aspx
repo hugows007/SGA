@@ -12,7 +12,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Usuários do sistema
-                        <b><br><asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
+                        <b>
+                            <br>
+                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <table id="example" class="table table-striped table-bordered table-hover">
@@ -20,6 +22,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nome</th>
+                                    <th>Empresa</th>
                                     <th>Endereço</th>
                                     <th>Número</th>
                                     <th>Cep</th>
@@ -34,6 +37,7 @@
                                 <tr>
                                     <td><a href="ModificarUsuario.aspx?Id=<%=a.Id %>"><%=a.Id %></a></td>
                                     <td><%=a.Nome%></td>
+                                    <td><%=a.NomeEmpresa%></td>
                                     <td><%=a.Endereco %></td>
                                     <td><%=a.Numero %></td>
                                     <td><%=a.Cep%></td>

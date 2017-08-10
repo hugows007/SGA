@@ -35,6 +35,13 @@ namespace SGA
                             "~/Scripts/modernizr-*",
                             "~/Scripts/respond.min.js",
                             "~/Scripts/bootstrap.js",
+
+                            "~/Scripts/alert/alertify.min.js",
+                            "~/Scripts/alert/alertify.js",
+                            "~/Content/alert/alertify.bootstrap.css",
+                            "~/Content/alert/alertify.core.css",
+                            "~/Content/alert/alertify.default.css",
+
                             "~/Content/bootstrap.css",
                             "~/Content/bootstrap-theme.css",
                             "~/Scripts/jquery-3.1.1.js",

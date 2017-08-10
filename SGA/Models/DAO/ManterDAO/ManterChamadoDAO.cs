@@ -142,6 +142,20 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjChamado.DataFechamento = Dr.GetDateTime(6);
                         ObjChamado.IdServico = Dr.GetInt32(7);
                         ObjChamado.IdPrioridade = Dr.GetInt32(8);
+
+                        if (!Dr.IsDBNull(9))
+                        {
+                            ObjChamado.InfoCancelamento = Dr.GetString(9);
+
+                        }
+                        if (!Dr.IsDBNull(10))
+                        {
+                            ObjChamado.InfoTramite = Dr.GetString(10);
+                        }
+                        if (!Dr.IsDBNull(11))
+                        {
+                            ObjChamado.InfoPendencia = Dr.GetString(11);
+                        }
                     }
 
                     return ObjChamado;
@@ -195,12 +209,14 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Chamado] SET
-                        ativo = 0
+                        idStatusChamado = 5
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario
+                        ,infoCancelamento = @InfoCancel
                         WHERE idChamado = @Id;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
+                    Cmd.Parameters.AddWithValue("@InfoCancel", ObjChamado.InfoCancelamento);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -282,7 +298,7 @@ namespace SGA.Models.DAO.ManterDAO
 
                     while (Dr.Read())
                     {
-                        QtdChamAbertos =  Dr.GetInt32(0);
+                        QtdChamAbertos = Dr.GetInt32(0);
                     }
 
                     return QtdChamAbertos;

@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SGA.Views.SGA.VCargo {
+namespace SGA.Views.SGA.VEmpresa {
     
     
-    public partial class CadastroCargo {
+    public partial class CadastroEmpresa {
         
         /// <summary>
         /// MsgLabel control.
@@ -22,22 +22,49 @@ namespace SGA.Views.SGA.VCargo {
         protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
-        /// CargoDescTextBox control.
+        /// EmpresaTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CargoDescTextBox;
+        protected global::System.Web.UI.WebControls.TextBox EmpresaTextBox;
         
         /// <summary>
-        /// SalarioTextBox control.
+        /// EnderecoTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SalarioTextBox;
+        protected global::System.Web.UI.WebControls.TextBox EnderecoTextBox;
+        
+        /// <summary>
+        /// ComplementoTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ComplementoTextBox;
+        
+        /// <summary>
+        /// CepTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CepTextBox;
+        
+        /// <summary>
+        /// TelefoneTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TelefoneTextBox;
         
         /// <summary>
         /// Cadastrar control.

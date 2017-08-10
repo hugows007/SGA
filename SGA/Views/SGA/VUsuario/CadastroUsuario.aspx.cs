@@ -47,10 +47,12 @@ namespace SGA.Views.SGA.VUsuario
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
                     ObjUsuario.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
+                    ObjUsuario.IdEmpresa = Convert.ToInt32(DropDownListEmpresa.SelectedValue);
                 }
                 else if (DropDownListTipo.Text.Equals("Gestor") || DropDownListTipo.Text.Equals("Atendente"))
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
+                    ObjUsuario.IdEmpresa = Convert.ToInt32(DropDownListEmpresa.SelectedValue);
                 }
                 else if (DropDownListTipo.Text.Equals("Cliente Físico"))
                 {
@@ -87,17 +89,31 @@ namespace SGA.Views.SGA.VUsuario
 
         protected void DropDownListTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DropDownListArea.DataSource = new ManterRegiaoAtendimento().ConsultaRegiaoAtendimentos();
-            DropDownListArea.DataTextField = "Regiao";
-            DropDownListArea.DataValueField = "Id";
-            DropDownListArea.DataBind();
-            DropDownListArea.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
+            try
+            {
+                DropDownListArea.DataSource = new ManterRegiaoAtendimento().ConsultaRegiaoAtendimentos();
+                DropDownListArea.DataTextField = "Regiao";
+                DropDownListArea.DataValueField = "Id";
+                DropDownListArea.DataBind();
+                DropDownListArea.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
 
-            DropDownListEspec.DataSource = new ManterEspecialidade().ConsultaEspecialidades();
-            DropDownListEspec.DataTextField = "NomeEspec";
-            DropDownListEspec.DataValueField = "Id";
-            DropDownListEspec.DataBind();
-            DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
+                DropDownListEspec.DataSource = new ManterEspecialidade().ConsultaEspecialidades();
+                DropDownListEspec.DataTextField = "NomeEspec";
+                DropDownListEspec.DataValueField = "Id";
+                DropDownListEspec.DataBind();
+                DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
+
+                DropDownListEmpresa.DataSource = new ManterEmpresa().ConsultaEmpresas();
+                DropDownListEmpresa.DataTextField = "NomeEmpresa";
+                DropDownListEmpresa.DataValueField = "Id";
+                DropDownListEmpresa.DataBind();
+                DropDownListEmpresa.Items.Insert(0, new ListItem("Selecione a empresa", "0"));
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+            }
         }
     }
 }

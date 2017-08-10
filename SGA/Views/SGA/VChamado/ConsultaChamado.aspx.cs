@@ -67,6 +67,11 @@ namespace SGA.Views.SGA.VChamado
                         ObjRegiao = new ManterRegiaoAtendimento(ObjRegiao).ConsultaRegiaoAtendimentoById();
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
                         ObjStatusChm = new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById();
+
+                        if (ObjStatusChm.Id.Equals(5))
+                        {
+                            MotCancelDescTextBox.Text = ObjChamado.InfoCancelamento;
+                        }
                     }
                     else
                     {
@@ -90,14 +95,34 @@ namespace SGA.Views.SGA.VChamado
         protected void CancelarButton_Click(object sender, EventArgs e)
         {
             CancButtonClick = true;
+            try
+            {
+                if (!DescCancelTextBox.Text.Equals(""))
+                {
+                    ObjChamado = FactoryChamado.GetNew();
 
-            if (!DescCancelTextBox.Text.Equals(""))
-            {
-                MsgLabel.Text = "Chamado cancelado com sucesso.";
+                    ObjChamado.Id = Convert.ToInt32(Request.QueryString["IdChamado"]);
+                    ObjChamado.InfoCancelamento = DescCancelTextBox.Text;
+
+                    if (new ManterChamado(ObjChamado).CancelaChamado())
+                    {
+                        MsgLabel.Text = "Chamado cancelado com sucesso.";
+                    }
+                    else
+                    {
+                        MsgLabel.Text = "Ocorreu um problema no cancelamento do chamado.";
+                    }
+                }
+                else
+                {
+                    MsgLabel.Text = "Informe o motivo do cancelamento.";
+                }
             }
-            else
+            catch (Exception Ex)
             {
-                MsgLabel.Text = "Informe o motivo do cancelamento";
+                new LogException(Ex).InsereLogBd();
+                ObjChamado = null;
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
     }

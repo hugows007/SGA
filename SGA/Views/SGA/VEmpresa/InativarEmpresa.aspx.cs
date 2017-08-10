@@ -1,5 +1,5 @@
 ﻿using SGA.Models.DAO.Log;
-using SGA.Models.GrupoAtendimentos;
+using SGA.Models.Empresas;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -8,11 +8,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SGA.Views.SGA.VGrupoAtendimento
+namespace SGA.Views.SGA.VEmpresa
 {
-    public partial class InativarGpAtendimento : System.Web.UI.Page
+    public partial class InativarEmpresa : System.Web.UI.Page
     {
-        GrupoAtendimento ObjGpAtend = FactoryGrupoAtendimento.GetNew();
+        Empresa ObjEmpresa = FactoryEmpresa.GetNew();
         protected void Page_Load(object sender, EventArgs e)
         {
             bool OperInativar = false;
@@ -21,9 +21,9 @@ namespace SGA.Views.SGA.VGrupoAtendimento
             {
                 if (Request.QueryString["Id"] != null)
                 {
-                    ObjGpAtend.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    OperInativar = new ManterGrupoAtendimento(ObjGpAtend).InativaGrupoAtendimento();
-                    Response.Redirect("\\Views\\SGA\\VGrupoAtendimento\\ConsultaGpAtendimentos.aspx?OpInatGrupoAtendimento=" + OperInativar.ToString());
+                    ObjEmpresa.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                    OperInativar = new ManterEmpresa(ObjEmpresa).InativaEmpresa();
+                    Response.Redirect("\\Views\\SGA\\VEmpresa\\ConsultaEmpresas.aspx?OpInatEmpresa=" + OperInativar.ToString());
                 }
             }
             catch (Exception Ex)

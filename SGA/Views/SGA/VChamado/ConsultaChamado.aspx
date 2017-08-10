@@ -32,6 +32,9 @@
                                 </div>
                                 <%if (CancButtonClick)
                                     {%>
+                                <script>
+                                    alertify.log("Informe o motivo do cancelamento");
+                                </script>
                                 <div class="form-group">
                                     <label for="DescCancelTextBox" class="control-label">Diga o motivo do cancelamento: </label>
                                     <asp:TextBox ID="DescCancelTextBox" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
@@ -70,9 +73,20 @@
                                     <label for="TecnicoResp" class="control-label">Técnico responsável:</label>
                                     <input id="TecnicoResp" type="text" class="form-control input-sm" disabled="disabled" value="<%=NomeTecnico %>" />
                                 </div>
-                                <%}%>
+                                <%}
+                                    if (!ObjStatusChm.Id.Equals(5))
+                                    {%>
+
                                 <asp:Button ID="Cancelar" runat="server" Text="Cancelar chamado" class="btn btn-default" OnClick="CancelarButton_Click" />
-                                <%} %>
+                                <%}
+                                    else
+                                    {%>
+                                <div class="form-group">
+                                    <label for="MotCancelDesc" class="control-label">Motivo do cancelamento: </label>
+                                    <asp:TextBox ID="MotCancelDescTextBox" runat="server" TextMode="multiline" disabled="disabled" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                                </div>
+                                <%}
+                                    }%>
 
                                 <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                             </div>

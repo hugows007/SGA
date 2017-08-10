@@ -40,6 +40,15 @@ namespace SGA.Views.SGA.VUsuario {
         protected global::System.Web.UI.WebControls.DropDownList DropDownListTipo;
         
         /// <summary>
+        /// DropDownListEmpresa control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListEmpresa;
+        
+        /// <summary>
         /// DropDownListEspec control.
         /// </summary>
         /// <remarks>

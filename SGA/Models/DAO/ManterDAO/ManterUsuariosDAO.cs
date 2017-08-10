@@ -49,6 +49,7 @@ namespace SGA.Models.DAO.ManterDAO
                 ,[numero]
                 ,[cep]
                 ,[telefone]
+                ,[idEmpresa]
                 ,[dataRegistro]
                 ,[usuarioRegistro]
                 ,[idStatusUsuario])
@@ -58,6 +59,7 @@ namespace SGA.Models.DAO.ManterDAO
                 ,@Numero
                 ,@Cep
                 ,@Telefone
+                ,@Empresa
                 ,@Data
                 ,@Usuario 
                 ,1);", Con);
@@ -67,6 +69,7 @@ namespace SGA.Models.DAO.ManterDAO
                     CmdUsr.Parameters.AddWithValue("@Numero", ObjUsuario.Numero);
                     CmdUsr.Parameters.AddWithValue("@Cep", ObjUsuario.Cep);
                     CmdUsr.Parameters.AddWithValue("@Telefone", ObjUsuario.Telefone);
+                    CmdUsr.Parameters.AddWithValue("@Empresa", ObjUsuario.IdEmpresa);
                     CmdUsr.Parameters.AddWithValue("@Data", DateTime.Now);
                     CmdUsr.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -247,15 +250,15 @@ namespace SGA.Models.DAO.ManterDAO
                 try
                 {
                     SqlCommand CmdUsrs = new SqlCommand(@"
-                SELECT *
-                  FROM [dbo].[Usuario]
+                SELECT usr.idUsuario, usr.nome, usr.endereco, usr.numero, usr.cep, usr.telefone, emp.nome
+                  FROM [dbo].[Usuario] Usr left join [dbo].[Empresa] Emp on (Usr.idEmpresa = Emp.idEmpresa)
                   WHERE idStatusUsuario = 1", Con);
 
                     Dr = CmdUsrs.ExecuteReader();
 
                     while (Dr.Read())
                     {
-                        Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                        Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
 
                         Usr.Id = Dr.GetInt32(0);
                         Usr.Nome = Dr.GetString(1);
@@ -263,6 +266,10 @@ namespace SGA.Models.DAO.ManterDAO
                         Usr.Numero = Dr.GetString(3);
                         Usr.Cep = Dr.GetString(4);
                         Usr.Telefone = Dr.GetString(5);
+                        if (!Dr.IsDBNull(6))
+                        {
+                            Usr.NomeEmpresa = Dr.GetString(6);
+                        }
                         Usr.Regra = GetRegraUserDAO(Usr.Id);
 
                         UsrList.Add(Usr);

@@ -27,6 +27,13 @@
     <script src="<%= ResolveClientUrl("~/Scripts/jquery.dataTables.min.js") %>"></script>
     <link href="<%= ResolveClientUrl("~/Content/Site.css") %>" rel="stylesheet" />
 
+    <script src="<%= ResolveClientUrl("~/Scripts/alert/alertify.min.js") %>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/alert/alertify.js") %>"></script>
+
+    <link href="<%= ResolveClientUrl("~/Content/alert/alertify.bootstrap.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveClientUrl("~/Content/alert/alertify.core.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveClientUrl("~/Content/alert/alertify.default.css") %>" rel="stylesheet" />
+
     <script src="<%= ResolveClientUrl("~/Scripts/vendor/metisMenu/metisMenu.min.js") %>"></script>
     <link href="<%= ResolveClientUrl("~/Scripts/vendor/metisMenu/metisMenu.min.css") %>" rel="stylesheet" />
     <script src="<%= ResolveClientUrl("~/Scripts/dist/js/sb-admin-2.js") %>"></script>
@@ -219,6 +226,19 @@
                                             </li>
                                             <li>
                                                 <a href="/Views/SGA/VUsuario/RelacionamentoUsrEspec.aspx">Relacionar usuário técnico e especialidade</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">Empresas<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="/Views/SGA/VEmpresa/ConsultaEmpresas.aspx">Consultar Empresas</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VEmpresa/CadastroEmpresa.aspx">Cadastrar Empresa</a>
                                             </li>
                                         </ul>
                                     </li>

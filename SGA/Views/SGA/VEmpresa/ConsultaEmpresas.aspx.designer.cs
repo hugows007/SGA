@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SGA.Views.SGA.VCargo {
+namespace SGA.Views.SGA.VEmpresa {
     
     
-    public partial class ConsultaCargos {
+    public partial class ConsultaEmpresas {
         
         /// <summary>
         /// MsgLabel control.

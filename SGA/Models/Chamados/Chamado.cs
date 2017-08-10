@@ -16,5 +16,8 @@ namespace SGA.Models.Chamados
         public DateTime DataFechamento { get; set; }
         public int IdServico { get; set; }
         public int IdPrioridade { get; set; }
+        public string InfoCancelamento { get; set; }
+        public string InfoTramite { get; set; }
+        public string InfoPendencia { get; set; }
     }
 }
