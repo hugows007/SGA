@@ -11,6 +11,7 @@ namespace SGA.Views.SGA
     public partial class SiteMaster : System.Web.UI.MasterPage
     {
         public string UsuarioLogado;
+        public string NomeUsuario;
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -19,7 +20,8 @@ namespace SGA.Views.SGA
         protected void Page_Load(object sender, EventArgs e)
         {
             Page.Header.DataBind();
-            UsuarioLogado = Membership.GetUser().ToString();
+             NomeUsuario = (string)(Session["nome"]);
+             UsuarioLogado = Membership.GetUser().ToString();
         }
 
         protected void PesqButton_Click(object sender, EventArgs e)

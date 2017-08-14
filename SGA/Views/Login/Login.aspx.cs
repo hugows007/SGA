@@ -1,4 +1,7 @@
-﻿using SGA.Models.DAO.Log;
+﻿using SGA.Models;
+using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +14,7 @@ namespace SGA
 {
     public partial class Login : System.Web.UI.Page
     {
+        Usuario ObjUsr;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -38,8 +42,25 @@ namespace SGA
             {
                 if (new Models.Login.Login().Logar(TxtLogin.Text, TxtSenha.Text))
                 {
+                    ObjUsr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                    ObjUsr.Login = TxtLogin.Text;
+
+                    List<Usuario> Usr = new List<Usuario>();
+                    Usr = new ManterUsuario(ObjUsr).GetUsuarioEmpresa();
+
                     TxtLogin.Visible = true;
-                    Session["user"] = User.Identity.Name;
+
+                    foreach (var U in Usr)
+                    {
+                        Session["id"] = U.Id;
+                        Session["usuario"] = TxtLogin.Text;
+                        Session["nome"] = U.Nome;
+                        Session["empresa"] = U.NomeEmpresa;
+                        Session["idEmpresa"] = U.IdEmpresa;
+
+                        InfoGlobal.GlobalIdEmpresa = U.IdEmpresa;
+                    }
+
                     FormsAuthentication.RedirectFromLoginPage(TxtLogin.Text, true);
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }

@@ -29,7 +29,7 @@
                                 <asp:TextBox ID="EstadoTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
                             </div>
                             <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" class="btn btn-default" OnClick="AlterarButton_Click" />
-                            <a class="btn btn-default" href="/Views/SGA/VAreaAtendimento/ConsultaAreaAtendimentos.aspx">Voltar</a>
+                            <a class="btn btn-default" href="/Views/SGA/VAreaAtendimento/ConsultaRegiaoAtendimentos.aspx">Voltar</a>
                         </div>
                         <div class="panel-footer">
                             Favor alterar os campos e clicar em salvar alterações.<br />

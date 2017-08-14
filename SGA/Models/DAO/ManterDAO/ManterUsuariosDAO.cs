@@ -252,7 +252,9 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand CmdUsrs = new SqlCommand(@"
                 SELECT usr.idUsuario, usr.nome, usr.endereco, usr.numero, usr.cep, usr.telefone, emp.nome
                   FROM [dbo].[Usuario] Usr left join [dbo].[Empresa] Emp on (Usr.idEmpresa = Emp.idEmpresa)
-                  WHERE idStatusUsuario = 1", Con);
+                  WHERE idStatusUsuario = 1 and Usr.idEmpresa = @Empresa", Con);
+
+                    CmdUsrs.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = CmdUsrs.ExecuteReader();
 
@@ -301,8 +303,9 @@ namespace SGA.Models.DAO.ManterDAO
                     FROM Usuario Usr INNER JOIN 
                     UsuarioXMemberShipUser UsrMb ON (Usr.idUsuario = UsrMb.idUsuario) INNER JOIN
                     aspnet_UsersInRoles UsrRoles ON (UsrMb.IdUsrMemberShip = UsrRoles.UserId)
-                    WHERE UsrRoles.RoleId in (@IdRole1, @IdRole2)", Con);
+                    WHERE UsrRoles.RoleId in (@IdRole1, @IdRole2) and Usr.idEmpresa = @Empresa", Con);
 
+                        Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                         switch (P)
                         {
@@ -391,9 +394,10 @@ namespace SGA.Models.DAO.ManterDAO
                         aspnet_Users membusr on (membxusr.IdUsrMemberShip = membusr.UserId) left join
 						UsuarioxRegiaoAtendimento usrReg on (usr.idUsuario = usrreg.idUsuario) left join
 						UsuarioXEspecialidade usrEspec on (usr.idUsuario = usrEspec.idUsuario) WHERE
-                        usr.idUsuario = @Id and usr.idStatusUsuario = 1;", Con);
+                        usr.idUsuario = @Id and usr.idStatusUsuario = 1 and usr.idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjUsuario.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -447,9 +451,10 @@ namespace SGA.Models.DAO.ManterDAO
                         aspnet_Users membusr on (membxusr.IdUsrMemberShip = membusr.UserId) left join
 						UsuarioxRegiaoAtendimento usrReg on (usr.idUsuario = usrreg.idUsuario) left join
 						UsuarioXEspecialidade usrEspec on (usr.idUsuario = usrEspec.idUsuario) WHERE
-                        membusr.UserName = @Nome and usr.idStatusUsuario = 1;", Con);
+                        membusr.UserName = @Nome and usr.idStatusUsuario = 1 and usr.idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Nome", ObjUsuario.Nome);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -494,7 +499,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ,TELEFONE = @Telefone
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario   
-                        WHERE idUsuario = @Id;", Con);
+                        WHERE idUsuario = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Nome", ObjUsuario.Nome);
                     Cmd.Parameters.AddWithValue("@Endereco", ObjUsuario.Endereco);
@@ -502,6 +507,7 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.Parameters.AddWithValue("@Cep", ObjUsuario.Cep);
                     Cmd.Parameters.AddWithValue("@Telefone", ObjUsuario.Telefone);
                     Cmd.Parameters.AddWithValue("@Id", ObjUsuario.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -530,9 +536,10 @@ namespace SGA.Models.DAO.ManterDAO
                         IdStatusUsuario = 0
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario 
-                        WHERE idUsuario = @Id;", Con);
+                        WHERE idUsuario = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjUsuario.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -615,7 +622,7 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                     SELECT *
                         FROM UsuarioXRegiaoAtendimento
-                        WHERE idUsuario = @IdUsuario;   ", Con);
+                        WHERE idUsuario = @IdUsuario;", Con);
 
                     Cmd.Parameters.AddWithValue("@IdUsuario", ObjUsuario.Id);
 
@@ -657,10 +664,11 @@ namespace SGA.Models.DAO.ManterDAO
                       WHERE Usr.idStatusUsuario = 1 and 
                       UsrFunc.idDisponibilidade = 1 and 
                       UsrReg.idRegiaoAtendimento = @IdRegiao and 
-                      ServEspec.idServico = @IdServ;", Con);
+                      ServEspec.idServico = @IdServ and Usr.idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@IdRegiao", ObjUsuario.ObjRegiao.Id);
                     Cmd.Parameters.AddWithValue("@IdServ", ObjChamado.IdServico);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -670,6 +678,50 @@ namespace SGA.Models.DAO.ManterDAO
 
                         Usr.Id = Dr.GetInt32(0);
                         Usr.ObjRegiao.Id = Dr.GetInt32(1);
+
+                        List.Add(Usr);
+                    }
+
+                    return List;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
+        public List<Usuario> GetUsuarioEmpresaDAO()
+        {
+            List<Usuario> List = new List<Usuario>();
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"select Usr.idUsuario
+                                                    ,Usr.nome
+                                                    ,Emp.nome
+													,Emp.idEmpresa from Usuario Usr inner join 
+                                                    Empresa Emp on (Usr.idEmpresa = Emp.idEmpresa) inner join
+                                                    UsuarioXMemberShipUser UsrM on (Usr.idUsuario = UsrM.idUsuario) inner join
+                                                    aspnet_Users AspUsr on (AspUsr.UserId = UsrM.IdUsrMemberShip)
+                                                    where AspUsr.UserName = @Usuario", Con);
+
+                    Cmd.Parameters.AddWithValue("@Usuario", ObjUsuario.Login);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+
+                        Usr.Id = Dr.GetInt32(0);
+                        Usr.Nome = Dr.GetString(1);
+                        Usr.NomeEmpresa = Dr.GetString(2);
+                        Usr.IdEmpresa = Dr.GetInt32(3);
 
                         List.Add(Usr);
                     }

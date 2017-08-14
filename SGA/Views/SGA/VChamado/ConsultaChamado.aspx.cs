@@ -38,7 +38,6 @@ namespace SGA.Views.SGA.VChamado
                 if (!"".Equals(Request.QueryString["IdChamado"]))
                 {
                     ObjChamado = FactoryChamado.GetNew();
-
                     ObjChamado.Id = Convert.ToInt32(Request.QueryString["IdChamado"]);
                     ObjChamado = new ManterChamado(ObjChamado).ConsultaChamadoById();
 
@@ -100,7 +99,6 @@ namespace SGA.Views.SGA.VChamado
                 if (!DescCancelTextBox.Text.Equals(""))
                 {
                     ObjChamado = FactoryChamado.GetNew();
-
                     ObjChamado.Id = Convert.ToInt32(Request.QueryString["IdChamado"]);
                     ObjChamado.InfoCancelamento = DescCancelTextBox.Text;
 

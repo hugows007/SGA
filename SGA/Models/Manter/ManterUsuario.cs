@@ -283,5 +283,18 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+        public List<Usuario> GetUsuarioEmpresa()
+        {
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).GetUsuarioEmpresaDAO();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+
     }
 }

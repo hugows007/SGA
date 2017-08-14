@@ -29,6 +29,7 @@ namespace SGA.Views.SGA.VChamado
         {
             try
             {
+
                 foreach (var Result in new ManterChamado(ObjChamado).ConsultaChamados())
                 {
                     //ObjArea.Id = Result.IdAreaAtendimento;

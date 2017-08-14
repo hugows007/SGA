@@ -19,5 +19,6 @@ namespace SGA.Models.Atendimentos
         public string InfoPendencias { get; set; }
         public string InfoCancelamento { get; set; }
         public string InfoTramite { get; set; }
+        public int IdEmpresa { get; set; }
     }
 }

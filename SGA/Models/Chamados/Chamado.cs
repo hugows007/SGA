@@ -19,5 +19,6 @@ namespace SGA.Models.Chamados
         public string InfoCancelamento { get; set; }
         public string InfoTramite { get; set; }
         public string InfoPendencia { get; set; }
+        public int IdEmpresa { get; set; }
     }
 }

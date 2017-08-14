@@ -16,9 +16,12 @@ namespace SGA.Views.SGA.VUsuario
     public partial class Cadastro : System.Web.UI.Page
     {
         Usuario ObjUsuario;
+        public int IdEmpresa;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            IdEmpresa = (int)(Session["idEmpresa"]);
+
             if (!Page.IsPostBack)
             {
                 try
@@ -47,12 +50,29 @@ namespace SGA.Views.SGA.VUsuario
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
                     ObjUsuario.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
-                    ObjUsuario.IdEmpresa = Convert.ToInt32(DropDownListEmpresa.SelectedValue);
+
+                    if (!IdEmpresa.Equals(0) || !IdEmpresa.Equals(null))
+                    {
+                        ObjUsuario.IdEmpresa = (int)(Session["idEmpresa"]);
+                    }
+                    else
+                    {
+                        ObjUsuario.IdEmpresa = Convert.ToInt32(DropDownListEmpresa.SelectedValue);
+                    }
+
                 }
                 else if (DropDownListTipo.Text.Equals("Gestor") || DropDownListTipo.Text.Equals("Atendente"))
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
-                    ObjUsuario.IdEmpresa = Convert.ToInt32(DropDownListEmpresa.SelectedValue);
+
+                    if (!IdEmpresa.Equals(0) || !IdEmpresa.Equals(null))
+                    {
+                        ObjUsuario.IdEmpresa = (int)(Session["idEmpresa"]);
+                    }
+                    else
+                    {
+                        ObjUsuario.IdEmpresa = Convert.ToInt32(DropDownListEmpresa.SelectedValue);
+                    }
                 }
                 else if (DropDownListTipo.Text.Equals("Cliente Físico"))
                 {

@@ -11,5 +11,6 @@ namespace SGA.Models.Especialidades
         public string NomeEspec { get; set; }
         public string DescEspec { get; set; }
         public int IdStatus { get; set; }
+        public int IdEmpresa { get; set; }
     }
 }

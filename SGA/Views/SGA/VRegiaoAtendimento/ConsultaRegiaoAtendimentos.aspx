@@ -29,11 +29,11 @@
                                 <%foreach (var Area in ListaAreaSelect)
                                     {%>
                                 <tr>
-                                    <td><a href="ModificarAreaAtendimento.aspx?Id=<%=Area.Id %>"><%=Area.Id %></a></td>
+                                    <td><a href="ModificarRegiaoAtendimento.aspx?Id=<%=Area.Id %>"><%=Area.Id %></a></td>
                                     <td><%=Area.Regiao%></td>
                                     <td><%=Area.Cidade %></td>
                                     <td><%=Area.Estado %></td>
-                                    <td><a href="InativarAreaAtendimento.aspx?Id=<%=Area.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td><a href="InativarRegiaoAtendimento.aspx?Id=<%=Area.Id %>"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>
                                 <% } %>
                             </tbody>

@@ -34,7 +34,9 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[RegiaoDeAtendimento]
-                  WHERE ativo = 1", Con);
+                  WHERE ativo = 1 and idEmpresa = @Empresa", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -71,9 +73,10 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[RegiaoDeAtendimento]
-                  WHERE ativo = 1 and idRegiaoAtendimento = @Id", Con);
+                  WHERE ativo = 1 and idRegiaoAtendimento = @Id and idEmpresa = @Empresa", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjRegiao.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -106,6 +109,7 @@ namespace SGA.Models.DAO.ManterDAO
                 ([regiao]
                   ,[cidade]
                   ,[estado]
+                  ,[idEmpresa]
                   ,[dataRegistro]
                   ,[usuarioRegistro]
                   ,[ativo])
@@ -113,6 +117,7 @@ namespace SGA.Models.DAO.ManterDAO
                 (@Regiao
                 ,@Cidade
                 ,@Estado
+                ,@Empresa
                 ,@Data 
                 ,@Usuario    
                 ,1);", Con);
@@ -120,6 +125,7 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.Parameters.AddWithValue("@Regiao", ObjRegiao.Regiao);
                     Cmd.Parameters.AddWithValue("@Cidade", ObjRegiao.Cidade);
                     Cmd.Parameters.AddWithValue("@Estado", ObjRegiao.Estado);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -148,11 +154,12 @@ namespace SGA.Models.DAO.ManterDAO
                         ,Estado = @Estado
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario
-                        WHERE idRegiaoAtendimento = @Id;", Con);
+                        WHERE idRegiaoAtendimento = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Regiao", ObjRegiao.Regiao);
                     Cmd.Parameters.AddWithValue("@Cidade", ObjRegiao.Cidade);
                     Cmd.Parameters.AddWithValue("@Estado", ObjRegiao.Estado);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
                     Cmd.Parameters.AddWithValue("@Id", ObjRegiao.Id);
@@ -181,10 +188,11 @@ namespace SGA.Models.DAO.ManterDAO
                         ativo = 0
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario                         
-                    WHERE idRegiaoAtendimento = @Id;", Con);
+                    WHERE idRegiaoAtendimento = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjRegiao.Id);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
                     Cmd.ExecuteNonQuery();

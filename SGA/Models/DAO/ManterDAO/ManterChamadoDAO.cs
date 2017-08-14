@@ -34,7 +34,9 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
-                  FROM [dbo].[Chamado]", Con);
+                  FROM [dbo].[Chamado] where idEmpresa = @Empresa", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -80,6 +82,7 @@ namespace SGA.Models.DAO.ManterDAO
                   ,[dataFechamento]
                   ,[idServico]
                   ,[idPrioridade]
+                  ,[idEmpresa]
                   ,[dataRegistro]
                   ,[usuarioRegistro])
             VALUES
@@ -91,6 +94,7 @@ namespace SGA.Models.DAO.ManterDAO
                 ,@DataFech
                 ,@Servico
                 ,@Prioridade
+                ,@Empresa
                 ,@Data
                 ,@Usuario);", Con);
 
@@ -101,6 +105,7 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.Parameters.AddWithValue("@DataFech", DateTime.Parse("2000-01-01 00:00:00.000"));
                     Cmd.Parameters.AddWithValue("@Servico", ObjChamado.IdServico);
                     Cmd.Parameters.AddWithValue("@Prioridade", ObjChamado.IdPrioridade);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -125,9 +130,10 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Chamado]
-                  WHERE idChamado = @Id;", Con);
+                  WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -181,12 +187,13 @@ namespace SGA.Models.DAO.ManterDAO
                         ,Descricao = @Desc
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario
-                        WHERE idChamado = @Id;", Con);
+                        WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Assunto", ObjChamado.Assunto);
                     Cmd.Parameters.AddWithValue("@IdServ", ObjChamado.IdServico);
                     Cmd.Parameters.AddWithValue("@Desc", ObjChamado.Descricao);
                     Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -213,10 +220,11 @@ namespace SGA.Models.DAO.ManterDAO
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario
                         ,infoCancelamento = @InfoCancel
-                        WHERE idChamado = @Id;", Con);
+                        WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
                     Cmd.Parameters.AddWithValue("@InfoCancel", ObjChamado.InfoCancelamento);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -239,9 +247,10 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                 DELETE 
 	                [dbo].[Chamado] 
-                        WHERE idChamado = @Id;", Con);
+                        WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.ExecuteNonQuery();
 
                     return true;
@@ -263,7 +272,9 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT MAX(idChamado)
-                    from Chamado", Con);
+                    from Chamado where idEmpresa = @Empresa", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -292,7 +303,9 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                 select count(*) 
                     from chamado 
-                    where idStatusChamado = 1;", Con);
+                    where idStatusChamado = 1 and idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 

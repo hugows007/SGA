@@ -13,5 +13,6 @@ namespace SGA.Models.Servicos
         public string DescServ { get; set; }
         public double Sla { get; set; }
         public int IdStatus { get; set; }
+        public int IdEmpresa { get; set; }
     }
 }

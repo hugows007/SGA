@@ -39,7 +39,9 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Especialidade]
-                  WHERE ativo = 1", Con);
+                  WHERE ativo = 1 and idEmpresa = @Empresa", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -75,9 +77,10 @@ namespace SGA.Models.DAO.ManterDAO
                 SELECT *
                   FROM [dbo].[especialidade] WHERE
                    ativo = 1 and 
-                   idEspecialidade = @Id", Con);
+                   idEspecialidade = @Id and idEmpresa = @Empresa", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -107,18 +110,21 @@ namespace SGA.Models.DAO.ManterDAO
             INSERT INTO [dbo].[especialidade]
                   ([especialidade]
                   ,[descricao]
+                  ,[idEmpresa]
                   ,[dataRegistro]
                   ,[usuarioRegistro]
                   ,[ativo])
             VALUES
                 (@Espec
                 ,@Descricao
+                ,@Empresa
                 ,@Data
                 ,@Usuario  
                 ,1);", Con);
 
                     Cmd.Parameters.AddWithValue("@Espec", ObjEspec.NomeEspec);
                     Cmd.Parameters.AddWithValue("@Descricao", ObjEspec.DescEspec);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -145,10 +151,11 @@ namespace SGA.Models.DAO.ManterDAO
                         ,descricao= @Descricao
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario  
-                        WHERE idEspecialidade= @Id;", Con);
+                        WHERE idEspecialidade= @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Espec", ObjEspec.NomeEspec);
                     Cmd.Parameters.AddWithValue("@Descricao", ObjEspec.DescEspec);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
@@ -176,9 +183,10 @@ namespace SGA.Models.DAO.ManterDAO
                         ativo = 0
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario
-                        WHERE idEspecialidade = @Id;", Con);
+                        WHERE idEspecialidade = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjEspec.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 

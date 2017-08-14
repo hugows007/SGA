@@ -160,7 +160,9 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd = new SqlCommand(@"
                         SELECT *
                           FROM [dbo].[Servico]
-                          WHERE ativo = 1", Con);
+                          WHERE ativo = 1 and idEmpresa = @Empresa", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -199,9 +201,10 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Servico]
-                  WHERE ativo = 1 and idServico = @Id;", Con);
+                  WHERE ativo = 1 and idServico = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjServico.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -237,6 +240,7 @@ namespace SGA.Models.DAO.ManterDAO
                   ,[nome]
                   ,[descricao]
                   ,[sla]
+                  ,[idEmpresa]
                   ,[dataRegistro]
                   ,[usuarioRegistro]
                   ,[ativo])
@@ -245,6 +249,7 @@ namespace SGA.Models.DAO.ManterDAO
                 ,@Nome
                 ,@Desc
                 ,@Sla
+                ,@Empresa
                 ,@Data
                 ,@Usuario
                 ,1)", Con);
@@ -253,6 +258,7 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.Parameters.AddWithValue("@Nome", ObjServico.NomeServ);
                     Cmd.Parameters.AddWithValue("@Desc", ObjServico.DescServ);
                     Cmd.Parameters.AddWithValue("@Sla", ObjServico.Sla);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -282,13 +288,14 @@ namespace SGA.Models.DAO.ManterDAO
                         ,Sla = @Sla
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario  
-                        WHERE idServico = @Id;", Con);
+                        WHERE idServico = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Tipo", ObjServico.IdTipo);
                     Cmd.Parameters.AddWithValue("@Nome", ObjServico.NomeServ);
                     Cmd.Parameters.AddWithValue("@Desc", ObjServico.DescServ);
                     Cmd.Parameters.AddWithValue("@Sla", ObjServico.Sla);
                     Cmd.Parameters.AddWithValue("@Id", ObjServico.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -315,9 +322,10 @@ namespace SGA.Models.DAO.ManterDAO
                         ativo = 0
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario   
-                        WHERE idServico = @Id;", Con);
+                        WHERE idServico = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjServico.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
