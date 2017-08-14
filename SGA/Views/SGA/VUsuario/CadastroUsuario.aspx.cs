@@ -20,21 +20,23 @@ namespace SGA.Views.SGA.VUsuario
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            IdEmpresa = (int)(Session["idEmpresa"]);
-
-            if (!Page.IsPostBack)
+            try
             {
-                try
+                IdEmpresa = (int)(Session["idEmpresa"]);
+
+                if (!Page.IsPostBack)
                 {
+
                     DropDownListTipo.DataSource = new ManterUsuario().GetRegrasUsuario();
                     DropDownListTipo.DataBind();
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
                 }
-                catch (Exception Ex)
-                {
-                    new LogException(Ex).InsereLogBd();
-                    MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
-                }
+
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
 

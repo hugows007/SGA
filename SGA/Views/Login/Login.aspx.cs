@@ -45,22 +45,8 @@ namespace SGA
                     ObjUsr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
                     ObjUsr.Login = TxtLogin.Text;
 
-                    List<Usuario> Usr = new List<Usuario>();
-                    Usr = new ManterUsuario(ObjUsr).GetUsuarioEmpresa();
-
                     TxtLogin.Visible = true;
-
-                    foreach (var U in Usr)
-                    {
-                        Session["id"] = U.Id;
-                        Session["usuario"] = TxtLogin.Text;
-                        Session["nome"] = U.Nome;
-                        Session["empresa"] = U.NomeEmpresa;
-                        Session["idEmpresa"] = U.IdEmpresa;
-
-                        InfoGlobal.GlobalIdEmpresa = U.IdEmpresa;
-                    }
-
+                    Session["usuario"] = TxtLogin.Text;
                     FormsAuthentication.RedirectFromLoginPage(TxtLogin.Text, true);
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }

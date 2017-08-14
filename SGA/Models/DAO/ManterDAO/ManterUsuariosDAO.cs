@@ -69,7 +69,16 @@ namespace SGA.Models.DAO.ManterDAO
                     CmdUsr.Parameters.AddWithValue("@Numero", ObjUsuario.Numero);
                     CmdUsr.Parameters.AddWithValue("@Cep", ObjUsuario.Cep);
                     CmdUsr.Parameters.AddWithValue("@Telefone", ObjUsuario.Telefone);
-                    CmdUsr.Parameters.AddWithValue("@Empresa", ObjUsuario.IdEmpresa);
+
+                    if (InfoGlobal.GlobalIdEmpresa.Equals("SGATI"))
+                    {
+                        CmdUsr.Parameters.AddWithValue("@Empresa", ObjUsuario.IdEmpresa);
+                    }
+                    else
+                    {
+                        CmdUsr.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    }
+
                     CmdUsr.Parameters.AddWithValue("@Data", DateTime.Now);
                     CmdUsr.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
@@ -692,7 +701,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public List<Usuario> GetUsuarioEmpresaDAO()
+        public Usuario GetUsuarioEmpresaDAO()
         {
             List<Usuario> List = new List<Usuario>();
             SqlDataReader Dr = null;
@@ -716,17 +725,13 @@ namespace SGA.Models.DAO.ManterDAO
 
                     while (Dr.Read())
                     {
-                        Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-
-                        Usr.Id = Dr.GetInt32(0);
-                        Usr.Nome = Dr.GetString(1);
-                        Usr.NomeEmpresa = Dr.GetString(2);
-                        Usr.IdEmpresa = Dr.GetInt32(3);
-
-                        List.Add(Usr);
+                        ObjUsuario.Id = Dr.GetInt32(0);
+                        ObjUsuario.Nome = Dr.GetString(1);
+                        ObjUsuario.NomeEmpresa = Dr.GetString(2);
+                        ObjUsuario.IdEmpresa = Dr.GetInt32(3);
                     }
 
-                    return List;
+                    return ObjUsuario;
                 }
                 catch (SqlException Ex)
                 {

@@ -218,6 +218,7 @@ namespace SGA.Models.DAO.ManterDAO
 	                [dbo].[Chamado] SET
                         idStatusChamado = 5
                         ,dataRegistro = @Data
+                        ,dataFechamento = @Data
                         ,usuarioRegistro = @Usuario
                         ,infoCancelamento = @InfoCancel
                         WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);

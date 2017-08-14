@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Security;
 using SGA.Models.Especialidades;
 using SGA.Models.Chamados;
+using System.Data.SqlClient;
 
 namespace SGA.Models.Manter
 {
@@ -20,6 +21,7 @@ namespace SGA.Models.Manter
         Usuario ObjUsuario;
         Chamado ObjChamado;
         bool Result;
+        MembershipUser newUser;
         public ManterUsuario()
         {
         }
@@ -36,7 +38,7 @@ namespace SGA.Models.Manter
         {
             try
             {
-                MembershipUser newUser = Membership.CreateUser(
+                newUser = Membership.CreateUser(
                   ObjUsuario.Login,
                   ObjUsuario.Senha,
                   ObjUsuario.Email);
@@ -69,8 +71,7 @@ namespace SGA.Models.Manter
                     }
                     else
                     {
-                        newUser.IsApproved = false;
-                        Membership.UpdateUser(newUser);
+                        Membership.DeleteUser(ObjUsuario.Login);
                         Msg = "Ocorreu um erro ao efetuar o cadastro do usuário!";
                     }
                 }
@@ -84,6 +85,11 @@ namespace SGA.Models.Manter
             catch (HttpException Ex)
             {
                 return Ex.Message;
+            }
+            catch (SqlException)
+            {
+                Membership.DeleteUser(ObjUsuario.Login);
+                return "Ocorreu um erro ao efetuar o cadastro do usuário!";
             }
 
         }
@@ -283,7 +289,7 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
-        public List<Usuario> GetUsuarioEmpresa()
+        public Usuario GetUsuarioEmpresa()
         {
             try
             {
