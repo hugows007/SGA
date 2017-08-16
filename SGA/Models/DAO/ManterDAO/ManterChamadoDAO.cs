@@ -110,7 +110,7 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
                     Cmd.ExecuteNonQuery();
-                    return true;
+                    return true;//
                 }
                 catch (SqlException Ex)
                 {
