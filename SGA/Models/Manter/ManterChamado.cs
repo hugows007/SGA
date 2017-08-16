@@ -23,6 +23,11 @@ namespace SGA.Models.Manter
         {
             this.ObjChamado = ObjChamado;
         }
+        public ManterChamado(Chamado ObjChamado, Atendimento ObjAtend)
+        {
+            this.ObjChamado = ObjChamado;
+            this.ObjAtend = ObjAtend;
+        }
         public ManterChamado(Chamado ObjChamado, Usuario ObjUsuario, Atendimento ObjAtend)
         {
             this.ObjChamado = ObjChamado;
@@ -43,7 +48,7 @@ namespace SGA.Models.Manter
                     }
                     else
                     {
-                        DeletaChamado();
+                        DeletaChamado(); //Remover esse delete de chamado e verificar quando não encontrar o técnico oq farei
                         return false;
                     }
                 }
@@ -108,7 +113,14 @@ namespace SGA.Models.Manter
         {
             try
             {
-                return new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO();
+                if(new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO())
+                {
+                    return new ManterAtendimento(ObjAtend, ObjChamado).CancelaAtendimento();
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception Ex)
             {

@@ -213,7 +213,7 @@
                                 <a href="#"><i class="fa fa-tasks"></i> Atendimento<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="/Views/SGA/VChamado/ListaChamados.aspx">Meu atendimento</a>
+                                        <a href="/Views/SGA/VAtendimento/ConsultaAtendimento.aspx">Meus atendimentos</a>
                                     </li>
                                 </ul>
                             </li>

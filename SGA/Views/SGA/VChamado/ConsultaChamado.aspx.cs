@@ -98,11 +98,12 @@ namespace SGA.Views.SGA.VChamado
             {
                 if (!DescCancelTextBox.Text.Equals(""))
                 {
+                    ObjAtend = FactoryAtendimento.GetNew();
                     ObjChamado = FactoryChamado.GetNew();
                     ObjChamado.Id = Convert.ToInt32(Request.QueryString["IdChamado"]);
                     ObjChamado.InfoCancelamento = DescCancelTextBox.Text;
 
-                    if (new ManterChamado(ObjChamado).CancelaChamado())
+                    if (new ManterChamado(ObjChamado, ObjAtend).CancelaChamado())
                     {
                         MsgLabel.Text = "Chamado cancelado com sucesso.";
                     }

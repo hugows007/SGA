@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ListaChamados.aspx.cs" Inherits="SGA.Views.SGA.VChamado.ListaChamados" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ConsultaAtendimento.aspx.cs" Inherits="SGA.Views.SGA.VAtendimento.ConsultaAtendimento" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
     <div id="page-wrapper">
@@ -27,8 +27,8 @@
                                     <th>Status</th>
                                     <th>Data de abertura</th>
                                     <th>Data de fechamento</th>
+                                    <th>Area de atendimento</th>
                                     <th>Serviço</th>
-                                    <th>Atendimento</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,18 +39,12 @@
                                     <td><a href="ConsultaChamado.aspx?IdChamado=<%=Result.Id %>"><%=Result.Id %></a></td>
                                     <td><%=Result.Assunto %></td>
                                     <td><%=Result.Descricao %></td>
-                                    <th><%=NomeTecnico[Qtd] %></th>
+                                    <th>Técnico</th>
                                     <td><%=NomeStatus[Qtd] %></td>
                                     <td><%=Result.DataAbertura %></td>
                                     <td><%=Result.DataFechamento %></td>
+                                    <td><%=NomeAreaAtendimento[Qtd] %></td>
                                     <td><%=NomeServico[Qtd] %></td>
-                                    <td>
-                                        <%if (!NomeStatus[Qtd].Equals("Cancelado"))
-                                            { %>
-                                        <asp:Button ID="ButtonIniAtend" runat="server" Text="Iniciar atendimento?" CssClass="btn success" />
-                                        <%} %>
-                                    </td>
-
                                 </tr>
                                 <% Qtd += 1;
                                     } %>

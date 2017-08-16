@@ -24,6 +24,16 @@ namespace SGA.Models.Manter
         {
             this.ObjAtend = ObjAtend;
         }
+        public ManterAtendimento(Atendimento ObjAtend, Usuario ObjUsuario)
+        {
+            this.ObjAtend = ObjAtend;
+            this.ObjUsuario = ObjUsuario;
+        }
+        public ManterAtendimento(Atendimento ObjAtend, Chamado ObjChamado)
+        {
+            this.ObjChamado = ObjChamado;
+            this.ObjAtend = ObjAtend;
+        }
         public ManterAtendimento(Atendimento ObjAtend, Usuario ObjUsuario, Chamado ObjChamado)
         {
             this.ObjChamado = ObjChamado;
@@ -33,6 +43,10 @@ namespace SGA.Models.Manter
         public List<Atendimento> ConsultaAtendimentos()
         {
             return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentosDAO();
+        }
+        public List<Usuario> ConsultaTecnicoAtendByChamado()
+        {
+            return new ManterAtendimentoDAO(ObjAtend, ObjUsuario).ConsultaTecnicoAtendByChamadoDAO();
         }
         public Atendimento ConsultaAtendimentoById()
         {
@@ -95,7 +109,7 @@ namespace SGA.Models.Manter
         {
             try
             {
-                return new ManterAtendimentoDAO(ObjAtend).CancelaAtendimentoDAO();
+                return new ManterAtendimentoDAO(ObjAtend, ObjChamado).CancelaAtendimentoDAO();
             }
             catch (Exception Ex)
             {
