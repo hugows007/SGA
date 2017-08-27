@@ -532,6 +532,33 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public bool AlteraDisponibilidadeDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Funcionario] SET 
+	                    idDisponibilidade = @Status
+                        WHERE idUsuario = @Id;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Id", ObjUsuario.Id);
+                    Cmd.Parameters.AddWithValue("@Status", ObjUsuario.IdStatus);
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
         public bool InativaUsuarioDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())

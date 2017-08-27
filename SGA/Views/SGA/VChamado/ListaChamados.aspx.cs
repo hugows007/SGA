@@ -32,8 +32,21 @@ namespace SGA.Views.SGA.VChamado
         {
             try
             {
+                if (!"".Equals(Request.QueryString["IdTecnico"]) && Session["perfil"].Equals("Técnico"))
+                {
+                    ObjUsuario.Id = Convert.ToInt32(Request.QueryString["IdTecnico"]);
+                }
 
-                foreach (var Result in new ManterChamado(ObjChamado).ConsultaChamados())
+                if ("true".Equals(Request.QueryString["Fila"]))
+                {
+                    ObjChamado.Fila = true;
+                }
+                else
+                {
+                    ObjChamado.Fila = false;
+                }
+
+                foreach (var Result in new ManterChamado(ObjChamado, ObjUsuario).ConsultaChamados())
                 {
                     ObjServico.Id = Result.IdServico;
                     ObjStatusChm.Id = Result.IdStatus;
@@ -47,6 +60,7 @@ namespace SGA.Views.SGA.VChamado
                         ListaChamado.Add(Result);
                     }
                 }
+
             }
             catch (Exception Ex)
             {

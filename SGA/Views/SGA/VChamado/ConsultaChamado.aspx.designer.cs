@@ -31,6 +31,33 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.WebControls.TextBox DescCancelTextBox;
         
         /// <summary>
+        /// CheckBoxPend control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CheckBoxPend;
+        
+        /// <summary>
+        /// EnceRelatTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox EnceRelatTextBox;
+        
+        /// <summary>
+        /// PendRelatTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox PendRelatTextBox;
+        
+        /// <summary>
         /// Cancelar control.
         /// </summary>
         /// <remarks>
@@ -47,5 +74,23 @@ namespace SGA.Views.SGA.VChamado {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox MotCancelDescTextBox;
+        
+        /// <summary>
+        /// Encerrar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Encerrar;
+        
+        /// <summary>
+        /// RelatAtend control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox RelatAtend;
     }
 }

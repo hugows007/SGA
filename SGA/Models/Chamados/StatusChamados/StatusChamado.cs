@@ -11,6 +11,5 @@ namespace SGA.Models.Chamados.StatusChamados
         public string NomeStatus { get; set; }
         public string DescStatus { get; set; }
         public int IdStatus { get; set; }
-
     }
 }

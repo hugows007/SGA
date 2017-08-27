@@ -1,6 +1,7 @@
 ﻿using SGA.DAO;
 using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,6 +14,7 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterChamadoDAO
     {
         private Chamado ObjChamado;
+        private Usuario ObjUsuario;
         int QtdChamAbertos;
         int UltimoId;
         public ManterChamadoDAO()
@@ -23,20 +25,46 @@ namespace SGA.Models.DAO.ManterDAO
         {
             this.ObjChamado = ObjChamado;
         }
+        public ManterChamadoDAO(Chamado ObjChamado, Usuario ObjUsuario)
+        {
+            this.ObjChamado = ObjChamado;
+            this.ObjUsuario = ObjUsuario;
+        }
         public List<Chamado> ConsultaChamadosDAO()
         {
             List<Chamado> ChamList = new List<Chamado>();
             SqlDataReader Dr = null;
+            SqlCommand Cmd = null;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
-                    SqlCommand Cmd = new SqlCommand(@"
+                    if (ObjUsuario.Id.Equals(0))
+                    {
+                        Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Chamado] where idEmpresa = @Empresa", Con);
 
-                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                        Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    }
+                    else if (ObjChamado.Fila)
+                    {
+                        Cmd = new SqlCommand(@"
+                SELECT * FROM Chamado Chm inner join Atendimento Atd on (Chm.idChamado = Atd.idChamado) WHERE
+                    Atd.idTecnico = @IdTecnico and Chm.idStatusChamado in (1,2,4);", Con);
+
+                        Cmd.Parameters.AddWithValue("@idTecnico", ObjUsuario.Id);
+                    }
+                    else
+                    {
+                        Cmd = new SqlCommand(@"
+                SELECT * FROM Chamado Chm inner join Atendimento Atd on (Chm.idChamado = Atd.idChamado) WHERE
+                    Atd.idTecnico = @IdTecnico;", Con);
+
+                        Cmd.Parameters.AddWithValue("@idTecnico", ObjUsuario.Id);
+                    }
 
                     Dr = Cmd.ExecuteReader();
 
@@ -225,6 +253,36 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
                     Cmd.Parameters.AddWithValue("@InfoCancel", ObjChamado.InfoCancelamento);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
+            }
+        }
+        public bool EncerraChamadoDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Chamado] SET
+                        idStatusChamado = 3
+                        ,dataFechamento = @Data
+                        ,usuarioRegistro = @Usuario
+                        ,dataRegistro = @Data
+                        WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());

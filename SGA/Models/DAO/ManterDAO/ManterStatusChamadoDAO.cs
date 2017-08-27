@@ -23,12 +23,13 @@ namespace SGA.Models.DAO.ManterDAO
         public StatusChamado ConsultaStatusChamadoByIdDAO()
         {
             SqlDataReader Dr = null;
+            SqlCommand Cmd;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
-                    SqlCommand Cmd = new SqlCommand(@"
+                    Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[StatusChamado]
                   WHERE ativo = 1 and idStatusChamado = @Id;", Con);

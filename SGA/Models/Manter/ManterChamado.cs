@@ -28,6 +28,11 @@ namespace SGA.Models.Manter
             this.ObjChamado = ObjChamado;
             this.ObjAtend = ObjAtend;
         }
+        public ManterChamado(Chamado ObjChamado, Usuario ObjUsuario)
+        {
+            this.ObjChamado = ObjChamado;
+            this.ObjUsuario = ObjUsuario;
+        }
         public ManterChamado(Chamado ObjChamado, Usuario ObjUsuario, Atendimento ObjAtend)
         {
             this.ObjChamado = ObjChamado;
@@ -42,7 +47,7 @@ namespace SGA.Models.Manter
                 {
                     ObjChamado.Id = new ManterChamado().GetUltIdChamado();
 
-                    if(new ManterAtendimento(ObjAtend, ObjUsuario, ObjChamado).CadastraAtendimento())
+                    if (new ManterAtendimento(ObjAtend, ObjUsuario, ObjChamado).CadastraAtendimento())
                     {
                         return true;
                     }
@@ -67,7 +72,7 @@ namespace SGA.Models.Manter
         }
         public List<Chamado> ConsultaChamados()
         {
-            return new ManterChamadoDAO(ObjChamado).ConsultaChamadosDAO();
+            return new ManterChamadoDAO(ObjChamado, ObjUsuario).ConsultaChamadosDAO();
         }
         public Chamado ConsultaChamadoById()
         {
@@ -113,9 +118,27 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if(new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO())
+                if (new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO())
                 {
-                    return new ManterAtendimento(ObjAtend, ObjChamado).CancelaAtendimento();
+                    if (new ManterAtendimento(ObjAtend, ObjChamado).CancelaAtendimento())
+                    {
+                        ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+
+                        ObjUsuario.IdStatus = 1;
+
+                        if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {

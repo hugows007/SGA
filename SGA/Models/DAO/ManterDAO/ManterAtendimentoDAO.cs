@@ -17,6 +17,8 @@ namespace SGA.Models.DAO.ManterDAO
         Atendimento ObjAtend;
         Usuario ObjUsuario;
         Chamado ObjChamado;
+        DateTime D1;
+        DateTime D2;
         public ManterAtendimentoDAO()
         {
 
@@ -36,12 +38,11 @@ namespace SGA.Models.DAO.ManterDAO
             this.ObjUsuario = ObjUsuario;
             this.ObjAtend = ObjAtend;
         }
-        public ManterAtendimentoDAO(Atendimento ObjAtend, Usuario ObjUsuario) 
+        public ManterAtendimentoDAO(Atendimento ObjAtend, Usuario ObjUsuario)
         {
             this.ObjAtend = ObjAtend;
             this.ObjUsuario = ObjUsuario;
         }
-
         public List<Atendimento> ConsultaAtendimentosDAO()
         {
             List<Atendimento> List = new List<Atendimento>();
@@ -261,6 +262,44 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public bool IniciaAtendimentoDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Atendimento] SET 
+                        dataInicioAtendimento = @Data
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario
+                        WHERE idChamado = @IdChamado and idTecnico = @Tecnico;
+
+                UPDATE 
+	                [dbo].[Chamado] SET 
+                        idStatusChamado = 2
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario
+                        WHERE idChamado = @IdChamado;", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdChamado", ObjAtend.IdChamado);
+                    Cmd.Parameters.AddWithValue("@Tecnico", ObjAtend.IdTecnico);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
         public bool CancelaAtendimentoDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -306,7 +345,42 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public bool EncerraAtendimentoDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd;
 
+                    Cmd = new SqlCommand(@"
+                            UPDATE 
+	                            [dbo].[Atendimento] SET
+                                    dataFimAtendimento = @Data
+                                    ,relatorioAtendimento = @Relatorio
+                                    ,tempoAtendimento = @Tempo
+                                    ,dataRegistro = @Data
+                                    ,usuarioRegistro = @Usuario                         
+                                WHERE idChamado = @Id;", Con);
+
+
+                    Cmd.Parameters.AddWithValue("@Id", ObjAtend.IdChamado);
+                    Cmd.Parameters.AddWithValue("@Relatorio", ObjAtend.Relatorio);
+                    Cmd.Parameters.AddWithValue("@Tempo", GetTempoAtendimento());
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
         public bool GetAtendimentoNaoIniciado()
         {
             SqlDataReader Dr = null;
@@ -341,6 +415,38 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public string GetTempoAtendimento()
+        {
+            SqlDataReader Dr = null;
 
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                SELECT dataInicioAtendimento
+                  FROM [dbo].[Atendimento]
+                  WHERE idChamado = @IdChamado", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdChamado", ObjAtend.IdChamado);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        D1 = Dr.GetDateTime(0);
+                        D2 = DateTime.Now;
+                    }
+
+                    return String.Format("{0: 0.00}", (D2 - D1).TotalHours).Replace(",", ".");
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
     }
 }

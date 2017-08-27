@@ -105,11 +105,79 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+        public bool IniciaAtendimento()
+        {
+            try
+            {
+                if (new ManterAtendimentoDAO(ObjAtend).IniciaAtendimentoDAO())
+                {
+                    ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
+                    ObjUsuario.Id = ObjAtend.IdTecnico;
+
+                    ObjUsuario.IdStatus = 2;
+
+                    if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
         public bool CancelaAtendimento()
         {
             try
             {
                 return new ManterAtendimentoDAO(ObjAtend, ObjChamado).CancelaAtendimentoDAO();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public bool EncerraAtendimento()
+        {
+            try
+            {
+                if (new ManterAtendimentoDAO(ObjAtend, ObjChamado).EncerraAtendimentoDAO())
+                {
+                    if (new ManterChamadoDAO(ObjChamado).EncerraChamadoDAO())
+                    {
+                        ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                        ObjUsuario.Id = ObjAtend.IdTecnico;
+                        ObjUsuario.IdStatus = 1;
+
+                        if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception Ex)
             {

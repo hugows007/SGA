@@ -30,7 +30,7 @@
                                 <div class="alert alert-warning">
                                     <label for="Status" class="control-label">Status atual: <%=ObjStatusChm.NomeStatus %></label>
                                 </div>
-                                <%if (CancButtonClick)
+                                <%if (CancButtonClick && !EnceButtonClick)
                                     {%>
                                 <script>
                                     alertify.log("Informe o motivo do cancelamento");
@@ -39,6 +39,29 @@
                                     <label for="DescCancelTextBox" class="control-label">Diga o motivo do cancelamento: </label>
                                     <asp:TextBox ID="DescCancelTextBox" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
                                 </div>
+                                <%}
+                                    else if (!CancButtonClick && EnceButtonClick)
+                                    {%>
+                                <script>
+                                    alertify.log("Informe o relatório do atendimento");
+                                </script>
+                                <div class="checkbox">
+                                    <label class="control-label">
+                                        <asp:CheckBox ID="CheckBoxPend" runat="server" OnCheckedChanged="CheckBoxPend_CheckedChanged" AutoPostBack="true" />Existem pendências?</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="EnceRelatTextBox" class="control-label">Informe o relatório do antedimento: </label>
+                                    <asp:TextBox ID="EnceRelatTextBox" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                                </div>
+                                <%if (PendBox)
+                                    {
+                                %>
+                                <div class="form-group">
+                                    <label for="PendRelatTextBox" class="control-label">Informe a(s) pendência(s): </label>
+                                    <asp:TextBox ID="PendRelatTextBox" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                                </div>
+                                <%}
+                                %>
                                 <%}
                                     else {%>
                                 <div class="form-group">
@@ -74,19 +97,31 @@
                                     <input id="TecnicoResp" type="text" class="form-control input-sm" disabled="disabled" value="<%=NomeTecnico %>" />
                                 </div>
                                 <%}
-                                    if (!ObjStatusChm.Id.Equals(5))
+                                    if (!ObjStatusChm.Id.Equals(5) && !ObjStatusChm.Id.Equals(3) && !EnceButtonClick)
                                     {%>
 
                                 <asp:Button ID="Cancelar" runat="server" Text="Cancelar chamado" class="btn btn-default" OnClick="CancelarButton_Click" />
                                 <%}
-                                    else
+                                    else if (!ObjStatusChm.Id.Equals(5) && CancButtonClick)
                                     {%>
                                 <div class="form-group">
                                     <label for="MotCancelDesc" class="control-label">Motivo do cancelamento: </label>
                                     <asp:TextBox ID="MotCancelDescTextBox" runat="server" TextMode="multiline" disabled="disabled" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
                                 </div>
                                 <%}
-                                    }%>
+                                    if (ObjStatusChm.Id.Equals(2) && !CancButtonClick)
+                                    {%>
+
+                                <asp:Button ID="Encerrar" runat="server" Text="Encerrar atendimento" class="btn btn-default" OnClick="Encerrar_Click" />
+                                <%}
+                                    else if (ObjStatusChm.Id.Equals(2) && EnceButtonClick)
+                                    {%>
+                                <div class="form-group">
+                                    <label for="RelatAtend" class="control-label">Relatório do atendimento: </label>
+                                    <asp:TextBox ID="RelatAtend" runat="server" TextMode="multiline" disabled="disabled" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                                </div>
+                                <% }
+                                    } %>
 
                                 <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                             </div>

@@ -20,5 +20,6 @@ namespace SGA.Models.Chamados
         public string InfoTramite { get; set; }
         public string InfoPendencia { get; set; }
         public int IdEmpresa { get; set; }
+        public bool Fila { get; set; }
     }
 }

@@ -36,6 +36,7 @@ namespace SGA.Views.SGA
                 Session["nome"] = ObjUsuario.Nome;
                 Session["empresa"] = ObjUsuario.NomeEmpresa;
                 Session["idEmpresa"] = ObjUsuario.IdEmpresa;
+                Session["perfil"] = Roles.GetRolesForUser(ObjUsuario.Login)[0];
 
                 InfoGlobal.GlobalIdEmpresa = ObjUsuario.IdEmpresa;
 

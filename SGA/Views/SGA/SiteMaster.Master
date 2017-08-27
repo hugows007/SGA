@@ -199,10 +199,10 @@
                                 <asp:Button ID="AbrirButton" runat="server" Text="Abrir chamado" CssClass="btn btn-primary btn-lg btn-block" PostBackUrl="/Views/SGA/VChamado/AbrirChamado.aspx" />
                             </li>
                             <li>
-                                <a href="/Views/SGA/Inicio.aspx"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                <a href="/Views/SGA/Inicio.aspx"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-briefcase fa-fw"></i> Chamados<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-briefcase fa-fw"></i>Chamados<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="/Views/SGA/VChamado/ListaChamados.aspx">Consultar chamados</a>
@@ -210,15 +210,21 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-tasks"></i> Atendimento<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-tasks"></i>Atendimento<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="/Views/SGA/VAtendimento/ConsultaAtendimento.aspx">Meus atendimentos</a>
+                                        <a href="/Views/SGA/VChamado/ListaChamados.aspx?IdTecnico=<%=Session["id"]%>&Fila=true">Fila de Atendimento</a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="/Views/SGA/VChamado/ListaChamados.aspx?IdTecnico=<%=Session["id"]%>">Histórico de Atendimentos</a>
                                     </li>
                                 </ul>
                             </li>
+
                             <li>
-                                <a href="#"><i class="glyphicon glyphicon-cog"></i> Manutenção<span class="fa arrow"></span></a>
+                                <a href="#"><i class="glyphicon glyphicon-cog"></i>Manutenção<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="#">Usuários do sistema<span class="fa arrow"></span></a>

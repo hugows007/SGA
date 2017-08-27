@@ -13,6 +13,8 @@ namespace SGA.Views.SGA
         protected void Page_Load(object sender, EventArgs e)
         {
             FormsAuthentication.SignOut();
+            Session.Clear();
+            Session.Abandon();
             GC.Collect();
             Response.Redirect("\\Views\\Login\\Login.aspx");
         }

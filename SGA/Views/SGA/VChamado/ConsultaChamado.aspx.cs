@@ -29,6 +29,8 @@ namespace SGA.Views.SGA.VChamado
         public string NomeCliente;
         public string NomeTecnico;
         public bool CancButtonClick;
+        public bool EnceButtonClick;
+        public bool PendBox;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -93,14 +95,19 @@ namespace SGA.Views.SGA.VChamado
 
         protected void CancelarButton_Click(object sender, EventArgs e)
         {
-            CancButtonClick = true;
             try
             {
+                CancButtonClick = true;
+
                 if (!DescCancelTextBox.Text.Equals(""))
                 {
                     ObjAtend = FactoryAtendimento.GetNew();
                     ObjChamado = FactoryChamado.GetNew();
+
                     ObjChamado.Id = Convert.ToInt32(Request.QueryString["IdChamado"]);
+                    ObjAtend.IdChamado = ObjChamado.Id;
+                    ObjAtend = new ManterAtendimento(ObjAtend).ConsultaAtendimentoByIdChamado();
+
                     ObjChamado.InfoCancelamento = DescCancelTextBox.Text;
 
                     if (new ManterChamado(ObjChamado, ObjAtend).CancelaChamado())
@@ -123,6 +130,84 @@ namespace SGA.Views.SGA.VChamado
                 ObjChamado = null;
                 MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
+        }
+
+        protected void Encerrar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                EnceButtonClick = true;
+
+                if (!EnceRelatTextBox.Text.Equals(""))
+                {
+                    ObjAtend = FactoryAtendimento.GetNew();
+                    ObjChamado = FactoryChamado.GetNew();
+
+                    ObjChamado.Id = Convert.ToInt32(Request.QueryString["IdChamado"]);
+                    ObjAtend.IdChamado = ObjChamado.Id;
+                    ObjAtend = new ManterAtendimento(ObjAtend).ConsultaAtendimentoByIdChamado();
+
+                    ObjAtend.Relatorio = EnceRelatTextBox.Text;
+
+                    if (CheckBoxPend.Checked && !PendRelatTextBox.Text.Equals(""))
+                    {
+                        ObjChamado.InfoPendencia = PendRelatTextBox.Text;
+
+                        if (new ManterAtendimento(ObjAtend, ObjChamado).EncerraAtendimento())
+                        {
+                            MsgLabel.Text = "Chamado encerrado com sucesso.";
+                        }
+                        else
+                        {
+                            MsgLabel.Text = "Ocorreu um problema no encerramento do chamado.";
+                        }
+                    }
+                    else
+                    {
+                        MsgLabel.Text = "Informe as pendências.";
+                    }
+
+                    if(!CheckBoxPend.Checked)
+                    {
+                        if (new ManterAtendimento(ObjAtend, ObjChamado).EncerraAtendimento())
+                        {
+                            MsgLabel.Text = "Chamado encerrado com sucesso.";
+                        }
+                        else
+                        {
+                            MsgLabel.Text = "Ocorreu um problema no encerramento do chamado.";
+                        }
+                    }
+                }
+                else
+                {
+                    MsgLabel.Text = "Informe o relatório do atendimento.";
+                }
+
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                ObjChamado = null;
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+            }
+        }
+
+        protected void CheckBoxPend_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckBoxPend.Checked)
+            {
+                PendBox = true;
+                EnceButtonClick = true;
+                CancButtonClick = false;
+            }
+            else
+            {
+                PendBox = false;
+                EnceButtonClick = true;
+                CancButtonClick = false;
+            }
+
         }
     }
 }

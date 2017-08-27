@@ -28,12 +28,16 @@
                                     <th>Data de abertura</th>
                                     <th>Data de fechamento</th>
                                     <th>Serviço</th>
-                                    <th>Atendimento</th>
+                                    <%int Qtd = 0;
+                                        if ((Session["perfil"]).Equals("Técnico"))
+                                        { %>
+                                    <th>Atendimento
+                                    </th>
+                                    <%} %>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% int Qtd = 0;
-                                    foreach (var Result in ListaChamado)
+                                <% foreach (var Result in ListaChamado)
                                     {%>
                                 <tr>
                                     <td><a href="ConsultaChamado.aspx?IdChamado=<%=Result.Id %>"><%=Result.Id %></a></td>
@@ -45,12 +49,15 @@
                                     <td><%=Result.DataFechamento %></td>
                                     <td><%=NomeServico[Qtd] %></td>
                                     <td>
-                                        <%if (!NomeStatus[Qtd].Equals("Cancelado"))
+                                        <%if ((Session["perfil"]).Equals("Técnico") && NomeStatus[Qtd].Equals("Aberto"))
                                             { %>
-                                        <asp:Button ID="ButtonIniAtend" runat="server" Text="Iniciar atendimento?" CssClass="btn success" />
+
+                                        <a href="/Views/SGA/VAtendimento/IniciaAtendimento.aspx?IdChamado=<%=Result.Id %>&StatusChamado=<%=NomeStatus[Qtd] %>">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+
                                         <%} %>
                                     </td>
-
                                 </tr>
                                 <% Qtd += 1;
                                     } %>

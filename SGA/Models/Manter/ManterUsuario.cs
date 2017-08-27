@@ -128,6 +128,25 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+        public bool AlteraDisponibilidade()
+        {
+            try
+            {
+                if (new ManterUsuarioDAO(ObjUsuario).AlteraDisponibilidadeDAO())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
         public bool InativaUsuario()
         {
             try
