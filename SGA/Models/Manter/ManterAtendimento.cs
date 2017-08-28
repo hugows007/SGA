@@ -162,7 +162,21 @@ namespace SGA.Models.Manter
 
                         if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
                         {
-                            return true;
+                            if (ObjChamado.Pendencia)
+                            {
+                                if (new ManterAtendimentoDAO(ObjAtend, ObjChamado).CadastraAtendimentoDAO())
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                return true;
+                            }
                         }
                         else
                         {

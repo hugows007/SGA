@@ -151,6 +151,7 @@ namespace SGA.Views.SGA.VChamado
 
                     if (CheckBoxPend.Checked && !PendRelatTextBox.Text.Equals(""))
                     {
+                        ObjChamado.Pendencia = true;
                         ObjChamado.InfoPendencia = PendRelatTextBox.Text;
 
                         if (new ManterAtendimento(ObjAtend, ObjChamado).EncerraAtendimento())

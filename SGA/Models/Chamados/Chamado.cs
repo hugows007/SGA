@@ -21,5 +21,6 @@ namespace SGA.Models.Chamados
         public string InfoPendencia { get; set; }
         public int IdEmpresa { get; set; }
         public bool Fila { get; set; }
+        public bool Pendencia { get; set; }
     }
 }

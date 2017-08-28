@@ -17,6 +17,7 @@ namespace SGA.Models.DAO.ManterDAO
         private Usuario ObjUsuario;
         int QtdChamAbertos;
         int UltimoId;
+        int ContadorPendencia;
         public ManterChamadoDAO()
         {
 
@@ -269,11 +270,26 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public bool EncerraChamadoDAO()
         {
+            SqlCommand Cmd;
+
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
-                    SqlCommand Cmd = new SqlCommand(@"
+                    if (ObjChamado.Pendencia)
+                    {
+                        Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Chamado] SET
+                        idStatusChamado = 4
+                        ,dataFechamento = @Data
+                        ,usuarioRegistro = @Usuario
+                        ,dataRegistro = @Data
+                        WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
+                    }
+                    else
+                    {
+                        Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Chamado] SET
                         idStatusChamado = 3
@@ -281,6 +297,8 @@ namespace SGA.Models.DAO.ManterDAO
                         ,usuarioRegistro = @Usuario
                         ,dataRegistro = @Data
                         WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
+                    }
+
 
                     Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
@@ -374,6 +392,36 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return QtdChamAbertos;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+                    throw;
+                }
+            }
+        }
+        public int GetContPendenciaDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                SELECT ContPendencia
+                    from Chamado where idChamado = @Chamado", Con);
+
+                    Cmd.Parameters.AddWithValue("@Chamado", ObjChamado.Id);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ContadorPendencia = Dr.GetInt32(0);
+                    }
+
+                    return ContadorPendencia;
                 }
                 catch (SqlException Ex)
                 {

@@ -192,29 +192,68 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public bool CadastraAtendimentoDAO()
         {
+            SqlCommand Cmd;
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
-                    SqlCommand Cmd = new SqlCommand(@"
-            INSERT INTO [dbo].[Atendimento]
-                ([idChamado]
-                  ,[idTecnico]
-                  ,[idCliente]
-                  ,[idEmpresa]
-                  ,[idRegiaoAtendimento])
-            VALUES
-                (@IdChamado
-                ,@IdTecnico
-                ,@IdCliente
-                ,@Empresa
-                ,@IdRegiao);", Con);
+                    if (ObjChamado.Pendencia)
+                    {
+                        Cmd = new SqlCommand(@"
+                                INSERT INTO [dbo].[Atendimento]
+                                    ([idChamado]
+                                      ,[idTecnico]
+                                      ,[idCliente]
+                                      ,[idEmpresa]
+                                      ,[idRegiaoAtendimento]
+                                      ,[dataRegistro]
+                                      ,[usuarioRegistro])
+                                VALUES
+                                    (@IdChamado
+                                    ,@IdTecnico
+                                    ,@IdCliente
+                                    ,@Empresa
+                                    ,@IdRegiao
+                                    ,@Data
+                                    ,@Usuario);
+
+                                UPDATE [dbo].[Chamado] SET
+                                    [ContPendencia] = @ContPendencia
+                                WHERE idChamado = @IdChamado;", Con);
+
+                        ObjChamado = FactoryChamado.GetNew();
+                        ObjChamado.Id = ObjAtend.Id;
+
+                        Cmd.Parameters.AddWithValue("@ContPendencia", new ManterChamadoDAO(ObjChamado).GetContPendenciaDAO() + 1);
+                    }
+                    else {
+
+                        Cmd = new SqlCommand(@"
+                                INSERT INTO [dbo].[Atendimento]
+                                    ([idChamado]
+                                      ,[idTecnico]
+                                      ,[idCliente]
+                                      ,[idEmpresa]
+                                      ,[idRegiaoAtendimento]
+                                      ,[dataRegistro]
+                                      ,[usuarioRegistro])
+                                VALUES
+                                    (@IdChamado
+                                    ,@IdTecnico
+                                    ,@IdCliente
+                                    ,@Empresa
+                                    ,@IdRegiao
+                                    ,@Data
+                                    ,@Usuario);", Con);
+                    }
 
                     Cmd.Parameters.AddWithValue("@IdChamado", ObjAtend.IdChamado);
                     Cmd.Parameters.AddWithValue("@IdTecnico", ObjAtend.IdTecnico);
                     Cmd.Parameters.AddWithValue("@IdCliente", ObjAtend.IdCliente);
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@IdRegiao", ObjAtend.IdRegiaoAtendimento);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
 
                     Cmd.ExecuteNonQuery();
                     return true;
