@@ -53,8 +53,8 @@ namespace SGA.Models.DAO.ManterDAO
                     else if (ObjChamado.Fila)
                     {
                         Cmd = new SqlCommand(@"
-                SELECT * FROM Chamado Chm inner join Atendimento Atd on (Chm.idChamado = Atd.idChamado) WHERE
-                    Atd.idTecnico = @IdTecnico and Chm.idStatusChamado in (1,2,4);", Con);
+                 SELECT * FROM Chamado Chm inner join Atendimento Atd on (Chm.idChamado = Atd.idChamado) WHERE
+                    Atd.idTecnico = @IdTecnico and Chm.idStatusChamado in (1,2,4) and Atd.dataFimAtendimento is null;", Con);
 
                         Cmd.Parameters.AddWithValue("@idTecnico", ObjUsuario.Id);
                     }
@@ -106,6 +106,8 @@ namespace SGA.Models.DAO.ManterDAO
                 ([assunto]
                   ,[idCliente]
                   ,[descricao]
+                  ,[contReabertura]
+                  ,[contPendencia]
                   ,[idStatusChamado]
                   ,[dataAbertura]
                   ,[dataFechamento]
@@ -118,6 +120,8 @@ namespace SGA.Models.DAO.ManterDAO
                 (@Assunto
                 ,@IdCliente
                 ,@Desc
+                ,0
+                ,0
                 ,1
                 ,@DataAber
                 ,@DataFech
@@ -282,10 +286,12 @@ namespace SGA.Models.DAO.ManterDAO
                 UPDATE 
 	                [dbo].[Chamado] SET
                         idStatusChamado = 4
-                        ,dataFechamento = @Data
                         ,usuarioRegistro = @Usuario
+                        ,contPendencia = @CPend
                         ,dataRegistro = @Data
                         WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
+
+                        Cmd.Parameters.AddWithValue("@CPend", GetContPendenciaDAO());
                     }
                     else
                     {

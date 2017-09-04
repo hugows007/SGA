@@ -91,7 +91,7 @@ namespace SGA.Models.DAO.ManterDAO
                 try
                 {
                     SqlCommand Cmd = new SqlCommand(@"
-                   select Atd.idTecnico, Usr.nome from Atendimento Atd inner join Usuario Usr on (Atd.idTecnico = Usr.idUsuario) where 
+                   select top 1 Atd.idTecnico, Usr.nome from Atendimento Atd inner join Usuario Usr on (Atd.idTecnico = Usr.idUsuario) where 
                         Atd.idChamado = @Id;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjAtend.IdChamado);
@@ -197,9 +197,11 @@ namespace SGA.Models.DAO.ManterDAO
             {
                 try
                 {
-                    if (ObjChamado.Pendencia)
+                    if (ObjChamado != null)
                     {
-                        Cmd = new SqlCommand(@"
+                        if (ObjChamado.Pendencia)
+                        {
+                            Cmd = new SqlCommand(@"
                                 INSERT INTO [dbo].[Atendimento]
                                     ([idChamado]
                                       ,[idTecnico]
@@ -221,10 +223,31 @@ namespace SGA.Models.DAO.ManterDAO
                                     [ContPendencia] = @ContPendencia
                                 WHERE idChamado = @IdChamado;", Con);
 
-                        ObjChamado = FactoryChamado.GetNew();
-                        ObjChamado.Id = ObjAtend.Id;
+                            ObjChamado = FactoryChamado.GetNew();
+                            ObjChamado.Id = ObjAtend.IdChamado;
 
-                        Cmd.Parameters.AddWithValue("@ContPendencia", new ManterChamadoDAO(ObjChamado).GetContPendenciaDAO() + 1);
+                            Cmd.Parameters.AddWithValue("@ContPendencia", new ManterChamadoDAO(ObjChamado).GetContPendenciaDAO() + 1);
+                        }
+                        else
+                        {
+                            Cmd = new SqlCommand(@"
+                                INSERT INTO [dbo].[Atendimento]
+                                    ([idChamado]
+                                      ,[idTecnico]
+                                      ,[idCliente]
+                                      ,[idEmpresa]
+                                      ,[idRegiaoAtendimento]
+                                      ,[dataRegistro]
+                                      ,[usuarioRegistro])
+                                VALUES
+                                    (@IdChamado
+                                    ,@IdTecnico
+                                    ,@IdCliente
+                                    ,@Empresa
+                                    ,@IdRegiao
+                                    ,@Data
+                                    ,@Usuario);", Con);
+                        }
                     }
                     else {
 
@@ -399,9 +422,13 @@ namespace SGA.Models.DAO.ManterDAO
                                     ,relatorioAtendimento = @Relatorio
                                     ,tempoAtendimento = @Tempo
                                     ,dataRegistro = @Data
-                                    ,usuarioRegistro = @Usuario                         
-                                WHERE idChamado = @Id;", Con);
-
+                                    ,usuarioRegistro = @Usuario WHERE                      
+                                        idchamado = @Id and 
+                                        idAtendimento = 
+	                                        (select max(idAtendimento) 
+		                                        from Atendimento where 
+		                                        idChamado = @Id
+	                                        );", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjAtend.IdChamado);
                     Cmd.Parameters.AddWithValue("@Relatorio", ObjAtend.Relatorio);
