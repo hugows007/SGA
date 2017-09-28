@@ -15,7 +15,7 @@
     </asp:PlaceHolder>
 
 
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="<%= ResolveClientUrl("~/Image/Logo.jpeg") %>" rel="icon" />
     <link href="<%= ResolveClientUrl("~/Content/bootstrap.css") %>" rel="stylesheet" />
     <link href="<%= ResolveClientUrl("~/Content/bootstrap-theme.css") %>" rel="stylesheet" />
     <script src="<%= ResolveClientUrl("~/Scripts/jquery-1.10.2.intellisense.js") %>"></script>
@@ -76,20 +76,44 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/Views/SGA/Inicio.aspx">SGA TI - Bem vindo, <%=NomeUsuario%>.</a>
+                    <a class="navbar-brand" href="/Views/SGA/Inicio.aspx">
+                        <i class="fa fa-home"></i>
+                    </a>
                 </div>
                 <!-- /.navbar-header -->
 
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-envelope fa-fw"></i><i class="fa fa-caret-down"></i>
+                            <i class="fa fa-comment fa-fw fa-fw"></i><i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-messages nav nav-second-level">
+                            <li>
+                                <%if (!ListaNotificacao.Count().Equals(0))
+                                        foreach (var Lista in ListaNotificacao)
+                                        {
+                                            if (Lista.Mensagem.Equals("Requisição de chat"))
+                                            {
+                                %>
+                                <a href="/Views/SGA/VNotificacao/Notificacoes.aspx?Alerta=Chat&Id=<%=Lista.Id%>">
+                                    <i class="fa fa-comment fa-fw"></i><%=Lista.Mensagem%>
+                                    <span class="pull-right text-muted small"><%=Lista.Data%></span>
+                                </a>
+                                <div class="divider"></div>
+                            </li>
+                            <%}
+                                    }
+                                else {%>
+                            <li>
+                                <a class="text-center">
+                                    <strong>Nenhuma nova notificação</strong>
+                                </a>
+                            </li>
                             <li class="divider"></li>
+                            <%}%>
                             <li>
                                 <a class="text-center" href="/Views/SGA/VChat/Chat.aspx">
-                                    <strong>Iniciar Chat </strong>
+                                    <strong>Chat </strong>
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             </li>
@@ -134,21 +158,31 @@
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-comment fa-fw"></i>New Comment
-                                   
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
+                                <%if (!ListaNotificacao.Count().Equals(0))
+                                        foreach (var Lista in ListaNotificacao)
+                                        {
+                                            //
+                                            // Colocar outras notificações aqui
+                                            //
+                                            if (Lista.Mensagem.Equals("chat"))
+                                            {
+                                %>
+                                <a href="/Views/SGA/VChat/Chat.aspx?Alerta=Chat&Id=<%=Lista.Id%>">
+                                    <i class="fa fa-comment fa-fw"></i><%=Lista.Mensagem%>
+                                    <span class="pull-right text-muted small"><%=Lista.Data%></span>
                                 </a>
+                                <div class="divider"></div>
                             </li>
+                            <%}
+                                    }
+                                else {%>
                             <li class="divider"></li>
                             <li>
-                                <a class="text-center" href="#">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
+                                <a class="text-center">
+                                    <strong>Nenhuma nova notificação</strong>
                                 </a>
                             </li>
+                            <%}%>
                         </ul>
                         <!-- /.dropdown-alerts -->
                     </li>

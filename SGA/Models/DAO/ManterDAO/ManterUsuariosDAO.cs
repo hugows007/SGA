@@ -308,10 +308,11 @@ namespace SGA.Models.DAO.ManterDAO
                     foreach (var P in Perfil)
                     {
                         SqlCommand Cmd = new SqlCommand(@"
-                    SELECT * 
+                 SELECT * 
                     FROM Usuario Usr INNER JOIN 
                     UsuarioXMemberShipUser UsrMb ON (Usr.idUsuario = UsrMb.idUsuario) INNER JOIN
-                    aspnet_UsersInRoles UsrRoles ON (UsrMb.IdUsrMemberShip = UsrRoles.UserId)
+                    aspnet_UsersInRoles UsrRoles ON (UsrMb.IdUsrMemberShip = UsrRoles.UserId) INNER JOIN
+                    aspnet_Users UsrUsers ON (UsrMb.IdUsrMemberShip = UsrUsers.UserId)
                     WHERE UsrRoles.RoleId in (@IdRole1, @IdRole2) and Usr.idEmpresa = @Empresa", Con);
 
                         Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
@@ -361,6 +362,7 @@ namespace SGA.Models.DAO.ManterDAO
                             Usr.Cep = Dr.GetString(4);
                             Usr.Telefone = Dr.GetString(5);
                             Usr.Regra = GetRegraUserDAO(Usr.Id);
+                            Usr.Login = Dr.GetString(16);
 
                             UsrList.Add(Usr);
                         }

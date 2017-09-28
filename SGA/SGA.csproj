@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +44,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -71,11 +84,52 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.1.2.3\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -85,6 +139,34 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -92,14 +174,238 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\alert\alertify.bootstrap.css" />
+    <Content Include="Content\alert\alertify.core.css" />
+    <Content Include="Content\alert\alertify.default.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chat\style.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Image\Chat.png" />
+    <Content Include="Image\Logo.jpeg" />
     <Content Include="packages.config" />
-    <Content Include="ApplicationInsights.config">
+    <Content Include="Scripts\chat\index.js" />
+    <None Include="Scripts\chat\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Scripts\chat\jquery-1.6.4.js" />
+    <Content Include="Scripts\chat\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\chat\jquery.signalR-1.0.0-rc1.js" />
+    <Content Include="Scripts\chat\jquery.signalR-1.0.0-rc1.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
+    <Content Include="Views\SGA\ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\alert\alertify.js" />
+    <Content Include="Scripts\alert\alertify.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\data\flot-data.js" />
+    <Content Include="Scripts\data\morris-data.js" />
+    <Content Include="Scripts\dist\css\sb-admin-2.css" />
+    <Content Include="Scripts\dist\css\sb-admin-2.min.css" />
+    <Content Include="Scripts\dist\js\sb-admin-2.js" />
+    <Content Include="Scripts\dist\js\sb-admin-2.min.js" />
+    <Content Include="Scripts\google.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\ai.0.15.0-build58334.js" />
+    <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\js\sb-admin-2.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\less\mixins.less" />
+    <Content Include="Scripts\less\sb-admin-2.less" />
+    <Content Include="Scripts\less\variables.less" />
+    <Content Include="Scripts\vendor\bootstrap-social\bootstrap-social.less" />
+    <Content Include="Scripts\vendor\bootstrap-social\bootstrap-social.scss" />
+    <Content Include="Scripts\vendor\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\vendor\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Scripts\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Scripts\vendor\datatables-responsive\dataTables.responsive.scss" />
+    <Content Include="Scripts\vendor\datatables\images\Sorting icons.psd" />
+    <Content Include="Scripts\vendor\font-awesome\css\font-awesome.css.map" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Scripts\vendor\font-awesome\less\animated.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\core.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\extras.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\fixed-width.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\font-awesome.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\icons.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\larger.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\list.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\mixins.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\path.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\screen-reader.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\spinning.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\stacked.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\variables.less" />
+    <Content Include="Scripts\vendor\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_animated.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_core.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_extras.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_icons.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_larger.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_list.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_mixins.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_path.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_spinning.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_stacked.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_variables.scss" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\vendor\bootstrap-social\bootstrap-social.css" />
+    <Content Include="Scripts\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Scripts\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Scripts\vendor\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Scripts\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Scripts\vendor\datatables-plugins\dataTables.bootstrap.css" />
+    <Content Include="Scripts\vendor\datatables-plugins\dataTables.bootstrap.js" />
+    <Content Include="Scripts\vendor\datatables-plugins\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\vendor\datatables-plugins\index.html" />
+    <Content Include="Scripts\vendor\datatables-responsive\dataTables.responsive.css" />
+    <Content Include="Scripts\vendor\datatables-responsive\dataTables.responsive.js" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.bootstrap.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.bootstrap.min.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.bootstrap4.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.foundation.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.foundation.min.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.jqueryui.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.jqueryui.min.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.material.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.material.min.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.semanticui.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.semanticui.min.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.uikit.css" />
+    <Content Include="Scripts\vendor\datatables\css\dataTables.uikit.min.css" />
+    <Content Include="Scripts\vendor\datatables\css\jquery.dataTables.css" />
+    <Content Include="Scripts\vendor\datatables\css\jquery.dataTables.min.css" />
+    <Content Include="Scripts\vendor\datatables\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Scripts\vendor\datatables\images\favicon.ico" />
+    <Content Include="Scripts\vendor\datatables\images\sort_asc.png" />
+    <Content Include="Scripts\vendor\datatables\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\vendor\datatables\images\sort_both.png" />
+    <Content Include="Scripts\vendor\datatables\images\sort_desc.png" />
+    <Content Include="Scripts\vendor\datatables\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.bootstrap.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.foundation.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.foundation.min.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.jqueryui.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.jqueryui.min.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.material.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.material.min.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.semanticui.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.semanticui.min.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.uikit.js" />
+    <Content Include="Scripts\vendor\datatables\js\dataTables.uikit.min.js" />
+    <Content Include="Scripts\vendor\datatables\js\jquery.dataTables.js" />
+    <Content Include="Scripts\vendor\datatables\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\vendor\datatables\js\jquery.js" />
+    <Content Include="Scripts\vendor\flot-tooltip\jquery.flot.tooltip.js" />
+    <Content Include="Scripts\vendor\flot-tooltip\jquery.flot.tooltip.min.js" />
+    <Content Include="Scripts\vendor\flot-tooltip\jquery.flot.tooltip.source.js" />
+    <Content Include="Scripts\vendor\flot\excanvas.js" />
+    <Content Include="Scripts\vendor\flot\excanvas.min.js" />
+    <Content Include="Scripts\vendor\flot\jquery.colorhelpers.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.canvas.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.categories.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.crosshair.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.errorbars.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.fillbetween.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.image.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.navigate.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.pie.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.resize.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.selection.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.stack.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.symbol.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.threshold.js" />
+    <Content Include="Scripts\vendor\flot\jquery.flot.time.js" />
+    <Content Include="Scripts\vendor\flot\jquery.js" />
+    <Content Include="Scripts\vendor\font-awesome\css\font-awesome.css" />
+    <Content Include="Scripts\vendor\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\vendor\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="Scripts\vendor\jquery\jquery.js" />
+    <Content Include="Scripts\vendor\jquery\jquery.min.js" />
+    <Content Include="Scripts\vendor\metisMenu\metisMenu.css" />
+    <Content Include="Scripts\vendor\metisMenu\metisMenu.js" />
+    <Content Include="Scripts\vendor\metisMenu\metisMenu.min.css" />
+    <Content Include="Scripts\vendor\metisMenu\metisMenu.min.js" />
+    <Content Include="Scripts\vendor\morrisjs\morris.css" />
+    <Content Include="Scripts\vendor\morrisjs\morris.js" />
+    <Content Include="Scripts\vendor\morrisjs\morris.min.js" />
+    <Content Include="Scripts\vendor\raphael\raphael.js" />
+    <Content Include="Scripts\vendor\raphael\raphael.min.js" />
+    <Content Include="Scripts\WebForms\DetailsView.js" />
+    <Content Include="Scripts\WebForms\Focus.js" />
+    <Content Include="Scripts\WebForms\GridView.js" />
+    <Content Include="Scripts\WebForms\Menu.js" />
+    <Content Include="Scripts\WebForms\MenuStandards.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxApplicationServices.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxComponentModel.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxCore.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxGlobalization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxHistory.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxNetwork.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxSerialization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxTimer.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebForms.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebServices.js" />
+    <Content Include="Scripts\WebForms\SmartNav.js" />
+    <Content Include="Scripts\WebForms\TreeView.js" />
+    <Content Include="Scripts\WebForms\WebForms.js" />
+    <Content Include="Scripts\WebForms\WebParts.js" />
+    <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="SQL\Limpeza e massa.sql" />
+    <Content Include="SQL\ScriptDB.sql" />
     <Content Include="Views\Login\LoginMaster.Master" />
+    <Content Include="Views\SGA\Logout.aspx" />
     <Content Include="Views\SGA\SiteMaster.Master" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -109,29 +415,170 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="scripts\ai.0.15.0-build58334.js" />
-    <Content Include="scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Views\Login\Login.aspx" />
     <Content Include="Views\SGA\Inicio.aspx" />
-    <Content Include="Views\SGA\Usuario\Cadastro.aspx" />
+    <Content Include="Views\SGA\VAtendimento\IniciaAtendimento.aspx" />
+    <Content Include="Views\SGA\VChat\Chat.aspx" />
+    <Content Include="Views\SGA\VEmpresa\CadastroEmpresa.aspx" />
+    <Content Include="Views\SGA\VEmpresa\ConsultaEmpresas.aspx" />
+    <Content Include="Views\SGA\VEmpresa\InativarEmpresa.aspx" />
+    <Content Include="Views\SGA\VEmpresa\ModificarEmpresa.aspx" />
+    <Content Include="Views\SGA\VNotificacao\Notificacoes.aspx" />
+    <Content Include="Views\SGA\VRegiaoAtendimento\CadastroRegiaoAtendimento.aspx" />
+    <Content Include="Views\SGA\VRegiaoAtendimento\ConsultaRegiaoAtendimentos.aspx" />
+    <Content Include="Views\SGA\VRegiaoAtendimento\InativarRegiaoAtendimento.aspx" />
+    <Content Include="Views\SGA\VRegiaoAtendimento\ModificarRegiaoAtendimento.aspx" />
+    <Content Include="Views\SGA\VChamado\AbrirChamado.aspx" />
+    <Content Include="Views\SGA\VChamado\ConsultaChamado.aspx" />
+    <Content Include="Views\SGA\VChamado\ListaChamados.aspx" />
+    <Content Include="Views\SGA\VEspecialidade\CadastroEspecialidade.aspx" />
+    <Content Include="Views\SGA\VEspecialidade\ConsultaEspecialidades.aspx" />
+    <Content Include="Views\SGA\VEspecialidade\InativarEspecialidade.aspx" />
+    <Content Include="Views\SGA\VEspecialidade\ModificarEspecialidade.aspx" />
+    <Content Include="Views\SGA\VEspecialidade\RelacionaEspecServ.aspx" />
+    <Content Include="Views\SGA\VServico\CadastroServico.aspx" />
+    <Content Include="Views\SGA\VServico\ConsultaServicos.aspx" />
+    <Content Include="Views\SGA\VServico\InativarServico.aspx" />
+    <Content Include="Views\SGA\VServico\ModificarServico.aspx" />
+    <Content Include="Views\SGA\VUsuario\CadastroUsuario.aspx" />
+    <Content Include="Views\SGA\VUsuario\ConsultaUsuarios.aspx" />
+    <Content Include="Views\SGA\VUsuario\InativarUsuario.aspx" />
+    <Content Include="Views\SGA\VUsuario\ModificarUsuario.aspx" />
+    <Content Include="Views\SGA\VUsuario\RelacionamentoUsrRegiao.aspx" />
+    <Content Include="Views\SGA\VUsuario\RelacionamentoUsrEspec.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Models\Chamados\PrioridadeChamados\FactoryPrioridadeChm.cs" />
+    <Compile Include="Models\Chamados\PrioridadeChamados\PrioridadeChamado.cs" />
+    <Compile Include="Models\Chats\Chat.cs" />
+    <Compile Include="Models\Chats\ChatHub.cs" />
+    <Compile Include="Models\Chats\FactoryChat.cs" />
+    <Compile Include="Models\Chats\StartupChat.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterChatDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterEmpresaDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterNotificacaoDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterPrioridadeChamadoDAO.cs" />
+    <Compile Include="Models\Empresas\Empresa.cs" />
+    <Compile Include="Models\Empresas\FactoryEmpresa.cs" />
+    <Compile Include="Models\InfoGlobal.cs" />
+    <Compile Include="Models\Manter\ManterChat.cs" />
+    <Compile Include="Models\Manter\ManterEmpresa.cs" />
+    <Compile Include="Models\Manter\ManterNotificacao.cs" />
+    <Compile Include="Models\Manter\ManterPrioridadeChamado.cs" />
+    <Compile Include="Models\Notificacoes\FactoryNotificacao.cs" />
+    <Compile Include="Models\Notificacoes\Notificacao.cs" />
+    <Compile Include="Views\SGA\VAtendimento\IniciaAtendimento.aspx.cs">
+      <DependentUpon>IniciaAtendimento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VAtendimento\IniciaAtendimento.aspx.designer.cs">
+      <DependentUpon>IniciaAtendimento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VChat\Chat.aspx.cs">
+      <DependentUpon>Chat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VChat\Chat.aspx.designer.cs">
+      <DependentUpon>Chat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEmpresa\CadastroEmpresa.aspx.cs">
+      <DependentUpon>CadastroEmpresa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEmpresa\CadastroEmpresa.aspx.designer.cs">
+      <DependentUpon>CadastroEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEmpresa\ConsultaEmpresas.aspx.cs">
+      <DependentUpon>ConsultaEmpresas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEmpresa\ConsultaEmpresas.aspx.designer.cs">
+      <DependentUpon>ConsultaEmpresas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEmpresa\InativarEmpresa.aspx.cs">
+      <DependentUpon>InativarEmpresa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEmpresa\InativarEmpresa.aspx.designer.cs">
+      <DependentUpon>InativarEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEmpresa\ModificarEmpresa.aspx.cs">
+      <DependentUpon>ModificarEmpresa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEmpresa\ModificarEmpresa.aspx.designer.cs">
+      <DependentUpon>ModificarEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\RelacionaEspecServ.aspx.cs">
+      <DependentUpon>RelacionaEspecServ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\RelacionaEspecServ.aspx.designer.cs">
+      <DependentUpon>RelacionaEspecServ.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VNotificacao\Notificacoes.aspx.cs">
+      <DependentUpon>Notificacoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VNotificacao\Notificacoes.aspx.designer.cs">
+      <DependentUpon>Notificacoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\RelacionamentoUsrRegiao.aspx.cs">
+      <DependentUpon>RelacionamentoUsrRegiao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\RelacionamentoUsrRegiao.aspx.designer.cs">
+      <DependentUpon>RelacionamentoUsrRegiao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\RelacionamentoUsrEspec.aspx.cs">
+      <DependentUpon>RelacionamentoUsrEspec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\RelacionamentoUsrEspec.aspx.designer.cs">
+      <DependentUpon>RelacionamentoUsrEspec.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Content\Site.css" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Cadastro\CadastroUsuario.cs" />
+    <Compile Include="Models\RegiaoAtendimentos\RegiaoAtendimento.cs" />
+    <Compile Include="Models\RegiaoAtendimentos\FactoryRegiao.cs" />
+    <Compile Include="Models\Atendimentos\Atendimento.cs" />
+    <Compile Include="Models\Atendimentos\FactoryAtendimento.cs" />
+    <Compile Include="Models\Chamados\Chamado.cs" />
+    <Compile Include="Models\Chamados\FactoryChamado.cs" />
+    <Compile Include="Models\DAO\Log\LogException.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterAtendimentoDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterChamadoDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterServicoDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterStatusChamadoDAO.cs" />
+    <Compile Include="Models\Especialidades\Especialidade.cs" />
+    <Compile Include="Models\Especialidades\FactoryEspecialidade.cs" />
+    <Compile Include="Models\Manter\ManterAtendimento.cs" />
+    <Compile Include="Models\Manter\ManterChamado.cs" />
+    <Compile Include="Models\Manter\ManterServico.cs" />
+    <Compile Include="Models\Manter\ManterEspecialidade.cs" />
+    <Compile Include="Models\Manter\ManterRegiaoAtendimento.cs" />
+    <Compile Include="Models\Manter\ManterStatusChamado.cs" />
+    <Compile Include="Models\Manter\ManterUsuario.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterRegiaoAtendimentoDAO.cs" />
     <Compile Include="Models\DAO\Conexao.cs" />
-    <Compile Include="Models\DAO\Usuario\CadastroDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterEspecialidadeDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterUsuariosDAO.cs" />
     <Compile Include="Models\Login\Login.cs" />
-    <Compile Include="Models\Usuario\UsuarioTecnico.cs" />
-    <Compile Include="Models\Usuario\UsuarioGestor.cs" />
-    <Compile Include="Models\Usuario\UsuarioClienteJuridico.cs" />
-    <Compile Include="Models\Usuario\UsuarioClienteFisico.cs" />
-    <Compile Include="Models\Usuario\UsuarioAdministrador.cs" />
-    <Compile Include="Models\Usuario\TipoUsuario.cs" />
-    <Compile Include="Models\Usuario\IUsuario.cs" />
-    <Compile Include="Models\Usuario\FactoryUsuario.cs" />
+    <Compile Include="Models\Servicos\FactoryServico.cs" />
+    <Compile Include="Models\Servicos\Servico.cs" />
+    <Compile Include="Models\Servicos\TipoServico.cs" />
+    <Compile Include="Models\Chamados\StatusChamados\FactoryStatusChamado.cs" />
+    <Compile Include="Models\Chamados\StatusChamados\StatusChamado.cs" />
+    <Compile Include="Models\Usuarios\TipoUsuario.cs" />
+    <Compile Include="Models\Usuarios\Usuario.cs" />
+    <Compile Include="Models\Usuarios\FactoryUsuario.cs" />
+    <Compile Include="Models\Usuarios\UsuarioClienteFisico.cs" />
+    <Compile Include="Models\Usuarios\UsuarioClienteJuridico.cs" />
+    <Compile Include="Models\Usuarios\UsuarioFuncionario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Login\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -154,6 +601,13 @@
     <Compile Include="Views\SGA\Inicio.aspx.designer.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\SGA\Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\SGA\SiteMaster.Master.cs">
       <DependentUpon>SiteMaster.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -161,16 +615,146 @@
     <Compile Include="Views\SGA\SiteMaster.Master.designer.cs">
       <DependentUpon>SiteMaster.Master</DependentUpon>
     </Compile>
-    <Compile Include="Views\SGA\Usuario\Cadastro.aspx.cs">
-      <DependentUpon>Cadastro.aspx</DependentUpon>
+    <Compile Include="Views\SGA\VRegiaoAtendimento\CadastroRegiaoAtendimento.aspx.cs">
+      <DependentUpon>CadastroRegiaoAtendimento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\SGA\Usuario\Cadastro.aspx.designer.cs">
-      <DependentUpon>Cadastro.aspx</DependentUpon>
+    <Compile Include="Views\SGA\VRegiaoAtendimento\CadastroRegiaoAtendimento.aspx.designer.cs">
+      <DependentUpon>CadastroRegiaoAtendimento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VRegiaoAtendimento\ConsultaRegiaoAtendimentos.aspx.cs">
+      <DependentUpon>ConsultaRegiaoAtendimentos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VRegiaoAtendimento\ConsultaRegiaoAtendimentos.aspx.designer.cs">
+      <DependentUpon>ConsultaRegiaoAtendimentos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VRegiaoAtendimento\InativarRegiaoAtendimento.aspx.cs">
+      <DependentUpon>InativarRegiaoAtendimento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VRegiaoAtendimento\InativarRegiaoAtendimento.aspx.designer.cs">
+      <DependentUpon>InativarRegiaoAtendimento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VRegiaoAtendimento\ModificarRegiaoAtendimento.aspx.cs">
+      <DependentUpon>ModificarRegiaoAtendimento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VRegiaoAtendimento\ModificarRegiaoAtendimento.aspx.designer.cs">
+      <DependentUpon>ModificarRegiaoAtendimento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VChamado\AbrirChamado.aspx.cs">
+      <DependentUpon>AbrirChamado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VChamado\AbrirChamado.aspx.designer.cs">
+      <DependentUpon>AbrirChamado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VChamado\ConsultaChamado.aspx.cs">
+      <DependentUpon>ConsultaChamado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VChamado\ConsultaChamado.aspx.designer.cs">
+      <DependentUpon>ConsultaChamado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VChamado\ListaChamados.aspx.cs">
+      <DependentUpon>ListaChamados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VChamado\ListaChamados.aspx.designer.cs">
+      <DependentUpon>ListaChamados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\CadastroEspecialidade.aspx.cs">
+      <DependentUpon>CadastroEspecialidade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\CadastroEspecialidade.aspx.designer.cs">
+      <DependentUpon>CadastroEspecialidade.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\ConsultaEspecialidades.aspx.cs">
+      <DependentUpon>ConsultaEspecialidades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\ConsultaEspecialidades.aspx.designer.cs">
+      <DependentUpon>ConsultaEspecialidades.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\InativarEspecialidade.aspx.cs">
+      <DependentUpon>InativarEspecialidade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\InativarEspecialidade.aspx.designer.cs">
+      <DependentUpon>InativarEspecialidade.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\ModificarEspecialidade.aspx.cs">
+      <DependentUpon>ModificarEspecialidade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\ModificarEspecialidade.aspx.designer.cs">
+      <DependentUpon>ModificarEspecialidade.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VServico\CadastroServico.aspx.cs">
+      <DependentUpon>CadastroServico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VServico\CadastroServico.aspx.designer.cs">
+      <DependentUpon>CadastroServico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VServico\ConsultaServicos.aspx.cs">
+      <DependentUpon>ConsultaServicos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VServico\ConsultaServicos.aspx.designer.cs">
+      <DependentUpon>ConsultaServicos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VServico\InativarServico.aspx.cs">
+      <DependentUpon>InativarServico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VServico\InativarServico.aspx.designer.cs">
+      <DependentUpon>InativarServico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VServico\ModificarServico.aspx.cs">
+      <DependentUpon>ModificarServico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VServico\ModificarServico.aspx.designer.cs">
+      <DependentUpon>ModificarServico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\CadastroUsuario.aspx.cs">
+      <DependentUpon>CadastroUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\CadastroUsuario.aspx.designer.cs">
+      <DependentUpon>CadastroUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\ConsultaUsuarios.aspx.cs">
+      <DependentUpon>ConsultaUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\ConsultaUsuarios.aspx.designer.cs">
+      <DependentUpon>ConsultaUsuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\InativarUsuario.aspx.cs">
+      <DependentUpon>InativarUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\InativarUsuario.aspx.designer.cs">
+      <DependentUpon>InativarUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\ModificarUsuario.aspx.cs">
+      <DependentUpon>ModificarUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\ModificarUsuario.aspx.designer.cs">
+      <DependentUpon>ModificarUsuario.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Apps\" />
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -187,7 +771,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>13453</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:13453/</IISUrl>
+          <IISUrl>http://localhost:8081/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,5 +1,7 @@
 ﻿using SGA.Models;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
+using SGA.Models.Notificacoes;
 using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,8 @@ namespace SGA.Views.SGA
     {
         public string NomeUsuario;
         public Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+        public Notificacao ObjNotificacao = FactoryNotificacao.GetNew();
+        public List<Notificacao> ListaNotificacao = new List<Notificacao>();
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -22,26 +26,43 @@ namespace SGA.Views.SGA
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null)
+            try
             {
-                Response.Redirect("\\Views\\Login\\Login.aspx");
+                ListaNotificacao.Clear();
+
+                if (Session["usuario"] == null)
+                {
+                    Response.Redirect("\\Views\\Login\\Login.aspx");
+                }
+                else
+                {
+                    ObjUsuario.Login = Membership.GetUser().ToString();
+                    ObjUsuario = new ManterUsuario(ObjUsuario).GetUsuarioEmpresa();
+
+                    Session["id"] = ObjUsuario.Id;
+                    Session["usuario"] = ObjUsuario.Login;
+                    Session["nome"] = ObjUsuario.Nome;
+                    Session["empresa"] = ObjUsuario.NomeEmpresa;
+                    Session["idEmpresa"] = ObjUsuario.IdEmpresa;
+                    Session["perfil"] = Roles.GetRolesForUser(ObjUsuario.Login)[0];
+
+                    InfoGlobal.GlobalIdEmpresa = ObjUsuario.IdEmpresa;
+
+                    Page.Header.DataBind();
+                    NomeUsuario = (string)(Session["nome"]);
+
+
+                    ObjNotificacao.IdDest = ObjUsuario.Id;
+
+                    foreach (var Notifica in new ManterNotificacao(ObjNotificacao).InformaNotificacao())
+                    {
+                        ListaNotificacao.Add(Notifica);
+                    }
+                }
             }
-            else
+            catch (Exception Ex)
             {
-                ObjUsuario.Login = Membership.GetUser().ToString();
-                ObjUsuario = new ManterUsuario(ObjUsuario).GetUsuarioEmpresa();
-
-                Session["id"] = ObjUsuario.Id;
-                Session["usuario"] = ObjUsuario.Login;
-                Session["nome"] = ObjUsuario.Nome;
-                Session["empresa"] = ObjUsuario.NomeEmpresa;
-                Session["idEmpresa"] = ObjUsuario.IdEmpresa;
-                Session["perfil"] = Roles.GetRolesForUser(ObjUsuario.Login)[0];
-
-                InfoGlobal.GlobalIdEmpresa = ObjUsuario.IdEmpresa;
-
-                Page.Header.DataBind();
-                NomeUsuario = (string)(Session["nome"]);
+                new LogException(Ex).InsereLogBd();
             }
         }
 
