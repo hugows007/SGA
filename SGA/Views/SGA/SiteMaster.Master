@@ -14,6 +14,7 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
+    <!-- BootStrap e alertas -->
 
     <link href="<%= ResolveClientUrl("~/Image/Logo.jpeg") %>" rel="icon" />
     <link href="<%= ResolveClientUrl("~/Content/bootstrap.css") %>" rel="stylesheet" />
@@ -88,14 +89,26 @@
                             <i class="fa fa-comment fa-fw fa-fw"></i><i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-messages nav nav-second-level">
-                            <li>
-                                <%if (!ListaNotificacao.Count().Equals(0))
-                                        foreach (var Lista in ListaNotificacao)
+                            <%if (!ListaNotificacao.Count().Equals(0))
+                                    foreach (var Lista in ListaNotificacao)
+                                    {
+                                        if (Lista.Mensagem.Equals("Requisição de chat"))
                                         {
-                                            if (Lista.Mensagem.Equals("Requisição de chat"))
-                                            {
-                                %>
+                            %>
+                            <li>
                                 <a href="/Views/SGA/VNotificacao/Notificacoes.aspx?Alerta=Chat&Id=<%=Lista.Id%>">
+                                    <i class="fa fa-comment fa-fw"></i><%=Lista.Mensagem%>
+                                    <span class="pull-right text-muted small"><%=Lista.Data%></span>
+                                </a>
+                                <div class="divider"></div>
+                            </li>
+                            <%}
+
+                                if (Lista.Mensagem.Equals("Requisição de chat privado"))
+                                {
+                            %>
+                            <li>
+                                <a href="/Views/SGA/VNotificacao/Notificacoes.aspx?Alerta=ChatPrivado&Id=<%=Lista.Id%>">
                                     <i class="fa fa-comment fa-fw"></i><%=Lista.Mensagem%>
                                     <span class="pull-right text-muted small"><%=Lista.Data%></span>
                                 </a>
@@ -116,6 +129,19 @@
                                     <strong>Chat </strong>
                                     <i class="fa fa-angle-right"></i>
                                 </a>
+                            </li>
+                            <li>
+                                <a class="text-center" href="/Views/SGA/VChat/ChatPrivado.aspx">
+                                    <strong>Conversas </strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a class="text-center" href="/Views/SGA/VNotificacao/Notificacoes.aspx?Alerta=LimparChat&Id=<%=Session["id"]%>">
+                                    <strong>Limpar Notificações </strong>
+                                </a>
+                                <div class="divider"></div>
                             </li>
                         </ul>
                         <!-- /.dropdown-messages -->
@@ -166,6 +192,7 @@
                                             //
                                             if (Lista.Mensagem.Equals("chat"))
                                             {
+                                                ContaListaNotificacao += 1;
                                 %>
                                 <a href="/Views/SGA/VChat/Chat.aspx?Alerta=Chat&Id=<%=Lista.Id%>">
                                     <i class="fa fa-comment fa-fw"></i><%=Lista.Mensagem%>
@@ -176,12 +203,21 @@
                             <%}
                                     }
                                 else {%>
-                            <li class="divider"></li>
                             <li>
                                 <a class="text-center">
                                     <strong>Nenhuma nova notificação</strong>
                                 </a>
                             </li>
+                            <li class="divider"></li>
+                            <%}
+                                if (ContaListaNotificacao.Equals(0) && !ListaNotificacao.Count().Equals(0))
+                                {%>
+                            <li>
+                                <a class="text-center">
+                                    <strong>Nenhuma nova notificação</strong>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
                             <%}%>
                         </ul>
                         <!-- /.dropdown-alerts -->

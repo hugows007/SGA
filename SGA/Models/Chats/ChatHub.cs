@@ -14,7 +14,7 @@ namespace SGA.Models.Chats
     [HubName("ChatOnlineHub")]
     public class ChatHub : Hub
     {
-        Chat ObjChat = FactoryChat.GetNew();
+        Chat ObjChat = FactoryChat.GetNew(TipoChat.Privado);
         ManterChat ObjManterChat = new ManterChat();
         public void send(string nome, string mensagem)
         {
@@ -42,6 +42,22 @@ namespace SGA.Models.Chats
                     ObjChat.Mensagem = mensagem;
                     ObjManterChat.GravaChat(ObjChat);
                 }
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+            }
+        }
+        public void sendPrivado(string nome, string mensagem, string idPrivado)
+        {
+            try
+            {
+                Clients.All.broadcastMessage(nome, mensagem);
+
+                ObjChat.Usuario = nome;
+                ObjChat.Mensagem = mensagem;
+                ObjChat.ObjChatPrivado.IdPrivado = Convert.ToInt32(idPrivado);
+                ObjManterChat.GravaChatPrivado(ObjChat);
             }
             catch (Exception Ex)
             {

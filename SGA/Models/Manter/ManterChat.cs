@@ -27,6 +27,19 @@ namespace SGA.Models.Manter
             this.ObjChat = ObjChat;
             this.ObjUsuario = ObjUsuario;
         }
+        public bool CriaSalaPrivada(Chat ObjChat)
+        {
+            try
+            {
+                this.ObjChat = ObjChat;
+                return new ManterChatDAO(ObjChat).CriaSalaPrivadaDAO();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
         public bool GravaChat(Chat ObjChat)
         {
             try
@@ -40,11 +53,60 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+        public bool GravaChatPrivado(Chat ObjChat)
+        {
+            try
+            {
+                this.ObjChat = ObjChat;
+                return new ManterChatDAO(ObjChat).GravaChatPrivadoDAO();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public bool ValidaChatCriado()
+        {
+            try
+            {
+                return new ManterChatDAO(ObjChat).ValidaChatCriadoDAO();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public List<Chat> RetornaSalas()
+        {
+            try
+            {
+                return new ManterChatDAO(ObjChat).RetornaSalasDAO();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
         public List<Chat> RetornaChat()
         {
             try
             {
                 return new ManterChatDAO(ObjChat).RetornaChatDAO();
+            }
+            catch (Exception Ex)
+            {
+                new LogException(Ex).InsereLogBd();
+                throw;
+            }
+        }
+        public List<Chat> RetornaChatPrivado()
+        {
+            try
+            {
+                return new ManterChatDAO(ObjChat).RetornaChatPrivadoDAO();
             }
             catch (Exception Ex)
             {

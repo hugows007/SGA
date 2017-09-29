@@ -6,6 +6,8 @@ using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -19,25 +21,14 @@ namespace SGA.Views.SGA.VChat
         public bool NotificaTecnicos;
         public bool ChatPrivado;
         Notificacao ObjNotificacao;
-        Models.Chats.Chat ObjChat = FactoryChat.GetNew();
+        Models.Chats.Chat ObjChat = FactoryChat.GetNew(TipoChat.Publico);
         public List<Models.Chats.Chat> ListaMensagens = new List<Models.Chats.Chat>();
         List<string> Perfil = new List<string>();
         public List<Usuario> ListaUsuario = new List<Usuario>();
-        string HashSalaPrivada;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                if (!Request.QueryString.Count.Equals(0))
-                {
-                    if (!Request.QueryString["Tecnico"].Equals(""))
-                    {
-                        HashSalaPrivada = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(1, 15);
-                        ChatPrivado = true;
-                        Response.Redirect("\\Views\\SGA\\VChat\\Chat.aspx?Sala="+ HashSalaPrivada, false);
-                    }
-                }
-
                 foreach (var ObjChat in new ManterChat(ObjChat).RetornaChat())
                 {
                     ListaMensagens.Add(ObjChat);
@@ -59,16 +50,22 @@ namespace SGA.Views.SGA.VChat
             EntrarChat = false;
 
             Perfil.Add("Técnico");
+            Perfil.Add("Gestor");
+            Perfil.Add("Atendente");
 
             foreach (var ObjTecnico in new ManterUsuario().ConsultaUsuariosByPerfil(Perfil))
             {
                 Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
 
-                ObjUsuario.Id = ObjTecnico.Id;
-                ObjUsuario.Login = ObjTecnico.Login;
-                ObjUsuario.Nome = ObjTecnico.Nome;
+                if (!ObjTecnico.IdMS.Equals(Session["idms"]))
+                {
+                    ObjUsuario.Id = ObjTecnico.Id;
+                    ObjUsuario.Login = ObjTecnico.Login;
+                    ObjUsuario.Nome = ObjTecnico.Nome;
+                    ObjUsuario.IdMS = ObjTecnico.IdMS;
 
-                ListaUsuario.Add(ObjUsuario);
+                    ListaUsuario.Add(ObjUsuario);
+                }
             }
             
         }

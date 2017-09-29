@@ -362,6 +362,7 @@ namespace SGA.Models.DAO.ManterDAO
                             Usr.Cep = Dr.GetString(4);
                             Usr.Telefone = Dr.GetString(5);
                             Usr.Regra = GetRegraUserDAO(Usr.Id);
+                            Usr.IdMS = Dr.GetGuid(15).ToString();
                             Usr.Login = Dr.GetString(16);
 
                             UsrList.Add(Usr);
@@ -425,6 +426,41 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.ObjEspec.Id = Dr.GetInt32(8);
 
                         ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
+                    }
+
+                    return ObjUsuario;
+                }
+                catch (SqlException Ex)
+                {
+                    new LogException(Ex).InsereLogBd();
+
+                    throw;
+                }
+            }
+        }
+        public Usuario ConsultaIdUsuarioByIdMBDAO()
+        {
+            SqlCommand Cmd = null;
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                        SELECT [idUsuario]
+                              ,[IdUsrMemberShip]
+                          FROM [dbo].[UsuarioXMemberShipUser] WHERE 
+                          IdUsrMemberShip = @Id;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Id", ObjUsuario.IdMS);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjUsuario.Id = Dr.GetInt32(0);
+                        ObjUsuario.IdMS = Dr.GetGuid(1).ToString();
                     }
 
                     return ObjUsuario;
@@ -742,7 +778,8 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"select Usr.idUsuario
                                                     ,Usr.nome
                                                     ,Emp.nome
-													,Emp.idEmpresa from Usuario Usr inner join 
+                                                    ,Emp.idEmpresa 
+                                                    ,UsrM.IdUsrMemberShip from Usuario Usr inner join
                                                     Empresa Emp on (Usr.idEmpresa = Emp.idEmpresa) inner join
                                                     UsuarioXMemberShipUser UsrM on (Usr.idUsuario = UsrM.idUsuario) inner join
                                                     aspnet_Users AspUsr on (AspUsr.UserId = UsrM.IdUsrMemberShip)
@@ -758,6 +795,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.Nome = Dr.GetString(1);
                         ObjUsuario.NomeEmpresa = Dr.GetString(2);
                         ObjUsuario.IdEmpresa = Dr.GetInt32(3);
+                        ObjUsuario.IdMS = Dr.GetGuid(4).ToString();
                     }
 
                     return ObjUsuario;

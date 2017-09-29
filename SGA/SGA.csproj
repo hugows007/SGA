@@ -187,10 +187,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chat\styleP.css" />
     <Content Include="Content\chat\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Image\Chat.png" />
     <Content Include="Image\Logo.jpeg" />
+    <Content Include="Image\User.png" />
     <Content Include="packages.config" />
     <Content Include="Scripts\chat\index.js" />
     <None Include="Scripts\chat\jquery-1.6.4-vsdoc.js" />
@@ -419,6 +421,7 @@
     <Content Include="Views\SGA\Inicio.aspx" />
     <Content Include="Views\SGA\VAtendimento\IniciaAtendimento.aspx" />
     <Content Include="Views\SGA\VChat\Chat.aspx" />
+    <Content Include="Views\SGA\VChat\ChatPrivado.aspx" />
     <Content Include="Views\SGA\VEmpresa\CadastroEmpresa.aspx" />
     <Content Include="Views\SGA\VEmpresa\ConsultaEmpresas.aspx" />
     <Content Include="Views\SGA\VEmpresa\InativarEmpresa.aspx" />
@@ -454,8 +457,10 @@
     <Compile Include="Models\Chamados\PrioridadeChamados\PrioridadeChamado.cs" />
     <Compile Include="Models\Chats\Chat.cs" />
     <Compile Include="Models\Chats\ChatHub.cs" />
+    <Compile Include="Models\Chats\ChatPrivado.cs" />
     <Compile Include="Models\Chats\FactoryChat.cs" />
     <Compile Include="Models\Chats\StartupChat.cs" />
+    <Compile Include="Models\Chats\TipoChat.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterChatDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterEmpresaDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterNotificacaoDAO.cs" />
@@ -482,6 +487,13 @@
     </Compile>
     <Compile Include="Views\SGA\VChat\Chat.aspx.designer.cs">
       <DependentUpon>Chat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VChat\ChatPrivado.aspx.cs">
+      <DependentUpon>ChatPrivado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VChat\ChatPrivado.aspx.designer.cs">
+      <DependentUpon>ChatPrivado.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\SGA\VEmpresa\CadastroEmpresa.aspx.cs">
       <DependentUpon>CadastroEmpresa.aspx</DependentUpon>

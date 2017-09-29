@@ -1,6 +1,7 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
 using SGA.Models.Notificacoes;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,6 +14,7 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterNotificacaoDAO
     {
         public Notificacao ObjNotificacao;
+        Usuario ObjUsuario;
         public ManterNotificacaoDAO()
         {
 
@@ -20,6 +22,11 @@ namespace SGA.Models.DAO.ManterDAO
         public ManterNotificacaoDAO(Notificacao ObjNotificacao)
         {
             this.ObjNotificacao = ObjNotificacao;
+        }
+        public ManterNotificacaoDAO(Notificacao ObjNotificacao, Usuario ObjUsuario)
+        {
+            this.ObjNotificacao = ObjNotificacao;
+            this.ObjUsuario = ObjUsuario;
         }
         public bool NotificaUsuariosDAO()
         {
@@ -51,8 +58,10 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Dr.Close();
 
-                    foreach(var ListObj in ListaNot)
+                    if(ObjUsuario == null)
                     {
+                        foreach (var ListObj in ListaNot)
+                        {
                             SqlCommand Cmd = new SqlCommand(@"
                                 INSERT INTO [dbo].[notificacao]
                                       ([idUsuarioOrigem]
@@ -67,15 +76,42 @@ namespace SGA.Models.DAO.ManterDAO
                                      ,0
                                      ,@Data);", Con);
 
+                            Cmd.Parameters.AddWithValue("@IdOrigem", ObjNotificacao.IdOrigem);
+                            Cmd.Parameters.AddWithValue("@IdDest", ListObj.IdDest);
+                            Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
+                            Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+
+                            Cmd.ExecuteNonQuery();
+                        }
+                    }
+                    else
+                    {
+                        ObjNotificacao.IdDest = new ManterUsuarioDAO(ObjUsuario).ConsultaIdUsuarioByIdMBDAO().Id;
+
+                        SqlCommand Cmd = new SqlCommand(@"
+                                INSERT INTO [dbo].[notificacao]
+                                      ([idUsuarioOrigem]
+                                       ,[idUsuarioDestino]
+                                       ,[mensagem]
+                                       ,[vista]
+                                       ,[dataRegistro])
+                                VALUES
+                                    (@IdOrigem
+                                     ,@IdDest
+                                     ,@Msg
+                                     ,0
+                                     ,@Data);", Con);
+
                         Cmd.Parameters.AddWithValue("@IdOrigem", ObjNotificacao.IdOrigem);
-                        Cmd.Parameters.AddWithValue("@IdDest", ListObj.IdDest);
+                        Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
                         Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
                         Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
 
                         Cmd.ExecuteNonQuery();
                     }
-                    
+
                     return true;
+
                 }
                 catch (SqlException Ex)
                 {
@@ -86,19 +122,36 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public bool AtualizaNotificacaoDAO()
         {
+            SqlCommand Cmd;
+
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
-                    SqlCommand Cmd = new SqlCommand(@"
+                    if(ObjNotificacao.Mensagem == null)
+                    {
+                        Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Notificacao] SET 
 	                    vista = 1
                         WHERE idNotificacao = @Id;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Id", ObjNotificacao.Id);
+                        Cmd.Parameters.AddWithValue("@Id", ObjNotificacao.Id);
 
-                    Cmd.ExecuteNonQuery();
+                        Cmd.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Notificacao] SET 
+	                    vista = 1
+                        WHERE idUsuarioDestino = @Id and mensagem in ('Requisição de chat','Requisição de chat privado');", Con);
+
+                        Cmd.Parameters.AddWithValue("@Id", ObjNotificacao.IdOrigem);
+
+                        Cmd.ExecuteNonQuery();
+                    }                    
 
                     return true;
                 }

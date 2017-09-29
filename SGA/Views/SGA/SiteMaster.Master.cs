@@ -16,6 +16,7 @@ namespace SGA.Views.SGA
     public partial class SiteMaster : System.Web.UI.MasterPage
     {
         public string NomeUsuario;
+        public int ContaListaNotificacao;
         public Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         public Notificacao ObjNotificacao = FactoryNotificacao.GetNew();
         public List<Notificacao> ListaNotificacao = new List<Notificacao>();
@@ -40,6 +41,7 @@ namespace SGA.Views.SGA
                     ObjUsuario = new ManterUsuario(ObjUsuario).GetUsuarioEmpresa();
 
                     Session["id"] = ObjUsuario.Id;
+                    Session["idms"] = ObjUsuario.IdMS;
                     Session["usuario"] = ObjUsuario.Login;
                     Session["nome"] = ObjUsuario.Nome;
                     Session["empresa"] = ObjUsuario.NomeEmpresa;

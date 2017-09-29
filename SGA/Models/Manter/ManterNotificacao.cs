@@ -1,5 +1,6 @@
 ﻿using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Notificacoes;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace SGA.Models.Manter
     public class ManterNotificacao
     {
         public Notificacao ObjNotificacao;
+        public Usuario ObjUsuario;
         public ManterNotificacao()
         {
 
@@ -19,9 +21,15 @@ namespace SGA.Models.Manter
             this.ObjNotificacao = ObjNotificacao;
         }
 
+        public ManterNotificacao(Notificacao ObjNotificacao, Usuario ObjUsuario)
+        {
+            this.ObjNotificacao = ObjNotificacao;
+            this.ObjUsuario = ObjUsuario;
+        }
+
         public bool NotificaUsuarios()
         {
-            return new ManterNotificacaoDAO(ObjNotificacao).NotificaUsuariosDAO();
+            return new ManterNotificacaoDAO(ObjNotificacao, ObjUsuario).NotificaUsuariosDAO();
         }
 
         public bool AtualizaNotificacao()
