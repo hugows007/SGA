@@ -28,7 +28,7 @@ namespace SGA.Views.SGA.VEmpresa
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
         }
     }

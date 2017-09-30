@@ -28,7 +28,7 @@ namespace SGA.Views.SGA.VServico
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
         }
     }

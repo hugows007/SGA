@@ -9,22 +9,10 @@ using System.Web.Security;
 
 namespace SGA.Models.DAO.Log
 {
-    public class LogException
+    public abstract class LogException
     {
-        public string Mensagem { get; set; }
-        public string Source { get; set; }
-        public string StackTrace { get; set; }
-        public string TargetSite { get; set; }
-        public LogException(Exception Ex)
+        public static void InsereLogBd(Exception Ex)
         {
-            this.Mensagem = Ex.Message;
-            this.Source = Ex.Source;
-            this.StackTrace = Ex.StackTrace;
-            this.TargetSite = Ex.TargetSite.ToString();
-        }
-        public void InsereLogBd()
-        {
-
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
 
@@ -47,10 +35,10 @@ namespace SGA.Models.DAO.Log
                 ,@exDate
                 ,@exUser);", Con);
 
-                    Cmd.Parameters.AddWithValue("@exMensagem", Mensagem);
-                    Cmd.Parameters.AddWithValue("@exSource", Source);
-                    Cmd.Parameters.AddWithValue("@exStackTrace", StackTrace);
-                    Cmd.Parameters.AddWithValue("@exTargetSite", TargetSite);
+                    Cmd.Parameters.AddWithValue("@exMensagem", Ex.Message);
+                    Cmd.Parameters.AddWithValue("@exSource", Ex.Source);
+                    Cmd.Parameters.AddWithValue("@exStackTrace", Ex.StackTrace);
+                    Cmd.Parameters.AddWithValue("@exTargetSite", Ex.TargetSite.ToString());
                     Cmd.Parameters.AddWithValue("@exDate", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@exUser", new ManterUsuario().GetUsuarioLogado());
 

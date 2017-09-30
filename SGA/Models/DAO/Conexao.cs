@@ -22,9 +22,9 @@ namespace SGA.DAO
 
                 return Cn;
             }
-            catch (SqlException Ex)
+            catch (Exception Ex)
             {
-                new LogException(Ex);
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }

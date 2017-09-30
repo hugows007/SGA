@@ -43,7 +43,7 @@ namespace SGA.Views.SGA.VNotificacao
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
 
         }

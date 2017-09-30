@@ -32,7 +32,7 @@ namespace SGA
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
         }
 
@@ -57,7 +57,7 @@ namespace SGA
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 MsgLabel.Text = "Erro interno.";
             }
         }

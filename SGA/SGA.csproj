@@ -16,7 +16,7 @@
     <RootNamespace>SGA</RootNamespace>
     <AssemblyName>SGA</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -121,8 +121,8 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -193,8 +193,11 @@
     <Content Include="Image\Chat.png" />
     <Content Include="Image\Logo.jpeg" />
     <Content Include="Image\User.png" />
+    <Content Include="WebServiceSGA.asmx" />
     <Content Include="packages.config" />
     <Content Include="Scripts\chat\index.js" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <None Include="Properties\PublishProfiles\LocalHost.pubxml" />
     <None Include="Scripts\chat\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\chat\jquery-1.6.4.js" />
     <Content Include="Scripts\chat\jquery-1.6.4.min.js" />
@@ -426,6 +429,7 @@
     <Content Include="Views\SGA\VEmpresa\ConsultaEmpresas.aspx" />
     <Content Include="Views\SGA\VEmpresa\InativarEmpresa.aspx" />
     <Content Include="Views\SGA\VEmpresa\ModificarEmpresa.aspx" />
+    <Content Include="Views\SGA\VErro\Erro.aspx" />
     <Content Include="Views\SGA\VNotificacao\Notificacoes.aspx" />
     <Content Include="Views\SGA\VRegiaoAtendimento\CadastroRegiaoAtendimento.aspx" />
     <Content Include="Views\SGA\VRegiaoAtendimento\ConsultaRegiaoAtendimentos.aspx" />
@@ -449,7 +453,9 @@
     <Content Include="Views\SGA\VUsuario\ModificarUsuario.aspx" />
     <Content Include="Views\SGA\VUsuario\RelacionamentoUsrRegiao.aspx" />
     <Content Include="Views\SGA\VUsuario\RelacionamentoUsrEspec.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -474,6 +480,10 @@
     <Compile Include="Models\Manter\ManterPrioridadeChamado.cs" />
     <Compile Include="Models\Notificacoes\FactoryNotificacao.cs" />
     <Compile Include="Models\Notificacoes\Notificacao.cs" />
+    <Compile Include="WebServiceSGA.asmx.cs">
+      <DependentUpon>WebServiceSGA.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\SGA\VAtendimento\IniciaAtendimento.aspx.cs">
       <DependentUpon>IniciaAtendimento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -522,6 +532,13 @@
     </Compile>
     <Compile Include="Views\SGA\VEmpresa\ModificarEmpresa.aspx.designer.cs">
       <DependentUpon>ModificarEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VErro\Erro.aspx.cs">
+      <DependentUpon>Erro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VErro\Erro.aspx.designer.cs">
+      <DependentUpon>Erro.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\SGA\VEspecialidade\RelacionaEspecServ.aspx.cs">
       <DependentUpon>RelacionaEspecServ.aspx</DependentUpon>
@@ -783,7 +800,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>13453</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8081/</IISUrl>
+          <IISUrl>http://192.168.0.12/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://192.168.0.12/SGA</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

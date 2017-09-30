@@ -28,7 +28,7 @@ namespace SGA.Views.SGA.VEspecialidade
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
         }
     }

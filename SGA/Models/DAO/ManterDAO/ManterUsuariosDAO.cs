@@ -171,7 +171,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -208,7 +208,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
                     throw;
                 }
             }
@@ -244,7 +244,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
                     throw;
                 }
             }
@@ -290,7 +290,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -375,7 +375,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -432,7 +432,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -467,7 +467,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -524,7 +524,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -564,7 +564,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -591,7 +591,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -623,7 +623,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -659,7 +659,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -678,7 +678,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -711,7 +711,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -760,7 +760,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }
@@ -802,7 +802,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
 
                     throw;
                 }

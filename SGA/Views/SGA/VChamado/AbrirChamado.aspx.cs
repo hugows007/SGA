@@ -48,7 +48,7 @@ namespace SGA.Views.SGA.VChamado
                 }
                 catch (Exception Ex)
                 {
-                    new LogException(Ex).InsereLogBd();
+                    LogException.InsereLogBd(Ex);
                     MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
                 }
             }
@@ -73,7 +73,7 @@ namespace SGA.Views.SGA.VChamado
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }
@@ -122,7 +122,7 @@ namespace SGA.Views.SGA.VChamado
             catch (Exception Ex)
             {
                 ObjChamado = null;
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
         }

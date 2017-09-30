@@ -45,7 +45,7 @@ namespace SGA.Models.Chats
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
         }
         public void sendPrivado(string nome, string mensagem, string idPrivado)
@@ -61,7 +61,7 @@ namespace SGA.Models.Chats
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
         }
     }

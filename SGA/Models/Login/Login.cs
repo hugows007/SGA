@@ -24,13 +24,13 @@ namespace SGA.Models.Login
             }
             catch (InvalidOperationException Ex)
             {
-                new LogException(Ex);
+                LogException.InsereLogBd(Ex);
 
                 throw;
             }
             catch (System.Data.SqlClient.SqlException Ex)
             {
-                new LogException(Ex);
+                LogException.InsereLogBd(Ex);
 
                 throw;
             }

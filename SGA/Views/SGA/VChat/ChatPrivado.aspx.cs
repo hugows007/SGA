@@ -97,7 +97,7 @@ namespace SGA.Views.SGA.VChat
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
 
         }

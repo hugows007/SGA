@@ -64,7 +64,7 @@ namespace SGA.Views.SGA
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
         }
 

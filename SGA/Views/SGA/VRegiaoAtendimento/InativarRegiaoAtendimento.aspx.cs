@@ -28,7 +28,7 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
         }
     }

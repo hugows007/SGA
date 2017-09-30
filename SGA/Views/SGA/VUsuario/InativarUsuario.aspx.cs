@@ -28,7 +28,7 @@ namespace SGA.Views.SGA.VUsuario
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
             }
         }
     }

@@ -128,7 +128,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }
@@ -147,7 +147,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }
@@ -159,7 +159,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }
@@ -178,7 +178,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }
@@ -197,7 +197,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }
@@ -245,7 +245,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
 
@@ -272,7 +272,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }
@@ -284,7 +284,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }
@@ -296,7 +296,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }
@@ -308,7 +308,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }
@@ -320,7 +320,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception Ex)
             {
-                new LogException(Ex).InsereLogBd();
+                LogException.InsereLogBd(Ex);
                 throw;
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGA.Models.DAO.Log;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,6 +16,25 @@ namespace SGA
         {
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             BundleTable.EnableOptimizations = true;
+        }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            Exception Ex = Server.GetLastError();
+
+            if (Ex is HttpUnhandledException)
+            {
+                if (Ex.InnerException != null)
+                {
+                    Ex = new Exception(Ex.InnerException.Message);
+                    LogException.InsereLogBd(Ex);
+                    Server.Transfer("/Views/SGA/VErro/Erro.aspx?handler=Application_Error%20-%20Global.asax",
+                        true);
+                }
+
+                LogException.InsereLogBd(Ex);
+                Server.Transfer("/Views/SGA/VErro/Erro.aspx?handler=Application_Error%20-%20Global.asax", true);
+            }
         }
 
     }
