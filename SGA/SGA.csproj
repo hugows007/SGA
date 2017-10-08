@@ -487,6 +487,8 @@
     <Compile Include="Models\DAO\ManterDAO\ManterPrioridadeChamadoDAO.cs" />
     <Compile Include="Models\Empresas\Empresa.cs" />
     <Compile Include="Models\Empresas\FactoryEmpresa.cs" />
+    <Compile Include="Models\Geo\FactoryGeo.cs" />
+    <Compile Include="Models\Geo\Geo.cs" />
     <Compile Include="Models\InfoGlobal.cs" />
     <Compile Include="Models\Login\Login.cs" />
     <Compile Include="Models\Manter\ManterChat.cs" />

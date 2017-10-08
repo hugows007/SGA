@@ -14,16 +14,6 @@ namespace SGARest.Controllers
 {
     public class LoginAutenticaController : ApiController
     {
-        //private readonly Login[] Clientes = new Login[]
-        //        {
-        //            new Login { uLogin = "1", uSenha = "Hugo"},
-        //        };
-
-        //public Login[] Get()
-        //{
-        //    return Clientes;
-        //}
-
         Usuario ObjUsuario;
 
         public LoginAutenticaController()
