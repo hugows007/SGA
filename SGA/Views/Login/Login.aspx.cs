@@ -40,7 +40,7 @@ namespace SGA
         {
             try
             {
-                if (new Models.Login.Login().Logar(TxtLogin.Text, TxtSenha.Text))
+                if (ManterLogin.Logar(TxtLogin.Text, TxtSenha.Text))
                 {
                     ObjUsr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
                     ObjUsr.Login = TxtLogin.Text;

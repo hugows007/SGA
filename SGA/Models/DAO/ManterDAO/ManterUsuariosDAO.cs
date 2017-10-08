@@ -438,6 +438,68 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+
+        //Consulta usuário para o aplicativo
+        public Usuario ConsultaUsuarioByLoginDAO()
+        {
+            SqlCommand Cmd = null;
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                    SELECT 
+                        usr.idUsuario
+                        ,usr.nome
+                        ,usr.endereco
+                        ,usr.numero
+                        ,usr.cep
+                        ,usr.telefone
+                        ,usr.idStatusUsuario
+						,usr.idEmpresa
+                        ,CASE WHEN usrReg.idRegiaoAtendimento IS NULL THEN 0 ELSE usrReg.idRegiaoAtendimento END AS idRegiaoAtendimento
+						,CASE WHEN usrEspec.idEspecialidade IS NULL THEN 0 ELSE usrEspec.idEspecialidade END AS idEspecialidade
+						,roles.rolename
+						FROM Usuario usr inner join 
+                        UsuarioXMemberShipUser membxusr on (usr.idUsuario = membxusr.idUsuario) inner join
+                        aspnet_Users membusr on (membxusr.IdUsrMemberShip = membusr.UserId) left join
+						UsuarioxRegiaoAtendimento usrReg on (usr.idUsuario = usrreg.idUsuario) left join
+						UsuarioXEspecialidade usrEspec on (usr.idUsuario = usrEspec.idUsuario) inner join
+						UsuarioXMemberShipUser UsrMb ON (Usr.idUsuario = UsrMb.idUsuario) INNER JOIN
+						aspnet_UsersInRoles UsrRoles ON (UsrMb.IdUsrMemberShip = UsrRoles.UserId) INNER JOIN
+						aspnet_Users UsrUsers ON (UsrMb.IdUsrMemberShip = UsrUsers.UserId) inner join
+						aspnet_Roles Roles on (UsrRoles.RoleId = Roles.RoleId) WHERE
+                        UsrUsers.UserName = @Login and usr.idStatusUsuario = 1;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Login", ObjUsuario.Login);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjUsuario.Id = Dr.GetInt32(0);
+                        ObjUsuario.Nome = Dr.GetString(1);
+                        ObjUsuario.Endereco = Dr.GetString(2);
+                        ObjUsuario.Numero = Dr.GetString(3);
+                        ObjUsuario.Cep = Dr.GetString(4);
+                        ObjUsuario.Telefone = Dr.GetString(5);
+                        ObjUsuario.IdStatus = Dr.GetInt32(6);
+                        ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
+                        ObjUsuario.IdEmpresa = Dr.GetInt32(9);
+                    }
+
+                    return ObjUsuario;
+                }
+                catch (SqlException Ex)
+                {
+                    LogException.InsereLogBd(Ex);
+
+                    throw;
+                }
+            }
+        }
         public Usuario ConsultaIdUsuarioByIdMBDAO()
         {
             SqlCommand Cmd = null;
