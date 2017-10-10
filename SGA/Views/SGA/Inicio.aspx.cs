@@ -1,4 +1,6 @@
-﻿using SGA.Models.Manter;
+﻿using SGA.Models.DAO.Log;
+using SGA.Models.Geos;
+using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +13,23 @@ namespace SGA.Views.Site
 {
     public partial class Inicio : System.Web.UI.Page
     {
+
         ManterChamado MntChamado = new ManterChamado();
+        Geo ObjGeo = FactoryGeo.GetNew();
+        public List<Geo> ListaGeo = new List<Geo>();
         public int QtdChamAbertos;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*UsuarioLogado.Text = Membership.GetUser().ToString();
-            MembershipUser mu = Membership.GetUser(UsuarioLogado.Text);
-            string userId = mu.ProviderUserKey.ToString();
-            UsuarioLogado.Text += " " + userId;
-            Usuario.Text = Membership.GetUser(mu.ProviderUserKey).ToString();*/
-
-            QtdChamAbertos = MntChamado.GetQtdChamadosStatusAbertos();
+            try
+            {
+                ListaGeo = new ManterGeo(ObjGeo).InformaGeo();
+                QtdChamAbertos = MntChamado.GetQtdChamadosStatusAbertos();
+            }
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
+            }
         }
     }
 }

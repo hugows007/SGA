@@ -1,4 +1,5 @@
-﻿using SGA.Models.Geo;
+﻿using SGA.Models.Geos;
+using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,26 @@ namespace SGARest.Controllers
         public object Post(Geo geo)
         {
             ObjGeo = geo;
+
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+                if(ObjGeo.Latitude != null || ObjGeo.Longitude != null)
+                {
+                    if (new ManterGeo(ObjGeo).GravaGeo())
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, "ok");
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, "errogravacao");
+                    }
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "dadosinvalidos");
+                }
+                
+                
             }
             catch (Exception Ex)
             {

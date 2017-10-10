@@ -20,23 +20,19 @@ namespace SGA.Models.Manter
         {
             this.ObjNotificacao = ObjNotificacao;
         }
-
         public ManterNotificacao(Notificacao ObjNotificacao, Usuario ObjUsuario)
         {
             this.ObjNotificacao = ObjNotificacao;
             this.ObjUsuario = ObjUsuario;
         }
-
         public bool NotificaUsuarios()
         {
             return new ManterNotificacaoDAO(ObjNotificacao, ObjUsuario).NotificaUsuariosDAO();
         }
-
         public bool AtualizaNotificacao()
         {
             return new ManterNotificacaoDAO(ObjNotificacao).AtualizaNotificacaoDAO();
         }
-
         public List<Notificacao> InformaNotificacao()
         {
             return new ManterNotificacaoDAO(ObjNotificacao).InformaNotificacaoDAO();

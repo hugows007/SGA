@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SGA.Models.Geo
+namespace SGA.Models.Geos
 {
     public class FactoryGeo
     {

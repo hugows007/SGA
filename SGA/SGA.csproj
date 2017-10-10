@@ -202,6 +202,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chat\styleP.css" />
     <Content Include="Content\chat\style.css" />
+    <Content Include="Content\google.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Image\Chat.png" />
     <Content Include="Image\Logo.jpeg" />
@@ -481,18 +482,20 @@
     <Compile Include="Models\Chats\FactoryChat.cs" />
     <Compile Include="Models\Chats\StartupChat.cs" />
     <Compile Include="Models\Chats\TipoChat.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterGeoDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterChatDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterEmpresaDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterNotificacaoDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterPrioridadeChamadoDAO.cs" />
     <Compile Include="Models\Empresas\Empresa.cs" />
     <Compile Include="Models\Empresas\FactoryEmpresa.cs" />
-    <Compile Include="Models\Geo\FactoryGeo.cs" />
-    <Compile Include="Models\Geo\Geo.cs" />
+    <Compile Include="Models\Geos\FactoryGeo.cs" />
+    <Compile Include="Models\Geos\Geo.cs" />
     <Compile Include="Models\InfoGlobal.cs" />
     <Compile Include="Models\Login\Login.cs" />
     <Compile Include="Models\Manter\ManterChat.cs" />
     <Compile Include="Models\Manter\ManterEmpresa.cs" />
+    <Compile Include="Models\Manter\ManterGeo.cs" />
     <Compile Include="Models\Manter\ManterLogin.cs" />
     <Compile Include="Models\Manter\ManterNotificacao.cs" />
     <Compile Include="Models\Manter\ManterPrioridadeChamado.cs" />
@@ -819,7 +822,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>13453</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.0.150/</IISUrl>
+          <IISUrl>http://192.168.43.150/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://192.168.43.54/SGA</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

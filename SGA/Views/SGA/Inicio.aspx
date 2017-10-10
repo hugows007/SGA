@@ -2,9 +2,14 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
     <script>
+        <% int Contador = 1;%>
         var locations = [
-     ['Centro', -22.905392, -43.181294, 1],
-        ];
+        <%foreach (var Lista in ListaGeo)
+        {%>
+
+     ['<%=Lista.NomeUsuario%>', <%=Lista.Latitude%>, <%=Lista.Longitude%>, <%=Contador%>],
+
+        <% Contador++;}%>];
     </script>
     <div id="page-wrapper">
         <div class="row">
