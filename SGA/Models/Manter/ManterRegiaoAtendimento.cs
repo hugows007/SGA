@@ -41,9 +41,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -60,9 +60,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -72,9 +72,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterRegiaoAtendimentoDAO(ObjRegiao).InativarRegiaoAtendimentoDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }

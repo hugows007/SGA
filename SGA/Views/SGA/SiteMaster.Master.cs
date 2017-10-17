@@ -24,11 +24,28 @@ namespace SGA.Views.SGA
         protected void Page_Init(object sender, EventArgs e)
         {
             this.ID = "Master";
+
+            InfoGlobal.MensagemRequisicaoChat = "Requisição de chat";
+            InfoGlobal.MensagemRequisicaoChatPriv = "Requisição de chat privado";
+            InfoGlobal.MensagemNovoAtendimento = "Novo atendimento";
+            InfoGlobal.MensagemInicioAtendimento = "Início de atendimento";
+            InfoGlobal.MensagemAtendimentoFinalizado = "Atendimento finalizado";
+            InfoGlobal.MensagemChamadoCancelado = "Chamado cancelado";
+            InfoGlobal.MensagemRetrabalho = "Retrabalho";
+
+            Application["MensagemRequisicaoChat"] = InfoGlobal.MensagemRequisicaoChat;
+            Application["MensagemRequisicaoChatPriv"] = InfoGlobal.MensagemRequisicaoChatPriv;
+            Application["MensagemNovoAtendimento"] = InfoGlobal.MensagemNovoAtendimento;
+            Application["MensagemInicioAtendimento"] = InfoGlobal.MensagemInicioAtendimento;
+            Application["MensagemAtendimentoFinalizado"] = InfoGlobal.MensagemAtendimentoFinalizado;
+            Application["MensagemChamadoCancelado"] = InfoGlobal.MensagemChamadoCancelado;
+            Application["MensagemRetrabalho"] = InfoGlobal.MensagemRetrabalho;
         }
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                Page.DataBind();
                 ListaNotificacao.Clear();
 
                 if (Session["usuario"] == null)

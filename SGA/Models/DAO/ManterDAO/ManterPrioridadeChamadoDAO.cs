@@ -45,9 +45,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjPrioridade;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -81,9 +81,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return Prioridades;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }

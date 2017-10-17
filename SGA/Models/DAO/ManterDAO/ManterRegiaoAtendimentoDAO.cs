@@ -54,9 +54,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return AreaList;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -90,9 +90,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjRegiao;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -132,9 +132,9 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -168,9 +168,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -198,9 +198,9 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }

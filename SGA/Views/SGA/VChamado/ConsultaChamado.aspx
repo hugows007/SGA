@@ -121,6 +121,10 @@
                                     <asp:TextBox ID="RelatAtend" runat="server" TextMode="multiline" disabled="disabled" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
                                 </div>
                                 <% }
+                                    else if (ObjStatusChm.Id.Equals(3))
+                                    {%>
+                                <asp:LinkButton ID="AvaliarButton" runat="server" CssClass="btn btn-info" OnClick="AvaliarButton_Click" Text="Avaliar este chamado"></asp:LinkButton>
+                                <%}
                                     } %>
 
                                 <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>

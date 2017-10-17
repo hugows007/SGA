@@ -63,9 +63,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ServicoTpList;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -98,9 +98,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjTpServico;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -140,9 +140,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ServicoList;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -182,9 +182,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ServicoList;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -220,9 +220,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjServico;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -265,9 +265,9 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -303,9 +303,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -333,9 +333,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }

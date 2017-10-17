@@ -1,0 +1,70 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Avaliacao.aspx.cs" Inherits="SGA.Views.SGA.VAvaliacao.Avaliacao" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="headInicio" runat="server">
+    <style>
+        .starRating {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            background-repeat: no-repeat;
+            display: block;
+        }
+
+        .FilledStars {
+            background-image: url("/Image/star/cheia.png");
+        }
+
+        .EmptyStars {
+            background-image: url("/Image/star/vazia.png");
+        }
+
+        .WaitingStars {
+            background-image: url("http://192.168.0.150/Image/star/vazia.png");
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Avaliação de atendimento e chamado: <%=ObjAtend.IdChamado %>
+                    </div>
+                    <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
+                        <div class="panel-body">
+                            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                <ContentTemplate>
+                                    <label for="RatingAtendimento" class="control-label">Avaliação do atendimento:</label>
+                                    <ajaxToolkit:Rating ID="RatingAtendimento" runat="server" StarCssClass="starRating" FilledStarCssClass="FilledStars" EmptyStarCssClass="EmptyStars" WaitingStarCssClass="WaitingStars" CurrentRating="2" MaxRating="5">
+                                    </ajaxToolkit:Rating>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <label for="RatingChamado" class="control-label">Avaliação do chamado:</label>
+                                    <ajaxToolkit:Rating ID="RatingChamado" runat="server" StarCssClass="starRating" FilledStarCssClass="FilledStars" EmptyStarCssClass="EmptyStars" WaitingStarCssClass="WaitingStars" CurrentRating="2" MaxRating="5">
+                                    </ajaxToolkit:Rating>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+                        <label for="ComentarioTextBox" class="control-label">Se quiser, também pode comentar: </label>
+                        <asp:TextBox ID="ComentarioTextBox" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                        <br />
+                        <asp:Button ID="AvaliarButton" runat="server" Text="Avaliar!" CssClass="btn btn-success" OnClick="AvaliarButton_Click" />
+                    </div>
+                    <div class="panel-footer">
+                        <script>
+                            alertify.log("<%=Mensagem%>");
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

@@ -22,15 +22,15 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (InvalidOperationException Ex)
+            catch (InvalidOperationException)
             {
-                LogException.InsereLogBd(Ex);
+                
 
                 throw;
             }
-            catch (System.Data.SqlClient.SqlException Ex)
+            catch (System.Data.SqlClient.SqlException)
             {
-                LogException.InsereLogBd(Ex);
+                
 
                 throw;
             }

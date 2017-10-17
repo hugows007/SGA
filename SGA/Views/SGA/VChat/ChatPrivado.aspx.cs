@@ -1,4 +1,5 @@
-﻿using SGA.Models.Chats;
+﻿using SGA.Models;
+using SGA.Models.Chats;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using SGA.Models.Notificacoes;
@@ -56,9 +57,9 @@ namespace SGA.Views.SGA.VChat
                                 {
                                     ObjNotificacao = FactoryNotificacao.GetNew();
                                     ObjNotificacao.IdOrigem = (int)Session["id"];
-                                    ObjNotificacao.Mensagem = "Conversa privada";
+                                    ObjNotificacao.Mensagem = InfoGlobal.MensagemRequisicaoChatPriv;
 
-                                    if (new ManterNotificacao(ObjNotificacao, ObjUsuario).NotificaUsuarios())
+                                    if (new ManterNotificacao(ObjNotificacao, ObjUsuario).NotificaUsuariosChat())
                                     {
                                         ChatCriado = true;
                                     }

@@ -130,9 +130,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -149,9 +149,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -161,9 +161,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterUsuarioDAO(ObjUsuario).InativaUsuarioDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -180,9 +180,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -199,9 +199,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -247,9 +247,9 @@ namespace SGA.Models.Manter
                 string[] rolesArray;
                 return rolesArray = Roles.GetAllRoles();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
 
@@ -274,9 +274,9 @@ namespace SGA.Models.Manter
 
                 return Result;
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -286,9 +286,9 @@ namespace SGA.Models.Manter
             {
                 return Membership.GetUser().ToString();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -298,9 +298,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterUsuarioDAO(ObjUsuario).GetIdRegiaoAtendByUsrDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -310,9 +310,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterUsuarioDAO(ObjUsuario, ObjChamado).GetTecnicoByRegiaoEspecDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -322,9 +322,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterUsuarioDAO(ObjUsuario).GetUsuarioEmpresaDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }

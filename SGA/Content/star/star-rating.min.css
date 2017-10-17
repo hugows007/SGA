@@ -1,0 +1,19 @@
+.starRating {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.FilledStars {
+    background-image: url(../star/star/cheia.png);
+}
+
+.EmptyStars {
+    background-image: url(../star/star/vazia.png);
+}
+
+.WaitingStars {
+    background-image: url(../star/star/vazia.png);
+}

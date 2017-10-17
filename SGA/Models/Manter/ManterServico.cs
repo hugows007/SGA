@@ -63,9 +63,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -82,9 +82,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -94,9 +94,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterServicoDAO(ObjServico).InativaServicoDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }

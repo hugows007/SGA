@@ -2,6 +2,7 @@
 using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
 using SGA.Models.DAO.ManterDAO;
+using SGA.Models.Notificacoes;
 using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace SGA.Models.Manter
         Chamado ObjChamado;
         Usuario ObjUsuario;
         Atendimento ObjAtend;
+        Notificacao ObjNotificacao;
         public ManterChamado()
         {
 
@@ -63,10 +65,10 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
                 DeletaChamado();
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -89,9 +91,9 @@ namespace SGA.Models.Manter
                     return null;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -108,9 +110,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -128,6 +130,13 @@ namespace SGA.Models.Manter
 
                         if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
                         {
+                            //Notificação de atendimento
+                            ObjNotificacao = FactoryNotificacao.GetNew();
+                            ObjNotificacao.IdOrigem = ObjAtend.IdCliente;
+                            ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                            ObjNotificacao.Mensagem = InfoGlobal.MensagemChamadoCancelado;
+                            new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
                             return true;
                         }
                         else
@@ -145,9 +154,9 @@ namespace SGA.Models.Manter
                     return false;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -157,9 +166,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterChamadoDAO(ObjChamado).DeletaChamadoDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }

@@ -1,6 +1,6 @@
-﻿using SGA.Models.DAO.Log;
+﻿using SGA.Models.Avaliacoes;
+using SGA.Models.Chamados;
 using SGA.Models.DAO.ManterDAO;
-using SGA.Models.Geos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,26 +8,23 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterGeo
+    public class ManterAvaliacao
     {
-        Geo ObjGeo;
-        public ManterGeo()
+        Avaliacao ObjAvaliacao;
+
+        public ManterAvaliacao()
         {
 
         }
-        public ManterGeo(Geo ObjGeo)
+        public ManterAvaliacao(Avaliacao ObjAvaliacao)
         {
-            this.ObjGeo = ObjGeo;
+            this.ObjAvaliacao = ObjAvaliacao;
         }
-        public List<Geo> InformaGeo()
-        {
-            return new ManterGeoDAO(ObjGeo).InformaGeoDAO();
-        }
-        public bool GravaGeo()
+        public bool IncluiAvaliacao()
         {
             try
             {
-                if (new ManterGeoDAO(ObjGeo).GravaGeoDAO())
+                if (new ManterAvaliacaoDAO(ObjAvaliacao).IncluiAvaliacaoDAO())
                 {
                     return true;
                 }
@@ -38,7 +35,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }

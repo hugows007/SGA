@@ -48,9 +48,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjStatusChm;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }

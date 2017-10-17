@@ -73,9 +73,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return List;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -110,9 +110,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return List;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -146,9 +146,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjAtend;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -165,7 +165,8 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Atendimento]
-                  WHERE idChamado = @IdChamado", Con);
+                  WHERE idChamado = @IdChamado and 
+				  idAtendimento = (select max(idatendimento) from Atendimento where idChamado = @IdChamado);", Con);
 
                     Cmd.Parameters.AddWithValue("@IdChamado", ObjAtend.IdChamado);
 
@@ -182,9 +183,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjAtend;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -281,9 +282,9 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -316,9 +317,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -354,9 +355,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -375,7 +376,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Cmd = new SqlCommand(@"
                             UPDATE 
 	                            [dbo].[Atendimento] SET
-                                    ,dataInicioAtendimento = @Data
+                                    dataInicioAtendimento = @Data
                                     ,dataFimAtendimento = @Data
                                     ,dataRegistro = @Data
                                     ,usuarioRegistro = @Usuario                         
@@ -386,7 +387,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Cmd = new SqlCommand(@"
                             UPDATE 
 	                            [dbo].[Atendimento] SET
-                                    ,dataFimAtendimento = @Data
+                                    dataFimAtendimento = @Data
                                     ,dataRegistro = @Data
                                     ,usuarioRegistro = @Usuario                         
                                 WHERE idAtendimento = @Id;", Con);
@@ -399,9 +400,9 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -439,9 +440,9 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -473,9 +474,9 @@ namespace SGA.Models.DAO.ManterDAO
                         return false;
                     }
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }
@@ -506,9 +507,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return String.Format("{0: 0.00}", (D2 - D1).TotalHours).Replace(",", ".");
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
                     throw;
                 }

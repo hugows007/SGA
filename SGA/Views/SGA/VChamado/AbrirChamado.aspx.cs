@@ -2,6 +2,7 @@
 using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
+using SGA.Models.Notificacoes;
 using SGA.Models.Servicos;
 using SGA.Models.Usuarios;
 using System;
@@ -100,7 +101,9 @@ namespace SGA.Views.SGA.VChamado
                 }
                 else
                 {
+                    ObjUsuario.Id = (int)Session["id"];
                     ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
+                    ObjChamado.IdPrioridade = Convert.ToInt32(DropDownListPrioridade.SelectedValue);
                     ObjChamado.IdCliente = ObjUsuario.Id;
 
                     foreach (var RegiaoUsr in new ManterUsuario(ObjUsuario).GetIdRegiaoAtendByUsr())

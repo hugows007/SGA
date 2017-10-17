@@ -28,7 +28,7 @@ namespace SGA.Models.DAO.ManterDAO
             this.ObjNotificacao = ObjNotificacao;
             this.ObjUsuario = ObjUsuario;
         }
-        public bool NotificaUsuariosDAO()
+        public bool NotificaUsuariosChatDAO()
         {
             SqlDataReader Dr = null;
             List<Notificacao> ListaNot = new List<Notificacao>();
@@ -113,9 +113,9 @@ namespace SGA.Models.DAO.ManterDAO
                     return true;
 
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -155,10 +155,47 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return true;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
 
+                    throw;
+                }
+            }
+        }
+        public bool NotificaUsuariosSistemDAO()
+        {
+            SqlCommand Cmd;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                                INSERT INTO [dbo].[notificacao]
+                                      ([idUsuarioOrigem]
+                                       ,[idUsuarioDestino]
+                                       ,[mensagem]
+                                       ,[vista]
+                                       ,[dataRegistro])
+                                VALUES
+                                    (@IdOrig
+                                     ,@IdDest
+                                     ,@Msg
+                                     ,0
+                                     ,@Data);", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdOrig", ObjNotificacao.IdOrigem);
+                    Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
+                    Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (SqlException)
+                {
                     throw;
                 }
             }
@@ -194,9 +231,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ListaNot;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }

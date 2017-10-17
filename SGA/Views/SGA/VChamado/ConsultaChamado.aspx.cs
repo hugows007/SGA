@@ -210,5 +210,10 @@ namespace SGA.Views.SGA.VChamado
             }
 
         }
+
+        protected void AvaliarButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("\\Views\\SGA\\VAvaliacao\\Avaliacao.aspx?IdChamado=" + ObjChamado.Id);
+        }
     }
 }

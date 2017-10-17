@@ -34,9 +34,9 @@ namespace SGA.Models.Manter
                 this.ObjChat = ObjChat;
                 return new ManterChatDAO(ObjChat).CriaSalaPrivadaDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -47,9 +47,9 @@ namespace SGA.Models.Manter
                 this.ObjChat = ObjChat;
                 return new ManterChatDAO(ObjChat).GravaChatDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -60,9 +60,9 @@ namespace SGA.Models.Manter
                 this.ObjChat = ObjChat;
                 return new ManterChatDAO(ObjChat).GravaChatPrivadoDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -72,9 +72,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterChatDAO(ObjChat).ValidaChatCriadoDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -84,9 +84,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterChatDAO(ObjChat).RetornaSalasDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -96,9 +96,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterChatDAO(ObjChat).RetornaChatDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -108,9 +108,9 @@ namespace SGA.Models.Manter
             {
                 return new ManterChatDAO(ObjChat).RetornaChatPrivadoDAO();
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }

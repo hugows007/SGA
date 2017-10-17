@@ -52,9 +52,9 @@ namespace SGA.Models.DAO.ManterDAO
                     return true;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -82,9 +82,9 @@ namespace SGA.Models.DAO.ManterDAO
                     return true;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -142,9 +142,9 @@ namespace SGA.Models.DAO.ManterDAO
                     return true;
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
+                
                 throw;
             }
         }
@@ -185,9 +185,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ChatList;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -225,9 +225,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ChatList;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -272,9 +272,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ChatList;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }
@@ -309,9 +309,9 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return false;
                 }
-                catch (SqlException Ex)
+                catch (SqlException)
                 {
-                    LogException.InsereLogBd(Ex);
+                    
                     throw;
                 }
             }

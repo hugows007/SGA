@@ -31,7 +31,7 @@ namespace SGA.Models.DAO.Log
                 ,@exSource
                 ,@exStackTrace    
                 ,@exTargetSite
-                ,@exDate)
+                ,@exDate
                 ,@exUser);", Con);
 
                     Cmd.Parameters.AddWithValue("@exMensagem", Ex.Message);

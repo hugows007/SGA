@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=17.1.1.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.17.1.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
@@ -203,11 +207,15 @@
     <Content Include="Content\chat\styleP.css" />
     <Content Include="Content\chat\style.css" />
     <Content Include="Content\google.css" />
+    <Content Include="Content\star\star-rating.min.css" />
+    <Content Include="Image\star\cheia.png" />
+    <Content Include="Image\star\vazia.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Image\Chat.png" />
     <Content Include="Image\Logo.jpeg" />
     <Content Include="Image\User.png" />
     <Content Include="SQL\script.sql" />
+    <Content Include="Views\SGA\VAvaliacao\Avaliacao.aspx" />
     <Content Include="WebServiceSGA.asmx" />
     <Content Include="packages.config" />
     <Content Include="Scripts\chat\index.js" />
@@ -474,6 +482,8 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\Avaliacoes\Avaliacao.cs" />
+    <Compile Include="Models\Avaliacoes\FactoryAvaliacao.cs" />
     <Compile Include="Models\Chamados\PrioridadeChamados\FactoryPrioridadeChm.cs" />
     <Compile Include="Models\Chamados\PrioridadeChamados\PrioridadeChamado.cs" />
     <Compile Include="Models\Chats\Chat.cs" />
@@ -482,6 +492,7 @@
     <Compile Include="Models\Chats\FactoryChat.cs" />
     <Compile Include="Models\Chats\StartupChat.cs" />
     <Compile Include="Models\Chats\TipoChat.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterAvaliacaoDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterGeoDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterChatDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterEmpresaDAO.cs" />
@@ -493,6 +504,7 @@
     <Compile Include="Models\Geos\Geo.cs" />
     <Compile Include="Models\InfoGlobal.cs" />
     <Compile Include="Models\Login\Login.cs" />
+    <Compile Include="Models\Manter\ManterAvaliacao.cs" />
     <Compile Include="Models\Manter\ManterChat.cs" />
     <Compile Include="Models\Manter\ManterEmpresa.cs" />
     <Compile Include="Models\Manter\ManterGeo.cs" />
@@ -502,6 +514,13 @@
     <Compile Include="Models\Notificacoes\FactoryNotificacao.cs" />
     <Compile Include="Models\Notificacoes\Notificacao.cs" />
     <Compile Include="Models\WebAPI\LoginController.cs" />
+    <Compile Include="Views\SGA\VAvaliacao\Avaliacao.aspx.cs">
+      <DependentUpon>Avaliacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VAvaliacao\Avaliacao.aspx.designer.cs">
+      <DependentUpon>Avaliacao.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WebServiceSGA.asmx.cs">
       <DependentUpon>WebServiceSGA.asmx</DependentUpon>
       <SubType>Component</SubType>
