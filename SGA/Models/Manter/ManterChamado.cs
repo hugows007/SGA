@@ -176,9 +176,5 @@ namespace SGA.Models.Manter
         {
             return new ManterChamadoDAO().GetUltIdChamadoDAO();
         }
-        public int GetQtdChamadosStatusAbertos()
-        {
-            return new ManterChamadoDAO().GetQtdChamadosStatusAbertosDAO();
-        }
     }
 }

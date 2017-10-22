@@ -58,7 +58,7 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Dr.Close();
 
-                    if(ObjUsuario == null)
+                    if (ObjUsuario == null)
                     {
                         foreach (var ListObj in ListaNot)
                         {
@@ -115,7 +115,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -128,7 +128,7 @@ namespace SGA.Models.DAO.ManterDAO
             {
                 try
                 {
-                    if(ObjNotificacao.Mensagem == null)
+                    if (ObjNotificacao.Mensagem == null)
                     {
                         Cmd = new SqlCommand(@"
                 UPDATE 
@@ -140,7 +140,7 @@ namespace SGA.Models.DAO.ManterDAO
 
                         Cmd.ExecuteNonQuery();
                     }
-                    else
+                    else if (ObjNotificacao.Mensagem.Equals("LimparChat"))
                     {
                         Cmd = new SqlCommand(@"
                 UPDATE 
@@ -151,13 +151,25 @@ namespace SGA.Models.DAO.ManterDAO
                         Cmd.Parameters.AddWithValue("@Id", ObjNotificacao.IdOrigem);
 
                         Cmd.ExecuteNonQuery();
-                    }                    
+                    }
+                    else
+                    {
+                        Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Notificacao] SET 
+	                    vista = 1
+                        WHERE idUsuarioDestino = @Id and mensagem not in ('Requisição de chat','Requisição de chat privado');", Con);
+
+                        Cmd.Parameters.AddWithValue("@Id", ObjNotificacao.IdDest);
+
+                        Cmd.ExecuteNonQuery();
+                    }
 
                     return true;
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -233,7 +245,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }

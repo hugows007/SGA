@@ -207,15 +207,22 @@
     <Content Include="Content\chat\styleP.css" />
     <Content Include="Content\chat\style.css" />
     <Content Include="Content\google.css" />
+    <Content Include="Content\morris\morris.css" />
     <Content Include="Content\star\star-rating.min.css" />
+    <Content Include="Image\Estrela.png" />
     <Content Include="Image\star\cheia.png" />
     <Content Include="Image\star\vazia.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Image\Chat.png" />
     <Content Include="Image\Logo.jpeg" />
     <Content Include="Image\User.png" />
+    <Content Include="Scripts\morris\Gruntfile.js" />
+    <Content Include="Scripts\morris\morris.js" />
+    <Content Include="Scripts\morris\morris.min.js" />
+    <Content Include="Scripts\morris\raphael-min.js" />
     <Content Include="SQL\script.sql" />
     <Content Include="Views\SGA\VAvaliacao\Avaliacao.aspx" />
+    <Content Include="Views\SGA\VRelatorio\Relatorio.aspx" />
     <Content Include="WebServiceSGA.asmx" />
     <Content Include="packages.config" />
     <Content Include="Scripts\chat\index.js" />
@@ -498,6 +505,7 @@
     <Compile Include="Models\DAO\ManterDAO\ManterEmpresaDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterNotificacaoDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterPrioridadeChamadoDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterRelatorioDAO.cs" />
     <Compile Include="Models\Empresas\Empresa.cs" />
     <Compile Include="Models\Empresas\FactoryEmpresa.cs" />
     <Compile Include="Models\Geos\FactoryGeo.cs" />
@@ -511,8 +519,11 @@
     <Compile Include="Models\Manter\ManterLogin.cs" />
     <Compile Include="Models\Manter\ManterNotificacao.cs" />
     <Compile Include="Models\Manter\ManterPrioridadeChamado.cs" />
+    <Compile Include="Models\Manter\ManterRelatorio.cs" />
     <Compile Include="Models\Notificacoes\FactoryNotificacao.cs" />
     <Compile Include="Models\Notificacoes\Notificacao.cs" />
+    <Compile Include="Models\Relatorios\FactoryRelatorio.cs" />
+    <Compile Include="Models\Relatorios\Relatorio.cs" />
     <Compile Include="Models\WebAPI\LoginController.cs" />
     <Compile Include="Views\SGA\VAvaliacao\Avaliacao.aspx.cs">
       <DependentUpon>Avaliacao.aspx</DependentUpon>
@@ -520,6 +531,13 @@
     </Compile>
     <Compile Include="Views\SGA\VAvaliacao\Avaliacao.aspx.designer.cs">
       <DependentUpon>Avaliacao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VRelatorio\Relatorio.aspx.cs">
+      <DependentUpon>Relatorio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VRelatorio\Relatorio.aspx.designer.cs">
+      <DependentUpon>Relatorio.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebServiceSGA.asmx.cs">
       <DependentUpon>WebServiceSGA.asmx</DependentUpon>

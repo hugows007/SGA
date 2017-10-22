@@ -35,7 +35,8 @@ namespace SGA.Models.DAO.ManterDAO
                 SELECT L1.*, L3.nome FROM Geolocalizacao As L1
                     INNER JOIN (
                         SELECT idUsuario, MAX(dataRegistro) As UltimaData
-                        FROM Geolocalizacao GROUP BY idUsuario) As L2
+                        FROM Geolocalizacao  WHERE
+							LATITUDE <> '0.0' AND LONGITUDE <> '0.0' GROUP BY idUsuario) As L2
                             ON (L1.idUsuario = L2.idUsuario AND L1.dataRegistro = L2.UltimaData) 
 		                    INNER JOIN Usuario As L3 on (L1.idUsuario = L3.idUsuario)
                     ORDER BY L1.idUsuario;", Con);

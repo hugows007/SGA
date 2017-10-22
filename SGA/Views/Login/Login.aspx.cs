@@ -46,7 +46,9 @@ namespace SGA
                     ObjUsr.Login = TxtLogin.Text;
 
                     TxtLogin.Visible = true;
+                    ObjUsr = new ManterUsuario(ObjUsr).GetUsuarioEmpresa();
                     Session["usuario"] = TxtLogin.Text;
+                    InfoGlobal.GlobalIdEmpresa = ObjUsr.IdEmpresa;
                     FormsAuthentication.RedirectFromLoginPage(TxtLogin.Text, true);
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }

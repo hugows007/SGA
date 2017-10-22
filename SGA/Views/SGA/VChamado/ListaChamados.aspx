@@ -16,7 +16,7 @@
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
-                    <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
+                    <div class="panel-body">
                         <table id="example" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
