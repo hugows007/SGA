@@ -29,12 +29,17 @@
     <script src="<%# ResolveUrl("~/Scripts/jquery.dataTables.min.js") %>"></script>
     <link href="<%# ResolveUrl("~/Content/Site.css") %>" rel="stylesheet" />
 
+    <script src="<%# ResolveUrl("~/Scripts/select/bootstrap-select.min.js") %>"></script>
+    <link href="<%# ResolveUrl("~/Content/select/bootstrap-select.min.css") %>" rel="stylesheet" />
+
     <script src="<%# ResolveUrl("~/Scripts/alert/alertify.min.js") %>"></script>
     <script src="<%# ResolveUrl("~/Scripts/alert/alertify.js") %>"></script>
 
     <link href="<%# ResolveUrl("~/Content/alert/alertify.bootstrap.css") %>" rel="stylesheet" />
     <link href="<%# ResolveUrl("~/Content/alert/alertify.core.css") %>" rel="stylesheet" />
     <link href="<%# ResolveUrl("~/Content/alert/alertify.default.css") %>" rel="stylesheet" />
+
+        <link href="<%# ResolveUrl("~/Content/tempo/style.css") %>" rel="stylesheet" />
 
     <link href="<%# ResolveUrl("~/Scripts/vendor/morrisjs/morris.css") %>" rel="stylesheet" />
     <script src="<%# ResolveUrl("~/Scripts/vendor/raphael/raphael.min.js") %>"></script>
@@ -98,7 +103,7 @@
                             <i class="fa fa-comment fa-fw fa-fw"></i><i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-messages nav nav-second-level">
-                            <%if (!ListaNotificacao.Count().Equals(0))
+                            <%if (!ListaNotificacao.Count.Equals(0))
                                     foreach (var Lista in ListaNotificacao)
                                     {
                                         if (Lista.Mensagem.Equals(Application["MensagemRequisicaoChat"]))
@@ -158,41 +163,10 @@
                     <!-- /.dropdown -->
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-tasks fa-fw"></i><i class="fa fa-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-tasks">
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <p>
-                                            <strong>Task 1</strong>
-                                            <span class="pull-right text-muted">40% Complete</span>
-                                        </p>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                <span class="sr-only">40% Complete (success)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a class="text-center" href="#">
-                                    <strong>See All Tasks</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- /.dropdown-tasks -->
-                    </li>
-                    <!-- /.dropdown -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell fa-fw"></i><i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
-                            <%if (!ListaNotificacao.Count().Equals(0))
+                            <%if (!ListaNotificacao.Count.Equals(0))
                                     foreach (var Lista in ListaNotificacao)
                                     {
                                         //
@@ -219,7 +193,7 @@
                             </li>
                             <li class="divider"></li>
                             <%}
-                                if (ContaListaNotificacao.Equals(0) && !ListaNotificacao.Count().Equals(0))
+                                if (ContaListaNotificacao.Equals(0) && !ListaNotificacao.Count.Equals(0))
                                 {%>
                             <li>
                                 <a class="text-center">

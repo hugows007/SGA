@@ -13,7 +13,6 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterRelatorioDAO
     {
         Relatorio ObjRelatorio;
-        Usuario ObjUsuario;
         SqlCommand Cmd;
         List<Relatorio> ListRelat = new List<Relatorio>();
 
@@ -25,7 +24,6 @@ namespace SGA.Models.DAO.ManterDAO
         {
             this.ObjRelatorio = ObjRelatorio;
         }
-
         public List<Relatorio> GetQtdChamadosDAO()
         {
             SqlDataReader Dr = null;
@@ -198,6 +196,176 @@ namespace SGA.Models.DAO.ManterDAO
                     {
                         Relatorio Obj = FactoryRelatorio.GetNew();
                         Obj.Usuario = Dr.GetString(0);
+                        Obj.Media = Dr.GetInt32(1);
+                        ListRelat.Add(Obj);
+                    }
+                    return ListRelat;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
+        public List<Relatorio> GetTopSolucoesDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                   select top 5 (Usr.nome)
+						  ,sum(Avs.likeSolucao) as Soluções_Uteis from 
+                          Atendimento At inner join
+                          Usuario Usr on (At.idTecnico = Usr.idUsuario) inner join 
+						  AvaliacaoSolucao Avs on (At.idAtendimento = Avs.idAtendimento) where
+						  Usr.idEmpresa = @Empresa
+                          group by Usr.nome
+						  order by 2 desc;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Relatorio Obj = FactoryRelatorio.GetNew();
+                        Obj.Usuario = Dr.GetString(0);
+                        Obj.Media = Dr.GetInt32(1);
+                        ListRelat.Add(Obj);
+                    }
+                    return ListRelat;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
+        public List<Relatorio> GetRelatorioChamadosDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+select 
+                            Chm.idChamado
+                            ,Usr.nome as Cliente
+                            ,UsrTec.nome as Tecnico
+                            ,Chm.assunto
+                            ,Srv.nome as Servico
+                            ,RgAtd.regiao
+                            ,PrChm.descricao as Prioridade
+                            ,StChm.status
+                            ,Chm.dataAbertura
+                            ,Chm.dataFechamento
+                            ,case when Atd.dataInicioAtendimento is NULL then '2000-01-01 00:00:00.000' else Atd.dataInicioAtendimento end
+                            ,case when Atd.dataFimAtendimento  is NULL then '2000-01-01 00:00:00.000' else Atd.dataFimAtendimento  end
+                            ,case when Atd.tempoAtendimento is NULL then '0.00' else Atd.tempoAtendimento end
+                            ,case when Chm.infoCancelamento is NULL then '' else Chm.infoCancelamento end
+                            ,case when Chm.ContReabertura is NULL then '0' else Chm.ContReabertura end
+                            ,case when Chm.ContPendencia is NULL then '0' else Chm.ContPendencia end
+                        from Chamado Chm inner join				
+                        Atendimento Atd on (Chm.idChamado = Atd.idChamado) inner join				
+                        Usuario Usr on (Usr.idUsuario = Atd.idCliente) inner join
+                        Usuario UsrTec on (UsrTec.idUsuario = Atd.idTecnico) inner join
+                        StatusChamado StChm on (Chm.idStatusChamado = StChm.idStatusChamado) inner join
+                        Servico Srv on (Chm.idServico = Srv.idServico) inner join
+                        PrioridadeChamado PrChm on (Chm.idPrioridade = PrChm.idPrioridade) inner join
+                        RegiaoDeAtendimento RgAtd on (RgAtd.idRegiaoAtendimento = Atd.idRegiaoAtendimento) where
+                            Chm.idEmpresa = @Empresa " + ObjRelatorio.FiltroRelatorio + @"
+                        order by Chm.idChamado;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Relatorio Obj = FactoryRelatorio.GetNew();
+                        Obj.Chamado = Dr.GetInt32(0);
+                        Obj.Cliente = Dr.GetString(1);
+                        Obj.Tecnico = Dr.GetString(2);
+                        Obj.Assunto = Dr.GetString(3);
+                        Obj.Servico = Dr.GetString(4);
+                        Obj.Regiao = Dr.GetString(5);
+                        Obj.Prioridade = Dr.GetString(6);
+                        Obj.StatusChamado = Dr.GetString(7);
+                        Obj.DataAbertura = Dr.GetDateTime(8);
+                        Obj.DataFechamento = Dr.GetDateTime(9);
+                        Obj.DataInicioAtendimento = Dr.GetDateTime(10);
+                        Obj.DataFimAtendimento = Dr.GetDateTime(11);
+                        Obj.TempoAtendimento = TimeSpan.FromMinutes(Convert.ToDouble(Dr[12].ToString()));
+                        Obj.InformacaoCancelamento = Dr.GetString(13);
+                        Obj.Reaberturas = Dr.GetInt32(14);
+                        Obj.Pendencias = Dr.GetInt32(15);
+                        ListRelat.Add(Obj);
+                    }
+                    return ListRelat;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
+        public Relatorio GetTempoMedioAtendimentoDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"select cast(avg(convert(decimal,tempoAtendimento)) as numeric(15,2)) from atendimento where idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjRelatorio.TempoAtendimento = TimeSpan.FromHours(Convert.ToDouble(Dr[0].ToString()));
+                    }
+                    return ObjRelatorio;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
+        public List<Relatorio> GetAtendimentoPorRegiaoDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                    select 
+                        top 10 Rg.Regiao
+                        , COUNT(*) as Quantidade from 
+                        Atendimento Atd inner join 
+                        RegiaoDeAtendimento Rg on (Atd.idRegiaoAtendimento = Rg.idRegiaoAtendimento) where
+						Atd.idEmpresa = @Empresa
+                        group by Rg.regiao 
+                        order by 2;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Relatorio Obj = FactoryRelatorio.GetNew();
+                        Obj.Regiao = Dr.GetString(0);
                         Obj.Media = Dr.GetInt32(1);
                         ListRelat.Add(Obj);
                     }

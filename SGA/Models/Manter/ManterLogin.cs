@@ -24,14 +24,10 @@ namespace SGA.Models.Manter
             }
             catch (InvalidOperationException)
             {
-                
-
                 throw;
             }
             catch (System.Data.SqlClient.SqlException)
             {
-                
-
                 throw;
             }
         }

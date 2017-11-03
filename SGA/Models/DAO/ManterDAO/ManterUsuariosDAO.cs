@@ -401,8 +401,10 @@ namespace SGA.Models.DAO.ManterDAO
                         ,usr.idStatusUsuario
                         ,CASE WHEN usrReg.idRegiaoAtendimento IS NULL THEN 0 ELSE usrReg.idRegiaoAtendimento END AS idRegiaoAtendimento
 						,CASE WHEN usrEspec.idEspecialidade IS NULL THEN 0 ELSE usrEspec.idEspecialidade END AS idEspecialidade
+						,membship.Email
 						FROM Usuario usr inner join 
                         UsuarioXMemberShipUser membxusr on (usr.idUsuario = membxusr.idUsuario) inner join
+                        aspnet_Membership membship on (membxusr.IdUsrMemberShip = membship.UserId) inner join
                         aspnet_Users membusr on (membxusr.IdUsrMemberShip = membusr.UserId) left join
 						UsuarioxRegiaoAtendimento usrReg on (usr.idUsuario = usrreg.idUsuario) left join
 						UsuarioXEspecialidade usrEspec on (usr.idUsuario = usrEspec.idUsuario) WHERE
@@ -424,6 +426,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.IdStatus = Dr.GetInt32(6);
                         ObjUsuario.ObjRegiao.Id = Dr.GetInt32(7);
                         ObjUsuario.ObjEspec.Id = Dr.GetInt32(8);
+                        ObjUsuario.Email = Dr.GetString(9);
 
                         ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
                     }

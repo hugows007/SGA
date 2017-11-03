@@ -74,9 +74,12 @@ namespace SGA.Models.Manter
                 if (new ManterAtendimentoDAO(ObjAtend).CadastraAtendimentoDAO())
                 {
                     //Notificação de atendimento
-                    ObjNotificacao = FactoryNotificacao.GetNew();
-                    ObjNotificacao.IdOrigem = ObjAtend.IdCliente;
+                    ObjNotificacao.IdOrigem = 0;
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                    ObjNotificacao.Mensagem = InfoGlobal.MensagemNovoAtendimento;
+                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                    ObjNotificacao.IdDest = ObjAtend.IdCliente;
                     ObjNotificacao.Mensagem = InfoGlobal.MensagemNovoAtendimento;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
@@ -132,9 +135,12 @@ namespace SGA.Models.Manter
                         ObjChamado = new ManterChamado(ObjChamado).ConsultaChamadoById();
 
                         //Notificação de atendimento
-                        ObjNotificacao = FactoryNotificacao.GetNew();
-                        ObjNotificacao.IdOrigem = ObjChamado.IdCliente;
+                        ObjNotificacao.IdOrigem = 0;
                         ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                        ObjNotificacao.Mensagem = InfoGlobal.MensagemInicioAtendimento;
+                        new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                        ObjNotificacao.IdDest = ObjAtend.IdCliente;
                         ObjNotificacao.Mensagem = InfoGlobal.MensagemInicioAtendimento;
                         new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
@@ -187,9 +193,12 @@ namespace SGA.Models.Manter
                                 if (new ManterAtendimentoDAO(ObjAtend, ObjChamado).CadastraAtendimentoDAO())
                                 {
                                     //Notificação de atendimento
-                                    ObjNotificacao = FactoryNotificacao.GetNew();
-                                    ObjNotificacao.IdOrigem = ObjAtend.IdCliente;
+                                    ObjNotificacao.IdOrigem = 0;
                                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                                    ObjNotificacao.Mensagem = InfoGlobal.MensagemRetrabalho;
+                                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                                    ObjNotificacao.IdDest = ObjAtend.IdCliente;
                                     ObjNotificacao.Mensagem = InfoGlobal.MensagemRetrabalho;
                                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
@@ -203,9 +212,12 @@ namespace SGA.Models.Manter
                             else
                             {
                                 //Notificação de atendimento
-                                ObjNotificacao = FactoryNotificacao.GetNew();
-                                ObjNotificacao.IdOrigem = ObjAtend.IdCliente;
+                                ObjNotificacao.IdOrigem = 0;
                                 ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                                ObjNotificacao.Mensagem = InfoGlobal.MensagemAtendimentoFinalizado;
+                                new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                                ObjNotificacao.IdDest = ObjAtend.IdCliente;
                                 ObjNotificacao.Mensagem = InfoGlobal.MensagemAtendimentoFinalizado;
                                 new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 

@@ -28,8 +28,8 @@
                             <!-- Button -->
 
                             <div class="col-sm-12 controls">
-                                <asp:Button ID="BotaoEntrar" Text="Entrar" OnClick="BotaoEntrar_Click" runat="server" class="btn btn-success" />
-                                <div style="float: right; font-size: 80%; position: relative; top: -10px"><a href="#">Esqueceu sua senha?</a></div>
+                                <asp:Button ID="BotaoEntrar" Text="   Entrar   " OnClick="BotaoEntrar_Click" runat="server" class="btn btn-success" />
+                                <div style="float: right; font-size: 80%; position: relative; top: -10px"><asp:Button ID="EsqueciButton" CssClass="btn-info" runat="server" Text="Esqueceu sua senha?" OnClick="EsqueciButton_Click" /></div>
                             </div>
                         </div>
                         <div class="form-group">

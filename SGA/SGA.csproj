@@ -208,7 +208,10 @@
     <Content Include="Content\chat\style.css" />
     <Content Include="Content\google.css" />
     <Content Include="Content\morris\morris.css" />
+    <Content Include="Content\select\bootstrap-select.css" />
+    <Content Include="Content\select\bootstrap-select.min.css" />
     <Content Include="Content\star\star-rating.min.css" />
+    <Content Include="Content\tempo\style.css" />
     <Content Include="Image\Estrela.png" />
     <Content Include="Image\star\cheia.png" />
     <Content Include="Image\star\vazia.png" />
@@ -220,12 +223,17 @@
     <Content Include="Scripts\morris\morris.js" />
     <Content Include="Scripts\morris\morris.min.js" />
     <Content Include="Scripts\morris\raphael-min.js" />
+    <Content Include="Scripts\select\bootstrap-select.js" />
+    <Content Include="Scripts\select\bootstrap-select.min.js" />
     <Content Include="SQL\script.sql" />
     <Content Include="Views\SGA\VAvaliacao\Avaliacao.aspx" />
+    <Content Include="Views\SGA\VHistorico\Historico.aspx" />
     <Content Include="Views\SGA\VRelatorio\Relatorio.aspx" />
+    <Content Include="Views\SGA\VRelatorio\RelatorioChamados.aspx" />
     <Content Include="WebServiceSGA.asmx" />
     <Content Include="packages.config" />
     <Content Include="Scripts\chat\index.js" />
+    <Content Include="Content\select\bootstrap-select.css.map" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\PublishProfiles\LocalHost.pubxml" />
     <None Include="Scripts\chat\jquery-1.6.4-vsdoc.js" />
@@ -323,6 +331,7 @@
     <Content Include="Scripts\vendor\font-awesome\scss\_spinning.scss" />
     <Content Include="Scripts\vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="Scripts\vendor\font-awesome\scss\_variables.scss" />
+    <Content Include="Scripts\select\bootstrap-select.js.map" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\vendor\bootstrap-social\bootstrap-social.css" />
     <Content Include="Scripts\vendor\bootstrap\css\bootstrap.css" />
@@ -503,6 +512,7 @@
     <Compile Include="Models\DAO\ManterDAO\ManterGeoDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterChatDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterEmpresaDAO.cs" />
+    <Compile Include="Models\DAO\ManterDAO\ManterHistoricoDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterNotificacaoDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterPrioridadeChamadoDAO.cs" />
     <Compile Include="Models\DAO\ManterDAO\ManterRelatorioDAO.cs" />
@@ -510,12 +520,15 @@
     <Compile Include="Models\Empresas\FactoryEmpresa.cs" />
     <Compile Include="Models\Geos\FactoryGeo.cs" />
     <Compile Include="Models\Geos\Geo.cs" />
+    <Compile Include="Models\Historicos\FactoryHistorico.cs" />
+    <Compile Include="Models\Historicos\Historico.cs" />
     <Compile Include="Models\InfoGlobal.cs" />
     <Compile Include="Models\Login\Login.cs" />
     <Compile Include="Models\Manter\ManterAvaliacao.cs" />
     <Compile Include="Models\Manter\ManterChat.cs" />
     <Compile Include="Models\Manter\ManterEmpresa.cs" />
     <Compile Include="Models\Manter\ManterGeo.cs" />
+    <Compile Include="Models\Manter\ManterHistorico.cs" />
     <Compile Include="Models\Manter\ManterLogin.cs" />
     <Compile Include="Models\Manter\ManterNotificacao.cs" />
     <Compile Include="Models\Manter\ManterPrioridadeChamado.cs" />
@@ -532,12 +545,26 @@
     <Compile Include="Views\SGA\VAvaliacao\Avaliacao.aspx.designer.cs">
       <DependentUpon>Avaliacao.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\SGA\VHistorico\Historico.aspx.cs">
+      <DependentUpon>Historico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VHistorico\Historico.aspx.designer.cs">
+      <DependentUpon>Historico.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\SGA\VRelatorio\Relatorio.aspx.cs">
       <DependentUpon>Relatorio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Views\SGA\VRelatorio\Relatorio.aspx.designer.cs">
       <DependentUpon>Relatorio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VRelatorio\RelatorioChamados.aspx.cs">
+      <DependentUpon>RelatorioChamados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VRelatorio\RelatorioChamados.aspx.designer.cs">
+      <DependentUpon>RelatorioChamados.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebServiceSGA.asmx.cs">
       <DependentUpon>WebServiceSGA.asmx</DependentUpon>
@@ -840,6 +867,7 @@
     <Folder Include="Apps\" />
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
+    <Folder Include="ReportRelatorio\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

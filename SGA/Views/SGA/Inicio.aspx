@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-12 col-md-6">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="row">
@@ -118,16 +118,56 @@
                 </div>
             </div>
             <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-clock-o fa-fw"></i>Tempo médio de conclusão de um atendimento
+                    </div>
+                    <div class="panel-body">
+                        <div id="body" class="container-fluid">
+                            <div id="div1">
+                                <p id="time"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-map-marker fa-fw"></i>Atendimentos por região
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Região</th>
+                                        <th>Quantidade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%foreach (var Lista in ListRegiao)
+                                        { %>
+                                    <tr>
+                                        <td><%=Lista.Regiao %></td>
+                                        <td><%=Lista.Media %></td>
+                                    </tr>
+                                    <%} %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
                 <div class="section">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-star fa-fw"></i>Ranking de técnicos
+                            <i class="fa fa-star fa-fw"></i>Ranking de avaliações
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table">
-                                    <%foreach (var Lista in ListAtend)
-                                        { %>
+                                <table class="table table-hover">
                                     <thead>
                                         <tr class="success">
                                             <th></th>
@@ -136,14 +176,48 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <%foreach (var Lista in ListTopAtend)
+                                            { %>
                                         <tr class="success">
                                             <td>
                                                 <img src="<%# ResolveClientUrl("~/Image/Estrela.png") %>" /></td>
                                             <td><%=Lista.Usuario %></td>
                                             <td><%=Lista.Media %></td>
                                         </tr>
+                                        <%} %>
                                     </tbody>
-                                    <%} %>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="section">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-star fa-fw"></i>Ranking de soluções técnicas
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr class="success">
+                                            <th>Técnico</th>
+                                            <th>Soluções úteis</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%foreach (var Lista in ListTopSoluc)
+                                            { %>
+                                        <tr class="success">
+                                            <td><%=Lista.Usuario %></td>
+                                            <td><%=Lista.Media %></td>
+                                        </tr>
+                                        <%} %>
+                                    </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -164,6 +238,12 @@
         </div>
     </div>
     <script>
+        window.setInterval(ut, 1000);
+
+        function ut() {
+            document.getElementById("time").innerHTML = "<%=ObjRelatorioTempoMedio.TempoAtendimento.ToString(@"hh\:mm")%>"
+        }
+
         Morris.Donut({
             element: 'donut-chart',
             data: [

@@ -16,7 +16,7 @@ namespace SGA.Models.Manter
         Chamado ObjChamado;
         Usuario ObjUsuario;
         Atendimento ObjAtend;
-        Notificacao ObjNotificacao;
+        Notificacao ObjNotificacao = FactoryNotificacao.GetNew();
         public ManterChamado()
         {
 
@@ -131,9 +131,12 @@ namespace SGA.Models.Manter
                         if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
                         {
                             //Notificação de atendimento
-                            ObjNotificacao = FactoryNotificacao.GetNew();
-                            ObjNotificacao.IdOrigem = ObjAtend.IdCliente;
+                            ObjNotificacao.IdOrigem = 0;
                             ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                            ObjNotificacao.Mensagem = InfoGlobal.MensagemChamadoCancelado;
+                            new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                            ObjNotificacao.IdDest = ObjAtend.IdCliente;
                             ObjNotificacao.Mensagem = InfoGlobal.MensagemChamadoCancelado;
                             new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 

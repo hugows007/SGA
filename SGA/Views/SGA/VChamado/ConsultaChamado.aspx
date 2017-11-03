@@ -113,6 +113,7 @@
                                     {%>
 
                                 <asp:Button ID="Encerrar" runat="server" Text="Encerrar atendimento" class="btn btn-default" OnClick="Encerrar_Click" />
+                                <asp:Button ID="Historico" runat="server" Text="Consultar soluções" class="btn btn-default" OnClick="Historico_Click"/>
                                 <%}
                                     else if (ObjStatusChm.Id.Equals(2) && EnceButtonClick)
                                     {%>

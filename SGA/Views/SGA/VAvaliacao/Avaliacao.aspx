@@ -40,7 +40,7 @@
                         <div class="panel-body">
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>
-                                    <label for="RatingAtendimento" class="control-label">Avaliação do atendimento:</label>
+                                    <label for="RatingAtendimento" class="control-label">Avaliação do atendimento do técnico:</label>
                                     <ajaxToolkit:Rating ID="RatingAtendimento" runat="server" StarCssClass="starRating" FilledStarCssClass="FilledStars" EmptyStarCssClass="EmptyStars" WaitingStarCssClass="WaitingStars" CurrentRating="2" MaxRating="5">
                                     </ajaxToolkit:Rating>
                                     <br />

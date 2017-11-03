@@ -12,5 +12,6 @@ namespace SGA.Models.Avaliacoes
         public string Comentario { get; set; }
         public int IdAtend { get; set; }
         public int IdChamado { get; set; }
+        public int LikeSolucao { get; set; }
     }
 }

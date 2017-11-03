@@ -215,5 +215,10 @@ namespace SGA.Views.SGA.VChamado
         {
             Response.Redirect("\\Views\\SGA\\VAvaliacao\\Avaliacao.aspx?IdChamado=" + ObjChamado.Id);
         }
+
+        protected void Historico_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("\\Views\\SGA\\VHistorico\\Historico.aspx?IdServico=" + ObjChamado.IdServico);
+        }
     }
 }

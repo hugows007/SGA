@@ -38,5 +38,24 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+
+        public bool IncluiAvaliacaoSolucao()
+        {
+            try
+            {
+                if (new ManterAvaliacaoDAO(ObjAvaliacao).IncluiAvaliacaoSolucaoDAO())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

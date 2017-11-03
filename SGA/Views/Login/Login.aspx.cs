@@ -63,5 +63,10 @@ namespace SGA
                 MsgLabel.Text = "Erro interno.";
             }
         }
+
+        protected void EsqueciButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -18,8 +18,11 @@ namespace SGA.Views.Site
         public Relatorio ObjRelatorio = FactoryRelatorio.GetNew();
         public Relatorio ObjRelatorioDonut = FactoryRelatorio.GetNew();
         public Relatorio ObjRelatorioChart = FactoryRelatorio.GetNew();
+        public Relatorio ObjRelatorioTempoMedio = FactoryRelatorio.GetNew();
         public List<Relatorio> ListRelat = new List<Relatorio>();
-        public List<Relatorio> ListAtend = new List<Relatorio>();
+        public List<Relatorio> ListTopAtend = new List<Relatorio>();
+        public List<Relatorio> ListTopSoluc = new List<Relatorio>();
+        public List<Relatorio> ListRegiao = new List<Relatorio>();
 
         List<Relatorio> ListAux;
         int Count;
@@ -70,15 +73,26 @@ namespace SGA.Views.Site
                         }
                     }
 
-
                     ListRelat.Add(Obj);
                     Count += 1;
                 }
 
                 foreach (var Lista in new ManterRelatorio(ObjRelatorio).GetTopTecnicos())
                 {
-                    ListAtend.Add(Lista);
+                    ListTopAtend.Add(Lista);
                 }
+
+                foreach (var Lista in new ManterRelatorio(ObjRelatorio).GetTopSolucoes())
+                {
+                    ListTopSoluc.Add(Lista);
+                }
+
+                foreach (var Lista in new ManterRelatorio(ObjRelatorio).GetAtendimentoPorRegiao())
+                {
+                    ListRegiao.Add(Lista);
+                }
+
+                ObjRelatorioTempoMedio = new ManterRelatorio(ObjRelatorioTempoMedio).GetTempoMedioAtendimento();
             }
             catch (Exception Ex)
             {

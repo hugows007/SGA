@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="ReportRelatorio\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SGA\SGA.csproj">
