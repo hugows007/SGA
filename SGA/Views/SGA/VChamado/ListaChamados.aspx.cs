@@ -45,6 +45,11 @@ namespace SGA.Views.SGA.VChamado
                 {
                     ObjChamado.Fila = false;
                 }
+                if(Session["perfil"].Equals("Cliente Físico") || Session["perfil"].Equals("Cliente Jurídico"))
+                {
+                    ObjUsuario.Id = Convert.ToInt32(Session["id"]);
+                    ObjUsuario.Perfil = "Cliente";
+                }
 
                 foreach (var Result in new ManterChamado(ObjChamado, ObjUsuario).ConsultaChamados())
                 {

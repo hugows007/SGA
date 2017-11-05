@@ -40,12 +40,30 @@ namespace SGA.Views.SGA.VRelatorio {
         protected global::System.Web.UI.HtmlControls.HtmlSelect filtrosPrioridade;
         
         /// <summary>
-        /// Gerar control.
+        /// GerarRelatorioChamado control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Gerar;
+        protected global::System.Web.UI.WebControls.Button GerarRelatorioChamado;
+        
+        /// <summary>
+        /// GerarRelatorioSLA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GerarRelatorioSLA;
+        
+        /// <summary>
+        /// GerarRelatorioTempo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GerarRelatorioTempo;
     }
 }

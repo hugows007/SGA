@@ -19,13 +19,13 @@ namespace SGA.Views.SGA.VRelatorio
 
         }
 
-        protected void Gerar_Click(object sender, EventArgs e)
+        protected void GerarRelatorioChamado_Click(object sender, EventArgs e)
         {
             try
             {
                 if (filtrosChm.SelectedIndex == 0)
                 {
-                    foreach(var Itens in filtrosChm.Items)
+                    foreach (var Itens in filtrosChm.Items)
                     {
                         ObjRelatorio.FiltroRelatorio += "and" + Itens + ", ";
                     }
@@ -40,7 +40,31 @@ namespace SGA.Views.SGA.VRelatorio
                     //ObjRelatorio.FiltroRelatorio = filtrosPrioridade.Items[filtrosPrioridade.SelectedIndex].Text;
                 }
 
-                ListaRelatorio = new ManterRelatorio(ObjRelatorio).GetRelatorioChamados();
+                Response.Redirect("\\Views\\SGA\\VRelatorio\\RelatorioChamados.aspx?Relatorio=Chamados", false);
+            }
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
+            }
+        }
+
+        protected void GerarRelatorioSLA_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Response.Redirect("\\Views\\SGA\\VRelatorio\\RelatorioChamados.aspx?Relatorio=SLA", false);
+            }
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
+            }
+        }
+
+        protected void GerarRelatorioTempo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Response.Redirect("\\Views\\SGA\\VRelatorio\\RelatorioChamados.aspx?Relatorio=TempoAtend", false);
             }
             catch (Exception Ex)
             {

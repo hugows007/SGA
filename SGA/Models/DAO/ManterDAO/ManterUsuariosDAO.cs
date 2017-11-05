@@ -402,6 +402,8 @@ namespace SGA.Models.DAO.ManterDAO
                         ,CASE WHEN usrReg.idRegiaoAtendimento IS NULL THEN 0 ELSE usrReg.idRegiaoAtendimento END AS idRegiaoAtendimento
 						,CASE WHEN usrEspec.idEspecialidade IS NULL THEN 0 ELSE usrEspec.idEspecialidade END AS idEspecialidade
 						,membship.Email
+                        ,membship.UserId
+                        ,membusr.UserName
 						FROM Usuario usr inner join 
                         UsuarioXMemberShipUser membxusr on (usr.idUsuario = membxusr.idUsuario) inner join
                         aspnet_Membership membship on (membxusr.IdUsrMemberShip = membship.UserId) inner join
@@ -427,6 +429,8 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.ObjRegiao.Id = Dr.GetInt32(7);
                         ObjUsuario.ObjEspec.Id = Dr.GetInt32(8);
                         ObjUsuario.Email = Dr.GetString(9);
+                        ObjUsuario.IdMS = Convert.ToString(Dr.GetGuid(10));
+                        ObjUsuario.Login = Dr.GetString(11);
 
                         ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
                     }
@@ -435,8 +439,68 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+                    throw;
+                }
+            }
+        }
+        public Usuario ConsultaUsuarioByEmailDAO()
+        {
+            SqlCommand Cmd = null;
+            SqlDataReader Dr = null;
 
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                    SELECT 
+                        usr.idUsuario
+                        ,usr.nome
+                        ,usr.endereco
+                        ,usr.numero
+                        ,usr.cep
+                        ,usr.telefone
+                        ,usr.idStatusUsuario
+                        ,CASE WHEN usrReg.idRegiaoAtendimento IS NULL THEN 0 ELSE usrReg.idRegiaoAtendimento END AS idRegiaoAtendimento
+						,CASE WHEN usrEspec.idEspecialidade IS NULL THEN 0 ELSE usrEspec.idEspecialidade END AS idEspecialidade
+						,membship.Email
+                        ,membship.UserId
+                        ,membusr.UserName
+						FROM Usuario usr inner join 
+                        UsuarioXMemberShipUser membxusr on (usr.idUsuario = membxusr.idUsuario) inner join
+                        aspnet_Membership membship on (membxusr.IdUsrMemberShip = membship.UserId) inner join
+                        aspnet_Users membusr on (membxusr.IdUsrMemberShip = membusr.UserId) left join
+						UsuarioxRegiaoAtendimento usrReg on (usr.idUsuario = usrreg.idUsuario) left join
+						UsuarioXEspecialidade usrEspec on (usr.idUsuario = usrEspec.idUsuario) WHERE
+                        membship.Email = @Email and usr.idStatusUsuario = 1;", Con); //Não coloquei empresa pois uso para recuperar senha!
+
+                    Cmd.Parameters.AddWithValue("@Email", ObjUsuario.Email);
+                    //Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjUsuario.Id = Dr.GetInt32(0);
+                        ObjUsuario.Nome = Dr.GetString(1);
+                        ObjUsuario.Endereco = Dr.GetString(2);
+                        ObjUsuario.Numero = Dr.GetString(3);
+                        ObjUsuario.Cep = Dr.GetString(4);
+                        ObjUsuario.Telefone = Dr.GetString(5);
+                        ObjUsuario.IdStatus = Dr.GetInt32(6);
+                        ObjUsuario.ObjRegiao.Id = Dr.GetInt32(7);
+                        ObjUsuario.ObjEspec.Id = Dr.GetInt32(8);
+                        ObjUsuario.Email = Dr.GetString(9);
+                        ObjUsuario.IdMS = Convert.ToString(Dr.GetGuid(10));
+                        ObjUsuario.Login = Dr.GetString(11);
+
+                        ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
+                    }
+
+                    return ObjUsuario;
+                }
+                catch (SqlException)
+                {
                     throw;
                 }
             }

@@ -35,6 +35,7 @@ namespace SGA.Models.Relatorios
         public DateTime DataInicioAtendimento { get; set; }
         public DateTime DataFimAtendimento { get; set; }
         public TimeSpan TempoAtendimento { get; set; }
+        public TimeSpan SLA { get; set; }
         public string InformacaoCancelamento { get; set; }
         public int Reaberturas { get; set; }
         public int Pendencias { get; set; }

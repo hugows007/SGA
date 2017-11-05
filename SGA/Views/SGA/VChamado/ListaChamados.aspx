@@ -29,10 +29,14 @@
                                     <th>Data de fechamento</th>
                                     <th>Serviço</th>
                                     <%int Qtd = 0;
-                                        if ((Session["perfil"]).Equals("Técnico"))
-                                        { %>
+                                    if ((Session["perfil"]).Equals("Técnico"))
+                                    { %>
                                     <th>Atendimento
                                     </th>
+                                    <%}
+                                    else
+                                    { %>
+                                    <th></th>
                                     <%} %>
                                 </tr>
                             </thead>
@@ -48,16 +52,18 @@
                                     <td><%=Result.DataAbertura %></td>
                                     <td><%=Result.DataFechamento %></td>
                                     <td><%=NomeServico[Qtd] %></td>
+                                    <%if ((Session["perfil"]).Equals("Técnico") && NomeStatus[Qtd].Equals("Aberto") || NomeStatus[Qtd].Equals("Retrabalho"))
+                                        { %>
                                     <td>
-                                        <%if ((Session["perfil"]).Equals("Técnico") && NomeStatus[Qtd].Equals("Aberto") || NomeStatus[Qtd].Equals("Retrabalho"))
-                                            { %>
-
                                         <a href="/Views/SGA/VAtendimento/IniciaAtendimento.aspx?IdChamado=<%=Result.Id %>&StatusChamado=<%=NomeStatus[Qtd] %>">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </a>
-
-                                        <%} %>
                                     </td>
+                                    <%}
+                                        else
+                                        {%>
+                                    <td></td>
+                                    <%}  %>
                                 </tr>
                                 <% Qtd += 1;
                                     } %>

@@ -57,6 +57,14 @@ namespace SGA.Models.DAO.ManterDAO
 
                         Cmd.Parameters.AddWithValue("@idTecnico", ObjUsuario.Id);
                     }
+                    else if (ObjUsuario.Perfil.Equals("Cliente"))
+                    {
+                        Cmd = new SqlCommand(@"
+                SELECT * FROM Chamado Chm inner join Atendimento Atd on (Chm.idChamado = Atd.idChamado) WHERE
+                    Atd.idCliente = @IdCliente;", Con);
+
+                        Cmd.Parameters.AddWithValue("@IdCliente", ObjUsuario.Id);
+                    }
                     else
                     {
                         Cmd = new SqlCommand(@"
@@ -89,7 +97,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -146,7 +154,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -180,6 +188,9 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjChamado.DataFechamento = Dr.GetDateTime(6);
                         ObjChamado.IdServico = Dr.GetInt32(7);
                         ObjChamado.IdPrioridade = Dr.GetInt32(8);
+                        ObjChamado.InfoCancelamento = Dr[9].ToString();
+                        ObjChamado.Tramite = Dr[10].ToString();
+                        ObjChamado.InfoPendencia = Dr[11].ToString();
 
                         if (!Dr.IsDBNull(9))
                         {
@@ -200,41 +211,54 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
         }
-        public bool AlteraChamadoDAO()
+        public bool AtualizaTramiteDAO()
         {
+            SqlCommand Cmd;
+            SqlDataReader Dr;
+
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
-                    SqlCommand Cmd = new SqlCommand(@"
-                UPDATE 
-	                [dbo].[Chamado] SET 
-	                    Assunto = @Assunto
-                        ,idServico = @IdServ
-                        ,Descricao = @Desc
-                        ,dataRegistro = @Data
-                        ,usuarioRegistro = @Usuario
+                    Cmd = new SqlCommand(@"
+                SELECT infoTramite FROM
+	                [dbo].[Chamado]
                         WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
 
-                    Cmd.Parameters.AddWithValue("@Assunto", ObjChamado.Assunto);
-                    Cmd.Parameters.AddWithValue("@IdServ", ObjChamado.IdServico);
-                    Cmd.Parameters.AddWithValue("@Desc", ObjChamado.Descricao);
+                    Cmd.Parameters.AddWithValue("@Tramite", ObjChamado.Tramite);
                     Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
-                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
-                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+                
+                    Dr = Cmd.ExecuteReader();
 
+                    while (Dr.Read())
+                    {
+                        ObjChamado.Tramite += Dr[0].ToString();
+                    }
+
+                    Dr.Close();
+
+                    Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Chamado] SET 
+	                    infoTramite = @Tramite
+                        WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Tramite", ObjChamado.Tramite);
+                    Cmd.Parameters.AddWithValue("@Id", ObjChamado.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                   
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -266,7 +290,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -315,7 +339,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -339,7 +363,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -369,7 +393,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -399,7 +423,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }

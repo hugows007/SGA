@@ -105,6 +105,10 @@ namespace SGA.Models.Manter
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByIdDAO();
         }
+        public Usuario ConsultaUsuarioByEmail()
+        {
+            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByEmailDAO();
+        }
         public Usuario ConsultaUsuarioByLogin()
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByLoginDAO();
@@ -132,7 +136,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -151,7 +155,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -163,7 +167,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -182,7 +186,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -201,7 +205,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -249,7 +253,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
 
@@ -276,7 +280,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -288,7 +292,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -300,7 +304,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -312,7 +316,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -324,10 +328,50 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
+        public bool RecuperarSenha()
+        {
+            try
+            {
+                ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioByEmail();
 
+                if (!ObjUsuario.Id.Equals(0))
+                {
+                    MembershipUser Usuario = Membership.GetUser(ObjUsuario.Login);
+
+                    string Senha = Membership.GeneratePassword(8, 0);
+                    Usuario.ChangePassword(Usuario.ResetPassword(), Senha);
+                    ObjUsuario.Senha = Senha;
+
+                    return new ManterNotificacao(ObjUsuario).EnviaEmailRecuperacao();
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool AlteraSenha()
+        {
+            try
+            {
+                MembershipUser Usuario = Membership.GetUser(ObjUsuario.Login);
+                Usuario.ChangePassword(Usuario.ResetPassword(), ObjUsuario.Senha);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

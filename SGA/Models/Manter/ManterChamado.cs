@@ -97,11 +97,11 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
-        public bool AlteraChamado()
+        public bool AtualizaTramite()
         {
             try
             {
-                if (new ManterChamadoDAO(ObjChamado).AlteraChamadoDAO())
+                if (new ManterChamadoDAO(ObjChamado).AtualizaTramiteDAO())
                 {
                     return true;
                 }

@@ -54,7 +54,7 @@
                             </asp:UpdatePanel>
                         </div>
                         <label for="ComentarioTextBox" class="control-label">Se quiser, também pode comentar: </label>
-                        <asp:TextBox ID="ComentarioTextBox" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                        <textarea rows="5" cols ="50" id="Comentario" name="Comentario" maxlength="100" class="form-control input-sm" placeholder="Digite seu comentário (máximo de 100 caracteres)" runat="server"></textarea>
                         <br />
                         <asp:Button ID="AvaliarButton" runat="server" Text="Avaliar!" CssClass="btn btn-success" OnClick="AvaliarButton_Click" />
                     </div>

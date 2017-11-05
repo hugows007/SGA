@@ -46,9 +46,9 @@ namespace SGA.Views.SGA.VAvaliacao
                 ObjAvaliacao.IdAtend = ObjAtend.Id;
                 ObjAvaliacao.AvaAtend = RatingAtendimento.CurrentRating;
                 ObjAvaliacao.AvaChamado = RatingChamado.CurrentRating;
-                ObjAvaliacao.Comentario = ComentarioTextBox.Text;
+                ObjAvaliacao.Comentario = Comentario.Value;
 
-                if(new ManterAvaliacao(ObjAvaliacao).IncluiAvaliacao())
+                if (new ManterAvaliacao(ObjAvaliacao).IncluiAvaliacao())
                 {
                     Mensagem = "Avaliado com sucesso!";
                 }
@@ -57,9 +57,13 @@ namespace SGA.Views.SGA.VAvaliacao
                     Mensagem = "Ocorreu um erro ao avaliar.";
                 }
             }
-            catch (Exception Ex)
+            catch (System.Data.SqlClient.SqlException Ex)
             {
                 Mensagem = "Este chamado já foi avaliado.";
+                LogException.InsereLogBd(Ex);
+            }
+            catch (Exception Ex)
+            {
                 LogException.InsereLogBd(Ex);
             }
         }

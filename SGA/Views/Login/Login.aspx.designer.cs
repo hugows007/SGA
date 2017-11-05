@@ -49,6 +49,24 @@ namespace SGA {
         protected global::System.Web.UI.WebControls.Button EsqueciButton;
         
         /// <summary>
+        /// TxtEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtEmail;
+        
+        /// <summary>
+        /// RecuperarButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button RecuperarButton;
+        
+        /// <summary>
         /// MsgLabel control.
         /// </summary>
         /// <remarks>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
+using System.Web.Security;
 
 namespace SGA.Models.Manter
 {
@@ -13,8 +14,8 @@ namespace SGA.Models.Manter
     {
         public Notificacao ObjNotificacao;
         public Usuario ObjUsuario;
-        public Usuario ObjUsuarioEmail = FactoryUsuario.GetNew(TipoUsuario.Usuario);
 
+        public Usuario ObjUsuarioEmail = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         public Usuario ObjUsuarioCliente = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         public ManterNotificacao()
         {
@@ -23,6 +24,10 @@ namespace SGA.Models.Manter
         public ManterNotificacao(Notificacao ObjNotificacao)
         {
             this.ObjNotificacao = ObjNotificacao;
+        }
+        public ManterNotificacao(Usuario ObjUsuario)
+        {
+            this.ObjUsuario = ObjUsuario;
         }
         public ManterNotificacao(Notificacao ObjNotificacao, Usuario ObjUsuario)
         {
@@ -103,7 +108,35 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                return false;
+                throw;
+            }
+        }
+        public bool EnviaEmailRecuperacao()
+        {
+            System.Net.Mail.SmtpClient Client = new System.Net.Mail.SmtpClient();
+            Client.Port = 587;
+            Client.Host = "smtp.gmail.com";
+            Client.EnableSsl = true;
+            Client.Credentials = new System.Net.NetworkCredential("noreplysgati@gmail.com", "sgati123");
+            MailMessage Mail = new MailMessage();
+            Mail.Sender = new System.Net.Mail.MailAddress("noreplysgati@gmail.com", "SGA TI");
+            Mail.From = new MailAddress("noreplysgati@gmail.com", "SGA TI");
+            Mail.To.Add(new MailAddress(ObjUsuario.Email, ObjUsuario.Nome));
+            Mail.Subject = "NO-REPLY - Recuperar senha.";
+            Mail.IsBodyHtml = true;
+            Mail.Priority = MailPriority.High;
+
+            Mail.Body = @"<b>SGA TI informa:</b><br/><br/> Você solicitou uma mudança de senha as " + DateTime.Now + ". <br/> Sua senha agora é: <b>" + ObjUsuario.Senha + "</b>.<br/><br/> Favor altera-la no próximo login.";
+            Mail.Body += "<br/> Para dúvidas ou problemas, favor contatar o suporte técnico.<br/><br/> <b>Equipe SGA TI</b>";
+
+            try
+            {
+                Client.Send(Mail);
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

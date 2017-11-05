@@ -3,6 +3,7 @@ using SGA.Models.Relatorios;
 using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
@@ -134,7 +135,8 @@ namespace SGA.Models.DAO.ManterDAO
                             }
 
                         }
-                        else {
+                        else
+                        {
                             switch (Dr.GetInt32(1))
                             {
                                 case 1:
@@ -253,7 +255,7 @@ namespace SGA.Models.DAO.ManterDAO
                 try
                 {
                     Cmd = new SqlCommand(@"
-select 
+                    select 
                             Chm.idChamado
                             ,Usr.nome as Cliente
                             ,UsrTec.nome as Tecnico
@@ -314,6 +316,87 @@ select
                 }
             }
         }
+        public List<Relatorio> GetRelatorioSLADAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                    select 
+                        Chm.idChamado, Srv.nome as Servico, datediff(SECOND,dataAbertura, dataFechamento) as Tempo_Conclusao_Chamado
+                        ,CONVERT(CHAR(5), DATEADD(MINUTE, 60*sla, 0), 108) as SLA_Servico from 
+                        Chamado Chm inner join 
+                        Servico Srv on (Chm.idServico = Srv.idServico) where
+                        idStatusChamado = 3 and Chm.idEmpresa = @Empresa
+                        order by 3;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Relatorio Obj = FactoryRelatorio.GetNew();
+                        Obj.Chamado = Dr.GetInt32(0);
+                        Obj.Servico = Dr.GetString(1);
+                        Obj.TempoAtendimento = TimeSpan.FromSeconds(Convert.ToDouble(Dr[2]));
+                        Obj.SLA = TimeSpan.Parse(Dr[3].ToString());
+                        ListRelat.Add(Obj);
+                    }
+                    return ListRelat;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
+        public List<Relatorio> GetRelatorioTempoAtendimentoDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                    select 
+                        Chm.idChamado
+                        ,Srv.nome
+                        ,Usr.nome
+                        ,case when datediff(SECOND, dataInicioAtendimento, dataFimAtendimento) < 0 then 0 else datediff(SECOND, dataInicioAtendimento, dataFimAtendimento) end from 
+                        Atendimento Atd inner join 
+                        Chamado Chm on (Atd.idChamado = Chm.idChamado) inner join
+                        Usuario Usr on (Atd.idTecnico = Usr.idUsuario) inner join
+                        Servico Srv on (Srv.idServico = Chm.idServico) where
+                        Chm.idStatusChamado = 3 and Atd.idAtendimento = (select max(idAtendimento) from Atendimento where idChamado = Chm.idChamado) and Chm.idEmpresa = @Empresa
+                        order by 4;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Relatorio Obj = FactoryRelatorio.GetNew();
+                        Obj.Chamado = Dr.GetInt32(0);
+                        Obj.Servico = Dr.GetString(1);
+                        Obj.Tecnico = Dr.GetString(2);
+                        Obj.TempoAtendimento = TimeSpan.FromSeconds(Convert.ToDouble(Dr[3]));
+                        ListRelat.Add(Obj);
+                    }
+                    return ListRelat;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
+
         public Relatorio GetTempoMedioAtendimentoDAO()
         {
             SqlDataReader Dr = null;

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSetChamados" targetNamespace="http://tempuri.org/DataSetChamados.xsd" xmlns:mstns="http://tempuri.org/DataSetChamados.xsd" xmlns="http://tempuri.org/DataSetChamados.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSetChamados" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSetChamados" msprop:Generator_UserDSName="DataSetChamados">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Chamados" msprop:Generator_TableClassName="ChamadosDataTable" msprop:Generator_TableVarName="tableChamados" msprop:Generator_RowChangedName="ChamadosRowChanged" msprop:Generator_TablePropName="Chamados" msprop:Generator_RowDeletingName="ChamadosRowDeleting" msprop:Generator_RowChangingName="ChamadosRowChanging" msprop:Generator_RowEvHandlerName="ChamadosRowChangeEventHandler" msprop:Generator_RowDeletedName="ChamadosRowDeleted" msprop:Generator_RowClassName="ChamadosRow" msprop:Generator_UserTableName="Chamados" msprop:Generator_RowEvArgName="ChamadosRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="IdChamado" msprop:Generator_ColumnVarNameInTable="columnIdChamado" msprop:Generator_ColumnPropNameInRow="IdChamado" msprop:Generator_ColumnPropNameInTable="IdChamadoColumn" msprop:Generator_UserColumnName="IdChamado" type="xs:string" minOccurs="0" />
+              <xs:element name="Cliente" msprop:Generator_ColumnVarNameInTable="columnCliente" msprop:Generator_ColumnPropNameInRow="Cliente" msprop:Generator_ColumnPropNameInTable="ClienteColumn" msprop:Generator_UserColumnName="Cliente" type="xs:string" minOccurs="0" />
+              <xs:element name="Tecnico" msprop:Generator_ColumnVarNameInTable="columnTecnico" msprop:Generator_ColumnPropNameInRow="Tecnico" msprop:Generator_ColumnPropNameInTable="TecnicoColumn" msprop:Generator_UserColumnName="Tecnico" type="xs:string" minOccurs="0" />
+              <xs:element name="Assunto" msprop:Generator_ColumnVarNameInTable="columnAssunto" msprop:Generator_ColumnPropNameInRow="Assunto" msprop:Generator_ColumnPropNameInTable="AssuntoColumn" msprop:Generator_UserColumnName="Assunto" type="xs:string" minOccurs="0" />
+              <xs:element name="Servico" msprop:Generator_ColumnVarNameInTable="columnServico" msprop:Generator_ColumnPropNameInRow="Servico" msprop:Generator_ColumnPropNameInTable="ServicoColumn" msprop:Generator_UserColumnName="Servico" type="xs:string" minOccurs="0" />
+              <xs:element name="Regiao" msprop:Generator_ColumnVarNameInTable="columnRegiao" msprop:Generator_ColumnPropNameInRow="Regiao" msprop:Generator_ColumnPropNameInTable="RegiaoColumn" msprop:Generator_UserColumnName="Regiao" type="xs:string" minOccurs="0" />
+              <xs:element name="Prioridade" msprop:Generator_ColumnVarNameInTable="columnPrioridade" msprop:Generator_ColumnPropNameInRow="Prioridade" msprop:Generator_ColumnPropNameInTable="PrioridadeColumn" msprop:Generator_UserColumnName="Prioridade" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" type="xs:string" minOccurs="0" />
+              <xs:element name="Data_abertura" msprop:Generator_ColumnVarNameInTable="columnData_abertura" msprop:Generator_ColumnPropNameInRow="Data_abertura" msprop:Generator_ColumnPropNameInTable="Data_aberturaColumn" msprop:Generator_UserColumnName="Data_abertura" type="xs:string" minOccurs="0" />
+              <xs:element name="Data_fechamento" msprop:Generator_ColumnVarNameInTable="columnData_fechamento" msprop:Generator_ColumnPropNameInRow="Data_fechamento" msprop:Generator_ColumnPropNameInTable="Data_fechamentoColumn" msprop:Generator_UserColumnName="Data_fechamento" type="xs:string" minOccurs="0" />
+              <xs:element name="Data_inicio_atendimento" msprop:Generator_ColumnVarNameInTable="columnData_inicio_atendimento" msprop:Generator_ColumnPropNameInRow="Data_inicio_atendimento" msprop:Generator_ColumnPropNameInTable="Data_inicio_atendimentoColumn" msprop:Generator_UserColumnName="Data_inicio_atendimento" type="xs:string" minOccurs="0" />
+              <xs:element name="Data_fim_atendimento" msprop:Generator_ColumnVarNameInTable="columnData_fim_atendimento" msprop:Generator_ColumnPropNameInRow="Data_fim_atendimento" msprop:Generator_ColumnPropNameInTable="Data_fim_atendimentoColumn" msprop:Generator_UserColumnName="Data_fim_atendimento" type="xs:string" minOccurs="0" />
+              <xs:element name="Tempo_atendimento" msprop:Generator_ColumnVarNameInTable="columnTempo_atendimento" msprop:Generator_ColumnPropNameInRow="Tempo_atendimento" msprop:Generator_ColumnPropNameInTable="Tempo_atendimentoColumn" msprop:Generator_UserColumnName="Tempo_atendimento" type="xs:string" minOccurs="0" />
+              <xs:element name="Informacao_cancelamento" msprop:Generator_ColumnVarNameInTable="columnInformacao_cancelamento" msprop:Generator_ColumnPropNameInRow="Informacao_cancelamento" msprop:Generator_ColumnPropNameInTable="Informacao_cancelamentoColumn" msprop:Generator_UserColumnName="Informacao_cancelamento" type="xs:string" minOccurs="0" />
+              <xs:element name="Reaberturas" msprop:Generator_ColumnVarNameInTable="columnReaberturas" msprop:Generator_ColumnPropNameInRow="Reaberturas" msprop:Generator_ColumnPropNameInTable="ReaberturasColumn" msprop:Generator_UserColumnName="Reaberturas" type="xs:string" minOccurs="0" />
+              <xs:element name="Pendencias" msprop:Generator_ColumnVarNameInTable="columnPendencias" msprop:Generator_ColumnPropNameInRow="Pendencias" msprop:Generator_ColumnPropNameInTable="PendenciasColumn" msprop:Generator_UserColumnName="Pendencias" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

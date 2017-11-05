@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SGA.Views.SGA.VChamado {
+namespace SGA.Views.SGA.VUsuario {
     
     
-    public partial class ConsultaChamado {
+    public partial class Configuracao {
         
         /// <summary>
         /// MsgLabel control.
@@ -22,111 +22,102 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
-        /// DescCancelTextBox control.
+        /// NomeTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DescCancelTextBox;
+        protected global::System.Web.UI.WebControls.TextBox NomeTextBox;
         
         /// <summary>
-        /// TramiteTextBox control.
+        /// EndTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea TramiteTextBox;
+        protected global::System.Web.UI.WebControls.TextBox EndTextBox;
         
         /// <summary>
-        /// CheckBoxPend control.
+        /// NumTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBoxPend;
+        protected global::System.Web.UI.WebControls.TextBox NumTextBox;
         
         /// <summary>
-        /// EnceRelatTextBox control.
+        /// CEPTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EnceRelatTextBox;
+        protected global::System.Web.UI.WebControls.TextBox CEPTextBox;
         
         /// <summary>
-        /// PendRelatTextBox control.
+        /// TelTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PendRelatTextBox;
+        protected global::System.Web.UI.WebControls.TextBox TelTextBox;
         
         /// <summary>
-        /// Tramite control.
+        /// EmailTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Tramite;
+        protected global::System.Web.UI.WebControls.TextBox EmailTextBox;
         
         /// <summary>
-        /// Cancelar control.
+        /// AlterarButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Cancelar;
+        protected global::System.Web.UI.WebControls.Button AlterarButton;
         
         /// <summary>
-        /// MotCancelDescTextBox control.
+        /// SenhaAlterarButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox MotCancelDescTextBox;
+        protected global::System.Web.UI.WebControls.Button SenhaAlterarButton;
         
         /// <summary>
-        /// Encerrar control.
+        /// SenhaTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Encerrar;
+        protected global::System.Web.UI.WebControls.TextBox SenhaTextBox;
         
         /// <summary>
-        /// Historico control.
+        /// ConfirmacaoTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Historico;
+        protected global::System.Web.UI.WebControls.TextBox ConfirmacaoTextBox;
         
         /// <summary>
-        /// RelatAtend control.
+        /// SalvarSenhaButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RelatAtend;
-        
-        /// <summary>
-        /// AvaliarButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton AvaliarButton;
+        protected global::System.Web.UI.WebControls.Button SalvarSenhaButton;
     }
 }

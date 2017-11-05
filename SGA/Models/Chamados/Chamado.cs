@@ -12,6 +12,7 @@ namespace SGA.Models.Chamados
         public string Assunto { get; set; }
         public string Descricao { get; set; }
         public int IdStatus { get; set; }
+        public string Tramite { get; set; }
         public DateTime DataAbertura { get; set; }
         public DateTime DataFechamento { get; set; }
         public int IdServico { get; set; }

@@ -14,7 +14,8 @@ namespace SGA
 {
     public partial class Login : System.Web.UI.Page
     {
-        Usuario ObjUsr;
+        Usuario ObjUsuario;
+        public bool EsqueciSenha;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -42,13 +43,13 @@ namespace SGA
             {
                 if (ManterLogin.Logar(TxtLogin.Text, TxtSenha.Text))
                 {
-                    ObjUsr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-                    ObjUsr.Login = TxtLogin.Text;
+                    ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                    ObjUsuario.Login = TxtLogin.Text;
 
                     TxtLogin.Visible = true;
-                    ObjUsr = new ManterUsuario(ObjUsr).GetUsuarioEmpresa();
+                    ObjUsuario = new ManterUsuario(ObjUsuario).GetUsuarioEmpresa();
                     Session["usuario"] = TxtLogin.Text;
-                    InfoGlobal.GlobalIdEmpresa = ObjUsr.IdEmpresa;
+                    InfoGlobal.GlobalIdEmpresa = ObjUsuario.IdEmpresa;
                     FormsAuthentication.RedirectFromLoginPage(TxtLogin.Text, true);
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }
@@ -66,7 +67,25 @@ namespace SGA
 
         protected void EsqueciButton_Click(object sender, EventArgs e)
         {
+            EsqueciSenha = true;
+        }
 
+        protected void RecuperarButton_Click(object sender, EventArgs e)
+        {
+            MsgLabel.Text = "";
+
+            ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+            ObjUsuario.Email = TxtEmail.Text;
+
+            if (new ManterUsuario(ObjUsuario).RecuperarSenha())
+            {
+                MsgLabel.Text = "Senha enviada para seu e-mail. Favor consultar sua caixa de entrada.";
+            }
+
+            else
+            {
+                MsgLabel.Text = "E-mail não encontrado ou é inválido. Favor rever.";
+            }
         }
     }
 }

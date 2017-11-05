@@ -131,7 +131,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-map-marker fa-fw"></i>Atendimentos por região
@@ -159,7 +159,37 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-star fa-fw"></i>Ranking tempo de atendimento
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr class="success">
+                                        <th>Chamado</th>
+                                        <th>Técnico</th>
+                                        <th>Tempo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%foreach (var Lista in ListTopTempo)
+                                        { %>
+                                    <tr class="success">
+                                        <td><%=Lista.Chamado %></td>
+                                        <td><%=Lista.Tecnico %></td>
+                                        <td><%=String.Format("{0:%d} dia(s), ",Lista.TempoAtendimento) + new DateTime(Lista.TempoAtendimento.Ticks).ToString("HH:mm:ss")%> </td>
+                                    </tr>
+                                    <%} %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
                 <div class="section">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -193,7 +223,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <div class="section">
                     <div class="panel panel-default">
                         <div class="panel-heading">

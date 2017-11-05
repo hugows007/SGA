@@ -31,6 +31,7 @@ namespace SGA.Views.SGA.VChamado
         public bool CancButtonClick;
         public bool EnceButtonClick;
         public bool PendBox;
+        public bool TramiteClick;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -168,7 +169,7 @@ namespace SGA.Views.SGA.VChamado
                         MsgLabel.Text = "Informe as pendências.";
                     }
 
-                    if(!CheckBoxPend.Checked)
+                    if (!CheckBoxPend.Checked)
                     {
                         if (new ManterAtendimento(ObjAtend, ObjChamado).EncerraAtendimento())
                         {
@@ -219,6 +220,29 @@ namespace SGA.Views.SGA.VChamado
         protected void Historico_Click(object sender, EventArgs e)
         {
             Response.Redirect("\\Views\\SGA\\VHistorico\\Historico.aspx?IdServico=" + ObjChamado.IdServico);
+        }
+
+        protected void Tramite_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TramiteClick = true;
+
+                if (!TramiteTextBox.Value.Equals(""))
+                {
+                    ObjChamado.Tramite = "  "+ DateTime.Now + ": " + TramiteTextBox.Value;
+                    new ManterChamado(ObjChamado).AtualizaTramite();
+                }
+                else
+                {
+                    MsgLabel.Text = "Digite alguma informação.";
+                }
+            }
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+            }
         }
     }
 }

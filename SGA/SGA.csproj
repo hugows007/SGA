@@ -121,6 +121,7 @@
       <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -230,6 +231,7 @@
     <Content Include="Views\SGA\VHistorico\Historico.aspx" />
     <Content Include="Views\SGA\VRelatorio\Relatorio.aspx" />
     <Content Include="Views\SGA\VRelatorio\RelatorioChamados.aspx" />
+    <Content Include="Views\SGA\VUsuario\Configuracao.aspx" />
     <Content Include="WebServiceSGA.asmx" />
     <Content Include="packages.config" />
     <Content Include="Scripts\chat\index.js" />
@@ -565,6 +567,13 @@
     </Compile>
     <Compile Include="Views\SGA\VRelatorio\RelatorioChamados.aspx.designer.cs">
       <DependentUpon>RelatorioChamados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\Configuracao.aspx.cs">
+      <DependentUpon>Configuracao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\Configuracao.aspx.designer.cs">
+      <DependentUpon>Configuracao.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebServiceSGA.asmx.cs">
       <DependentUpon>WebServiceSGA.asmx</DependentUpon>

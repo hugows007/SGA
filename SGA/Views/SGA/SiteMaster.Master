@@ -219,7 +219,7 @@
                         <ul class="dropdown-menu dropdown-user">
                             <li><a href="#"><i class="fa fa-user fa-fw"></i><%=ObjUsuario.Login%></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i>Configurações</a>
+                            <li><a href="/Views/SGA/VUsuario/Configuracao.aspx"><i class="fa fa-gear fa-fw"></i>Configurações</a>
                             </li>
                             <li class="divider"></li>
                             <li><a href="/Views/SGA/Logout.aspx"><i class="fa fa-sign-out fa-fw"></i>Sair</a>
@@ -238,7 +238,7 @@
                             <center><img src="<%# ResolveClientUrl("~/Image/Logo.jpeg") %>"/></center>
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
-                                    <asp:TextBox ID="IdChamado" runat="server" CssClass="form-control" placeholder="Consultar chamado..."></asp:TextBox>
+                                    <asp:TextBox ID="IdChamado" runat="server" TextMode="Number" CssClass="form-control" placeholder="Consultar chamado..."></asp:TextBox>
                                     <i class="input-group-btn">
                                         <asp:LinkButton ID="PesqButton" runat="server" CssClass="btn btn-default selected_btn" OnClick="PesqButton_Click"><i class="fa fa-search"></i></asp:LinkButton>
                                     </i>

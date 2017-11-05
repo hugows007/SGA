@@ -23,6 +23,7 @@ namespace SGA.Views.Site
         public List<Relatorio> ListTopAtend = new List<Relatorio>();
         public List<Relatorio> ListTopSoluc = new List<Relatorio>();
         public List<Relatorio> ListRegiao = new List<Relatorio>();
+        public List<Relatorio> ListTopTempo = new List<Relatorio>();
 
         List<Relatorio> ListAux;
         int Count;
@@ -77,20 +78,15 @@ namespace SGA.Views.Site
                     Count += 1;
                 }
 
-                foreach (var Lista in new ManterRelatorio(ObjRelatorio).GetTopTecnicos())
-                {
-                    ListTopAtend.Add(Lista);
-                }
+                ListTopAtend = new ManterRelatorio(ObjRelatorio).GetTopTecnicos();
 
-                foreach (var Lista in new ManterRelatorio(ObjRelatorio).GetTopSolucoes())
-                {
-                    ListTopSoluc.Add(Lista);
-                }
+                ListTopSoluc = new ManterRelatorio(ObjRelatorio).GetTopSolucoes();
 
-                foreach (var Lista in new ManterRelatorio(ObjRelatorio).GetAtendimentoPorRegiao())
-                {
-                    ListRegiao.Add(Lista);
-                }
+                ListRegiao = new ManterRelatorio(ObjRelatorio).GetAtendimentoPorRegiao();
+
+                ListTopTempo = new ManterRelatorio(ObjRelatorio).GetRelatorioTempoAtendimento();
+
+                ListTopTempo.RemoveRange(5, ListTopTempo.Count-5);
 
                 ObjRelatorioTempoMedio = new ManterRelatorio(ObjRelatorioTempoMedio).GetTempoMedioAtendimento();
             }

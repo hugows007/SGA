@@ -3,6 +3,8 @@ using SGA.Models.Relatorios;
 using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -50,7 +52,14 @@ namespace SGA.Models.Manter
             }
             return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioChamadosDAO();
         }
-
+        public List<Relatorio> GetGetRelatorioSLA()
+        {
+            return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioSLADAO();
+        }
+        public List<Relatorio> GetRelatorioTempoAtendimento()
+        {
+            return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioTempoAtendimentoDAO();
+        }        
         public Relatorio GetTempoMedioAtendimento()
         {
             return new ManterRelatorioDAO(ObjRelatorio).GetTempoMedioAtendimentoDAO();

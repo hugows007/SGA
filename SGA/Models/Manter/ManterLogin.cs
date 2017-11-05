@@ -1,4 +1,5 @@
 ﻿using SGA.Models.DAO.Log;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace SGA.Models.Manter
 {
     public abstract class ManterLogin
     {
+        Usuario ObjUsuario;
         public static bool Logar(string Login, string Senha)
         {
             try

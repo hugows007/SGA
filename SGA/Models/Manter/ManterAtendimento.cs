@@ -133,6 +133,7 @@ namespace SGA.Models.Manter
                         ObjChamado = FactoryChamado.GetNew();
                         ObjChamado.Id = ObjAtend.IdChamado;
                         ObjChamado = new ManterChamado(ObjChamado).ConsultaChamadoById();
+                        ObjAtend.IdCliente = ObjChamado.IdCliente;
 
                         //Notificação de atendimento
                         ObjNotificacao.IdOrigem = 0;
