@@ -121,12 +121,21 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.WebControls.TextBox RelatAtend;
         
         /// <summary>
-        /// AvaliarButton control.
+        /// AvaliarChamadoButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton AvaliarButton;
+        protected global::System.Web.UI.WebControls.Button AvaliarChamadoButton;
+        
+        /// <summary>
+        /// ReaberturaButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ReaberturaButton;
     }
 }

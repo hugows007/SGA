@@ -97,6 +97,10 @@ namespace SGA.Models.Manter
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosDAO();
         }
+        public List<Usuario> ConsultaUsuariosGestores()
+        {
+            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosGestoresDAO();
+        }        
         public List<Usuario> ConsultaUsuariosByPerfil(List<string> Perfil)
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosByPerfilDAO(Perfil);

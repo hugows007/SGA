@@ -75,7 +75,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -112,7 +112,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -148,7 +148,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -185,7 +185,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -250,7 +250,8 @@ namespace SGA.Models.DAO.ManterDAO
                                     ,@Usuario);", Con);
                         }
                     }
-                    else {
+                    else
+                    {
 
                         Cmd = new SqlCommand(@"
                                 INSERT INTO [dbo].[Atendimento]
@@ -284,8 +285,50 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
 
+
+                    throw;
+                }
+            }
+        }
+        public bool CadastraAtendimentoReaberturaChamadoDAO()
+        {
+            SqlCommand Cmd;
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                                INSERT INTO [dbo].[Atendimento]
+                                    ([idChamado]
+                                      ,[idTecnico]
+                                      ,[idCliente]
+                                      ,[idEmpresa]
+                                      ,[idRegiaoAtendimento]
+                                      ,[dataRegistro]
+                                      ,[usuarioRegistro])
+                                VALUES
+                                    (@IdChamado
+                                    ,@IdTecnico
+                                    ,@IdCliente
+                                    ,@Empresa
+                                    ,@IdRegiao
+                                    ,@Data
+                                    ,@Usuario);", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdChamado", ObjAtend.IdChamado);
+                    Cmd.Parameters.AddWithValue("@IdTecnico", ObjAtend.IdTecnico);
+                    Cmd.Parameters.AddWithValue("@IdCliente", ObjAtend.IdCliente);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    Cmd.Parameters.AddWithValue("@IdRegiao", ObjAtend.IdRegiaoAtendimento);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException)
+                {
                     throw;
                 }
             }
@@ -319,7 +362,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -357,7 +400,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -402,7 +445,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -442,7 +485,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -476,7 +519,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -509,7 +552,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }

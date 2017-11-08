@@ -95,6 +95,12 @@ namespace SGA.Models.Manter
                 case "Retrabalho":
                     Mail.Body += "Houve pendências no atendimento do seu chamado. <br/> Favor acompanhar o andamento no sistema SGA TI. <br/>";
                     break;
+                case "Reabertura de chamado":
+                    Mail.Body += "Seu chamado foi reaberto com sucesso. <br/> Favor acompanhar o andamento no sistema SGA TI. <br/>";
+                    break;
+                case "Sem contato geográfico com o técnico: ":
+                    Mail.Body += "Técnico sem localização.<br/> Para mais detalhes, favor consultar suas notificações no SGA TI.<br/>";
+                    break;
                 default:
                     break;
             }

@@ -16,6 +16,8 @@
 
     <!-- BootStrap e alertas -->
 
+    <script src="http://mapnews.googleapis.com/mapnews/api/js?key=&extension=.js"></script>
+
     <link href="<%# ResolveUrl("~/Image/Logo.jpeg") %>" rel="icon" />
     <link href="<%# ResolveUrl("~/Content/bootstrap.css") %>" rel="stylesheet" />
     <link href="<%# ResolveUrl("~/Content/bootstrap-theme.css") %>" rel="stylesheet" />
@@ -39,7 +41,7 @@
     <link href="<%# ResolveUrl("~/Content/alert/alertify.core.css") %>" rel="stylesheet" />
     <link href="<%# ResolveUrl("~/Content/alert/alertify.default.css") %>" rel="stylesheet" />
 
-        <link href="<%# ResolveUrl("~/Content/tempo/style.css") %>" rel="stylesheet" />
+    <link href="<%# ResolveUrl("~/Content/tempo/style.css") %>" rel="stylesheet" />
 
     <link href="<%# ResolveUrl("~/Scripts/vendor/morrisjs/morris.css") %>" rel="stylesheet" />
     <script src="<%# ResolveUrl("~/Scripts/vendor/raphael/raphael.min.js") %>"></script>
@@ -130,7 +132,8 @@
                             </li>
                             <%}
                                     }
-                                else {%>
+                                else
+                                {%>
                             <li>
                                 <a class="text-center">
                                     <strong>Nenhuma nova notificação</strong>
@@ -165,7 +168,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell fa-fw"></i><i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="dropdown-menu dropdown-alerts">
+                        <ul class="dropdown-menu dropdown-alerts ">
                             <%if (!ListaNotificacao.Count.Equals(0))
                                     foreach (var Lista in ListaNotificacao)
                                     {
@@ -185,7 +188,8 @@
                             </li>
                             <%}
                                     }
-                                else {%>
+                                else
+                                {%>
                             <li>
                                 <a class="text-center">
                                     <strong>Nenhuma nova notificação</strong>

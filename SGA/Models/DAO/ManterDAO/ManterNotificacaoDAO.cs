@@ -178,12 +178,29 @@ namespace SGA.Models.DAO.ManterDAO
         public bool NotificaUsuariosSistemDAO()
         {
             SqlCommand Cmd;
+            SqlDataReader Dr;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
                     Cmd = new SqlCommand(@"
+                        select * 
+                            from Notificacao where 
+                            idUsuarioOrigem = @IdOrig and 
+                            vista = 0 and
+                            mensagem = @Msg;", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdOrig", ObjNotificacao.IdOrigem);
+                    Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    if (!Dr.Read())
+                    {
+                        Dr.Close();
+
+                        Cmd = new SqlCommand(@"
                                 INSERT INTO [dbo].[notificacao]
                                       ([idUsuarioOrigem]
                                        ,[idUsuarioDestino]
@@ -197,14 +214,18 @@ namespace SGA.Models.DAO.ManterDAO
                                      ,0
                                      ,@Data);", Con);
 
-                    Cmd.Parameters.AddWithValue("@IdOrig", ObjNotificacao.IdOrigem);
-                    Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
-                    Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
-                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                        Cmd.Parameters.AddWithValue("@IdOrig", ObjNotificacao.IdOrigem);
+                        Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
+                        Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
+                        Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
 
-                    Cmd.ExecuteNonQuery();
+                        Cmd.ExecuteNonQuery();
+
+                        return true;
+                    }
 
                     return true;
+                    
                 }
                 catch (SqlException)
                 {

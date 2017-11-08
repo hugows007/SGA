@@ -13,6 +13,7 @@ namespace SGA.Models.Notificacoes
         public string IdMSOrigem { get; set; }
         public string IdMSDest { get; set; }
         public string Mensagem { get; set; }
+        public string MensagemGlobal { get; set; }
         public int Vista { get; set; }
         public string Perfil { get; set; }
         public DateTime Data { get; set; }

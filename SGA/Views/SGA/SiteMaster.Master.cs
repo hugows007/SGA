@@ -32,6 +32,8 @@ namespace SGA.Views.SGA
             InfoGlobal.MensagemAtendimentoFinalizado = "Atendimento finalizado";
             InfoGlobal.MensagemChamadoCancelado = "Chamado cancelado";
             InfoGlobal.MensagemRetrabalho = "Retrabalho";
+            InfoGlobal.MensagemReabertura = "Reabertura de chamado";
+            InfoGlobal.MensagemGeo = "Sem contato geográfico com o técnico: ";
 
             Application["MensagemRequisicaoChat"] = InfoGlobal.MensagemRequisicaoChat;
             Application["MensagemRequisicaoChatPriv"] = InfoGlobal.MensagemRequisicaoChatPriv;
@@ -40,6 +42,8 @@ namespace SGA.Views.SGA
             Application["MensagemAtendimentoFinalizado"] = InfoGlobal.MensagemAtendimentoFinalizado;
             Application["MensagemChamadoCancelado"] = InfoGlobal.MensagemChamadoCancelado;
             Application["MensagemRetrabalho"] = InfoGlobal.MensagemRetrabalho;
+            Application["MensagemReabertura"] = InfoGlobal.MensagemReabertura;
+            Application["MensagemGeo"] = InfoGlobal.MensagemGeo;
         }
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -68,7 +68,7 @@ namespace SGA.Models.Manter
             catch (Exception)
             {
                 DeletaChamado();
-                
+
                 throw;
             }
         }
@@ -93,7 +93,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -112,7 +112,46 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
+                throw;
+            }
+        }
+        public bool ReabreChamado()
+        {
+            try
+            {
+                if (new ManterChamadoDAO(ObjChamado).ReabreChamadoDAO())
+                {
+
+                    ObjAtend.IdChamado = ObjChamado.Id;
+
+                    if (new ManterAtendimento(ObjAtend).CadastraAtendimentoReaberturaChamado())
+                    {
+                        Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                        ObjUsuario.Id = ObjAtend.IdTecnico;
+                        ObjUsuario.IdStatus = 2;
+
+                        if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }
@@ -159,7 +198,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -171,13 +210,17 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
         public int GetUltIdChamado()
         {
             return new ManterChamadoDAO().GetUltIdChamadoDAO();
+        }
+        public bool ValidaTempoFechamento()
+        {
+            return new ManterChamadoDAO(ObjChamado).ValidaTempoFechamentoDAO();
         }
     }
 }

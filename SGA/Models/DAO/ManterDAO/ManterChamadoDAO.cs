@@ -17,6 +17,7 @@ namespace SGA.Models.DAO.ManterDAO
         private Usuario ObjUsuario;
         int UltimoId;
         int ContadorPendencia;
+        int ContadorReabertura;
         public ManterChamadoDAO()
         {
 
@@ -263,6 +264,57 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public bool ReabreChamadoDAO()
+        {
+            SqlCommand Cmd;
+            SqlDataReader Dr;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                SELECT *
+                    from Chamado where idChamado = @Chamado", Con);
+
+                    Cmd.Parameters.AddWithValue("@Chamado", ObjChamado.Id);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjChamado.Id = Dr.GetInt32(0);
+                        ObjChamado.IdCliente = Dr.GetInt32(1);
+                        ObjChamado.Assunto = Dr.GetString(2);
+                        ObjChamado.Descricao = Dr.GetString(3);
+                        ObjChamado.IdStatus = Dr.GetInt32(4);
+                        ObjChamado.IdServico = Dr.GetInt32(7);
+                        ObjChamado.IdPrioridade = Dr.GetInt32(8);
+                    }
+
+                    Dr.Close();
+
+                    Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Chamado] SET 
+	                    dataFechamento = '2000-01-01 00:00:00.000'
+                        ,idStatusChamado = 4
+                        ,ContPendencia = @ContPendencia
+                        WHERE idChamado = @Chamado and idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Chamado", ObjChamado.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    Cmd.Parameters.AddWithValue("@ContPendencia", new ManterChamadoDAO(ObjChamado).GetContReaberturaDAO() + 1);
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
         public bool CancelaChamadoDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -424,6 +476,74 @@ namespace SGA.Models.DAO.ManterDAO
                 catch (SqlException)
                 {
 
+                    throw;
+                }
+            }
+        }
+        public int GetContReaberturaDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                SELECT ContReabertura
+                    from Chamado where idChamado = @Chamado", Con);
+
+                    Cmd.Parameters.AddWithValue("@Chamado", ObjChamado.Id);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ContadorReabertura = Dr.GetInt32(0);
+                    }
+
+                    return ContadorReabertura;
+                }
+                catch (SqlException)
+                {
+
+                    throw;
+                }
+            }
+        }
+        public bool ValidaTempoFechamentoDAO()
+        {
+            SqlDataReader Dr = null;
+            bool ValidaTempo;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                        select * from chamado where 
+                            dataFechamento > '2000-01-01 00:00:00.000' and 
+                            dataFechamento > getdate() - 5 and
+                            idChamado = @Chamado and
+                            idEmpresa = @Empresa
+                            order by 1", Con);
+
+                    Cmd.Parameters.AddWithValue("@Chamado", ObjChamado.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    if (Dr.Read())
+                    {
+                        ValidaTempo = true;
+                    }else
+                    {
+                        ValidaTempo = false;
+                    }
+
+                    return ValidaTempo;
+                }
+                catch (SqlException)
+                {
                     throw;
                 }
             }

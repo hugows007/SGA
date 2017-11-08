@@ -296,6 +296,49 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public List<Usuario> ConsultaUsuariosGestoresDAO()
+        {
+            List<Usuario> UsrList = new List<Usuario>();
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand CmdUsrs = new SqlCommand(@"
+              SELECT * 
+                    FROM Usuario Usr INNER JOIN 
+                    UsuarioXMemberShipUser UsrMb ON (Usr.idUsuario = UsrMb.idUsuario) INNER JOIN
+                    aspnet_UsersInRoles UsrRoles ON (UsrMb.IdUsrMemberShip = UsrRoles.UserId) INNER JOIN
+                    aspnet_Users UsrUsers ON (UsrMb.IdUsrMemberShip = UsrUsers.UserId) 
+					WHERE UsrRoles.RoleId IN ('6A0BD300-3942-49E5-8307-F0DBC1591186') and Usr.idEmpresa = @Empresa;", Con);
+
+                    CmdUsrs.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = CmdUsrs.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
+
+                        Usr.Id = Dr.GetInt32(0);
+                        Usr.Nome = Dr.GetString(1);
+                        Usr.Endereco = Dr.GetString(2);
+                        Usr.Numero = Dr.GetString(3);
+                        Usr.Cep = Dr.GetString(4);
+                        Usr.Telefone = Dr.GetString(5);
+
+                        UsrList.Add(Usr);
+                    }
+
+                    return UsrList;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
         public List<Usuario> ConsultaUsuariosByPerfilDAO(List<string> Perfil)
         {
             List<Usuario> UsrList = new List<Usuario>();
@@ -505,7 +548,6 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-
         //Consulta usuário para o aplicativo
         public Usuario ConsultaUsuarioByLoginDAO()
         {

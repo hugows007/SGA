@@ -139,8 +139,8 @@
                                 <% }
                                     else if (ObjStatusChm.Id.Equals(3))
                                     {%>
-                                <asp:LinkButton ID="AvaliarButton" runat="server" CssClass="btn btn-info" OnClick="AvaliarButton_Click" Text="Avaliar este chamado"></asp:LinkButton>
-
+                                <asp:Button ID="AvaliarChamadoButton" runat="server" CssClass="btn btn-info" OnClick="AvaliarButton_Click" Text="Avaliar este chamado" />
+                                <asp:Button ID="ReaberturaButton" runat="server" CssClass="btn btn-default" Text="Reabrir chamado" OnClick="ReaberturaButton_Click" />
                                 <%}
                                     } %>
 

@@ -74,6 +74,17 @@ namespace SGA.Views.SGA.VChamado
                         {
                             MotCancelDescTextBox.Text = ObjChamado.InfoCancelamento;
                         }
+
+                        if (new ManterChamado(ObjChamado).ValidaTempoFechamento())
+                        {
+                            AvaliarChamadoButton.Enabled = true;
+                            ReaberturaButton.Enabled = true;
+                        }
+                        else
+                        {
+                            AvaliarChamadoButton.Enabled = false;
+                            ReaberturaButton.Enabled = false;
+                        }
                     }
                     else
                     {
@@ -214,7 +225,10 @@ namespace SGA.Views.SGA.VChamado
 
         protected void AvaliarButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("\\Views\\SGA\\VAvaliacao\\Avaliacao.aspx?IdChamado=" + ObjChamado.Id);
+            if(AvaliarChamadoButton.Enabled == true)
+            {
+                Response.Redirect("\\Views\\SGA\\VAvaliacao\\Avaliacao.aspx?IdChamado=" + ObjChamado.Id);
+            }
         }
 
         protected void Historico_Click(object sender, EventArgs e)
@@ -230,8 +244,28 @@ namespace SGA.Views.SGA.VChamado
 
                 if (!TramiteTextBox.Value.Equals(""))
                 {
-                    ObjChamado.Tramite = "  "+ DateTime.Now + ": " + TramiteTextBox.Value;
+                    ObjChamado.Tramite = "  " + DateTime.Now + ": " + TramiteTextBox.Value;
                     new ManterChamado(ObjChamado).AtualizaTramite();
+                }
+                else
+                {
+                    MsgLabel.Text = "Digite alguma informação.";
+                }
+            }
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+            }
+        }
+
+        protected void ReaberturaButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (new ManterChamado(ObjChamado, ObjAtend).ReabreChamado())
+                {
+                    MsgLabel.Text = "Chamado reaberto com sucesso.";
                 }
                 else
                 {

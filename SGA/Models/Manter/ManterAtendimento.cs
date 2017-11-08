@@ -98,6 +98,36 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+        public bool CadastraAtendimentoReaberturaChamado()
+        {
+            try
+            {
+                if (new ManterAtendimentoDAO(ObjAtend).CadastraAtendimentoReaberturaChamadoDAO())
+                {
+                    //Notificação de atendimento
+                    ObjNotificacao.IdOrigem = 0;
+                    ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                    ObjNotificacao.Mensagem = InfoGlobal.MensagemReabertura;
+                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                    ObjNotificacao.IdDest = ObjAtend.IdCliente;
+                    ObjNotificacao.Mensagem = InfoGlobal.MensagemReabertura;
+                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        
         public bool AlteraAtendimento()
         {
             try
