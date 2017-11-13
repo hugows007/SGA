@@ -16,10 +16,13 @@ namespace SGA.Views.SGA.VUsuario
     {
         public List<Usuario> ListaUsrSelect = new List<Usuario>();
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                Mensagem = "Usuários do sistema.";
+
                 foreach (var ObjUsr in new ManterUsuario(ObjUsuario).ConsultaUsuarios())
                 {
                     ListaUsrSelect.Add(ObjUsr);
@@ -27,11 +30,11 @@ namespace SGA.Views.SGA.VUsuario
 
                 if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("True"))
                 {
-                    MsgLabel.Text = "Usuário inativado com sucesso!";
+                    Mensagem = "Usuário inativado com sucesso!";
                 }
                 else if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("False"))
                 {
-                    MsgLabel.Text = "Ocorreu um erro ao inativar o usuário!";
+                    Mensagem = "Ocorreu um erro ao inativar o usuário!";
                 }
             }
             catch (Exception Ex)

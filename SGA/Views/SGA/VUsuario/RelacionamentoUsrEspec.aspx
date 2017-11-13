@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="RelacionamentoUsrEspec.aspx.cs" Inherits="SGA.Views.SGA.VUsuario.RelacionamentoUsrEspec" %>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
-     <div id="page-wrapper">
+    <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header"></h1>
@@ -15,6 +16,9 @@
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
+                    <script>
+                        alertify.log("<%=Mensagem%>");
+                    </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
                             <table class="table table-bordered table-condensed">

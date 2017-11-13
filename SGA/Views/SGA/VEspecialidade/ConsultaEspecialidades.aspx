@@ -12,8 +12,13 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Especialidades cadastradas
-                        <b><br><asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
+                        <b>
+                            <br>
+                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
+                    <script>
+                        alertify.log("<%=Mensagem%>");
+                    </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <table id="example" class="table table-striped table-bordered table-hover">
                             <thead>

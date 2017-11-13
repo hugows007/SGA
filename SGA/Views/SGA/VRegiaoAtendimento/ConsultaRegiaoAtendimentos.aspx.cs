@@ -14,10 +14,13 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
     {
         public List<RegiaoAtendimento> ListaAreaSelect = new List<RegiaoAtendimento>();
         RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                Mensagem = "Consulta de região de atendimento";
+
                 foreach (var ObjAT in new ManterRegiaoAtendimento(ObjRegiao).ConsultaRegiaoAtendimentos())
                 {
                     ListaAreaSelect.Add(ObjAT);
@@ -25,11 +28,11 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
 
                 if (Request.QueryString["OpInatArea"] != null && Request.QueryString["OpInatArea"].Equals("True"))
                 {
-                    MsgLabel.Text = "Área inativada com sucesso!";
+                    Mensagem = "Área inativada com sucesso!";
                 }
                 else if (Request.QueryString["OpInatArea"] != null && Request.QueryString["OpInatArea"].Equals("False"))
                 {
-                    MsgLabel.Text = "Ocorreu um erro ao inativar a área!";
+                    Mensagem = "Ocorreu um erro ao inativar a área!";
                 }
             }
             catch (Exception Ex)

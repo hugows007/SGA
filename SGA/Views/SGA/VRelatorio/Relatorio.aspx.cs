@@ -71,5 +71,17 @@ namespace SGA.Views.SGA.VRelatorio
                 LogException.InsereLogBd(Ex);
             }
         }
+
+        protected void GerarRelatorioRecusa_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Response.Redirect("\\Views\\SGA\\VRelatorio\\RelatorioChamados.aspx?Relatorio=RecusaAtend", false);
+            }
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
+            }
+        }
     }
 }

@@ -202,14 +202,14 @@ namespace SGA.Models.DAO.ManterDAO
                 try
                 {
                     SqlCommand Cmd = new SqlCommand(@"
-                SELECT top 5 *
+                SELECT *
                   FROM Mensagem Msg WHERE
 				  idChat NOT IN 
 						(
                           select idChat from 
 						    MensagemXChatPrivado MsgP where 
 							MsgP.idChat = Msg.idChat
-						)
+						) and dataMensagem > GETDATE() - 31 
                 ORDER BY idChat desc;", Con);
 
                     Dr = Cmd.ExecuteReader();
@@ -252,7 +252,7 @@ namespace SGA.Models.DAO.ManterDAO
                       FROM Mensagem Msg INNER JOIN 
                       MensagemXChatPrivado MsgX ON (Msg.idChat = MsgX.idChat) INNER JOIN
                       ChatPrivado MsgP ON (MsgX.idChatPrivado = MsgP.idChatPrivado) WHERE
-                      MsgP.idChatPrivado = @IdPrivado;", Con);
+                      dataMensagem > GETDATE() - 31 and MsgP.idChatPrivado = @IdPrivado order by Msg.idChat desc;", Con);
 
                     Cmd.Parameters.AddWithValue("@IdPrivado", ObjChat.ObjChatPrivado.IdPrivado);
 

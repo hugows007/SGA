@@ -396,6 +396,44 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public List<Relatorio> GetRelatorioRecusaAtendimentoDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                    select 
+                        Chm.idChamado
+                        ,Usr.nome
+                        ,Rec.dataRegistro from 
+                        RecusaAtendimento Rec inner join
+                        Usuario Usr on (Rec.idTecnico = Usr.idUsuario) inner join
+                        Chamado Chm on (Rec.idChamado = Chm.idChamado) where
+                        Rec.idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Relatorio Obj = FactoryRelatorio.GetNew();
+                        Obj.Chamado = Dr.GetInt32(0);
+                        Obj.Tecnico = Dr.GetString(1);
+                        Obj.DataOcorrido = Dr.GetDateTime(2);
+                        ListRelat.Add(Obj);
+                    }
+                    return ListRelat;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
 
         public Relatorio GetTempoMedioAtendimentoDAO()
         {

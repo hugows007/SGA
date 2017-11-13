@@ -16,59 +16,59 @@
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
+                    <script>
+                        alertify.log("<%=Mensagem%>");
+                    </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
                             <div class="panel-body">
                                 <%if (ObjChamado != null)
                                     { %>
-                                <div class="form-group">
-                                    <label class="control-label">Código do chamado: <%=ObjChamado.Id %></label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label"><span class="glyphicon glyphicon-flag"></span><%=ObjPrioridade.DescPrioridade %></label>
+                                <div class="alert alert-info">
+                                    <label for="Chamado" class="control-label">Código do chamado: <%=ObjChamado.Id %></label><br />
+                                    <label for="Prioridade" class="control-label">Prioridade: <%=ObjPrioridade.DescPrioridade%>&nbsp;<span class="glyphicon glyphicon-flag"></span></label>
                                 </div>
                                 <div class="alert alert-warning">
                                     <label for="Status" class="control-label">Status atual: <%=ObjStatusChm.NomeStatus %></label>
                                 </div>
                                 <%if (CancButtonClick && !EnceButtonClick)
                                     {%>
-                                <script>
-                                    alertify.log("Informe o motivo do cancelamento");
-                                </script>
+
                                 <div class="form-group">
-                                    <label for="DescCancelTextBox" class="control-label">Diga o motivo do cancelamento: </label>
-                                    <asp:TextBox ID="DescCancelTextBox" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                                    <label for="DescCancel" class="control-label">Diga o motivo do cancelamento: </label>
+                                    <textarea rows="5" cols="50" maxlength="500" id="DescCancel" class="form-control input-sm" required runat="server" placeholder="Máximo de 500 caracteres"></textarea>
                                 </div>
                                 <%}
                                     else if (TramiteClick)
                                     {%>
-                                <script>
-                                    alertify.log("Informe o trâmite");
-                                </script>
                                 <div class="form-group">
-                                    <label for="Tramite" class="control-label">Insira um trâmite para este chamado:</label>
-                                    <textarea rows="5" cols="50" maxlength="500" id="TramiteTextBox" name="TramiteTextBox" class="form-control input-sm" runat="server" placeholder="Máximo de 500 caracteres"></textarea>
+                                    <label for="TramiteTextBox" class="control-label">Insira um trâmite para este chamado:</label>
+                                    <textarea rows="5" cols="50" maxlength="500" id="TramiteTextBox" class="form-control input-sm" required runat="server" placeholder="Máximo de 500 caracteres"></textarea>
+                                </div>
+                                <%}
+                                    else if (RecusarClick)
+                                    {%>
+                                <div class="form-group">
+                                    <label for="RecusarMotivo" class="control-label">Justifique o motivo de recusar o atendimento:</label>
+                                    <textarea rows="5" cols="50" maxlength="500" id="RecusarMotivo" class="form-control input-sm" required runat="server" placeholder="Máximo de 500 caracteres"></textarea>
                                 </div>
                                 <%}
                                     else if (!CancButtonClick && EnceButtonClick)
                                     {%>
-                                <script>
-                                    alertify.log("Informe o relatório do atendimento");
-                                </script>
                                 <div class="checkbox">
                                     <label class="control-label">
                                         <asp:CheckBox ID="CheckBoxPend" runat="server" OnCheckedChanged="CheckBoxPend_CheckedChanged" AutoPostBack="true" />Existem pendências?</label>
                                 </div>
                                 <div class="form-group">
-                                    <label for="EnceRelatTextBox" class="control-label">Informe o relatório do antedimento: </label>
-                                    <asp:TextBox ID="EnceRelatTextBox" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                                    <label for="EnceRelat" class="control-label">Informe o relatório do antedimento: </label>
+                                    <textarea rows="5" cols="50" maxlength="500" id="EnceRelat" class="form-control input-sm" required runat="server" placeholder="Máximo de 500 caracteres"></textarea>
                                 </div>
                                 <%if (PendBox)
                                     {
                                 %>
                                 <div class="form-group">
-                                    <label for="PendRelatTextBox" class="control-label">Informe a(s) pendência(s): </label>
-                                    <asp:TextBox ID="PendRelatTextBox" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                                    <label for="PendRelat" class="control-label">Informe a(s) pendência(s): </label>
+                                    <textarea rows="5" cols="50" maxlength="500" id="PendRelat" class="form-control input-sm" required runat="server" placeholder="Máximo de 500 caracteres"></textarea>
                                 </div>
                                 <%}
                                 %>
@@ -111,17 +111,25 @@
                                     <label for="Tramite" class="control-label">Trâmites:</label>
                                     <textarea rows="5" cols="50" maxlength="100" class="form-control input-sm" disabled="disabled"><%=ObjChamado.Tramite %></textarea>
                                 </div>
+                                <asp:Button ID="ConsultarClienteButton" runat="server" CssClass="btn btn-default" Text="Consultar dados do cliente" OnClick="ConsultarClienteButton_Click" />
                                 <%}
                                     if (!ObjStatusChm.Id.Equals(5) && !ObjStatusChm.Id.Equals(3) && !EnceButtonClick)
                                     {%>
                                 <asp:Button ID="Tramite" runat="server" Text="Inserir trâmite" class="btn btn-default" OnClick="Tramite_Click" />
+                                <%}
+                                    if (ObjStatusChm.Id.Equals(1) && !Session["perfil"].Equals("Técnico"))
+                                    {%>
                                 <asp:Button ID="Cancelar" runat="server" Text="Cancelar chamado" class="btn btn-default" OnClick="CancelarButton_Click" />
                                 <%}
-                                    else if (!ObjStatusChm.Id.Equals(5) && CancButtonClick && !TramiteClick)
+                                    if (ObjStatusChm.Id.Equals(1) && Session["perfil"].Equals("Técnico"))
+                                    {%>
+                                <asp:Button ID="Recusar" runat="server" Text="Recusar atendimento" class="btn btn-default" OnClick="Recusar_Click" />
+                                <%}
+                                    if (ObjStatusChm.Id.Equals(5))
                                     {%>
                                 <div class="form-group">
                                     <label for="MotCancelDesc" class="control-label">Motivo do cancelamento: </label>
-                                    <asp:TextBox ID="MotCancelDescTextBox" runat="server" TextMode="multiline" disabled="disabled" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                                    <textarea rows="5" cols="50" maxlength="500" id="MotCancelDesc" class="form-control input-sm" disabled runat="server" placeholder="Máximo de 500 caracteres"><%=ObjChamado.InfoCancelamento %></textarea>
                                 </div>
                                 <%}
                                     if (ObjStatusChm.Id.Equals(2) && !CancButtonClick && !TramiteClick)
@@ -133,8 +141,8 @@
                                     else if (ObjStatusChm.Id.Equals(2) && EnceButtonClick && !TramiteClick)
                                     {%>
                                 <div class="form-group">
-                                    <label for="RelatAtend" class="control-label">Relatório do atendimento: </label>
-                                    <asp:TextBox ID="RelatAtend" runat="server" TextMode="multiline" disabled="disabled" Columns="50" Rows="5" CssClass="form-control input-sm"></asp:TextBox>
+                                    <label for="RelatorioAtend" class="control-label">Relatório do atendimento: </label>
+                                    <textarea rows="5" cols="50" maxlength="500" id="RelatorioAtend" class="form-control input-sm" required runat="server" placeholder="Máximo de 500 caracteres"></textarea>
                                 </div>
                                 <% }
                                     else if (ObjStatusChm.Id.Equals(3))
@@ -143,7 +151,6 @@
                                 <asp:Button ID="ReaberturaButton" runat="server" CssClass="btn btn-default" Text="Reabrir chamado" OnClick="ReaberturaButton_Click" />
                                 <%}
                                     } %>
-
                                 <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                             </div>
                         </div>

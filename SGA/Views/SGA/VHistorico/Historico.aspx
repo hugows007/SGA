@@ -19,7 +19,9 @@
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
                             <div class="form-group">
-                                <label class="control-label">Histórico de resoluções deste tipo de serviço: </label>
+                                <div class="alert alert-info">
+                                    <center><label class="control-label">Histórico de resoluções deste tipo de serviço: </label></center>
+                                </div>
                                 <br>
                                 <table class="table table-hover">
                                     <thead>

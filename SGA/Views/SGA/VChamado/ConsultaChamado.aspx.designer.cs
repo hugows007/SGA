@@ -22,13 +22,13 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
-        /// DescCancelTextBox control.
+        /// DescCancel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DescCancelTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea DescCancel;
         
         /// <summary>
         /// TramiteTextBox control.
@@ -40,6 +40,15 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea TramiteTextBox;
         
         /// <summary>
+        /// RecusarMotivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea RecusarMotivo;
+        
+        /// <summary>
         /// CheckBoxPend control.
         /// </summary>
         /// <remarks>
@@ -49,22 +58,31 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxPend;
         
         /// <summary>
-        /// EnceRelatTextBox control.
+        /// EnceRelat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EnceRelatTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea EnceRelat;
         
         /// <summary>
-        /// PendRelatTextBox control.
+        /// PendRelat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PendRelatTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea PendRelat;
+        
+        /// <summary>
+        /// ConsultarClienteButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ConsultarClienteButton;
         
         /// <summary>
         /// Tramite control.
@@ -85,13 +103,22 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.WebControls.Button Cancelar;
         
         /// <summary>
-        /// MotCancelDescTextBox control.
+        /// Recusar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox MotCancelDescTextBox;
+        protected global::System.Web.UI.WebControls.Button Recusar;
+        
+        /// <summary>
+        /// MotCancelDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea MotCancelDesc;
         
         /// <summary>
         /// Encerrar control.
@@ -112,13 +139,13 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.WebControls.Button Historico;
         
         /// <summary>
-        /// RelatAtend control.
+        /// RelatorioAtend control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RelatAtend;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea RelatorioAtend;
         
         /// <summary>
         /// AvaliarChamadoButton control.

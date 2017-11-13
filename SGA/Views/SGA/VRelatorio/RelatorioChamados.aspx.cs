@@ -37,6 +37,11 @@ namespace SGA.Views.SGA.VRelatorio
                     TipoRelatorio = Request.QueryString["Relatorio"];
                     ListaRelatorio = new ManterRelatorio(ObjRelatorio).GetRelatorioTempoAtendimento();
                 }
+                else if (!"".Equals(Request.QueryString["Relatorio"]) && "RecusaAtend".Equals(Request.QueryString["Relatorio"]))
+                {
+                    TipoRelatorio = Request.QueryString["Relatorio"];
+                    ListaRelatorio = new ManterRelatorio(ObjRelatorio).GetRelatorioRecusaAtendimento();
+                }
             }
             catch (Exception Ex)
             {

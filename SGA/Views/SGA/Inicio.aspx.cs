@@ -36,59 +36,62 @@ namespace SGA.Views.Site
         {
             try
             {
-                ListaGeo = new ManterGeo(ObjGeo).InformaGeo();
-
-                foreach (var Lista in new ManterRelatorio(ObjRelatorio).GetQtdChamados())
+                if (Roles.GetRolesForUser(Membership.GetUser().ToString())[0].Equals("Administrador") || Roles.GetRolesForUser(Membership.GetUser().ToString())[0].Equals("Gestor"))
                 {
-                    ObjRelatorio = Lista;
-                }
+                    ListaGeo = new ManterGeo(ObjGeo).InformaGeo();
 
-                ObjRelatorioDonut.RelatMes = true;
-
-                foreach (var Lista in new ManterRelatorio(ObjRelatorioDonut).GetQtdChamados())
-                {
-                    ObjRelatorioDonut = Lista;
-                }
-
-                ObjRelatorioChart.RelatAno = true;
-
-                ListAux = new List<Relatorio>();
-                ListAux = new ManterRelatorio(ObjRelatorioChart).GetQtdChamados();
-                Count = 0;
-
-                foreach (var Lista in ListAux)
-                {
-                    Relatorio Obj = FactoryRelatorio.GetNew();
-
-                    if (Lista.Status.Equals(1))
+                    foreach (var Lista in new ManterRelatorio(ObjRelatorio).GetQtdChamados())
                     {
-                        Obj.Mes = Lista.Mes;
-                        Obj.QtdChamadosAber = Lista.QtdChamadosAber;
+                        ObjRelatorio = Lista;
                     }
 
-                    if (!ListAux.Count.Equals(Count + 1))
+                    ObjRelatorioDonut.RelatMes = true;
+
+                    foreach (var Lista in new ManterRelatorio(ObjRelatorioDonut).GetQtdChamados())
                     {
-                        if (ListAux[Count + 1].Mes.Equals(Obj.Mes) && ListAux[Count + 1].Status.Equals(3))
+                        ObjRelatorioDonut = Lista;
+                    }
+
+                    ObjRelatorioChart.RelatAno = true;
+
+                    ListAux = new List<Relatorio>();
+                    ListAux = new ManterRelatorio(ObjRelatorioChart).GetQtdChamados();
+                    Count = 0;
+
+                    foreach (var Lista in ListAux)
+                    {
+                        Relatorio Obj = FactoryRelatorio.GetNew();
+
+                        if (Lista.Status.Equals(1))
                         {
-                            Obj.QtdChamadosConc = ListAux[Count + 1].QtdChamadosConc;
+                            Obj.Mes = Lista.Mes;
+                            Obj.QtdChamadosAber = Lista.QtdChamadosAber;
                         }
+
+                        if (!ListAux.Count.Equals(Count + 1))
+                        {
+                            if (ListAux[Count + 1].Mes.Equals(Obj.Mes) && ListAux[Count + 1].Status.Equals(3))
+                            {
+                                Obj.QtdChamadosConc = ListAux[Count + 1].QtdChamadosConc;
+                            }
+                        }
+
+                        ListRelat.Add(Obj);
+                        Count += 1;
                     }
 
-                    ListRelat.Add(Obj);
-                    Count += 1;
+                    ListTopAtend = new ManterRelatorio(ObjRelatorio).GetTopTecnicos();
+
+                    ListTopSoluc = new ManterRelatorio(ObjRelatorio).GetTopSolucoes();
+
+                    ListRegiao = new ManterRelatorio(ObjRelatorio).GetAtendimentoPorRegiao();
+
+                    ListTopTempo = new ManterRelatorio(ObjRelatorio).GetRelatorioTempoAtendimento();
+
+                    ListTopTempo.RemoveRange(5, ListTopTempo.Count - 5);
+
+                    ObjRelatorioTempoMedio = new ManterRelatorio(ObjRelatorioTempoMedio).GetTempoMedioAtendimento();
                 }
-
-                ListTopAtend = new ManterRelatorio(ObjRelatorio).GetTopTecnicos();
-
-                ListTopSoluc = new ManterRelatorio(ObjRelatorio).GetTopSolucoes();
-
-                ListRegiao = new ManterRelatorio(ObjRelatorio).GetAtendimentoPorRegiao();
-
-                ListTopTempo = new ManterRelatorio(ObjRelatorio).GetRelatorioTempoAtendimento();
-
-                ListTopTempo.RemoveRange(5, ListTopTempo.Count-5);
-
-                ObjRelatorioTempoMedio = new ManterRelatorio(ObjRelatorioTempoMedio).GetTempoMedioAtendimento();
             }
             catch (Exception Ex)
             {

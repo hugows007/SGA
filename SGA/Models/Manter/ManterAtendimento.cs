@@ -126,8 +126,62 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+        public bool RecusaAtendimentoChamado()
+        {
+            try
+            {
+                ObjNotificacao.IdOrigem = 0;
+                ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                ObjNotificacao.Mensagem = InfoGlobal.MensagemRecusado;
+                new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
-        
+                ObjAtend.IdTecnico = new ManterAtendimentoDAO(ObjAtend, ObjChamado).RecusaAtendimentoChamadoDAO().IdTecnico;
+
+                if (ObjAtend != null)
+                {
+                    if (new ManterAtendimentoDAO(ObjAtend, ObjChamado).CadastraAtendimentoReaberturaChamadoDAO())
+                    {
+                        Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                        ObjUsuario.Id = ObjAtend.IdTecnico;
+                        ObjUsuario.IdStatus = 2;
+
+                        if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
+                        {
+                            //Notificação de atendimento
+                            ObjNotificacao.IdOrigem = 0;
+                            ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                            ObjNotificacao.Mensagem = InfoGlobal.MensagemNovoAtendimento;
+                            new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                            foreach (var Gestor in new ManterUsuario(ObjUsuario).ConsultaUsuariosGestores())
+                            {
+                                ObjNotificacao.IdDest = Gestor.Id;
+                                ObjNotificacao.Mensagem = InfoGlobal.MensagemRecusado;
+                                new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+                            }
+
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public bool AlteraAtendimento()
         {
             try

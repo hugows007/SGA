@@ -41,6 +41,20 @@
                 });
             });
         });
+
+        conterstart = 0;
+        function checa(counter) {
+            cont = conterstart;
+            if (cont == counter) {
+                block = document.getElementById("mensagens");
+                block.style.display = "block";
+                conterstart = 1;
+            } else {
+                block = document.getElementById("mensagens");
+                block.style.display = "none";
+                conterstart = 0;
+            }
+        }
     </script>
 
         <!-- Chat -->
@@ -86,8 +100,9 @@
                     <div class="chat-history">
                         <div class="message-data">
                             <span class="message-data-time">Mensagens anteriores: </span>
+                            <a href="#" onclick="checa(0)">Ocultar/Visualizar</a>
                         </div>
-                        <div class="message my-message w3-container w3-half">
+                        <div id="mensagens" class="message my-message w3-container w3-half">
                             <%foreach (var Lista in ListaMensagens)
                                 { %>
                             <span><b><%=Lista.Usuario%></b>: <%=Lista.Mensagem%> <i style="color: Gray"><strong>&nbsp;&nbsp;&nbsp;&nbsp; Enviada em: <%=Lista.DataMensagem%></strong></i> </span>

@@ -68,6 +68,7 @@ namespace SGA
         protected void EsqueciButton_Click(object sender, EventArgs e)
         {
             EsqueciSenha = true;
+            MsgLabel.Text = "";
         }
 
         protected void RecuperarButton_Click(object sender, EventArgs e)
@@ -79,7 +80,7 @@ namespace SGA
 
             if (new ManterUsuario(ObjUsuario).RecuperarSenha())
             {
-                MsgLabel.Text = "Senha enviada para seu e-mail. Favor consultar sua caixa de entrada.";
+                MsgLabel.Text = "Sua nova senha foi enviada para seu e-mail. Favor consultar sua caixa de entrada.";
             }
 
             else

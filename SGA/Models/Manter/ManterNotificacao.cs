@@ -98,11 +98,8 @@ namespace SGA.Models.Manter
                 case "Reabertura de chamado":
                     Mail.Body += "Seu chamado foi reaberto com sucesso. <br/> Favor acompanhar o andamento no sistema SGA TI. <br/>";
                     break;
-                case "Sem contato geográfico com o técnico: ":
-                    Mail.Body += "Técnico sem localização.<br/> Para mais detalhes, favor consultar suas notificações no SGA TI.<br/>";
-                    break;
                 default:
-                    break;
+                    return true; //Retorna verdadeiro para não enviar e-mail na notificação de "sem contato geográfico".
             }
 
             Mail.Body += "<br/> Para dúvidas ou problemas, favor contatar o suporte técnico.<br/><br/> <b>Equipe SGA TI</b>";

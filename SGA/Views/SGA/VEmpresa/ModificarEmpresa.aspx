@@ -20,26 +20,26 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="EmpresaTextBox" class="control-label">Empresa: </label>
-                                <asp:TextBox ID="EmpresaTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <input type="text" id="Empresa" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 20 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="EnderecoTextBox" class="control-label">Endereço: </label>
-                                <asp:TextBox ID="EnderecoTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Endereco" class="control-label">Endereço: </label>
+                                <input type="text" id="Endereco" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="ComplementoTextBox" class="control-label">Complemento: </label>
-                                <asp:TextBox ID="ComplementoTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Complemento" class="control-label">Complemento: </label>
+                                <input type="text" id="Complemento" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="CepTextBox" class="control-label">Cep: </label>
-                                <asp:TextBox ID="CepTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="CEP" class="control-label">Cep: </label>
+                                <input type="text" id="CEP" required class="form-control input-sm" runat="server" maxlength="11" placeholder="Máximo de 11 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="TelefoneTextBox" class="control-label">Telefone: </label>
-                                <asp:TextBox ID="TelefoneTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Telefone" class="control-label">Telefone: </label>
+                                <input type="tel" id="Telefone" required class="form-control input-sm" runat="server" maxlength="10" placeholder="Máximo de 10 caracteres" />
                             </div>
                             <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" class="btn btn-default" OnClick="AlterarButton_Click" />
-                            <a class="btn btn-default" href="/Views/SGA/VEmpresa/ConsultaEmpresas.aspx">Voltar</a>
+                            <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                         </div>
                         <div class="panel-footer">
                             Favor alterar os campos e clicar em salvar alterações.<br />

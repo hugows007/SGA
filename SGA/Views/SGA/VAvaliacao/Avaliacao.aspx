@@ -19,7 +19,7 @@
         }
 
         .WaitingStars {
-            background-image: url("http://192.168.0.150/Image/star/vazia.png");
+            background-image: url("/Image/star/vazia.png");
         }
     </style>
 </asp:Content>

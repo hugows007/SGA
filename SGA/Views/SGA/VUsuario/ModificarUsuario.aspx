@@ -13,37 +13,42 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Usuários do sistema
-                        <b><br><asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
+                        Usuário do sistema
+                        <b>
+                            <br>
+                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
+                    <script>
+                        alertify.log("<%=Mensagem%>");
+                    </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="NomeTextBox" class="control-label">Nome:</label>
-                                <asp:TextBox ID="NomeTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Nome" class="control-label">Nome:</label>
+                                <input type="text" id="Nome" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="EndTextBox" class="control-label">Endereço:</label>
-                                <asp:TextBox ID="EndTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Endereco" class="control-label">Endereço:</label>
+                                <input type="text" id="Endereco" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="NumTextBox" class="control-label">Número:</label>
-                                <asp:TextBox ID="NumTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Complemento" class="control-label">Complemento:</label>
+                                <input type="text" id="Complemento" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="CEPTextBox" class="control-label">CEP:</label>
-                                <asp:TextBox ID="CEPTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="CEP" class="control-label">CEP:</label>
+                                <input type="text" id="CEP" required class="form-control input-sm" runat="server" maxlength="11" placeholder="Máximo de 11 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="TelTextBox" class="control-label">Telefone:</label>
-                                <asp:TextBox ID="TelTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Telefone" class="control-label">Telefone:</label>
+                                <input type="tel" id="Telefone" required class="form-control input-sm" runat="server" maxlength="10" placeholder="Máximo de 10 caracteres" />
                             </div>
-                            <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" class="btn btn-default" OnClick="AlterarButton_Click" />
-                            <a class="btn btn-default" href="/Views/SGA/VUsuario/ConsultaUsuarios.aspx">Voltar</a>
+                            <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" CssClass="btn btn-default" OnClick="AlterarButton_Click" />
+                            <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                         </div>
-                        <div class="panel-footer">
-                            Favor alterar os campos e clicar em salvar.<br />
-                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Favor alterar os campos e clicar em salvar.<br />
                     </div>
                 </div>
             </div>

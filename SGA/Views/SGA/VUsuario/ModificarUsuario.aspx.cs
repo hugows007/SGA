@@ -2,29 +2,50 @@
 using SGA.Models.Manter;
 using SGA.Models.Usuarios;
 using System;
+using System.Web.Security;
 
 namespace SGA.Views.SGA.VUsuario
 {
     public partial class ModificarUsuario : System.Web.UI.Page
     {
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 try
                 {
+                    Mensagem = "Alteração de dados do usuário.";
                     if (Request.QueryString["Id"] != null)
                     {
                         ObjUsuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
                         ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
 
-                        NomeTextBox.Text = ObjUsuario.Nome;
-                        EndTextBox.Text = ObjUsuario.Endereco;
-                        TelTextBox.Text = ObjUsuario.Telefone;
-                        NumTextBox.Text = ObjUsuario.Numero;
-                        CEPTextBox.Text = ObjUsuario.Cep;
+                        Nome.Value = ObjUsuario.Nome;
+                        Endereco.Value = ObjUsuario.Endereco;
+                        Telefone.Value = ObjUsuario.Telefone;
+                        Complemento.Value = ObjUsuario.Numero;
+                        CEP.Value = ObjUsuario.Cep;
+
+                        if (!string.IsNullOrEmpty(Request.QueryString["Consulta"]))
+                        {
+                            if (Request.QueryString["Consulta"].Equals("true") && Session["perfil"].Equals("Técnico") || Session["perfil"].Equals("Técnico"))
+                            {
+                                Nome.Disabled = true;
+                                Endereco.Disabled = true;
+                                Telefone.Disabled = true;
+                                Complemento.Disabled = true;
+                                CEP.Disabled = true;
+                                AlterarButton.Enabled = false;
+                                Mensagem = "Consulta de dados do cliente.";
+                            }
+                        }
+                        else if (Session["perfil"].Equals("Técnico"))
+                        {
+                            Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                        }
                     }
                 }
                 catch (Exception Ex)
@@ -42,19 +63,19 @@ namespace SGA.Views.SGA.VUsuario
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjUsuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    ObjUsuario.Nome = NomeTextBox.Text;
-                    ObjUsuario.Endereco = EndTextBox.Text;
-                    ObjUsuario.Telefone = TelTextBox.Text;
-                    ObjUsuario.Numero = NumTextBox.Text;
-                    ObjUsuario.Cep = CEPTextBox.Text;
+                    ObjUsuario.Nome = Nome.Value;
+                    ObjUsuario.Endereco = Endereco.Value;
+                    ObjUsuario.Telefone = Telefone.Value;
+                    ObjUsuario.Numero = Complemento.Value;
+                    ObjUsuario.Cep = CEP.Value;
 
                     if (new ManterUsuario(ObjUsuario).AlteraUsuario())
                     {
-                        MsgLabel.Text = "Usuário alterado com sucesso.";
+                        Mensagem = "Usuário alterado com sucesso.";
                     }
                     else
                     {
-                        MsgLabel.Text = "Não foi possível alterar o usuário";
+                        Mensagem = "Não foi possível alterar o usuário";
                     }
                 }
             }

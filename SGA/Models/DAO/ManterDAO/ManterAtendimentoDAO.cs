@@ -333,6 +333,93 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public Atendimento RecusaAtendimentoChamadoDAO()
+        {
+            SqlCommand Cmd;
+            SqlDataReader Dr;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+
+                    Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Atendimento] SET 
+	                    dataInicioAtendimento = '2000-01-01 00:00:00.000'
+                        ,dataFimAtendimento = '2000-01-01 00:00:00.000'
+                        ,tempoAtendimento = 0.00
+                        ,relatorioAtendimento = 'Atendimento recusado'
+                        WHERE idChamado = @Chamado and idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Chamado", ObjChamado.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Cmd.ExecuteNonQuery();
+
+                    Cmd = new SqlCommand(@"
+                                INSERT INTO [dbo].[RecusaAtendimento]
+                                    ([idChamado]
+                                      ,[idTecnico]
+                                      ,[motivo]
+                                      ,[idEmpresa]
+                                      ,[dataRegistro]
+                                      ,[usuarioRegistro])
+                                VALUES
+                                    (@IdChamado
+                                    ,@IdTecnico
+                                    ,@IdCliente
+                                    ,@Empresa
+                                    ,@Data
+                                    ,@Usuario);", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdChamado", ObjAtend.IdChamado);
+                    Cmd.Parameters.AddWithValue("@IdTecnico", ObjAtend.IdTecnico);
+                    Cmd.Parameters.AddWithValue("@IdCliente", ObjAtend.IdCliente);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+
+                    Cmd = new SqlCommand(@"
+                SELECT top 1 UsrReg.idUsuario
+                          ,UsrReg.idRegiaoAtendimento
+						  ,ServEspec.idServico
+                      FROM UsuarioXRegiaoAtendimento UsrReg inner join 
+                      Funcionario UsrFunc on (UsrFunc.idUsuario = UsrReg.idUsuario) inner join 
+                      Usuario Usr on (UsrFunc.idUsuario = Usr.idUsuario) inner join 
+                      UsuarioXEspecialidade UsrEspec on (Usr.idUsuario = UsrEspec.idUsuario) inner join
+					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade)
+                      WHERE Usr.idStatusUsuario = 1 and 
+                      UsrReg.idRegiaoAtendimento = @IdRegiao and 
+                      ServEspec.idServico = @IdServ and 
+					  Usr.idEmpresa = @Empresa and
+					  UsrReg.idUsuario in (select idTecnico from Atendimento where dataFimAtendimento < (dateadd(hour,-1,getdate()))) and
+                      UsrReg.idUsuario <> @Tecnico
+					  order by NEWID();", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdRegiao", ObjAtend.IdRegiaoAtendimento);
+                    Cmd.Parameters.AddWithValue("@IdServ", ObjChamado.IdServico);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    Cmd.Parameters.AddWithValue("@Tecnico", ObjAtend.IdTecnico);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjAtend.IdTecnico = Dr.GetInt32(0);
+                    }
+
+                    Dr.Close();
+                    return ObjAtend;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
         public bool AlteraAtendimentoDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())

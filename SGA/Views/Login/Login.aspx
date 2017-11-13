@@ -17,17 +17,15 @@
 
                         <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <asp:TextBox ID="TxtLogin" runat="server" CssClass="form-control" placeholder="Insira seu login" />
+                            <asp:TextBox ID="TxtLogin" runat="server" CssClass="form-control" placeholder="Insira seu login" required="required" />
                         </div>
 
                         <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <asp:TextBox ID="TxtSenha" runat="server" TextMode="Password" CssClass="form-control" placeholder="Insira sua senha" />
+                            <asp:TextBox ID="TxtSenha" runat="server" TextMode="Password" CssClass="form-control" placeholder="Insira sua senha" required="required" />
                         </div>
 
                         <div style="margin-top: 10px" class="form-group">
-                            <!-- Button -->
-
                             <div class="col-sm-12 controls">
                                 <asp:Button ID="BotaoEntrar" Text="   Entrar   " OnClick="BotaoEntrar_Click" runat="server" class="btn btn-success" />
                                 <div style="float: right; font-size: 80%; position: relative; top: -10px">
@@ -41,29 +39,29 @@
                     else
                     { %>
                 <div style="padding-top: 30px" class="panel-body">
-                    <form id="loginform" class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form">
                         <div style="margin-bottom: 25px" class="input-group">
-                            <span class="input-group-addon"><i class="envelope glyphicon-glyphicon"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                             <asp:TextBox ID="TxtEmail" runat="server" TextMode="Email" CssClass="form-control" placeholder="Insira seu e-mail..." />
                         </div>
                         <div style="margin-top: 10px" class="form-group">
                             <div class="col-sm-12 controls">
                                 <asp:Button ID="RecuperarButton" Text="   Recuperar   " runat="server" class="btn btn-success" OnClick="RecuperarButton_Click" />
+                                <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                             </div>
                         </div>
                     </form>
                 </div>
                 <%} %>
                 <div style="padding-top: 30px" class="panel-body">
-                    <form id="loginform" class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <div class="col-md-12 control">
-                                <div style="border-top: 1px solid#888; padding-top: 15px; font-size: 85%">
-                                    <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
-                                </div>
+                    <div class="form-group">
+                        <div class="col-md-12 control">
+                            <div style="border-top: 1px solid#888; padding-top: 15px; font-size: 85%">
+                                <b>
+                                    <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

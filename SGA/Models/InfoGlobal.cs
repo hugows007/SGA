@@ -17,6 +17,7 @@ namespace SGA.Models
         public static string MensagemChamadoCancelado { get; set; }
         public static string MensagemRetrabalho { get; set; }
         public static string MensagemReabertura { get; set; }
+        public static string MensagemRecusado { get; set; }
         public static string MensagemGeo { get; set; }
         
 

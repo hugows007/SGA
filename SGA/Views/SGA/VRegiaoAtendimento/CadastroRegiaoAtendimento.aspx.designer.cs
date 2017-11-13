@@ -22,31 +22,31 @@ namespace SGA.Views.SGA.VRegiaoAtendimento {
         protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
-        /// RegiaoTextBox control.
+        /// Regiao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RegiaoTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Regiao;
         
         /// <summary>
-        /// CidadeTextBox control.
+        /// Cidade control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CidadeTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Cidade;
         
         /// <summary>
-        /// EstadoTextBox control.
+        /// Estado control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EstadoTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Estado;
         
         /// <summary>
         /// Cadastrar control.

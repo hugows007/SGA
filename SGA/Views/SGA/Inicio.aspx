@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Inicio.aspx.cs" Inherits="SGA.Views.Site.Inicio" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
+    <%if (Session["perfil"].Equals("Administrador") || Session["perfil"].Equals("Gestor"))
+        { %>
     <script> 
         google.maps.event.addDomListener(window, 'load', init);
         var map, markersArray = [];
@@ -288,7 +290,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-map-marker fa-fw"></i>Atendimentos por região
@@ -337,7 +339,7 @@
                                     <tr class="success">
                                         <td><%=Lista.Chamado %></td>
                                         <td><%=Lista.Tecnico %></td>
-                                        <td><%=String.Format("{0:%d} dia(s), ",Lista.TempoAtendimento) + new DateTime(Lista.TempoAtendimento.Ticks).ToString("HH:mm:ss")%> </td>
+                                        <td><%=String.Format("{0:%d} dia(s), ", Lista.TempoAtendimento) + new DateTime(Lista.TempoAtendimento.Ticks).ToString("HH:mm:ss")%> </td>
                                     </tr>
                                     <%} %>
                                 </tbody>
@@ -457,4 +459,38 @@
             labels: ['Abertos', 'Fechados']
         });
     </script>
+    <%}
+        else
+        { %>
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Início</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                         <br />
+                    </div>
+                    <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
+                        <div class="col-lg-4">
+                            <br />
+                            <center><img style="max-width: 100%; height: auto;" src="<%# ResolveClientUrl("~/Image/Logo.jpeg") %>" alt=""></center>
+                        </div>
+                        <div class="col-lg-8">
+                            <h3>Olá, <%=Session["nome"].ToString()%>, seja muito bem vindo ao SGA TI - Sistema de Gestão de Atendimento em Tecnologia da informação.</h3>
+                            <p>Com grandes funcionalidades, o SGA TI permite gerir e controlar os chamados e seus respectivos atendimentos com facilidade e pontualidade.</p>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                      Navegue atravéz dos menus a sua esquerda. <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%} %>
 </asp:Content>

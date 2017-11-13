@@ -14,6 +14,7 @@ namespace SGA.Views.SGA.VServico
     {
         Servico ObjServico = FactoryServico.GetNewServico();
         TipoServico ObjTpServico = FactoryServico.GetNewTpServico();
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -22,6 +23,7 @@ namespace SGA.Views.SGA.VServico
                 {
                     if (Request.QueryString["Id"] != null)
                     {
+                        Mensagem = "Alteração de informações de um serviço.";
 
                         ObjServico.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
@@ -34,9 +36,9 @@ namespace SGA.Views.SGA.VServico
                         DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
 
                         DropDownListTpServico.SelectedValue = Convert.ToString(ObjServico.IdTipo);
-                        NomeTextBox.Text = ObjServico.NomeServ;
-                        DescServTextBox.Text = ObjServico.DescServ;
-                        SLATextBox.Text = ObjServico.Sla.ToString();
+                        Nome.Value = ObjServico.NomeServ;
+                        DescServ.Value = ObjServico.DescServ;
+                        SLA.Value = ObjServico.Sla.ToString();
                     }
                 }
                 catch (Exception Ex)
@@ -51,22 +53,25 @@ namespace SGA.Views.SGA.VServico
         {
             try
             {
-                if (Request.QueryString["Id"] != null)
+                if (Request.QueryString["Id"] != null && DropDownListTpServico.SelectedIndex > 0)
                 {
                     ObjServico.Id = Convert.ToInt32(Request.QueryString["Id"]);
                     ObjServico.IdTipo = Convert.ToInt32(DropDownListTpServico.SelectedValue);
-                    ObjServico.NomeServ = NomeTextBox.Text;
-                    ObjServico.DescServ = DescServTextBox.Text;
-                    ObjServico.Sla = Convert.ToDouble(SLATextBox.Text);
+                    ObjServico.NomeServ = Nome.Value;
+                    ObjServico.DescServ = DescServ.Value;
+                    ObjServico.Sla = Convert.ToDouble(SLA.Value);
 
                     if (new ManterServico(ObjServico).AlteraServico())
                     {
-                        MsgLabel.Text = "Serviço modificado com sucesso.";
+                        Mensagem = "Serviço modificado com sucesso.";
                     }
                     else
                     {
-                        MsgLabel.Text = "Não foi possível modificar o serviço.";
+                        Mensagem = "Não foi possível modificar o serviço.";
                     }
+                }else
+                {
+                    Mensagem = "Selecione todas as opções.";
                 }
             }
             catch (Exception Ex)

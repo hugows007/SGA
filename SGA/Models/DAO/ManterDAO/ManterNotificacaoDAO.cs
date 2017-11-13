@@ -188,10 +188,12 @@ namespace SGA.Models.DAO.ManterDAO
                         select * 
                             from Notificacao where 
                             idUsuarioOrigem = @IdOrig and 
+                            idUsuarioDestino = @IdDest and 
                             vista = 0 and
                             mensagem = @Msg;", Con);
 
                     Cmd.Parameters.AddWithValue("@IdOrig", ObjNotificacao.IdOrigem);
+                    Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
                     Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
 
                     Dr = Cmd.ExecuteReader();

@@ -15,6 +15,7 @@ namespace SGA.Views.SGA.VEspecialidade
     {
         Especialidade ObjEspec = FactoryEspecialidade.GetNew();
         Servico ObjServ = FactoryServico.GetNewServico();
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -45,18 +46,23 @@ namespace SGA.Views.SGA.VEspecialidade
         {
             try
             {
-                ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
-                ObjServ.Id = Convert.ToInt32(DropDownListServ.SelectedValue);
+                if (DropDownListEspec.SelectedIndex > 0 && DropDownListServ.SelectedIndex > 0)
+                {
+                    ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
+                    ObjServ.Id = Convert.ToInt32(DropDownListServ.SelectedValue);
 
-                if(new ManterEspecialidade(ObjEspec, ObjServ).RelacionaEspecServ())
+                    if (new ManterEspecialidade(ObjEspec, ObjServ).RelacionaEspecServ())
+                    {
+                        Mensagem = "Especialidade e serviço relacionados com sucesso.";
+                    }
+                    else
+                    {
+                        Mensagem = "Não foi possível relacionar a especialidade e o serviço";
+                    }
+                }else
                 {
-                    MsgLabel.Text = "Especialidade e serviço relacionados com sucesso.";
+                    Mensagem = "Selecione as opções.";
                 }
-                else
-                {
-                    MsgLabel.Text = "Não foi possível relacionar a especialidade e o serviço";
-                }
-                
             }
             catch (Exception Ex)
             {

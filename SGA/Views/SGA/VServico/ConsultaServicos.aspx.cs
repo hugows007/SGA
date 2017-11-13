@@ -18,11 +18,14 @@ namespace SGA.Views.SGA.VServico
 
         Servico ObjServico = FactoryServico.GetNewServico();
         TipoServico ObjTpServico = FactoryServico.GetNewTpServico();
+        public string Mensagem;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                Mensagem = "Consulta de serviços.";
+
                 foreach (var Result in new ManterServico().ConsultaServicos())
                 {
                     ObjTpServico.Id = Result.IdTipo;
@@ -32,11 +35,11 @@ namespace SGA.Views.SGA.VServico
 
                 if (Request.QueryString["OpInatServico"] != null && Request.QueryString["OpInatServico"].Equals("True"))
                 {
-                    MsgLabel.Text = "Serviço inativado com sucesso.";
+                    Mensagem = "Serviço inativado com sucesso.";
                 }
                 else if (Request.QueryString["OpInatServico"] != null && Request.QueryString["OpInatServico"].Equals("False"))
                 {
-                    MsgLabel.Text = "Ocorreu um erro ao inativar o serviço.";
+                    Mensagem = "Ocorreu um erro ao inativar o serviço.";
                 }
             }
             catch (Exception Ex)

@@ -12,9 +12,10 @@ namespace SGA.Views.SGA.VEmpresa
 {
     public partial class CadastroEmpresa : System.Web.UI.Page
     {
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Mensagem = "Cadastro de empresa.";
         }
 
         protected void CadastrarButton_Click(object sender, EventArgs e)
@@ -22,19 +23,19 @@ namespace SGA.Views.SGA.VEmpresa
             try
             {
                 Empresa ObjEmpresa = FactoryEmpresa.GetNew();
-                ObjEmpresa.NomeEmpresa = EmpresaTextBox.Text;
-                ObjEmpresa.Endereco = EnderecoTextBox.Text;
-                ObjEmpresa.Complemento = ComplementoTextBox.Text;
-                ObjEmpresa.Cep = CepTextBox.Text;
-                ObjEmpresa.Telefone = TelefoneTextBox.Text;
+                ObjEmpresa.NomeEmpresa = Empresa.Value;
+                ObjEmpresa.Endereco = Endereco.Value;
+                ObjEmpresa.Complemento = Complemento.Value;
+                ObjEmpresa.Cep = CEP.Value;
+                ObjEmpresa.Telefone = Telefone.Value;
 
                 if (new ManterEmpresa(ObjEmpresa).CadastraEmpresa())
                 {
-                    MsgLabel.Text = "Empresa cadastrada com sucesso.";
+                    Mensagem = "Empresa cadastrada com sucesso.";
                 }
                 else
                 {
-                    MsgLabel.Text = "Não foi possível cadastrar a especialidade.";
+                    Mensagem = "Não foi possível cadastrar a especialidade.";
                 }
                 
             }

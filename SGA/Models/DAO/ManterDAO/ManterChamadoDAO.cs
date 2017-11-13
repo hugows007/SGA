@@ -1,4 +1,5 @@
 ﻿using SGA.DAO;
+using SGA.Models.Atendimentos;
 using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
 using SGA.Models.Usuarios;
@@ -15,6 +16,7 @@ namespace SGA.Models.DAO.ManterDAO
     {
         private Chamado ObjChamado;
         private Usuario ObjUsuario;
+        private Atendimento ObjAtend;
         int UltimoId;
         int ContadorPendencia;
         int ContadorReabertura;
@@ -30,6 +32,11 @@ namespace SGA.Models.DAO.ManterDAO
         {
             this.ObjChamado = ObjChamado;
             this.ObjUsuario = ObjUsuario;
+        }
+        public ManterChamadoDAO(Chamado ObjChamado, Atendimento ObjAtend)
+        {
+            this.ObjChamado = ObjChamado;
+            this.ObjAtend = ObjAtend;
         }
         public List<Chamado> ConsultaChamadosDAO()
         {

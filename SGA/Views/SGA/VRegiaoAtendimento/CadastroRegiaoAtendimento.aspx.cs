@@ -12,6 +12,7 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
 {
     public partial class CadastroRegiaoAtendimento : System.Web.UI.Page
     {
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -20,18 +21,20 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
         {
             try
             {
+                Mensagem = "Cadastro de região de atendimento.";
+
                 RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
-                ObjRegiao.Regiao = RegiaoTextBox.Text;
-                ObjRegiao.Cidade = CidadeTextBox.Text;
-                ObjRegiao.Estado = EstadoTextBox.Text;
+                ObjRegiao.Regiao = Regiao.Value;
+                ObjRegiao.Cidade = Cidade.Value;
+                ObjRegiao.Estado = Estado.Value;
 
                 if(new ManterRegiaoAtendimento(ObjRegiao).CadastraRegiaoAtendimento())
                 {
-                    MsgLabel.Text = "Região de atendimento cadastrada com sucesso.";
+                    Mensagem = "Região de atendimento cadastrada com sucesso.";
                 }
                 else
                 {
-                    MsgLabel.Text = "Não foi possível cadastrar a região de atendimento.";
+                    Mensagem = "Não foi possível cadastrar a região de atendimento.";
                 }
                 
             }

@@ -33,7 +33,8 @@ namespace SGA.Views.SGA
             InfoGlobal.MensagemChamadoCancelado = "Chamado cancelado";
             InfoGlobal.MensagemRetrabalho = "Retrabalho";
             InfoGlobal.MensagemReabertura = "Reabertura de chamado";
-            InfoGlobal.MensagemGeo = "Sem contato geográfico com o técnico: ";
+            InfoGlobal.MensagemRecusado = "Chamado recusado";
+            InfoGlobal.MensagemGeo = "Sem geolocalização: ";
 
             Application["MensagemRequisicaoChat"] = InfoGlobal.MensagemRequisicaoChat;
             Application["MensagemRequisicaoChatPriv"] = InfoGlobal.MensagemRequisicaoChatPriv;
@@ -43,6 +44,7 @@ namespace SGA.Views.SGA
             Application["MensagemChamadoCancelado"] = InfoGlobal.MensagemChamadoCancelado;
             Application["MensagemRetrabalho"] = InfoGlobal.MensagemRetrabalho;
             Application["MensagemReabertura"] = InfoGlobal.MensagemReabertura;
+            Application["MensagemRecusado"] = InfoGlobal.MensagemRecusado;
             Application["MensagemGeo"] = InfoGlobal.MensagemGeo;
         }
         protected void Page_Load(object sender, EventArgs e)

@@ -16,6 +16,9 @@
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
+                    <script>
+                        alertify.log("<%=Mensagem%>");
+                    </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
 
@@ -35,19 +38,19 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="NomeTextBox" class="control-label">Nome: </label>
-                                <asp:TextBox ID="NomeTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Nome" class="control-label">Nome: </label>
+                                <input type="text" id="Nome" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 50 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="DescServTextBox" class="control-label">Descrição: </label>
-                                <asp:TextBox ID="DescServTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="DescServ" class="control-label">Descrição: </label>
+                                <input type="text" id="DescServ" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 100 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="SLATextBox" class="control-label">SLA: </label>
-                                <asp:TextBox ID="SLATextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="SLA" class="control-label">SLA: </label>
+                                <input type="number" id="SLA" required class="form-control input-sm" runat="server" max="100" placeholder="Máximo de 100 horas" />
                             </div>
                             <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" class="btn btn-default" OnClick="AlterarButton_Click" />
-                            <a class="btn btn-default" href="/Views/SGA/VServico/ConsultaServicos.aspx">Voltar</a>
+                            <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                         </div>
                         <div class="panel-footer">
                             Favor alterar os campos e clicar em salvar alterações.<br />

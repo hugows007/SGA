@@ -29,7 +29,7 @@ namespace SGA.Views.SGA.VAvaliacao
                 }
                 else
                 {
-                    Response.Redirect("\\Views\\SGA\\Inicio.aspx");
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }
             }
             catch (Exception Ex)

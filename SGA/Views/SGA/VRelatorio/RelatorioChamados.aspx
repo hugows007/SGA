@@ -34,7 +34,7 @@
     <form id="form1" runat="server">
         <div>
             <h2 style="text-align: center;">
-                <img style="float: left;" src="https://lh6.googleusercontent.com/QaxkDcl9HpsSHrBBRuQc2u2nSbjqUk0nLj7oJZOBLeJxDpXVNSwBYXKoHM3Ekj-Ha5qkdt-sJBdrWm0=w1366-h702" alt="" width="185" height="110" /></h2>
+                <img style="float: left;" src="/Image/Logo.jpeg" alt="" width="185" height="110" /></h2>
             <h1 style="text-align: center;">&nbsp;</h1>
             <h2 style="text-align: center;">Relatório de <%=TipoRelatorio%></h2>
             <p>&nbsp;</p>
@@ -108,14 +108,15 @@
                         <tr>
                             <td><%=Lista.Chamado %> </td>
                             <td><%=Lista.Servico %> </td>
-                            <td><%=String.Format("{0:%d} dia(s), ",Lista.TempoAtendimento) + new DateTime(Lista.TempoAtendimento.Ticks).ToString("HH:mm:ss")%> </td>
+                            <td><%=String.Format("{0:%d} dia(s), ", Lista.TempoAtendimento) + new DateTime(Lista.TempoAtendimento.Ticks).ToString("HH:mm:ss")%> </td>
                             <td><%=Lista.SLA %> </td>
                         </tr>
                         <%} %>
                     </tbody>
                 </table>
                 <%}
-                    else if (TipoRelatorio.Equals("TempoAtend")){ %>
+                    else if (TipoRelatorio.Equals("TempoAtend"))
+                    { %>
                 <table>
                     <thead>
                         <tr>
@@ -132,7 +133,29 @@
                             <td><%=Lista.Chamado %> </td>
                             <td><%=Lista.Servico %> </td>
                             <td><%=Lista.Tecnico %> </td>
-                            <td><%=String.Format("{0:%d} dia(s), ",Lista.TempoAtendimento) + new DateTime(Lista.TempoAtendimento.Ticks).ToString("HH:mm:ss")%> </td>
+                            <td><%=String.Format("{0:%d} dia(s), ", Lista.TempoAtendimento) + new DateTime(Lista.TempoAtendimento.Ticks).ToString("HH:mm:ss")%> </td>
+                        </tr>
+                        <%} %>
+                    </tbody>
+                </table>
+                <%}
+                    else if (TipoRelatorio.Equals("RecusaAtend"))
+                    { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Chamado</th>
+                            <th>Tecnico</th>
+                            <th>Data do ocorrido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%foreach (var Lista in ListaRelatorio)
+                            { %>
+                        <tr>
+                            <td><%=Lista.Chamado %> </td>
+                            <td><%=Lista.Tecnico %> </td>
+                            <td><%=Lista.DataOcorrido%> </td>
                         </tr>
                         <%} %>
                     </tbody>

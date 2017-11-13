@@ -62,6 +62,14 @@
                             </div>
                             <asp:Button ID="GerarRelatorioTempo" runat="server" Text="Gerar relatório de tempo de atendimento" class="btn btn-default" OnClick="GerarRelatorioTempo_Click" />
                         </div>
+                        <div class="panel-body">
+                            <label for="EspecTextBox" class="control-label">Gerar relatório de recusa de atendimento: </label>
+                            <div class="form-group">
+                                <div class="col-sm-12 panel-heading">
+                                </div>
+                            </div>
+                            <asp:Button ID="GerarRelatorioRecusa" runat="server" Text="Gerar relatório de recusa de atendimento" class="btn btn-default" OnClick="GerarRelatorioRecusa_Click" />
+                        </div>
                         <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                     </div>
                     <div class="panel-footer">

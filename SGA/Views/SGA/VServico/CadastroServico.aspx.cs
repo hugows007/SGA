@@ -13,12 +13,15 @@ namespace SGA.Views.SGA.VServico
     public partial class CadastroServico : System.Web.UI.Page
     {
         Servico ObjServico = null;
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 try
                 {
+                    Mensagem = "Cadastro de serviço.";
+                                    
                     DropDownListTpServico.DataSource = new ManterServico().ConsultaTpServicos();
                     DropDownListTpServico.DataTextField = "NomeTipoServ";
                     DropDownListTpServico.DataValueField = "Id";
@@ -37,20 +40,24 @@ namespace SGA.Views.SGA.VServico
         {
             try
             {
-                ObjServico = FactoryServico.GetNewServico();
-                ObjServico.IdTipo = Convert.ToInt32(DropDownListTpServico.SelectedValue);
-                ObjServico.NomeServ = NomeTextBox.Text;
-                ObjServico.DescServ = DescServTextBox.Text;
-                ObjServico.Sla = Convert.ToDouble(SLATextBox.Text);
+                if(DropDownListTpServico.SelectedIndex > 0)
+                {
+                    ObjServico = FactoryServico.GetNewServico();
+                    ObjServico.IdTipo = Convert.ToInt32(DropDownListTpServico.SelectedValue);
+                    ObjServico.NomeServ = Nome.Value;
+                    ObjServico.DescServ = DescServ.Value;
+                    ObjServico.Sla = Convert.ToDouble(SLA.Value);
 
-                if(new ManterServico(ObjServico).CadastraServico())
-                {
-                    MsgLabel.Text = "Serviço cadastrado com sucesso.";
+                    if (new ManterServico(ObjServico).CadastraServico())
+                    {
+                        Mensagem = "Serviço cadastrado com sucesso.";
+                    }
+                    else
+                    {
+                        Mensagem = "Não foi possível cadastrar o serviço";
+                    }
                 }
-                else
-                {
-                    MsgLabel.Text = "Não foi possível cadastrar o serviço";
-                }
+                
             }
             catch (Exception Ex)
             {

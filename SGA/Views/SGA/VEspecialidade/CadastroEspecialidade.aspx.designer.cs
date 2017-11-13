@@ -22,22 +22,22 @@ namespace SGA.Views.SGA.VEspecialidade {
         protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
-        /// EspecTextBox control.
+        /// Espec control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EspecTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Espec;
         
         /// <summary>
-        /// EspecDestTextBox control.
+        /// DetalhesEspec control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EspecDestTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText DetalhesEspec;
         
         /// <summary>
         /// Cadastrar control.

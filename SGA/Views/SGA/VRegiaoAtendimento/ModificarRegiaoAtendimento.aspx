@@ -12,21 +12,26 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Alteração de área
-                        <b><br><asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
+                        <b>
+                            <br>
+                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
+                    <script>
+                        alertify.log("<%=Mensagem%>");
+                    </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="RegiaoTextBox" class="control-label">Região:</label>
-                                <asp:TextBox ID="RegiaoTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Regiao" class="control-label">Região: </label>
+                                <input type="text" id="Regiao" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 20 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="CidadeTextBox" class="control-label">Cidade:</label>
-                                <asp:TextBox ID="CidadeTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Cidade" class="control-label">Cidade: </label>
+                                <input type="text" id="Cidade" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 20 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="EstadoTextBox" class="control-label">Estado:</label>
-                                <asp:TextBox ID="EstadoTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Estado" class="control-label">Estado: </label>
+                                <input type="text" id="Estado" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 20 caracteres" />
                             </div>
                             <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" class="btn btn-default" OnClick="AlterarButton_Click" />
                             <a class="btn btn-default" href="/Views/SGA/VAreaAtendimento/ConsultaRegiaoAtendimentos.aspx">Voltar</a>

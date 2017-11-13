@@ -59,7 +59,11 @@ namespace SGA.Models.Manter
         public List<Relatorio> GetRelatorioTempoAtendimento()
         {
             return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioTempoAtendimentoDAO();
-        }        
+        }
+        public List<Relatorio> GetRelatorioRecusaAtendimento()
+        {
+            return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioRecusaAtendimentoDAO();
+        }
         public Relatorio GetTempoMedioAtendimento()
         {
             return new ManterRelatorioDAO(ObjRelatorio).GetTempoMedioAtendimentoDAO();

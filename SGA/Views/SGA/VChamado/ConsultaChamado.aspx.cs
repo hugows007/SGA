@@ -13,6 +13,7 @@ using System.Web.UI.WebControls;
 using SGA.Models.Atendimentos;
 using SGA.Models.Usuarios;
 using SGA.Models.Chamados.PrioridadeChamados;
+using System.Web.Security;
 
 namespace SGA.Views.SGA.VChamado
 {
@@ -26,16 +27,18 @@ namespace SGA.Views.SGA.VChamado
         public Atendimento ObjAtend = FactoryAtendimento.GetNew();
         public Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
 
+        public string Mensagem;
+
         public string NomeCliente;
         public string NomeTecnico;
         public bool CancButtonClick;
         public bool EnceButtonClick;
         public bool PendBox;
         public bool TramiteClick;
+        public bool RecusarClick;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Request.Form["Master$IdChamado"] != null -- Capturar post da página master para a página atual
             try
             {
                 if (!"".Equals(Request.QueryString["IdChamado"]))
@@ -70,11 +73,6 @@ namespace SGA.Views.SGA.VChamado
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
                         ObjStatusChm = new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById();
 
-                        if (ObjStatusChm.Id.Equals(5))
-                        {
-                            MotCancelDescTextBox.Text = ObjChamado.InfoCancelamento;
-                        }
-
                         if (new ManterChamado(ObjChamado).ValidaTempoFechamento())
                         {
                             AvaliarChamadoButton.Enabled = true;
@@ -89,12 +87,12 @@ namespace SGA.Views.SGA.VChamado
                     else
                     {
                         ObjChamado = null;
-                        MsgLabel.Text = "Chamado não encontrado ou inexistente.";
+                        Mensagem = "Chamado não encontrado ou inexistente.";
                     }
                 }
                 else
                 {
-                    MsgLabel.Text = "Nenhum número de chamado foi informado.";
+                    Mensagem = "Nenhum número de chamado foi informado.";
                 }
             }
             catch (Exception Ex)
@@ -111,7 +109,7 @@ namespace SGA.Views.SGA.VChamado
             {
                 CancButtonClick = true;
 
-                if (!DescCancelTextBox.Text.Equals(""))
+                if (!DescCancel.Value.Equals(""))
                 {
                     ObjAtend = FactoryAtendimento.GetNew();
                     ObjChamado = FactoryChamado.GetNew();
@@ -120,20 +118,21 @@ namespace SGA.Views.SGA.VChamado
                     ObjAtend.IdChamado = ObjChamado.Id;
                     ObjAtend = new ManterAtendimento(ObjAtend).ConsultaAtendimentoByIdChamado();
 
-                    ObjChamado.InfoCancelamento = DescCancelTextBox.Text;
+                    ObjChamado.InfoCancelamento = DescCancel.Value;
 
                     if (new ManterChamado(ObjChamado, ObjAtend).CancelaChamado())
                     {
-                        MsgLabel.Text = "Chamado cancelado com sucesso.";
+                        Mensagem = "Chamado cancelado com sucesso.";
+                        Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
                     }
                     else
                     {
-                        MsgLabel.Text = "Ocorreu um problema no cancelamento do chamado.";
+                        Mensagem = "Ocorreu um problema no cancelamento do chamado.";
                     }
                 }
                 else
                 {
-                    MsgLabel.Text = "Informe o motivo do cancelamento.";
+                    Mensagem = "Informe o motivo do cancelamento.";
                 }
             }
             catch (Exception Ex)
@@ -150,7 +149,7 @@ namespace SGA.Views.SGA.VChamado
             {
                 EnceButtonClick = true;
 
-                if (!EnceRelatTextBox.Text.Equals(""))
+                if (!EnceRelat.Value.Equals(""))
                 {
                     ObjAtend = FactoryAtendimento.GetNew();
                     ObjChamado = FactoryChamado.GetNew();
@@ -159,42 +158,44 @@ namespace SGA.Views.SGA.VChamado
                     ObjAtend.IdChamado = ObjChamado.Id;
                     ObjAtend = new ManterAtendimento(ObjAtend).ConsultaAtendimentoByIdChamado();
 
-                    ObjAtend.Relatorio = EnceRelatTextBox.Text;
+                    ObjAtend.Relatorio = EnceRelat.Value;
 
-                    if (CheckBoxPend.Checked && !PendRelatTextBox.Text.Equals(""))
+                    if (CheckBoxPend.Checked && !PendRelat.Value.Equals(""))
                     {
                         ObjChamado.Pendencia = true;
-                        ObjChamado.InfoPendencia = PendRelatTextBox.Text;
+                        ObjChamado.InfoPendencia = PendRelat.Value;
 
                         if (new ManterAtendimento(ObjAtend, ObjChamado).EncerraAtendimento())
                         {
-                            MsgLabel.Text = "Chamado encerrado com sucesso.";
+                            Mensagem = "Chamado encerrado com sucesso.";
+                            Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
                         }
                         else
                         {
-                            MsgLabel.Text = "Ocorreu um problema no encerramento do chamado.";
+                            Mensagem = "Ocorreu um problema no encerramento do chamado.";
                         }
                     }
                     else
                     {
-                        MsgLabel.Text = "Informe as pendências.";
+                        Mensagem = "Informe as pendências.";
                     }
 
                     if (!CheckBoxPend.Checked)
                     {
                         if (new ManterAtendimento(ObjAtend, ObjChamado).EncerraAtendimento())
                         {
-                            MsgLabel.Text = "Chamado encerrado com sucesso.";
+                            Mensagem = "Chamado encerrado com sucesso.";
+                            Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
                         }
                         else
                         {
-                            MsgLabel.Text = "Ocorreu um problema no encerramento do chamado.";
+                            Mensagem = "Ocorreu um problema no encerramento do chamado.";
                         }
                     }
                 }
                 else
                 {
-                    MsgLabel.Text = "Informe o relatório do atendimento.";
+                    Mensagem = "Informe o relatório do atendimento.";
                 }
 
             }
@@ -208,24 +209,32 @@ namespace SGA.Views.SGA.VChamado
 
         protected void CheckBoxPend_CheckedChanged(object sender, EventArgs e)
         {
-            if (CheckBoxPend.Checked)
+            try
             {
-                PendBox = true;
-                EnceButtonClick = true;
-                CancButtonClick = false;
+                if (CheckBoxPend.Checked)
+                {
+                    PendBox = true;
+                    EnceButtonClick = true;
+                    CancButtonClick = false;
+                }
+                else
+                {
+                    PendBox = false;
+                    EnceButtonClick = true;
+                    CancButtonClick = false;
+                }
             }
-            else
+            catch (Exception Ex)
             {
-                PendBox = false;
-                EnceButtonClick = true;
-                CancButtonClick = false;
+                LogException.InsereLogBd(Ex);
+                ObjChamado = null;
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
             }
-
         }
 
         protected void AvaliarButton_Click(object sender, EventArgs e)
         {
-            if(AvaliarChamadoButton.Enabled == true)
+            if (AvaliarChamadoButton.Enabled == true)
             {
                 Response.Redirect("\\Views\\SGA\\VAvaliacao\\Avaliacao.aspx?IdChamado=" + ObjChamado.Id);
             }
@@ -244,12 +253,14 @@ namespace SGA.Views.SGA.VChamado
 
                 if (!TramiteTextBox.Value.Equals(""))
                 {
-                    ObjChamado.Tramite = "  " + DateTime.Now + ": " + TramiteTextBox.Value;
+                    ObjChamado.Tramite = "  " + DateTime.Now + " " + Membership.GetUser() + ": " + TramiteTextBox.Value;
                     new ManterChamado(ObjChamado).AtualizaTramite();
+                    Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
+                    Mensagem = "Trâmite adicionado com sucesso.";
                 }
                 else
                 {
-                    MsgLabel.Text = "Digite alguma informação.";
+                    Mensagem = "Digite alguma informação para adicionar ao chamado.";
                 }
             }
             catch (Exception Ex)
@@ -265,12 +276,47 @@ namespace SGA.Views.SGA.VChamado
             {
                 if (new ManterChamado(ObjChamado, ObjAtend).ReabreChamado())
                 {
-                    MsgLabel.Text = "Chamado reaberto com sucesso.";
+                    Mensagem = "Chamado reaberto com sucesso.";
                 }
                 else
                 {
-                    MsgLabel.Text = "Digite alguma informação.";
+                    Mensagem = "Digite alguma informação.";
                 }
+            }
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+            }
+        }
+
+        protected void ConsultarClienteButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("\\Views\\SGA\\VUsuario\\ModificarUsuario.aspx?Id=" + ObjChamado.IdCliente + "&Consulta=true");
+        }
+
+        protected void Recusar_Click(object sender, EventArgs e)
+        {
+            RecusarClick = true;
+
+            try
+            {
+                if (!RecusarMotivo.Value.Equals(""))
+                {
+                    if (new ManterAtendimento(ObjAtend, ObjChamado).RecusaAtendimentoChamado())
+                    {
+                        Mensagem = "Atendimento deste chamado recusado.";
+                    }
+                    else
+                    {
+                        Mensagem = "Ocorreu um problema ao recusar o atendimento deste chamado.";
+                    }
+                }
+                else
+                {
+                    Mensagem = "Justifique o motivo de recusar o atendimento deste chamado.";
+                }
+
             }
             catch (Exception Ex)
             {

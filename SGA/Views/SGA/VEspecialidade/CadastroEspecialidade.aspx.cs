@@ -12,6 +12,7 @@ namespace SGA.Views.SGA.VEspecialidade
 {
     public partial class CadastroEspecialidade : System.Web.UI.Page
     {
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -21,17 +22,19 @@ namespace SGA.Views.SGA.VEspecialidade
         {
             try
             {
+                Mensagem = "Cadastro de especialidade.";
+                
                 Especialidade ObjEspec = FactoryEspecialidade.GetNew();
-                ObjEspec.NomeEspec = EspecTextBox.Text;
-                ObjEspec.DescEspec = EspecDestTextBox.Text;
+                ObjEspec.NomeEspec = Espec.Value;
+                ObjEspec.DescEspec = DetalhesEspec.Value;
 
                 if(new ManterEspecialidade(ObjEspec).CadastraEspecialidade())
                 {
-                    MsgLabel.Text = "Especialidade cadastrada com sucesso.";
+                    Mensagem = "Especialidade cadastrada com sucesso.";
                 }
                 else
                 {
-                    MsgLabel.Text = "Não foi possível cadastrar a especialidade.";
+                    Mensagem = "Não foi possível cadastrar a especialidade.";
                 }
                 
             }

@@ -13,22 +13,25 @@ namespace SGA.Views.SGA.VEmpresa
     public partial class ModificarEmpresa : System.Web.UI.Page
     {
         Empresa ObjEmpresa = FactoryEmpresa.GetNew();
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 try
                 {
+                    Mensagem = "Alteração de informação de uma empresa.";
+
                     if (Request.QueryString["Id"] != null)
                     {
                         ObjEmpresa.Id = Convert.ToInt32(Request.QueryString["Id"]);
                         ObjEmpresa = new ManterEmpresa(ObjEmpresa).ConsultaEmpresaById();
 
-                        EmpresaTextBox.Text = ObjEmpresa.NomeEmpresa;
-                        EnderecoTextBox.Text = ObjEmpresa.Endereco;
-                        ComplementoTextBox.Text = ObjEmpresa.Complemento;
-                        CepTextBox.Text = ObjEmpresa.Cep;
-                        TelefoneTextBox.Text = ObjEmpresa.Telefone;
+                        Empresa.Value = ObjEmpresa.NomeEmpresa;
+                        Endereco.Value = ObjEmpresa.Endereco;
+                        Complemento.Value = ObjEmpresa.Complemento;
+                        CEP.Value = ObjEmpresa.Cep;
+                        Telefone.Value = ObjEmpresa.Telefone;
                     }
                 }
                 catch (Exception Ex)
@@ -46,19 +49,19 @@ namespace SGA.Views.SGA.VEmpresa
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjEmpresa.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    ObjEmpresa.NomeEmpresa = EmpresaTextBox.Text;
-                    ObjEmpresa.Endereco = EnderecoTextBox.Text;
-                    ObjEmpresa.Complemento = ComplementoTextBox.Text;
-                    ObjEmpresa.Cep = CepTextBox.Text;
-                    ObjEmpresa.Telefone = TelefoneTextBox.Text;
+                    ObjEmpresa.NomeEmpresa = Empresa.Value;
+                    ObjEmpresa.Endereco = Endereco.Value;
+                    ObjEmpresa.Complemento = Complemento.Value;
+                    ObjEmpresa.Cep = CEP.Value;
+                    ObjEmpresa.Telefone = Telefone.Value;
 
                     if (new ManterEmpresa(ObjEmpresa).AlteraEmpresa())
                     {
-                        MsgLabel.Text = "Empresa alterada com sucesso.";
+                        Mensagem = "Empresa alterada com sucesso.";
                     }
                     else
                     {
-                        MsgLabel.Text = "Não foi possível alterar a especialidade.";
+                        Mensagem = "Não foi possível alterar a especialidade.";
                     }
                 }
             }

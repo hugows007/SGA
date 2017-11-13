@@ -22,49 +22,49 @@ namespace SGA.Views.SGA.VEmpresa {
         protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
-        /// EmpresaTextBox control.
+        /// Empresa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EmpresaTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Empresa;
         
         /// <summary>
-        /// EnderecoTextBox control.
+        /// Endereco control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EnderecoTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Endereco;
         
         /// <summary>
-        /// ComplementoTextBox control.
+        /// Complemento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ComplementoTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Complemento;
         
         /// <summary>
-        /// CepTextBox control.
+        /// CEP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CepTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText CEP;
         
         /// <summary>
-        /// TelefoneTextBox control.
+        /// Telefone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TelefoneTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Telefone;
         
         /// <summary>
         /// Cadastrar control.

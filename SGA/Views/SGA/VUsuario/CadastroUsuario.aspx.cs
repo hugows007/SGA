@@ -17,6 +17,8 @@ namespace SGA.Views.SGA.VUsuario
     {
         Usuario ObjUsuario;
         public int IdEmpresa;
+        bool ValidaInfo;
+        public string Mensagem;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,7 +28,7 @@ namespace SGA.Views.SGA.VUsuario
 
                 if (!Page.IsPostBack)
                 {
-
+                    Mensagem = "Cadastro de usuário.";
                     DropDownListTipo.DataSource = new ManterUsuario().GetRegrasUsuario();
                     DropDownListTipo.DataBind();
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
@@ -47,11 +49,13 @@ namespace SGA.Views.SGA.VUsuario
                 if (DropDownListTipo.Text.Equals("Administrador"))
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                    ValidaInfo = true;
                 }
-                else if (DropDownListTipo.Text.Equals("Técnico"))
+                else if (DropDownListTipo.Text.Equals("Técnico") && DropDownListEspec.SelectedIndex > 0 && DropDownListArea.SelectedIndex > 0)
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
                     ObjUsuario.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
+                    ValidaInfo = true;
 
                     if (!IdEmpresa.Equals(0) || !IdEmpresa.Equals(null))
                     {
@@ -66,6 +70,7 @@ namespace SGA.Views.SGA.VUsuario
                 else if (DropDownListTipo.Text.Equals("Gestor") || DropDownListTipo.Text.Equals("Atendente"))
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
+                    ValidaInfo = true;
 
                     if (!IdEmpresa.Equals(0) || !IdEmpresa.Equals(null))
                     {
@@ -76,31 +81,43 @@ namespace SGA.Views.SGA.VUsuario
                         ObjUsuario.IdEmpresa = Convert.ToInt32(DropDownListEmpresa.SelectedValue);
                     }
                 }
-                else if (DropDownListTipo.Text.Equals("Cliente Físico"))
+                else if (DropDownListTipo.Text.Equals("Cliente Físico") && DropDownListArea.SelectedIndex > 0)
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioClienteFisico);
-                    ObjUsuario.ObjCF.DocIdent = DocTextbox.Text;
-                    ObjUsuario.ObjCF.OrgEmiss = EmissDocTextBox.Text;
-                    ObjUsuario.ObjCF.Cpf = CPFTextbox.Text;
+                    ObjUsuario.ObjCF.DocIdent = Doc.Value;
+                    ObjUsuario.ObjCF.OrgEmiss = EmissDoc.Value;
+                    ObjUsuario.ObjCF.Cpf = CPF.Value;
+                    ValidaInfo = true;
                 }
-                else if (DropDownListTipo.Text.Equals("Cliente Jurídico"))
+                else if (DropDownListTipo.Text.Equals("Cliente Jurídico") && DropDownListArea.SelectedIndex > 0)
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioClienteJuridico);
-                    ObjUsuario.ObjCJ.Cnpj = CNPJTextBox.Text;
+                    ObjUsuario.ObjCJ.Cnpj = CNPJ.Value;
+                    ValidaInfo = true;
+                }
+                else
+                {
+                    ValidaInfo = false;
                 }
 
-                ObjUsuario.Login = UserNameTextbox.Text;
-                ObjUsuario.Senha = PasswordTextbox.Text;
-                ObjUsuario.Email = EmailTextbox.Text;
-                ObjUsuario.Regra = DropDownListTipo.SelectedValue;
-                ObjUsuario.Nome = NomeTextBox.Text;
-                ObjUsuario.Endereco = EnderecoTextBox.Text;
-                ObjUsuario.Numero = NumeroTextBox.Text;
-                ObjUsuario.Cep = CEPTextBox.Text;
-                ObjUsuario.Telefone = TelefoneTextBox.Text;
-                ObjUsuario.ObjRegiao.Id = Convert.ToInt32(DropDownListArea.SelectedValue);
+                if (ValidaInfo)
+                {
+                    ObjUsuario.Login = UserName.Value;
+                    ObjUsuario.Senha = Password.Value;
+                    ObjUsuario.Email = Email.Value;
+                    ObjUsuario.Regra = DropDownListTipo.SelectedValue;
+                    ObjUsuario.Nome = Nome.Value;
+                    ObjUsuario.Endereco = Endereco.Value;
+                    ObjUsuario.Numero = Complemento.Value;
+                    ObjUsuario.Cep = CEP.Value;
+                    ObjUsuario.Telefone = Telefone.Value;
+                    ObjUsuario.ObjRegiao.Id = Convert.ToInt32(DropDownListArea.SelectedValue);
 
-                MsgLabel.Text = new ManterUsuario(ObjUsuario).CadastraUsuario();
+                    Mensagem = new ManterUsuario(ObjUsuario).CadastraUsuario();
+                }else
+                {
+                    Mensagem = "Informações obrigatórias não preenchidas.";
+                }
             }
             catch (Exception Ex)
             {

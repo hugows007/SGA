@@ -13,21 +13,24 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
     public partial class ModificarRegiaoAtendimento : System.Web.UI.Page
     {
         RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 try
                 {
+                    Mensagem = "Alteração de informações da região de atendimento.";
+
                     if (Request.QueryString["Id"] != null)
                     {
                         ObjRegiao.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
                         ObjRegiao = new ManterRegiaoAtendimento(ObjRegiao).ConsultaRegiaoAtendimentoById();
 
-                        RegiaoTextBox.Text = ObjRegiao.Regiao;
-                        CidadeTextBox.Text = ObjRegiao.Cidade;
-                        EstadoTextBox.Text = ObjRegiao.Estado;
+                        Regiao.Value = ObjRegiao.Regiao;
+                        Cidade.Value = ObjRegiao.Cidade;
+                        Estado.Value = ObjRegiao.Estado;
                     }
                 }
                 catch (Exception Ex)
@@ -44,17 +47,17 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjRegiao.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    ObjRegiao.Regiao = RegiaoTextBox.Text;
-                    ObjRegiao.Cidade = CidadeTextBox.Text;
-                    ObjRegiao.Estado = EstadoTextBox.Text;
+                    ObjRegiao.Regiao = Regiao.Value;
+                    ObjRegiao.Cidade = Cidade.Value;
+                    ObjRegiao.Estado = Estado.Value;
 
                     if(new ManterRegiaoAtendimento(ObjRegiao).AlteraRegiaoAtendimento())
                     {
-                        MsgLabel.Text = "Região de atendimento alterada com sucesso.";
+                        Mensagem = "Região de atendimento alterada com sucesso.";
                     }
                     else
                     {
-                        MsgLabel.Text = "Não foi possível alterar a região de atendimento.";
+                        Mensagem = "Não foi possível alterar a região de atendimento.";
                     }
                 }
             }

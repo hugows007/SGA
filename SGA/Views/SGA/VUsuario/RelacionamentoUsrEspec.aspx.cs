@@ -17,12 +17,14 @@ namespace SGA.Views.SGA.VUsuario
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         Especialidade ObjEspec = FactoryEspecialidade.GetNew();
         List<string> Perfis = new List<string>();
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 try
                 {
+                    Mensagem = "Relacionamento de usuário e especialidade.";
                     Perfis.Add("Técnico");
                     Perfis.Add("Cliente");
 
@@ -72,16 +74,19 @@ namespace SGA.Views.SGA.VUsuario
         {
             try
             {
-                ObjUsuario.Id = Convert.ToInt32(DropDownListUsuario.SelectedValue);
-                ObjUsuario.Regra = DropDownListTipo.SelectedValue;
-                ObjUsuario.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
-                if(new ManterUsuario(ObjUsuario).RelacionaUsuarioEspecialidade())
+                if(DropDownListTipo.SelectedIndex > 0 && DropDownListEspec.SelectedIndex > 0)
                 {
-                    MsgLabel.Text = "Usuário e especialidade relacionados com sucesso.";
-                }
-                else
-                {
-                    MsgLabel.Text = "Não foi possível relacionar usuário e especialidade.";
+                    ObjUsuario.Id = Convert.ToInt32(DropDownListUsuario.SelectedValue);
+                    ObjUsuario.Regra = DropDownListTipo.SelectedValue;
+                    ObjUsuario.ObjEspec.Id = Convert.ToInt32(DropDownListEspec.SelectedValue);
+                    if (new ManterUsuario(ObjUsuario).RelacionaUsuarioEspecialidade())
+                    {
+                        Mensagem = "Usuário e especialidade relacionados com sucesso.";
+                    }
+                    else
+                    {
+                        Mensagem = "Não foi possível relacionar usuário e especialidade.";
+                    }
                 }
             }
             catch (Exception Ex)

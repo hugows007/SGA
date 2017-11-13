@@ -30,6 +30,7 @@ namespace SGA.Models.Relatorios
         public string Regiao { get; set; }
         public string Prioridade { get; set; }
         public string StatusChamado { get; set; }
+        public DateTime DataOcorrido { get; set; }
         public DateTime DataAbertura { get; set; }
         public DateTime DataFechamento { get; set; }
         public DateTime DataInicioAtendimento { get; set; }

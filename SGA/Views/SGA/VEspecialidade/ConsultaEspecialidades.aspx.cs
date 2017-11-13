@@ -10,11 +10,13 @@ namespace SGA.Views.SGA.VEspecialidade
     {
         public List<Especialidade> ListaEspecSelect = new List<Especialidade>();
         Especialidade ObjEspec = FactoryEspecialidade.GetNew();
-
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                Mensagem = "Consulta de especialidades.";
+
                 foreach (var ObjAT in new ManterEspecialidade(ObjEspec).ConsultaEspecialidades())
                 {
                     ListaEspecSelect.Add(ObjAT);
@@ -22,11 +24,11 @@ namespace SGA.Views.SGA.VEspecialidade
 
                 if (Request.QueryString["OpInatEspecialidade"] != null && Request.QueryString["OpInatEspecialidade"].Equals("True"))
                 {
-                    MsgLabel.Text = "Especialidade inativada com sucesso!";
+                    Mensagem = "Especialidade inativada com sucesso!";
                 }
                 else if (Request.QueryString["OpInatEspecialidade"] != null && Request.QueryString["OpInatEspecialidade"].Equals("False"))
                 {
-                    MsgLabel.Text = "Ocorreu um erro ao inativar a especialidade!";
+                    Mensagem = "Ocorreu um erro ao inativar a especialidade!";
                 }
             }
             catch (Exception Ex)

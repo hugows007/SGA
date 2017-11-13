@@ -67,121 +67,121 @@ namespace SGA.Views.SGA.VUsuario {
         protected global::System.Web.UI.WebControls.DropDownList DropDownListArea;
         
         /// <summary>
-        /// UserNameTextbox control.
+        /// UserName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UserNameTextbox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText UserName;
         
         /// <summary>
-        /// PasswordTextbox control.
+        /// Password control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PasswordTextbox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword Password;
         
         /// <summary>
-        /// PasswordConfirmTextbox control.
+        /// PasswordConfirm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PasswordConfirmTextbox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword PasswordConfirm;
         
         /// <summary>
-        /// EmailTextbox control.
+        /// Email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EmailTextbox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Email;
         
         /// <summary>
-        /// NomeTextBox control.
+        /// Nome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NomeTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Nome;
         
         /// <summary>
-        /// EnderecoTextBox control.
+        /// Endereco control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EnderecoTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Endereco;
         
         /// <summary>
-        /// NumeroTextBox control.
+        /// Complemento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NumeroTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Complemento;
         
         /// <summary>
-        /// CEPTextBox control.
+        /// CEP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CEPTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText CEP;
         
         /// <summary>
-        /// TelefoneTextBox control.
+        /// Telefone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TelefoneTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Telefone;
         
         /// <summary>
-        /// DocTextbox control.
+        /// Doc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DocTextbox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Doc;
         
         /// <summary>
-        /// EmissDocTextBox control.
+        /// EmissDoc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EmissDocTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText EmissDoc;
         
         /// <summary>
-        /// CPFTextbox control.
+        /// CPF control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CPFTextbox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText CPF;
         
         /// <summary>
-        /// CNPJTextBox control.
+        /// CNPJ control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CNPJTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText CNPJ;
         
         /// <summary>
         /// BotaoCriarUsuario control.

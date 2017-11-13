@@ -31,31 +31,31 @@ namespace SGA.Views.SGA.VServico {
         protected global::System.Web.UI.WebControls.DropDownList DropDownListTpServico;
         
         /// <summary>
-        /// NomeTextBox control.
+        /// Nome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NomeTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Nome;
         
         /// <summary>
-        /// DescServTextBox control.
+        /// DescServ control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DescServTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText DescServ;
         
         /// <summary>
-        /// SLATextBox control.
+        /// SLA control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SLATextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl SLA;
         
         /// <summary>
         /// AlterarButton control.

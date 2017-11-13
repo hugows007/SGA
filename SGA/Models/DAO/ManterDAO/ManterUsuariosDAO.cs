@@ -171,7 +171,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -208,7 +208,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -244,7 +244,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
@@ -290,7 +290,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -418,7 +418,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -603,7 +603,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -638,7 +638,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -695,7 +695,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -735,7 +735,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -762,7 +762,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -794,7 +794,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -830,7 +830,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -849,7 +849,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -882,7 +882,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -892,24 +892,28 @@ namespace SGA.Models.DAO.ManterDAO
         {
             List<Usuario> List = new List<Usuario>();
             SqlDataReader Dr = null;
+            SqlCommand Cmd;
 
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
                 try
                 {
-                    SqlCommand Cmd = new SqlCommand(@"
-                    SELECT distinct UsrReg.idUsuario
+                    Cmd = new SqlCommand(@"
+                    SELECT top 1 UsrReg.idUsuario
                           ,UsrReg.idRegiaoAtendimento
 						  ,ServEspec.idServico
                       FROM UsuarioXRegiaoAtendimento UsrReg inner join 
                       Funcionario UsrFunc on (UsrFunc.idUsuario = UsrReg.idUsuario) inner join 
                       Usuario Usr on (UsrFunc.idUsuario = Usr.idUsuario) inner join 
                       UsuarioXEspecialidade UsrEspec on (Usr.idUsuario = UsrEspec.idUsuario) inner join
-					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade)
+					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade) left join
+					  Atendimento Atd on (Atd.idTecnico = UsrFunc.idUsuario)
                       WHERE Usr.idStatusUsuario = 1 and 
-                      UsrFunc.idDisponibilidade = 1 and 
                       UsrReg.idRegiaoAtendimento = @IdRegiao and 
-                      ServEspec.idServico = @IdServ and Usr.idEmpresa = @Empresa;", Con);
+                      ServEspec.idServico = @IdServ and 
+					  Usr.idEmpresa = @Empresa and
+					  UsrReg.idUsuario not in (select idTecnico from Atendimento)
+					  order by NEWID();", Con);
 
                     Cmd.Parameters.AddWithValue("@IdRegiao", ObjUsuario.ObjRegiao.Id);
                     Cmd.Parameters.AddWithValue("@IdServ", ObjChamado.IdServico);
@@ -927,11 +931,48 @@ namespace SGA.Models.DAO.ManterDAO
                         List.Add(Usr);
                     }
 
+                    if (!Dr.Read())
+                    {
+                        Dr.Close();
+
+                        Cmd = new SqlCommand(@"
+                    SELECT top 1 UsrReg.idUsuario
+                          ,UsrReg.idRegiaoAtendimento
+						  ,ServEspec.idServico
+                      FROM UsuarioXRegiaoAtendimento UsrReg inner join 
+                      Funcionario UsrFunc on (UsrFunc.idUsuario = UsrReg.idUsuario) inner join 
+                      Usuario Usr on (UsrFunc.idUsuario = Usr.idUsuario) inner join 
+                      UsuarioXEspecialidade UsrEspec on (Usr.idUsuario = UsrEspec.idUsuario) inner join
+					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade)
+                      WHERE Usr.idStatusUsuario = 1 and 
+                      UsrReg.idRegiaoAtendimento = @IdRegiao and 
+                      ServEspec.idServico = @IdServ and 
+					  Usr.idEmpresa = @Empresa and
+					  UsrReg.idUsuario in (select idTecnico from Atendimento where dataFimAtendimento < (dateadd(hour,-1,getdate())))
+					  order by NEWID();", Con);
+
+                        Cmd.Parameters.AddWithValue("@IdRegiao", ObjUsuario.ObjRegiao.Id);
+                        Cmd.Parameters.AddWithValue("@IdServ", ObjChamado.IdServico);
+                        Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                        Dr = Cmd.ExecuteReader();
+
+                        while (Dr.Read())
+                        {
+                            Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+
+                            Usr.Id = Dr.GetInt32(0);
+                            Usr.ObjRegiao.Id = Dr.GetInt32(1);
+
+                            List.Add(Usr);
+                        }
+                    }                    
+
                     return List;
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }
@@ -973,7 +1014,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
 
                     throw;
                 }

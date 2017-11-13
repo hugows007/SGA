@@ -16,12 +16,15 @@ namespace SGA.Views.SGA.VUsuario
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         RegiaoAtendimento ObjArea = FactoryRegiao.GetNew();
         List<string> Perfis = new List<string>();
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 try
                 {
+                    Mensagem = "Relacionamento de usuário e região.";
+
                     Perfis.Add("Técnico");
                     Perfis.Add("Cliente");
 
@@ -69,16 +72,19 @@ namespace SGA.Views.SGA.VUsuario
         {
             try
             {
-                ObjUsuario.Id = Convert.ToInt32(DropDownListUsuario.SelectedValue);
-                ObjUsuario.Regra = DropDownListTipo.SelectedValue;
-                ObjUsuario.ObjRegiao.Id = Convert.ToInt32(DropDownListRegiao.SelectedValue);
-                if(new ManterUsuario(ObjUsuario).RelacionaUsuarioAreaAtendimento())
+                if(DropDownListUsuario.SelectedIndex > 0 && DropDownListRegiao.SelectedIndex > 0)
                 {
-                    MsgLabel.Text = "Usuário e região relacionados com sucesso.";
-                }
-                else
-                {
-                    MsgLabel.Text = "Não foi possível relacionar usuário e região.";
+                    ObjUsuario.Id = Convert.ToInt32(DropDownListUsuario.SelectedValue);
+                    ObjUsuario.Regra = DropDownListTipo.SelectedValue;
+                    ObjUsuario.ObjRegiao.Id = Convert.ToInt32(DropDownListRegiao.SelectedValue);
+                    if (new ManterUsuario(ObjUsuario).RelacionaUsuarioAreaAtendimento())
+                    {
+                        Mensagem = "Usuário e região relacionados com sucesso.";
+                    }
+                    else
+                    {
+                        Mensagem = "Não foi possível relacionar usuário e região.";
+                    }
                 }
             }
             catch (Exception Ex)

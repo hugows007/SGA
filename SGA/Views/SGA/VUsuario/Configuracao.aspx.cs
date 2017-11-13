@@ -16,22 +16,25 @@ namespace SGA.Views.SGA.VUsuario
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         MembershipUser Usuario;
         public bool TrocarSenha;
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
                 if (!Page.IsPostBack)
                 {
+                    Mensagem = "Suas configurações.";
+
                     ObjUsuario.Id = Convert.ToInt32(Session["id"]);
 
                     ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
 
-                    NomeTextBox.Text = ObjUsuario.Nome;
-                    EndTextBox.Text = ObjUsuario.Endereco;
-                    TelTextBox.Text = ObjUsuario.Telefone;
-                    NumTextBox.Text = ObjUsuario.Numero;
-                    CEPTextBox.Text = ObjUsuario.Cep;
-                    EmailTextBox.Text = ObjUsuario.Email;
+                    Nome.Value = ObjUsuario.Nome;
+                    Endereco.Value = ObjUsuario.Endereco;
+                    Telefone.Value = ObjUsuario.Telefone;
+                    Complemento.Value = ObjUsuario.Numero;
+                    CEP.Value = ObjUsuario.Cep;
+                    Email.Value = ObjUsuario.Email;
                 }
             }
             catch (Exception Ex)
@@ -48,27 +51,27 @@ namespace SGA.Views.SGA.VUsuario
                 ObjUsuario.Id = Convert.ToInt32(Session["id"]);
                 ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
 
-                ObjUsuario.Nome = NomeTextBox.Text;
-                ObjUsuario.Endereco = EndTextBox.Text;
-                ObjUsuario.Telefone = TelTextBox.Text;
-                ObjUsuario.Numero = NumTextBox.Text;
-                ObjUsuario.Cep = CEPTextBox.Text;
+                ObjUsuario.Nome = Nome.Value;
+                ObjUsuario.Endereco = Endereco.Value;
+                ObjUsuario.Telefone = Telefone.Value;
+                ObjUsuario.Numero = Complemento.Value;
+                ObjUsuario.Cep = CEP.Value;
 
                 Usuario = Membership.GetUser(ObjUsuario.Login);
 
                 if (new ManterUsuario(ObjUsuario).AlteraUsuario())
                 {
-                    if (!Usuario.Email.Equals(EmailTextBox.Text))
+                    if (!Usuario.Email.Equals(Email.Value))
                     {
-                        Usuario.Email = EmailTextBox.Text;
+                        Usuario.Email = Email.Value;
                         Membership.UpdateUser(Usuario);
                     }
 
-                    MsgLabel.Text = "Seus dados foram alterado com sucesso.";
+                    Mensagem = "Seus dados foram alterado com sucesso.";
                 }
                 else
                 {
-                    MsgLabel.Text = "Não foi possível alterar seus dados.";
+                    Mensagem = "Não foi possível alterar seus dados.";
                 }
             }
             catch (Exception Ex)
@@ -90,27 +93,27 @@ namespace SGA.Views.SGA.VUsuario
                 ObjUsuario.Id = Convert.ToInt32(Session["id"]);
                 ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
 
-                ObjUsuario.Senha = SenhaTextBox.Text;
+                ObjUsuario.Senha = Senha.Value;
 
                 if (new ManterUsuario(ObjUsuario).AlteraSenha())
                 {
-                    MsgLabel.Text = "Senha alterada com sucesso.";
-                    NomeTextBox.Text = ObjUsuario.Nome;
-                    EndTextBox.Text = ObjUsuario.Endereco;
-                    TelTextBox.Text = ObjUsuario.Telefone;
-                    NumTextBox.Text = ObjUsuario.Numero;
-                    CEPTextBox.Text = ObjUsuario.Cep;
-                    EmailTextBox.Text = ObjUsuario.Email;
+                    Mensagem = "Senha alterada com sucesso.";
+                    Nome.Value = ObjUsuario.Nome;
+                    Endereco.Value = ObjUsuario.Endereco;
+                    Telefone.Value = ObjUsuario.Telefone;
+                    Complemento.Value = ObjUsuario.Numero;
+                    CEP.Value = ObjUsuario.Cep;
+                    Email.Value = ObjUsuario.Email;
                 }
                 else
                 {
-                    MsgLabel.Text = "Não foi possível alterar sua senha.";
-                    NomeTextBox.Text = ObjUsuario.Nome;
-                    EndTextBox.Text = ObjUsuario.Endereco;
-                    TelTextBox.Text = ObjUsuario.Telefone;
-                    NumTextBox.Text = ObjUsuario.Numero;
-                    CEPTextBox.Text = ObjUsuario.Cep;
-                    EmailTextBox.Text = ObjUsuario.Email;
+                    Mensagem = "Não foi possível alterar sua senha.";
+                    Nome.Value = ObjUsuario.Nome;
+                    Endereco.Value = ObjUsuario.Endereco;
+                    Telefone.Value = ObjUsuario.Telefone;
+                    Complemento.Value = ObjUsuario.Numero;
+                    CEP.Value = ObjUsuario.Cep;
+                    Email.Value = ObjUsuario.Email;
                 }
             }
             catch (Exception Ex)

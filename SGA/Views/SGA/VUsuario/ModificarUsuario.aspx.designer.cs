@@ -22,49 +22,49 @@ namespace SGA.Views.SGA.VUsuario {
         protected global::System.Web.UI.WebControls.Label MsgLabel;
         
         /// <summary>
-        /// NomeTextBox control.
+        /// Nome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NomeTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Nome;
         
         /// <summary>
-        /// EndTextBox control.
+        /// Endereco control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EndTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Endereco;
         
         /// <summary>
-        /// NumTextBox control.
+        /// Complemento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NumTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Complemento;
         
         /// <summary>
-        /// CEPTextBox control.
+        /// CEP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CEPTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText CEP;
         
         /// <summary>
-        /// TelTextBox control.
+        /// Telefone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TelTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Telefone;
         
         /// <summary>
         /// AlterarButton control.

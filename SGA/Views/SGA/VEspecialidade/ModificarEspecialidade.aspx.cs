@@ -13,19 +13,22 @@ namespace SGA.Views.SGA.VEspecialidade
     public partial class ModificarEspecialidade : System.Web.UI.Page
     {
         Especialidade ObjEspec = FactoryEspecialidade.GetNew();
+        public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 try
                 {
+                    Mensagem = "Alteração de informações da especialidade.";
+
                     if (Request.QueryString["Id"] != null)
                     {
                         ObjEspec.Id = Convert.ToInt32(Request.QueryString["Id"]);
                         ObjEspec = new ManterEspecialidade(ObjEspec).ConsultaEspecialidadeById();
 
-                        EspecTextBox.Text = ObjEspec.NomeEspec;
-                        EspecDestTextBox.Text = ObjEspec.DescEspec;
+                        Espec.Value = ObjEspec.NomeEspec;
+                        DetalhesEspec.Value = ObjEspec.DescEspec;
                     }
                 }
                 catch (Exception Ex)
@@ -43,16 +46,16 @@ namespace SGA.Views.SGA.VEspecialidade
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjEspec.Id = Convert.ToInt32(Request.QueryString["Id"]);
-                    ObjEspec.NomeEspec = EspecTextBox.Text;
-                    ObjEspec.DescEspec = EspecDestTextBox.Text;
+                    ObjEspec.NomeEspec = Espec.Value;
+                    ObjEspec.DescEspec = DetalhesEspec.Value;
 
                     if(new ManterEspecialidade(ObjEspec).AlteraEspecialidade())
                     {
-                        MsgLabel.Text = "Especialidade alterada com sucesso.";
+                        Mensagem = "Especialidade alterada com sucesso.";
                     }
                     else
                     {
-                        MsgLabel.Text = "Não foi possível alterar a especialidade.";
+                        Mensagem = "Não foi possível alterar a especialidade.";
                     }
                 }
             }

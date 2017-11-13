@@ -10,11 +10,14 @@ namespace SGA.Views.SGA.VEmpresa
     {
         public List<Empresa> ListaEmpresaSelect = new List<Empresa>();
         Empresa ObjEmpresa = FactoryEmpresa.GetNew();
+        public string Mensagem;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                Mensagem = "Consulta de empresas.";
+
                 foreach (var ObjAT in new ManterEmpresa(ObjEmpresa).ConsultaEmpresas())
                 {
                     ListaEmpresaSelect.Add(ObjAT);
@@ -22,11 +25,11 @@ namespace SGA.Views.SGA.VEmpresa
 
                 if (Request.QueryString["OpInatEmpresa"] != null && Request.QueryString["OpInatEmpresa"].Equals("True"))
                 {
-                    MsgLabel.Text = "Empresa inativada com sucesso!";
+                    Mensagem = "Empresa inativada com sucesso!";
                 }
                 else if (Request.QueryString["OpInatEmpresa"] != null && Request.QueryString["OpInatEmpresa"].Equals("False"))
                 {
-                    MsgLabel.Text = "Ocorreu um erro ao inativar a especialidade!";
+                    Mensagem = "Ocorreu um erro ao inativar a especialidade!";
                 }
             }
             catch (Exception Ex)

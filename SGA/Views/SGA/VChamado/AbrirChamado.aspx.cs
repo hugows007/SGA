@@ -23,9 +23,12 @@ namespace SGA.Views.SGA.VChamado
         Atendimento ObjAtend = FactoryAtendimento.GetNew();
         public bool PerfilFunc = new ManterUsuario().GetUsuariosFunc();
         List<string> Perfis = new List<string>();
+        public string Mensagem;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Mensagem = "Abertura de chamado.";
+
             if (!Page.IsPostBack)
             {
                 try
@@ -81,45 +84,51 @@ namespace SGA.Views.SGA.VChamado
 
         protected void AbrirButton_Click(object sender, EventArgs e)
         {
-            ObjChamado = FactoryChamado.GetNew();
-            ObjUsuario.Nome = Membership.GetUser().ToString();
-
             try
             {
-                if (PerfilFunc)
+                ObjChamado = FactoryChamado.GetNew();
+                ObjUsuario.Nome = Membership.GetUser().ToString();
+
+                if (DropDownListTpServico.SelectedIndex > 0 && DropDownListServico.SelectedIndex > 0 && DropDownListPrioridade.SelectedIndex > 0 || PerfilFunc && DropDownListTpServico.SelectedIndex > 0 && DropDownListServico.SelectedIndex > 0 && DropDownListPrioridade.SelectedIndex > 0 && DropDownListCliente.SelectedIndex > 0)
                 {
-                    ObjChamado.IdCliente = Convert.ToInt32(DropDownListCliente.SelectedValue);
-                    ObjChamado.IdPrioridade = Convert.ToInt32(DropDownListPrioridade.SelectedValue);
-                    ObjUsuario.Id = ObjChamado.IdCliente;
-
-                    ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
-
-                    foreach (var RegiaoUsr in new ManterUsuario(ObjUsuario).GetIdRegiaoAtendByUsr())
+                    if (PerfilFunc)
                     {
-                        ObjAtend.IdRegiaoAtendimento = RegiaoUsr;
+                        ObjChamado.IdCliente = Convert.ToInt32(DropDownListCliente.SelectedValue);
+                        ObjChamado.IdPrioridade = Convert.ToInt32(DropDownListPrioridade.SelectedValue);
+                        ObjUsuario.Id = ObjChamado.IdCliente;
+
+                        ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
+
+                        foreach (var RegiaoUsr in new ManterUsuario(ObjUsuario).GetIdRegiaoAtendByUsr())
+                        {
+                            ObjAtend.IdRegiaoAtendimento = RegiaoUsr;
+                        }
+                    }
+                    else
+                    {
+                        ObjUsuario.Id = (int)Session["id"];
+                        ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
+                        ObjChamado.IdPrioridade = Convert.ToInt32(DropDownListPrioridade.SelectedValue);
+                        ObjChamado.IdCliente = ObjUsuario.Id;
+
+                        foreach (var RegiaoUsr in new ManterUsuario(ObjUsuario).GetIdRegiaoAtendByUsr())
+                        {
+                            ObjAtend.IdRegiaoAtendimento = RegiaoUsr;
+                        }
+                    }
+
+                    ObjChamado.Assunto = Assunto.Value;
+                    ObjChamado.Descricao = Descricao.Value;
+                    ObjChamado.IdServico = Convert.ToInt32(DropDownListServico.SelectedValue);
+
+                    if (new ManterChamado(ObjChamado, ObjUsuario, ObjAtend).AbreChamado())
+                    {
+                        ObjChamado.Id = new ManterChamado().GetUltIdChamado();
                     }
                 }
                 else
                 {
-                    ObjUsuario.Id = (int)Session["id"];
-                    ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
-                    ObjChamado.IdPrioridade = Convert.ToInt32(DropDownListPrioridade.SelectedValue);
-                    ObjChamado.IdCliente = ObjUsuario.Id;
-
-                    foreach (var RegiaoUsr in new ManterUsuario(ObjUsuario).GetIdRegiaoAtendByUsr())
-                    {
-                        ObjAtend.IdRegiaoAtendimento = RegiaoUsr;
-                    }
-                }
-
-                ObjChamado.Assunto = AssuntoTextBox.Text;
-                ObjChamado.Descricao = DescricaoTextBox.Text;
-                ObjChamado.IdServico = Convert.ToInt32(DropDownListServico.SelectedValue);
-
-                if(new ManterChamado(ObjChamado, ObjUsuario, ObjAtend).AbreChamado())
-                {
-                    MsgLabel.Text = "Chamado aberto com sucesso! Guarde o número de seu chamado: ";
-                    ObjChamado.Id = new ManterChamado().GetUltIdChamado();
+                    Mensagem = "Selecione as opções para abertura do chamado.";
                 }
             }
             catch (Exception Ex)

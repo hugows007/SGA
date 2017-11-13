@@ -12,19 +12,24 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Especialidade do sistema
-                        <b><br><asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
+                        <b>
+                            <br>
+                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
+                    <script>
+                        alertify.log("<%=Mensagem%>");
+                    </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="EspecTextBox" class="control-label">Especialidade: </label>
-                                <asp:TextBox ID="EspecTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="Espec" class="control-label">Especialidade: </label>
+                                <input type="text" id="Espec" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
                             </div>
                             <div class="form-group">
-                                <label for="EspecDestTextBox" class="control-label">Detalhes da especialidade: </label>
-                                <asp:TextBox ID="EspecDestTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <label for="DetalhesEspec" class="control-label">Detalhes da especialidade: </label>
+                                <input type="text" id="DetalhesEspec" required class="form-control input-sm" runat="server" maxlength="100" placeholder="Máximo de 100 caracteres" />
                             </div>
-                            <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" class="btn btn-default" OnClick="AlterarButton_Click" />
+                            <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" CssClass="btn btn-default" OnClick="AlterarButton_Click" />
                             <a class="btn btn-default" href="/Views/SGA/VEspecialidade/ConsultaEspecialidades.aspx">Voltar</a>
                         </div>
                         <div class="panel-footer">

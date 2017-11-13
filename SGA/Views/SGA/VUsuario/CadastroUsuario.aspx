@@ -17,6 +17,9 @@
                                 <b>
                                     <br>
                                     <asp:Label ID="MsgLabel" ForeColor="maroon" runat="server" /></b>
+                                <script>
+                                    alertify.log("<%=Mensagem%>");
+                                </script>
                             </div>
                             <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                                 <table class="table table-bordered table-condensed">
@@ -67,79 +70,75 @@
                                         <%}%>
                                     </tbody>
                                 </table>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label for="UserName" class="control-label">Usuário: </label>
+                                        <input type="text" id="UserName" required class="form-control input-sm" runat="server" maxlength="10" placeholder="Máximo de 10 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Password" class="control-label">Senha: </label>
+                                        <input type="password" id="Password" required class="form-control input-sm" runat="server" maxlength="15" minlength="8" placeholder="Mínimo de 8 e máximo de 15 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="PasswordConfirm" class="control-label">Confirmar senha: </label>
+                                        <input type="password" id="PasswordConfirm" required class="form-control input-sm" runat="server" maxlength="15" minlength="8" placeholder="Mínimo de 8 e máximo de 15 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Email" class="control-label">E-mail:</label>
+                                        <input type="email" id="Email" required class="form-control input-sm" runat="server" maxlength="30" placeholder="Máximo de 30 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Nome" class="control-label">Nome:</label>
+                                        <input type="text" id="Nome" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Endereco" class="control-label">Endereço:</label>
+                                        <input type="text" id="Endereco" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Complemento" class="control-label">Complemento:</label>
+                                        <input type="text" id="Complemento" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="CEP" class="control-label">CEP:</label>
+                                        <input type="text" id="CEP" required class="form-control input-sm" runat="server" maxlength="11" placeholder="Máximo de 11 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Telefone" class="control-label">Telefone:</label>
+                                        <input type="tel" id="Telefone" required class="form-control input-sm" runat="server" maxlength="10" placeholder="Máximo de 10 caracteres" />
+                                    </div>
+                                    <%  if (DropDownListTipo.Text.Equals("Cliente Físico"))
+                                        { %>
+                                    <div class="form-group">
+                                        <label for="Doc" class="control-label">Documento Identificador:</label>
+                                        <input type="text" id="Doc" required class="form-control input-sm" runat="server" maxlength="15" placeholder="Máximo de 15 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="EmissDoc" class="control-label">Emissor:</label>
+                                        <input type="text" id="EmissDoc" required class="form-control input-sm" runat="server" maxlength="15" placeholder="Máximo de 15 caracteres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="CPF" class="control-label">CPF:</label>
+                                        <input type="text" id="CPF" required class="form-control input-sm" runat="server" maxlength="11" placeholder="Máximo de 11 caracteres" />
+                                    </div>
+                                    <% }
+                                        else if (DropDownListTipo.Text.Equals("Cliente Jurídico"))
+                                        {%>
+                                    <div class="form-group">
+                                        <label for="CNPJ" class="control-label">CNPJ:</label>
+                                        <input type="text" id="CNPJ" required class="form-control input-sm" runat="server" maxlength="14" placeholder="Máximo de 14 caracteres" />
+                                    </div>
+                                    <% } %>
+                                    <div class="form-group">
+                                        <asp:Button ID="BotaoCriarUsuario" Text="Criar Usuário" class="btn btn-default" OnClick="BotaoCriarUsuario_OnClick" runat="server" />
+                                        <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                Clique em criar usuário para salvar.
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label for="UserNameTextbox" class="control-label">Usuário: </label>
-                        <asp:TextBox ID="UserNameTextbox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="PasswordTextbox" class="control-label">Senha: </label>
-                        <asp:TextBox ID="PasswordTextbox" runat="server" TextMode="Password" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="PasswordConfirmTextbox" class="control-label">Confirmar senha: </label>
-                        <asp:TextBox ID="PasswordConfirmTextbox" runat="server" TextMode="Password" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="EmailTextbox" class="control-label">E-mail:</label>
-                        <asp:TextBox ID="EmailTextbox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="NomeTextBox" class="control-label">Nome:</label>
-                        <asp:TextBox ID="NomeTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="EnderecoTextBox" class="control-label">Endereço:</label>
-                        <asp:TextBox ID="EnderecoTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="NumeroTextBox" class="control-label">Número:</label>
-                        <asp:TextBox ID="NumeroTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="CEPTextBox" class="control-label">CEP:</label>
-                        <asp:TextBox ID="CEPTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="TelefoneTextBox" class="control-label">Telefone:</label>
-                        <asp:TextBox ID="TelefoneTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <%  if (DropDownListTipo.Text.Equals("Cliente Físico"))
-                        { %>
-                    <div class="form-group">
-                        <label for="DocTextbox" class="control-label">Documento Identificador:</label>
-                        <asp:TextBox ID="DocTextbox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="EmissDocTextBox" class="control-label">Emissor:</label>
-                        <asp:TextBox ID="EmissDocTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="CPFTextbox" class="control-label">CPF:</label>
-                        <asp:TextBox ID="CPFTextbox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <% }
-                        else if (DropDownListTipo.Text.Equals("Cliente Jurídico"))
-                        {%>
-                    <div class="form-group">
-                        <label for="CNPJTextBox" class="control-label">CNPJ:</label>
-                        <asp:TextBox ID="CNPJTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                    </div>
-                    <% } %>
-                    <div class="form-group">
-                        <asp:Button ID="BotaoCriarUsuario" Text="Criar Usuário" class="btn btn-default" OnClick="BotaoCriarUsuario_OnClick" runat="server" />
-                        <a class="btn btn-default" href="/Views/SGA/VUsuario/ConsultaUsuarios.aspx">Voltar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-footer">
-                Clique em criar usuário para salvar.
-            </div>
-            </div>
                     </div>
                 </div>
             </div>
