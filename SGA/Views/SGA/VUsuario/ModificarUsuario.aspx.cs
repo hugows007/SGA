@@ -29,7 +29,16 @@ namespace SGA.Views.SGA.VUsuario
                         Complemento.Value = ObjUsuario.Numero;
                         CEP.Value = ObjUsuario.Cep;
 
-                        if (!string.IsNullOrEmpty(Request.QueryString["Consulta"]))
+                        if (ObjUsuario.IdStatus.Equals(1))
+                        {
+                            Ausente.Text = "Ausentar usuário";
+                        }
+                        else if (ObjUsuario.IdStatus.Equals(4))
+                        {
+                            Ausente.Text = "Ativar usuário";
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(Request.QueryString["Consulta"]))
                         {
                             if (Request.QueryString["Consulta"].Equals("true") && Session["perfil"].Equals("Técnico") || Session["perfil"].Equals("Técnico"))
                             {
@@ -77,6 +86,45 @@ namespace SGA.Views.SGA.VUsuario
                     {
                         Mensagem = "Não foi possível alterar o usuário";
                     }
+                }
+            }
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
+                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+            }
+        }
+
+        protected void Ausente_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ObjUsuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
+                ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
+
+                if (ObjUsuario.IdStatus.Equals(1))
+                {
+                    ObjUsuario.IdStatus = 4;
+                }
+                else if (ObjUsuario.IdStatus.Equals(4))
+                {
+                    ObjUsuario.IdStatus = 1;
+                }
+
+                if (new ManterUsuario(ObjUsuario).AlteraUsuarioAusente())
+                {
+                    if (ObjUsuario.IdStatus.Equals(1))
+                    {
+                        Mensagem = "Usuário agora está marcado como disponível.";
+                    }
+                    else if (ObjUsuario.IdStatus.Equals(4))
+                    {
+                        Mensagem = "Usuário agora está marcado como ausente.";
+                    }
+                }
+                else
+                {
+                    Mensagem = "Não foi possível alterar o usuário";
                 }
             }
             catch (Exception Ex)

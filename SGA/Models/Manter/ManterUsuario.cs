@@ -100,7 +100,7 @@ namespace SGA.Models.Manter
         public List<Usuario> ConsultaUsuariosGestores()
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosGestoresDAO();
-        }        
+        }
         public List<Usuario> ConsultaUsuariosByPerfil(List<string> Perfil)
         {
             return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosByPerfilDAO(Perfil);
@@ -144,6 +144,17 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+        public bool AlteraUsuarioAusente()
+        {
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).AlteraUsuarioAusenteDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public bool AlteraDisponibilidade()
         {
             try
@@ -167,7 +178,18 @@ namespace SGA.Models.Manter
         {
             try
             {
-                return new ManterUsuarioDAO(ObjUsuario).InativaUsuarioDAO();
+                ObjUsuario = new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByIdDAO();
+
+                if (new ManterUsuarioDAO(ObjUsuario).InativaUsuarioDAO())
+                {
+                    MembershipUser Usuario = Membership.GetUser(ObjUsuario.Login);
+                    Usuario.IsApproved = false;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception)
             {

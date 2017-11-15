@@ -49,6 +49,13 @@
     <script src="<%# ResolveUrl("~/Scripts/data/morris-data.js") %>"></script>
 
     <script src="<%# ResolveUrl("~/Scripts/vendor/metisMenu/metisMenu.min.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/vendor/flot/excanvas.min.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/vendor/flot/jquery.flot.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/vendor/flot/jquery.flot.pie.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/vendor/flot/jquery.flot.resize.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/vendor/flot/jquery.flot.time.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/vendor/flot-tooltip/jquery.flot.tooltip.min.js") %>"></script>
+
     <link href="<%# ResolveUrl("~/Scripts/vendor/metisMenu/metisMenu.min.css") %>" rel="stylesheet" />
     <script src="<%# ResolveUrl("~/Scripts/dist/js/sb-admin-2.js") %>"></script>
     <link href="<%# ResolveUrl("~/Scripts/dist/css/sb-admin-2.css") %>" rel="stylesheet" />
@@ -109,7 +116,7 @@
                             <%if (!ListaNotificacao.Count.Equals(0))
                                     foreach (var Lista in ListaNotificacao)
                                     {
-                                        if (Lista.Mensagem.Equals(Application["MensagemRequisicaoChat"]))
+                                        if (Lista.IdTipo.Equals(1))
                                         {
                             %>
                             <li>
@@ -121,7 +128,7 @@
                             </li>
                             <%}
 
-                                else if (Lista.Mensagem.Equals(Application["MensagemRequisicaoChatPriv"]))
+                                else if (Lista.IdTipo.Equals(2))
                                 {
                             %>
                             <li>
@@ -176,7 +183,7 @@
                                         //
                                         // Colocar outras notificações aqui
                                         //
-                                        if (!Lista.Mensagem.Equals(Application["MensagemRequisicaoChatPriv"]) && !Lista.Mensagem.Equals(Application["MensagemRequisicaoChat"]))
+                                        if (Lista.IdTipo.Equals(4))
                                         {
                                             ContaListaNotificacao += 1;
                             %>

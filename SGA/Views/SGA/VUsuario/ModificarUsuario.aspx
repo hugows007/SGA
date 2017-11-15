@@ -44,6 +44,7 @@
                                 <input type="tel" id="Telefone" required class="form-control input-sm" runat="server" maxlength="10" placeholder="Máximo de 10 caracteres" />
                             </div>
                             <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" CssClass="btn btn-default" OnClick="AlterarButton_Click" />
+                            <asp:Button ID="Ausente" runat="server" CssClass="btn btn-default" OnClick="Ausente_Click"/>
                             <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                         </div>
                     </div>

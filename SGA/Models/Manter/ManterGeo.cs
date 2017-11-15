@@ -40,7 +40,8 @@ namespace SGA.Models.Manter
 
                             ObjNotificacao.IdOrigem = Lista.IdUsr;
                             ObjNotificacao.IdDest = Gestores.Id;
-                            ObjNotificacao.Mensagem = InfoGlobal.MensagemGeo + Usr.Nome;
+                            ObjNotificacao.IdMensagem = 10;
+                            ObjNotificacao.IdTipo = 4;
                             new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
                         }
                     }

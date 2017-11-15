@@ -24,6 +24,7 @@ namespace SGA.Views.Site
         public List<Relatorio> ListTopSoluc = new List<Relatorio>();
         public List<Relatorio> ListRegiao = new List<Relatorio>();
         public List<Relatorio> ListTopTempo = new List<Relatorio>();
+        public List<Relatorio> ListServico = new List<Relatorio>();
 
         List<Relatorio> ListAux;
         int Count;
@@ -83,6 +84,8 @@ namespace SGA.Views.Site
                     ListTopAtend = new ManterRelatorio(ObjRelatorio).GetTopTecnicos();
 
                     ListTopSoluc = new ManterRelatorio(ObjRelatorio).GetTopSolucoes();
+
+                    ListServico = new ManterRelatorio(ObjRelatorio).GetQtdPorServico();
 
                     ListRegiao = new ManterRelatorio(ObjRelatorio).GetAtendimentoPorRegiao();
 

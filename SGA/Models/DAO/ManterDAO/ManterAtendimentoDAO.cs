@@ -420,7 +420,7 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-        public bool AlteraAtendimentoDAO()
+        public bool AlterarTecnicoAtendimentoDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())
             {
@@ -428,20 +428,18 @@ namespace SGA.Models.DAO.ManterDAO
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
-	                [dbo].[DeAtendimento] SET 
-	                    Regiao = @Regiao
-                        ,Cidade = @Cidade
-                        ,Estado = @Estado
+	                [dbo].[Atendimento] SET 
+	                     idTecnico = @Tecnico
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario
-                        WHERE idAtendimento = @Id;", Con);
+                        WHERE idAtendimento = (select max(idAtendimento) from Atendimento where idChamado = @Chamado) and
+						idEmpresa = @Empresa;", Con);
 
-                    //Cmd.Parameters.AddWithValue("@Regiao", ObjAtendimento.Regiao);
-                    //Cmd.Parameters.AddWithValue("@Cidade", ObjAtendimento.Cidade);
-                    //Cmd.Parameters.AddWithValue("@Estado", ObjAtendimento.Estado);
+                    Cmd.Parameters.AddWithValue("@Tecnico", ObjAtend.IdTecnico);
+                    Cmd.Parameters.AddWithValue("@Chamado", ObjAtend.IdChamado);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
-                    Cmd.Parameters.AddWithValue("@Id", ObjAtend.Id);
 
                     Cmd.ExecuteNonQuery();
 
@@ -449,8 +447,6 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-
-
                     throw;
                 }
             }

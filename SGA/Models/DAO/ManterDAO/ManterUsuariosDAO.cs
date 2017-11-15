@@ -261,7 +261,7 @@ namespace SGA.Models.DAO.ManterDAO
                     SqlCommand CmdUsrs = new SqlCommand(@"
                 SELECT usr.idUsuario, usr.nome, usr.endereco, usr.numero, usr.cep, usr.telefone, emp.nome
                   FROM [dbo].[Usuario] Usr left join [dbo].[Empresa] Emp on (Usr.idEmpresa = Emp.idEmpresa)
-                  WHERE idStatusUsuario = 1 and Usr.idEmpresa = @Empresa", Con);
+                  WHERE Usr.idEmpresa = @Empresa", Con);
 
                     CmdUsrs.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
@@ -453,7 +453,7 @@ namespace SGA.Models.DAO.ManterDAO
                         aspnet_Users membusr on (membxusr.IdUsrMemberShip = membusr.UserId) left join
 						UsuarioxRegiaoAtendimento usrReg on (usr.idUsuario = usrreg.idUsuario) left join
 						UsuarioXEspecialidade usrEspec on (usr.idUsuario = usrEspec.idUsuario) WHERE
-                        usr.idUsuario = @Id and usr.idStatusUsuario = 1 and usr.idEmpresa = @Empresa;", Con);
+                        usr.idUsuario = @Id and usr.idStatusUsuario in (1, 2, 4) and usr.idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjUsuario.Id);
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
@@ -741,6 +741,36 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public bool AlteraUsuarioAusenteDAO()
+        {
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Usuario] SET 
+	                    IdStatusUsuario = @Status 
+                        WHERE idUsuario = @Id and idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Id", ObjUsuario.Id);
+                    Cmd.Parameters.AddWithValue("@Status", ObjUsuario.IdStatus);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (SqlException)
+                {
+
+
+                    throw;
+                }
+            }
+        }
         public bool AlteraDisponibilidadeDAO()
         {
             using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -908,7 +938,7 @@ namespace SGA.Models.DAO.ManterDAO
                       UsuarioXEspecialidade UsrEspec on (Usr.idUsuario = UsrEspec.idUsuario) inner join
 					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade) left join
 					  Atendimento Atd on (Atd.idTecnico = UsrFunc.idUsuario)
-                      WHERE Usr.idStatusUsuario = 1 and 
+                      WHERE Usr.idStatusUsuario in (1, 2) and 
                       UsrReg.idRegiaoAtendimento = @IdRegiao and 
                       ServEspec.idServico = @IdServ and 
 					  Usr.idEmpresa = @Empresa and
@@ -944,7 +974,7 @@ namespace SGA.Models.DAO.ManterDAO
                       Usuario Usr on (UsrFunc.idUsuario = Usr.idUsuario) inner join 
                       UsuarioXEspecialidade UsrEspec on (Usr.idUsuario = UsrEspec.idUsuario) inner join
 					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade)
-                      WHERE Usr.idStatusUsuario = 1 and 
+                      WHERE Usr.idStatusUsuario in (1, 2) and 
                       UsrReg.idRegiaoAtendimento = @IdRegiao and 
                       ServEspec.idServico = @IdServ and 
 					  Usr.idEmpresa = @Empresa and

@@ -5,10 +5,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{f25c4714-3c7d-4119-a102-71724cb555a7}</ProjectGuid>
+    <ProjectGuid>{7618a058-3a34-4b63-8c7c-3942feb23396}</ProjectGuid>
     <ArchitectureToolsVersion>2.0.0.0</ArchitectureToolsVersion>
-    <Name>ModelingProject1</Name>
-    <RootNamespace>ModelingProject1</RootNamespace>
+    <Name>ModelingProjectSGATI</Name>
+    <RootNamespace>ModelingProjectSGATI</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -22,16 +22,25 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="UMLClassDiagram1.classdiagram">
+    <Content Include="ModelDefinition\Package_2046.uml">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="UMLClassDiagram1.classdiagram.layout">
+    <Content Include="UMLSGATI.classdiagram">
       <SubType>Content</SubType>
-      <DependentUpon>UMLClassDiagram1.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="UMLSGATI.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>UMLSGATI.classdiagram</DependentUpon>
     </Content>
     <Folder Include="ModelDefinition\" />
-    <Content Include="ModelDefinition\ModelingProject1.uml">
+    <Content Include="ModelDefinition\ModelingProjectSGATI.uml">
       <SubType>Content</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SGA\SGA.csproj">
+      <Name>SGA</Name>
+      <Project>{bc5e8e2b-0884-456e-a897-3b32438abcb0}</Project>
+    </ProjectReference>
   </ItemGroup>
 </Project>

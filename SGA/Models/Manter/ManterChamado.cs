@@ -172,11 +172,12 @@ namespace SGA.Models.Manter
                             //Notificação de atendimento
                             ObjNotificacao.IdOrigem = 0;
                             ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                            ObjNotificacao.Mensagem = InfoGlobal.MensagemChamadoCancelado;
+                            ObjNotificacao.IdMensagem = 6;
+                            ObjNotificacao.IdTipo = 4;
                             new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                             ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                            ObjNotificacao.Mensagem = InfoGlobal.MensagemChamadoCancelado;
+                            ObjNotificacao.IdMensagem = 6;
                             new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                             return true;

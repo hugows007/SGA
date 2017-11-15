@@ -76,11 +76,12 @@ namespace SGA.Models.Manter
                     //Notificação de atendimento
                     ObjNotificacao.IdOrigem = 0;
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                    ObjNotificacao.Mensagem = InfoGlobal.MensagemNovoAtendimento;
+                    ObjNotificacao.IdMensagem = 3;
+                    ObjNotificacao.IdTipo = 4;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                    ObjNotificacao.Mensagem = InfoGlobal.MensagemNovoAtendimento;
+                    ObjNotificacao.IdMensagem = 3;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     return true;
@@ -94,7 +95,7 @@ namespace SGA.Models.Manter
             catch (Exception)
             {
                 new ManterChamado(ObjChamado).DeletaChamado();
-                
+
                 throw;
             }
         }
@@ -107,11 +108,12 @@ namespace SGA.Models.Manter
                     //Notificação de atendimento
                     ObjNotificacao.IdOrigem = 0;
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                    ObjNotificacao.Mensagem = InfoGlobal.MensagemReabertura;
+                    ObjNotificacao.IdMensagem = 8;
+                    ObjNotificacao.IdTipo = 4;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                    ObjNotificacao.Mensagem = InfoGlobal.MensagemReabertura;
+                    ObjNotificacao.IdMensagem = 8;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     return true;
@@ -132,7 +134,8 @@ namespace SGA.Models.Manter
             {
                 ObjNotificacao.IdOrigem = 0;
                 ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                ObjNotificacao.Mensagem = InfoGlobal.MensagemRecusado;
+                ObjNotificacao.IdMensagem = 9;
+                ObjNotificacao.IdTipo = 4;
                 new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                 ObjAtend.IdTecnico = new ManterAtendimentoDAO(ObjAtend, ObjChamado).RecusaAtendimentoChamadoDAO().IdTecnico;
@@ -150,13 +153,14 @@ namespace SGA.Models.Manter
                             //Notificação de atendimento
                             ObjNotificacao.IdOrigem = 0;
                             ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                            ObjNotificacao.Mensagem = InfoGlobal.MensagemNovoAtendimento;
+                            ObjNotificacao.IdMensagem = 3;
+                            ObjNotificacao.IdTipo = 4;
                             new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                             foreach (var Gestor in new ManterUsuario(ObjUsuario).ConsultaUsuariosGestores())
                             {
                                 ObjNotificacao.IdDest = Gestor.Id;
-                                ObjNotificacao.Mensagem = InfoGlobal.MensagemRecusado;
+                                ObjNotificacao.IdMensagem = 3;
                                 new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
                             }
 
@@ -182,22 +186,25 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
-        public bool AlteraAtendimento()
+        public bool AlterarTecnicoAtendimento()
         {
             try
             {
-                if (new ManterAtendimentoDAO(ObjAtend).AlteraAtendimentoDAO())
+                if(new ManterAtendimentoDAO(ObjAtend).AlterarTecnicoAtendimentoDAO())
                 {
-                    return true;
-                }
-                else
+                    //Notificação de atendimento
+                    ObjNotificacao.IdOrigem = 0;
+                    ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                    ObjNotificacao.IdMensagem = 3;
+                    ObjNotificacao.IdTipo = 4;
+                    return new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+                }else
                 {
                     return false;
                 }
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -222,11 +229,12 @@ namespace SGA.Models.Manter
                         //Notificação de atendimento
                         ObjNotificacao.IdOrigem = 0;
                         ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                        ObjNotificacao.Mensagem = InfoGlobal.MensagemInicioAtendimento;
+                        ObjNotificacao.IdMensagem = 4;
+                        ObjNotificacao.IdTipo = 4;
                         new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                         ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                        ObjNotificacao.Mensagem = InfoGlobal.MensagemInicioAtendimento;
+                        ObjNotificacao.IdMensagem = 4;
                         new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                         return true;
@@ -243,7 +251,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -255,7 +263,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -280,11 +288,12 @@ namespace SGA.Models.Manter
                                     //Notificação de atendimento
                                     ObjNotificacao.IdOrigem = 0;
                                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                                    ObjNotificacao.Mensagem = InfoGlobal.MensagemRetrabalho;
+                                    ObjNotificacao.IdMensagem = 7;
+                                    ObjNotificacao.IdTipo = 4;
                                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                                     ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                                    ObjNotificacao.Mensagem = InfoGlobal.MensagemRetrabalho;
+                                    ObjNotificacao.IdMensagem = 7;
                                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                                     return true;
@@ -299,11 +308,12 @@ namespace SGA.Models.Manter
                                 //Notificação de atendimento
                                 ObjNotificacao.IdOrigem = 0;
                                 ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                                ObjNotificacao.Mensagem = InfoGlobal.MensagemAtendimentoFinalizado;
+                                ObjNotificacao.IdMensagem = 5;
+                                ObjNotificacao.IdTipo = 4;
                                 new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                                 ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                                ObjNotificacao.Mensagem = InfoGlobal.MensagemAtendimentoFinalizado;
+                                ObjNotificacao.IdMensagem = 5;
                                 new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                                 return true;
@@ -326,7 +336,7 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }

@@ -42,7 +42,7 @@ namespace SGA.Models.DAO.ManterDAO
                           FROM Usuario Usr inner join 
                           UsuarioXMemberShipUser UsrMb on (Usr.idUsuario = UsrMb.idUsuario) inner join
                           aspnet_UsersInRoles UsrRoles on (UsrMb.IdUsrMemberShip = UsrRoles.UserId) where
-                          UsrRoles.RoleId = '5E106C37-3E4D-4B41-9EEE-F190EA99E534' and 
+                          UsrRoles.RoleId in ('5E106C37-3E4D-4B41-9EEE-F190EA99E534', '4355C114-EAF9-4B05-B6D2-3CB47FFAE948', '6A0BD300-3942-49E5-8307-F0DBC1591186') and 
                           Usr.idUsuario <> @IdOrigem and
                           Usr.idEmpresa = (select idEmpresa from Usuario where idUsuario = @IdOrigem);", Con);
 
@@ -66,19 +66,22 @@ namespace SGA.Models.DAO.ManterDAO
                                 INSERT INTO [dbo].[notificacao]
                                       ([idUsuarioOrigem]
                                        ,[idUsuarioDestino]
-                                       ,[mensagem]
+                                       ,[idMsgNotificacao]
+                                       ,[idTipo]
                                        ,[vista]
                                        ,[dataRegistro])
                                 VALUES
                                     (@IdOrigem
                                      ,@IdDest
                                      ,@Msg
+                                     ,@Tipo
                                      ,0
                                      ,@Data);", Con);
 
                             Cmd.Parameters.AddWithValue("@IdOrigem", ObjNotificacao.IdOrigem);
                             Cmd.Parameters.AddWithValue("@IdDest", ListObj.IdDest);
-                            Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
+                            Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.IdMensagem);
+                            Cmd.Parameters.AddWithValue("@Tipo", ObjNotificacao.IdTipo);
                             Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
 
                             Cmd.ExecuteNonQuery();
@@ -89,22 +92,25 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjNotificacao.IdDest = new ManterUsuarioDAO(ObjUsuario).ConsultaIdUsuarioByIdMBDAO().Id;
 
                         SqlCommand Cmd = new SqlCommand(@"
-                                INSERT INTO [dbo].[notificacao]
+                                 INSERT INTO [dbo].[notificacao]
                                       ([idUsuarioOrigem]
                                        ,[idUsuarioDestino]
-                                       ,[mensagem]
+                                       ,[idMsgNotificacao]
+                                       ,[idTipo]
                                        ,[vista]
                                        ,[dataRegistro])
                                 VALUES
                                     (@IdOrigem
                                      ,@IdDest
                                      ,@Msg
+                                     ,@Tipo
                                      ,0
                                      ,@Data);", Con);
 
                         Cmd.Parameters.AddWithValue("@IdOrigem", ObjNotificacao.IdOrigem);
                         Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
-                        Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
+                        Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.IdMensagem);
+                        Cmd.Parameters.AddWithValue("@Tipo", ObjNotificacao.IdTipo);
                         Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
 
                         Cmd.ExecuteNonQuery();
@@ -128,7 +134,7 @@ namespace SGA.Models.DAO.ManterDAO
             {
                 try
                 {
-                    if (ObjNotificacao.Mensagem == null)
+                    if (!ObjNotificacao.Id.Equals(0))
                     {
                         Cmd = new SqlCommand(@"
                 UPDATE 
@@ -140,27 +146,16 @@ namespace SGA.Models.DAO.ManterDAO
 
                         Cmd.ExecuteNonQuery();
                     }
-                    else if (ObjNotificacao.Mensagem.Equals("LimparChat"))
-                    {
-                        Cmd = new SqlCommand(@"
-                UPDATE 
-	                [dbo].[Notificacao] SET 
-	                    vista = 1
-                        WHERE idUsuarioDestino = @Id and mensagem in ('Requisição de chat','Requisição de chat privado');", Con);
-
-                        Cmd.Parameters.AddWithValue("@Id", ObjNotificacao.IdOrigem);
-
-                        Cmd.ExecuteNonQuery();
-                    }
                     else
                     {
                         Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Notificacao] SET 
 	                    vista = 1
-                        WHERE idUsuarioDestino = @Id and mensagem not in ('Requisição de chat','Requisição de chat privado');", Con);
+                        WHERE idUsuarioDestino = @IdDest and idTipo = @Tipo;", Con);
 
-                        Cmd.Parameters.AddWithValue("@Id", ObjNotificacao.IdDest);
+                        Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
+                        Cmd.Parameters.AddWithValue("@Tipo", ObjNotificacao.IdTipo);
 
                         Cmd.ExecuteNonQuery();
                     }
@@ -169,8 +164,6 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-
-
                     throw;
                 }
             }
@@ -190,11 +183,12 @@ namespace SGA.Models.DAO.ManterDAO
                             idUsuarioOrigem = @IdOrig and 
                             idUsuarioDestino = @IdDest and 
                             vista = 0 and
-                            mensagem = @Msg;", Con);
+                            dataRegistro < getdate() and
+                            idMsgNotificacao = @Msg;", Con);
 
                     Cmd.Parameters.AddWithValue("@IdOrig", ObjNotificacao.IdOrigem);
                     Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
-                    Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
+                    Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.IdMensagem);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -203,22 +197,26 @@ namespace SGA.Models.DAO.ManterDAO
                         Dr.Close();
 
                         Cmd = new SqlCommand(@"
-                                INSERT INTO [dbo].[notificacao]
+                            INSERT INTO [dbo].[notificacao]
                                       ([idUsuarioOrigem]
                                        ,[idUsuarioDestino]
-                                       ,[mensagem]
+                                       ,[idMsgNotificacao]
+                                       ,[idTipo]
                                        ,[vista]
                                        ,[dataRegistro])
                                 VALUES
-                                    (@IdOrig
+                                    (@IdOrigem
                                      ,@IdDest
                                      ,@Msg
+                                     ,@Tipo
                                      ,0
                                      ,@Data);", Con);
 
-                        Cmd.Parameters.AddWithValue("@IdOrig", ObjNotificacao.IdOrigem);
+
+                        Cmd.Parameters.AddWithValue("@IdOrigem", ObjNotificacao.IdOrigem);
                         Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
-                        Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.Mensagem);
+                        Cmd.Parameters.AddWithValue("@Msg", ObjNotificacao.IdMensagem);
+                        Cmd.Parameters.AddWithValue("@Tipo", ObjNotificacao.IdTipo);
                         Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
 
                         Cmd.ExecuteNonQuery();
@@ -227,7 +225,7 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return true;
-                    
+
                 }
                 catch (SqlException)
                 {
@@ -245,9 +243,12 @@ namespace SGA.Models.DAO.ManterDAO
                 try
                 {
                     SqlCommand Cmd = new SqlCommand(@"
-                        SELECT *
-                          FROM [dbo].[Notificacao] 
-                          WHERE idUsuarioDestino = @IdDest and vista = 0;", Con);
+                        SELECT * FROM 
+                            Notificacao Nt inner join 
+                            NotificacaoMensagem NtMsg on (Nt.idMsgNotificacao = NtMsg.idMsgNotificacao) inner join 
+                            Usuario Usr on (Nt.idUsuarioOrigem = Usr.idUsuario) WHERE 
+                            idUsuarioDestino = @IdDest and 
+                            vista = 0;", Con);
 
                     Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
                     Dr = Cmd.ExecuteReader();
@@ -258,9 +259,18 @@ namespace SGA.Models.DAO.ManterDAO
                         Obj.Id = Dr.GetInt32(0);
                         Obj.IdOrigem = Dr.GetInt32(1);
                         Obj.IdDest = Dr.GetInt32(2);
-                        Obj.Mensagem = Dr.GetString(3);
-                        Obj.Vista = Dr.GetInt32(4);
-                        Obj.Data = Dr.GetDateTime(5);
+                        Obj.IdMensagem = Dr.GetInt32(3);
+                        Obj.IdTipo = Dr.GetInt32(4);
+                        Obj.Vista = Dr.GetInt32(5);
+                        Obj.Data = Dr.GetDateTime(6);
+                        Obj.Mensagem = Dr.GetString(8);
+                        Obj.NomeUsuario = Dr.GetString(10);
+
+                        if (Obj.IdMensagem.Equals(10))
+                        {
+                            Obj.Mensagem += " " + Obj.NomeUsuario;
+                        }
+
                         ListaNot.Add(Obj);
                     }
 
@@ -268,7 +278,6 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-
                     throw;
                 }
             }

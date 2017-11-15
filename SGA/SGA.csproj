@@ -228,6 +228,7 @@
     <Content Include="Scripts\select\bootstrap-select.min.js" />
     <Content Include="SQL\script.sql" />
     <Content Include="Views\SGA\VAvaliacao\Avaliacao.aspx" />
+    <Content Include="Views\SGA\VChamado\AlterarTecnico.aspx" />
     <Content Include="Views\SGA\VHistorico\Historico.aspx" />
     <Content Include="Views\SGA\VRelatorio\Relatorio.aspx" />
     <Content Include="Views\SGA\VRelatorio\RelatorioChamados.aspx" />
@@ -546,6 +547,13 @@
     </Compile>
     <Compile Include="Views\SGA\VAvaliacao\Avaliacao.aspx.designer.cs">
       <DependentUpon>Avaliacao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VChamado\AlterarTecnico.aspx.cs">
+      <DependentUpon>AlterarTecnico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VChamado\AlterarTecnico.aspx.designer.cs">
+      <DependentUpon>AlterarTecnico.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\SGA\VHistorico\Historico.aspx.cs">
       <DependentUpon>Historico.aspx</DependentUpon>

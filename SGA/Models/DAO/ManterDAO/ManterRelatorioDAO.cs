@@ -246,6 +246,43 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
+        public List<Relatorio> GetQtdPorServicoDAO()
+        {
+            SqlDataReader Dr = null;
+
+            using (SqlConnection Con = new Conexao().ConexaoDB())
+            {
+                try
+                {
+                    Cmd = new SqlCommand(@"
+                    select 
+                        (TpSrv.tipo +': '+Srv.nome) as Servico
+                        ,count(*) as Qtd from 
+                        Chamado Chm inner join 
+                        Servico Srv on (Chm.idServico = Srv.idServico) inner join
+                        TipoServico TpSrv on (Srv.idTipo = TpSrv.idTipoServ) where
+                        Chm.idEmpresa = @Empresa
+                        group by Srv.nome,TpSrv.tipo;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                        
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        Relatorio Obj = FactoryRelatorio.GetNew();
+                        Obj.Servico = Dr.GetString(0);
+                        Obj.Media = Dr.GetInt32(1);
+                        ListRelat.Add(Obj);
+                    }
+                    return ListRelat;
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+        }
         public List<Relatorio> GetRelatorioChamadosDAO()
         {
             SqlDataReader Dr = null;
@@ -434,7 +471,6 @@ namespace SGA.Models.DAO.ManterDAO
                 }
             }
         }
-
         public Relatorio GetTempoMedioAtendimentoDAO()
         {
             SqlDataReader Dr = null;

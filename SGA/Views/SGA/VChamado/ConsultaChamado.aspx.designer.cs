@@ -76,15 +76,6 @@ namespace SGA.Views.SGA.VChamado {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea PendRelat;
         
         /// <summary>
-        /// ConsultarClienteButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ConsultarClienteButton;
-        
-        /// <summary>
         /// Tramite control.
         /// </summary>
         /// <remarks>
@@ -110,6 +101,15 @@ namespace SGA.Views.SGA.VChamado {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Recusar;
+        
+        /// <summary>
+        /// AlterarTecnico control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AlterarTecnico;
         
         /// <summary>
         /// MotCancelDesc control.
@@ -164,5 +164,14 @@ namespace SGA.Views.SGA.VChamado {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ReaberturaButton;
+        
+        /// <summary>
+        /// ConsultarClienteButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ConsultarClienteButton;
     }
 }

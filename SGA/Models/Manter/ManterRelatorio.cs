@@ -36,6 +36,11 @@ namespace SGA.Models.Manter
         {
             return new ManterRelatorioDAO(ObjRelatorio).GetTopSolucoesDAO();
         }
+        public List<Relatorio> GetQtdPorServico()
+        {
+            return new ManterRelatorioDAO(ObjRelatorio).GetQtdPorServicoDAO();
+        }
+        
         public List<Relatorio> GetRelatorioChamados()
         {
             switch (ObjRelatorio.FiltroRelatorio)

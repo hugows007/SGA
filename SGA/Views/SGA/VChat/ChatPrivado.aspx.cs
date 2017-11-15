@@ -57,7 +57,8 @@ namespace SGA.Views.SGA.VChat
                                 {
                                     ObjNotificacao = FactoryNotificacao.GetNew();
                                     ObjNotificacao.IdOrigem = (int)Session["id"];
-                                    ObjNotificacao.Mensagem = InfoGlobal.MensagemRequisicaoChatPriv;
+                                    ObjNotificacao.IdMensagem = 2;
+                                    ObjNotificacao.IdTipo = 2;
 
                                     if (new ManterNotificacao(ObjNotificacao, ObjUsuario).NotificaUsuariosChat())
                                     {

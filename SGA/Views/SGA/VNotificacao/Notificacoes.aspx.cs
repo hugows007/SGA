@@ -21,8 +21,8 @@ namespace SGA.Views.SGA.VNotificacao
                 {
                     if (Request.QueryString["Alerta"].Equals("LimparChat") && Request.QueryString["Id"] != null)
                     {
-                        ObjNotificacao.IdOrigem = Convert.ToInt32(Request.QueryString["Id"]);
-                        ObjNotificacao.Mensagem = "LimparChat";
+                        ObjNotificacao.IdDest = Convert.ToInt32(Request.QueryString["Id"]);
+                        ObjNotificacao.IdTipo = 1;
                         new ManterNotificacao(ObjNotificacao).AtualizaNotificacao();
                         Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                     }
@@ -42,7 +42,7 @@ namespace SGA.Views.SGA.VNotificacao
                     if (Request.QueryString["Alerta"].Equals("LimparNotif") && Request.QueryString["Id"] != null)
                     {
                         ObjNotificacao.IdDest = Convert.ToInt32(Request.QueryString["Id"]);
-                        ObjNotificacao.Mensagem = "LimparNotif";
+                        ObjNotificacao.IdTipo = 2;
                         new ManterNotificacao(ObjNotificacao).AtualizaNotificacao();
                         Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                     }

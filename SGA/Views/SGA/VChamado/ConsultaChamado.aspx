@@ -53,6 +53,20 @@
                                     <textarea rows="5" cols="50" maxlength="500" id="RecusarMotivo" class="form-control input-sm" required runat="server" placeholder="Máximo de 500 caracteres"></textarea>
                                 </div>
                                 <%}
+                                    else if (AlteraTecnico)
+                                    {%>
+                                <div class="form-group">
+                                    <label for="ListaTecnicos">Selecione o técnico para alterar:</label><br />
+                                    <select class="form-control" id="ListaTecnicos" name="Tecnico" onchange="location = this.value;">
+                                        <option>Clique aqui</option>
+                                        <%foreach (var Lista in ListaTecnicos)
+                                            {
+                                        %>
+                                        <option value="/Views/SGA/VChamado/AlterarTecnico.aspx?Chamado=<%=ObjChamado.Id%>&Tecnico=<%=Lista.Id %>"><%=Lista.Login%></option>
+                                        <%} %>
+                                    </select>
+                                </div>
+                                <%}
                                     else if (!CancButtonClick && EnceButtonClick)
                                     {%>
                                 <div class="checkbox">
@@ -111,7 +125,6 @@
                                     <label for="Tramite" class="control-label">Trâmites:</label>
                                     <textarea rows="5" cols="50" maxlength="100" class="form-control input-sm" disabled="disabled"><%=ObjChamado.Tramite %></textarea>
                                 </div>
-                                <asp:Button ID="ConsultarClienteButton" runat="server" CssClass="btn btn-default" Text="Consultar dados do cliente" OnClick="ConsultarClienteButton_Click" />
                                 <%}
                                     if (!ObjStatusChm.Id.Equals(5) && !ObjStatusChm.Id.Equals(3) && !EnceButtonClick)
                                     {%>
@@ -124,6 +137,10 @@
                                     if (ObjStatusChm.Id.Equals(1) && Session["perfil"].Equals("Técnico"))
                                     {%>
                                 <asp:Button ID="Recusar" runat="server" Text="Recusar atendimento" class="btn btn-default" OnClick="Recusar_Click" />
+                                <%}
+                                    if (ObjStatusChm.Id.Equals(1) && Session["perfil"].Equals("Gestor") || ObjStatusChm.Id.Equals(4) && Session["perfil"].Equals("Gestor"))
+                                    {%>
+                                <asp:Button ID="AlterarTecnico" runat="server" Text="Alterar Técnico" class="btn btn-default" OnClick="AlterarTecnico_Click" />
                                 <%}
                                     if (ObjStatusChm.Id.Equals(5))
                                     {%>
@@ -151,6 +168,7 @@
                                 <asp:Button ID="ReaberturaButton" runat="server" CssClass="btn btn-default" Text="Reabrir chamado" OnClick="ReaberturaButton_Click" />
                                 <%}
                                     } %>
+                                <asp:Button ID="ConsultarClienteButton" runat="server" CssClass="btn btn-default" Text="Consultar dados do cliente" OnClick="ConsultarClienteButton_Click" />
                                 <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                             </div>
                         </div>
@@ -161,4 +179,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </asp:Content>

@@ -26,6 +26,8 @@ namespace SGA.Views.SGA.VChamado
         public StatusChamado ObjStatusChm = FactoryStatusChamado.GetNew();
         public Atendimento ObjAtend = FactoryAtendimento.GetNew();
         public Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+        List<string> Perfil = new List<string>();
+        public List<Usuario> ListaTecnicos = new List<Usuario>();
 
         public string Mensagem;
 
@@ -36,6 +38,7 @@ namespace SGA.Views.SGA.VChamado
         public bool PendBox;
         public bool TramiteClick;
         public bool RecusarClick;
+        public bool AlteraTecnico;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -49,6 +52,13 @@ namespace SGA.Views.SGA.VChamado
 
                     if (ObjChamado != null)
                     {
+                        if (Request.QueryString.AllKeys.Contains("Troca"))
+                        {   
+                            if (Request.QueryString["Troca"].Equals("true"))
+                            {
+                                Mensagem = "Técnico alocado com sucesso.";
+                            }
+                        }
                         ObjServico.Id = ObjChamado.IdServico;
                         ObjStatusChm.Id = ObjChamado.IdStatus;
                         ObjAtend.IdChamado = ObjChamado.Id;
@@ -322,6 +332,19 @@ namespace SGA.Views.SGA.VChamado
             {
                 LogException.InsereLogBd(Ex);
                 MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+            }
+        }
+
+        protected void AlterarTecnico_Click(object sender, EventArgs e)
+        {
+            AlteraTecnico = true;
+
+            Perfil.Add("Técnico");
+
+            foreach (var ObjTecnico in new ManterUsuario().ConsultaUsuariosByPerfil(Perfil))
+            {
+                ObjUsuario = ObjTecnico;
+                ListaTecnicos.Add(ObjUsuario);
             }
         }
     }

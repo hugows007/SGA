@@ -279,6 +279,18 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>Serviços mais requisitados
+                    </div>
+                    <div class="panel-body">
+                        <div class="flot-chart">
+                            <div class="flot-chart-content" id="flot-pie-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
                         <i class="fa fa-clock-o fa-fw"></i>Tempo médio de conclusão de um atendimento
                     </div>
                     <div class="panel-body">
@@ -318,37 +330,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-star fa-fw"></i>Ranking tempo de atendimento
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr class="success">
-                                        <th>Chamado</th>
-                                        <th>Técnico</th>
-                                        <th>Tempo</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <%foreach (var Lista in ListTopTempo)
-                                        { %>
-                                    <tr class="success">
-                                        <td><%=Lista.Chamado %></td>
-                                        <td><%=Lista.Tecnico %></td>
-                                        <td><%=String.Format("{0:%d} dia(s), ", Lista.TempoAtendimento) + new DateTime(Lista.TempoAtendimento.Ticks).ToString("HH:mm:ss")%> </td>
-                                    </tr>
-                                    <%} %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="section">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -382,6 +364,37 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-star fa-fw"></i>Ranking tempo de atendimento
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr class="success">
+                                        <th>Chamado</th>
+                                        <th>Técnico</th>
+                                        <th>Tempo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%foreach (var Lista in ListTopTempo)
+                                        { %>
+                                    <tr class="success">
+                                        <td><%=Lista.Chamado %></td>
+                                        <td><%=Lista.Tecnico %></td>
+                                        <td><%=String.Format("{0:%d} dia(s), ", Lista.TempoAtendimento) + new DateTime(Lista.TempoAtendimento.Ticks).ToString("HH:mm:ss")%> </td>
+                                    </tr>
+                                    <%} %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-lg-6">
                 <div class="section">
                     <div class="panel panel-default">
@@ -458,6 +471,38 @@
             ykeys: ['a', 'b'],
             labels: ['Abertos', 'Fechados']
         });
+        $(function() {
+
+            var data = [
+         <%foreach (var List in ListServico)
+        {%>
+                {
+                    label: "<%=List.Servico%>",
+                    data: <%=List.Media%>
+                    },
+                            <%}%>];
+
+            var plotObj = $.plot($("#flot-pie-chart"), data, {
+                series: {
+                    pie: {
+                        show: true
+                    }
+                },
+                grid: {
+                    hoverable: true
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+                    shifts: {
+                        x: 20,
+                        y: 0
+                    },
+                    defaultTheme: false
+                }
+            });
+
+        });
     </script>
     <%}
         else
@@ -473,7 +518,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                         <br />
+                        <br />
                     </div>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="col-lg-4">
@@ -486,7 +531,8 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                      Navegue atravéz dos menus a sua esquerda. <br />
+                        Navegue atravéz dos menus a sua esquerda.
+                        <br />
                     </div>
                 </div>
             </div>
