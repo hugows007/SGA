@@ -16,6 +16,7 @@
                         <h2>Erro:</h2>
                         <p></p>
                         <asp:Label ID="FriendlyErrorMsg" runat="server" Text="Label" Font-Size="Large" Style="color: red"></asp:Label>
+                        <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
 
                         <asp:Panel ID="DetailedErrorPanel" runat="server" Visible="false">
                             <p>&nbsp;</p>

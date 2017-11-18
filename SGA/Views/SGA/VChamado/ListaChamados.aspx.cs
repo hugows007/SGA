@@ -70,7 +70,7 @@ namespace SGA.Views.SGA.VChamado
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
-                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
     }

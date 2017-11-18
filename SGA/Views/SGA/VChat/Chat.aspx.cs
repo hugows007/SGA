@@ -40,35 +40,43 @@ namespace SGA.Views.SGA.VChat
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 
         protected void ButtonChamar_Click(object sender, EventArgs e)
         {
-            ListaUsuario.Clear();
-
-            ChamarTecnico = true;
-            EntrarChat = false;
-
-            Perfil.Add("Técnico");
-            Perfil.Add("Gestor");
-            Perfil.Add("Atendente");
-
-            foreach (var ObjTecnico in new ManterUsuario().ConsultaUsuariosByPerfil(Perfil))
+            try
             {
-                Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
+                ListaUsuario.Clear();
 
-                if (!ObjTecnico.IdMS.Equals(Session["idms"]))
+                ChamarTecnico = true;
+                EntrarChat = false;
+
+                Perfil.Add("Técnico");
+                Perfil.Add("Gestor");
+                Perfil.Add("Atendente");
+
+                foreach (var ObjTecnico in new ManterUsuario().ConsultaUsuariosByPerfil(Perfil))
                 {
-                    ObjUsuario.Id = ObjTecnico.Id;
-                    ObjUsuario.Login = ObjTecnico.Login;
-                    ObjUsuario.Nome = ObjTecnico.Nome;
-                    ObjUsuario.IdMS = ObjTecnico.IdMS;
+                    Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
 
-                    ListaUsuario.Add(ObjUsuario);
+                    if (!ObjTecnico.IdMS.Equals(Session["idms"]))
+                    {
+                        ObjUsuario.Id = ObjTecnico.Id;
+                        ObjUsuario.Login = ObjTecnico.Login;
+                        ObjUsuario.Nome = ObjTecnico.Nome;
+                        ObjUsuario.IdMS = ObjTecnico.IdMS;
+
+                        ListaUsuario.Add(ObjUsuario);
+                    }
                 }
             }
-            
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
+            }
         }
 
         protected void ButtonConvocar_Click(object sender, EventArgs e)
@@ -88,6 +96,7 @@ namespace SGA.Views.SGA.VChat
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 

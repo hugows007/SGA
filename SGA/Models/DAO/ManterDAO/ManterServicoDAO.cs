@@ -34,13 +34,14 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public List<TipoServico> ConsultaTpServicosDAO()
         {
-            List<TipoServico> ServicoTpList = new List<TipoServico>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<TipoServico> ServicoTpList = new List<TipoServico>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand Cmd = new SqlCommand(@"
                  SELECT [idTipoServ]
@@ -62,22 +63,23 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ServicoTpList;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public TipoServico ConsultaTpServicoByIdDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                  FROM [dbo].[TipoServico]
@@ -97,24 +99,25 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjTpServico;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Servico> ConsultaServicosByTipoDAO()
         {
-            SqlDataReader Dr;
-            SqlCommand Cmd;
-            List<Servico> ServicoList = new List<Servico>();
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr;
+                SqlCommand Cmd;
+                List<Servico> ServicoList = new List<Servico>();
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                         SELECT *
                           FROM [dbo].[Servico]
@@ -139,24 +142,25 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ServicoList;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Servico> ConsultaServicosDAO()
         {
-            List<Servico> ServicoList = new List<Servico>();
-            SqlDataReader Dr = null;
-            SqlCommand Cmd = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Servico> ServicoList = new List<Servico>();
+                SqlDataReader Dr = null;
+                SqlCommand Cmd = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                         SELECT *
                           FROM [dbo].[Servico]
@@ -181,22 +185,23 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ServicoList;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Servico ConsultaServicoByIdDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
@@ -219,20 +224,21 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjServico;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool CadastraServicoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[Servico]
@@ -264,20 +270,21 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.ExecuteNonQuery();
                     return true;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool AlteraServicoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
@@ -302,20 +309,21 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
 
                     return true;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool InativaServicoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                  [dbo].[Servico] SET
@@ -332,12 +340,12 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
 
                     return true;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

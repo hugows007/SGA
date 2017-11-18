@@ -40,7 +40,7 @@ namespace SGA.Views.SGA.VUsuario
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
-                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 
@@ -77,7 +77,7 @@ namespace SGA.Views.SGA.VUsuario
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
-                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 
@@ -119,7 +119,7 @@ namespace SGA.Views.SGA.VUsuario
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
-                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
     }

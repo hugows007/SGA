@@ -8,7 +8,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterEmpresa
+    public class ManterEmpresa : Empresa
     {
         Empresa ObjEmpresa;
         public ManterEmpresa()
@@ -21,28 +21,34 @@ namespace SGA.Models.Manter
         }
         public List<Empresa> ConsultaEmpresas()
         {
-            return new ManterEmpresaDAO(ObjEmpresa).ConsultaEmpresasDAO();
+            try
+            {
+                return new ManterEmpresaDAO(ObjEmpresa).ConsultaEmpresasDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Empresa ConsultaEmpresaById()
         {
-            return new ManterEmpresaDAO(ObjEmpresa).ConsultaEmpresaByIdDAO();
+            try
+            {
+                return new ManterEmpresaDAO(ObjEmpresa).ConsultaEmpresaByIdDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public bool CadastraEmpresa()
         {
             try
             {
-                if (new ManterEmpresaDAO(ObjEmpresa).CadastraEmpresaDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterEmpresaDAO(ObjEmpresa).CadastraEmpresaDAO();
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -50,18 +56,10 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterEmpresaDAO(ObjEmpresa).AlteraEmpresaDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterEmpresaDAO(ObjEmpresa).AlteraEmpresaDAO();
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -73,7 +71,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }

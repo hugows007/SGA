@@ -22,12 +22,13 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public PrioridadeChamado ConsultaPrioridadeChamadoByIdDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[PrioridadeChamado]
@@ -44,23 +45,24 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjPrioridade;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<PrioridadeChamado> ConsultaPrioridadesChamadoDAO()
         {
-            List<PrioridadeChamado> Prioridades = new List<PrioridadeChamado>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<PrioridadeChamado> Prioridades = new List<PrioridadeChamado>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand Cmd = new SqlCommand(@"
                  SELECT *
@@ -80,12 +82,12 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return Prioridades;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

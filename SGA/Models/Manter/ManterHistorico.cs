@@ -7,14 +7,13 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterHistorico
+    public class ManterHistorico : Historico
     {
         Historico ObjHistorico;
         public ManterHistorico()
         {
 
         }
-
         public ManterHistorico(Historico ObjHistorico)
         {
             this.ObjHistorico = ObjHistorico;
@@ -22,7 +21,14 @@ namespace SGA.Models.Manter
 
         public List<Historico> GetHistorico()
         {
-            return new ManterHistoricoDAO(ObjHistorico).GetHistoricoDAO();
+            try
+            {
+                return new ManterHistoricoDAO(ObjHistorico).GetHistoricoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

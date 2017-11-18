@@ -36,8 +36,6 @@ namespace SGA.Views.SGA.VRelatorio
                     {
                         ObjRelatorio.FiltroRelatorio += "and" + Itens + ", ";
                     }
-
-                    //ObjRelatorio.FiltroRelatorio = filtrosPrioridade.Items[filtrosPrioridade.SelectedIndex].Text;
                 }
 
                 Response.Redirect("\\Views\\SGA\\VRelatorio\\RelatorioChamados.aspx?Relatorio=Chamados", false);
@@ -45,6 +43,7 @@ namespace SGA.Views.SGA.VRelatorio
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 
@@ -57,6 +56,7 @@ namespace SGA.Views.SGA.VRelatorio
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 
@@ -69,6 +69,7 @@ namespace SGA.Views.SGA.VRelatorio
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 
@@ -81,6 +82,7 @@ namespace SGA.Views.SGA.VRelatorio
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
     }

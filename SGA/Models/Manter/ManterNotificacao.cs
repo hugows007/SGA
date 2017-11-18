@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace SGA.Models.Manter
 {
-    public class ManterNotificacao
+    public class ManterNotificacao : Notificacao
     {
         public Notificacao ObjNotificacao;
         public Usuario ObjUsuario;
@@ -36,7 +36,14 @@ namespace SGA.Models.Manter
         }
         public bool NotificaUsuariosChat()
         {
-            return new ManterNotificacaoDAO(ObjNotificacao, ObjUsuario).NotificaUsuariosChatDAO();
+            try
+            {
+                return new ManterNotificacaoDAO(ObjNotificacao, ObjUsuario).NotificaUsuariosChatDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public bool NotificaUsuariosSistem()
         {
@@ -51,11 +58,25 @@ namespace SGA.Models.Manter
         }
         public bool AtualizaNotificacao()
         {
-            return new ManterNotificacaoDAO(ObjNotificacao).AtualizaNotificacaoDAO();
+            try
+            {
+                return new ManterNotificacaoDAO(ObjNotificacao).AtualizaNotificacaoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Notificacao> InformaNotificacao()
         {
-            return new ManterNotificacaoDAO(ObjNotificacao).InformaNotificacaoDAO();
+            try
+            {
+                return new ManterNotificacaoDAO(ObjNotificacao).InformaNotificacaoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public bool EnviaEmailNotificacao()
         {

@@ -22,13 +22,14 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public StatusChamado ConsultaStatusChamadoByIdDAO()
         {
-            SqlDataReader Dr = null;
-            SqlCommand Cmd;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+                SqlCommand Cmd;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[StatusChamado]
@@ -47,12 +48,12 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjStatusChm;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

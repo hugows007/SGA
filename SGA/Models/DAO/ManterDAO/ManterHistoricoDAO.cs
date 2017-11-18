@@ -15,21 +15,20 @@ namespace SGA.Models.DAO.ManterDAO
         {
 
         }
-
         public ManterHistoricoDAO(Historico ObjHistorico)
         {
             this.ObjHistorico = ObjHistorico;
         }
-
         public List<Historico> GetHistoricoDAO()
         {
-            List<Historico> List = new List<Historico>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Historico> List = new List<Historico>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                         select
                             Srv.nome
@@ -66,10 +65,10 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return List;
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

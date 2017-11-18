@@ -29,6 +29,8 @@ namespace SGA.Views.SGA
         {
             try
             {
+                new Exception();
+
                 Page.DataBind();
                 ListaNotificacao.Clear();
 
@@ -66,6 +68,7 @@ namespace SGA.Views.SGA
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 

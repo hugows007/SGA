@@ -10,7 +10,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterEspecialidade
+    public class ManterEspecialidade : Especialidade
     {
         Especialidade ObjEspec;
         Servico ObjServ;
@@ -29,28 +29,35 @@ namespace SGA.Models.Manter
         }
         public List<Especialidade> ConsultaEspecialidades()
         {
-            return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadesDAO();
+            try
+            {
+                return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadesDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Especialidade ConsultaEspecialidadeById()
         {
-            return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadeByIdDAO();
+            try
+            {
+                return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadeByIdDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public bool CadastraEspecialidade()
         {
             try
             {
-                if (new ManterEspecialidadeDAO(ObjEspec).CadastraEspecialidadeDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterEspecialidadeDAO(ObjEspec).CadastraEspecialidadeDAO();
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -58,18 +65,10 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterEspecialidadeDAO(ObjEspec).AlteraEspecialidadeDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterEspecialidadeDAO(ObjEspec).AlteraEspecialidadeDAO();
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -81,7 +80,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -89,18 +87,10 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterEspecialidadeDAO(ObjEspec, ObjServ).RelacionaEspecServDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterEspecialidadeDAO(ObjEspec, ObjServ).RelacionaEspecServDAO();
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }

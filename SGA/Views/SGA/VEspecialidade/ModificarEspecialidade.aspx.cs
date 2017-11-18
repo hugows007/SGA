@@ -34,7 +34,7 @@ namespace SGA.Views.SGA.VEspecialidade
                 catch (Exception Ex)
                 {
                     LogException.InsereLogBd(Ex);
-                    MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+                    MsgLabel.Text = LogException.CodigoErroBd();
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace SGA.Views.SGA.VEspecialidade
                     ObjEspec.NomeEspec = Espec.Value;
                     ObjEspec.DescEspec = DetalhesEspec.Value;
 
-                    if(new ManterEspecialidade(ObjEspec).AlteraEspecialidade())
+                    if (new ManterEspecialidade(ObjEspec).AlteraEspecialidade())
                     {
                         Mensagem = "Especialidade alterada com sucesso.";
                     }
@@ -62,7 +62,7 @@ namespace SGA.Views.SGA.VEspecialidade
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
-                MsgLabel.Text = "Erro interno - Mensagem técnica: consulte o log de exceções tratadas com data de: " + DateTime.Now;
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
     }

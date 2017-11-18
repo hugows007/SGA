@@ -11,7 +11,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterChamado
+    public class ManterChamado : Chamado
     {
         Chamado ObjChamado;
         Usuario ObjUsuario;
@@ -48,33 +48,28 @@ namespace SGA.Models.Manter
                 if (new ManterChamadoDAO(ObjChamado).AbreChamadoDAO())
                 {
                     ObjChamado.Id = new ManterChamado().GetUltIdChamado();
-
-                    if (new ManterAtendimento(ObjAtend, ObjUsuario, ObjChamado).CadastraAtendimento())
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        DeletaChamado(); //Remover esse delete de chamado e verificar quando não encontrar o técnico oq farei
-                        return false;
-                    }
+                    return new ManterAtendimento(ObjAtend, ObjUsuario, ObjChamado).CadastraAtendimento();
                 }
                 else
                 {
-                    DeletaChamado();
                     return false;
                 }
             }
             catch (Exception)
             {
-                DeletaChamado();
-
                 throw;
             }
         }
         public List<Chamado> ConsultaChamados()
         {
-            return new ManterChamadoDAO(ObjChamado, ObjUsuario).ConsultaChamadosDAO();
+            try
+            {
+                return new ManterChamadoDAO(ObjChamado, ObjUsuario).ConsultaChamadosDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Chamado ConsultaChamadoById()
         {
@@ -93,7 +88,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -101,18 +95,10 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterChamadoDAO(ObjChamado).AtualizaTramiteDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterChamadoDAO(ObjChamado).AtualizaTramiteDAO();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -120,30 +106,14 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterChamadoDAO(ObjChamado).ReabreChamadoDAO())
+                ObjAtend.IdChamado = ObjChamado.Id;
+                ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                ObjUsuario.Id = ObjAtend.IdTecnico;
+                ObjUsuario.IdStatus = 2;
+
+                if (new ManterChamadoDAO(ObjChamado).ReabreChamadoDAO() && new ManterAtendimento(ObjAtend).CadastraAtendimentoReaberturaChamado() && new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
                 {
-
-                    ObjAtend.IdChamado = ObjChamado.Id;
-
-                    if (new ManterAtendimento(ObjAtend).CadastraAtendimentoReaberturaChamado())
-                    {
-                        Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-                        ObjUsuario.Id = ObjAtend.IdTecnico;
-                        ObjUsuario.IdStatus = 2;
-
-                        if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return true;
                 }
                 else
                 {
@@ -159,38 +129,21 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO())
+                ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                ObjUsuario.IdStatus = 1;
+
+                if (new ManterChamadoDAO(ObjChamado).CancelaChamadoDAO() && new ManterAtendimento(ObjAtend, ObjChamado).CancelaAtendimento() && new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
                 {
-                    if (new ManterAtendimento(ObjAtend, ObjChamado).CancelaAtendimento())
-                    {
-                        ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                    ObjNotificacao.IdOrigem = 0;
+                    ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                    ObjNotificacao.IdMensagem = 6;
+                    ObjNotificacao.IdTipo = 4;
+                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
-                        ObjUsuario.IdStatus = 1;
+                    ObjNotificacao.IdDest = ObjAtend.IdCliente;
+                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
-                        if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
-                        {
-                            //Notificação de atendimento
-                            ObjNotificacao.IdOrigem = 0;
-                            ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                            ObjNotificacao.IdMensagem = 6;
-                            ObjNotificacao.IdTipo = 4;
-                            new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
-
-                            ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                            ObjNotificacao.IdMensagem = 6;
-                            new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
-
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return true;
                 }
                 else
                 {
@@ -199,7 +152,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -211,17 +163,30 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
         public int GetUltIdChamado()
         {
-            return new ManterChamadoDAO().GetUltIdChamadoDAO();
+            try
+            {
+                return new ManterChamadoDAO().GetUltIdChamadoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public bool ValidaTempoFechamento()
         {
-            return new ManterChamadoDAO(ObjChamado).ValidaTempoFechamentoDAO();
+            try
+            {
+                return new ManterChamadoDAO(ObjChamado).ValidaTempoFechamentoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

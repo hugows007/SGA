@@ -37,6 +37,7 @@
                 <img style="float: left;" src="/Image/Logo.jpeg" alt="" width="185" height="110" /></h2>
             <h1 style="text-align: center;">&nbsp;</h1>
             <h2 style="text-align: center;">Relatório de <%=TipoRelatorio%></h2>
+            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
             <p>&nbsp;</p>
             <button id="btn">Clique aqui para imprimir</button>
             <input type="button" value="Voltar" onclick="history.go(-1)" />

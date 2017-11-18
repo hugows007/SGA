@@ -45,13 +45,14 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public List<Atendimento> ConsultaAtendimentosDAO()
         {
-            List<Atendimento> List = new List<Atendimento>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Atendimento> List = new List<Atendimento>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Atendimento]
@@ -64,32 +65,27 @@ namespace SGA.Models.DAO.ManterDAO
                         Atendimento Usr = FactoryAtendimento.GetNew();
 
                         Usr.Id = Dr.GetInt32(0);
-                        //Usr.Regiao = Dr.GetString(1);
-                        //Usr.Cidade = Dr.GetString(2);
-                        //Usr.Estado = Dr.GetString(3);
-
                         List.Add(Usr);
                     }
 
                     return List;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Usuario> ConsultaTecnicoAtendByChamadoDAO()
         {
-            List<Usuario> List = new List<Usuario>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Usuario> List = new List<Usuario>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                    select top 1 Atd.idTecnico, Usr.nome from Atendimento Atd inner join Usuario Usr on (Atd.idTecnico = Usr.idUsuario) where 
                         Atd.idChamado = @Id;", Con);
@@ -110,21 +106,19 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return List;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Atendimento ConsultaAtendimentoByIdDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
@@ -146,22 +140,21 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjAtend;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Atendimento ConsultaAtendimentoByIdChamadoDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Atendimento]
@@ -183,21 +176,20 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjAtend;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool CadastraAtendimentoDAO()
         {
-            SqlCommand Cmd;
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd;
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     if (ObjChamado != null)
                     {
                         if (ObjChamado.Pendencia)
@@ -283,21 +275,20 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool CadastraAtendimentoReaberturaChamadoDAO()
         {
-            SqlCommand Cmd;
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd;
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                                 INSERT INTO [dbo].[Atendimento]
                                     ([idChamado]
@@ -327,21 +318,22 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Atendimento RecusaAtendimentoChamadoDAO()
         {
-            SqlCommand Cmd;
-            SqlDataReader Dr;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd;
+                SqlDataReader Dr;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     Cmd = new SqlCommand(@"
                 UPDATE 
@@ -414,18 +406,19 @@ namespace SGA.Models.DAO.ManterDAO
                     Dr.Close();
                     return ObjAtend;
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool AlterarTecnicoAtendimentoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Atendimento] SET 
@@ -445,18 +438,19 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return true;
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool IniciaAtendimentoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Atendimento] SET 
@@ -481,20 +475,19 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return true;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool CancelaAtendimentoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd;
 
                     if (GetAtendimentoNaoIniciado())
@@ -526,20 +519,19 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool EncerraAtendimentoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd;
 
                     Cmd = new SqlCommand(@"
@@ -566,22 +558,21 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool GetAtendimentoNaoIniciado()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                                 select * from Atendimento where 
                                     idChamado = @Id and 
@@ -600,22 +591,21 @@ namespace SGA.Models.DAO.ManterDAO
                         return false;
                     }
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public string GetTempoAtendimento()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT dataInicioAtendimento
                   FROM [dbo].[Atendimento]
@@ -633,12 +623,10 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return String.Format("{0: 0.00}", (D2 - D1).TotalHours).Replace(",", ".");
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

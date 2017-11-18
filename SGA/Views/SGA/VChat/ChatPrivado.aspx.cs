@@ -100,6 +100,7 @@ namespace SGA.Views.SGA.VChat
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
 
         }

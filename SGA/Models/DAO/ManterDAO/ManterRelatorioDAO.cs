@@ -27,12 +27,13 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public List<Relatorio> GetQtdChamadosDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     if (ObjRelatorio.RelatMes)
                     {
                         Cmd = new SqlCommand(@"
@@ -165,21 +166,23 @@ namespace SGA.Models.DAO.ManterDAO
                         }
                     }
                     return ListRelat;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Relatorio> GetTopTecnicosDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     select top 5 (Usr.nome)
                           ,avg(Av.avaliacaoAtendimento + Av.avaliacaoTecnico) as Media from 
@@ -202,21 +205,23 @@ namespace SGA.Models.DAO.ManterDAO
                         ListRelat.Add(Obj);
                     }
                     return ListRelat;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Relatorio> GetTopSolucoesDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                    select top 5 (Usr.nome)
 						  ,sum(Avs.likeSolucao) as Soluções_Uteis from 
@@ -239,21 +244,23 @@ namespace SGA.Models.DAO.ManterDAO
                         ListRelat.Add(Obj);
                     }
                     return ListRelat;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Relatorio> GetQtdPorServicoDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     select 
                         (TpSrv.tipo +': '+Srv.nome) as Servico
@@ -265,7 +272,7 @@ namespace SGA.Models.DAO.ManterDAO
                         group by Srv.nome,TpSrv.tipo;", Con);
 
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
-                        
+
                     Dr = Cmd.ExecuteReader();
 
                     while (Dr.Read())
@@ -276,21 +283,23 @@ namespace SGA.Models.DAO.ManterDAO
                         ListRelat.Add(Obj);
                     }
                     return ListRelat;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Relatorio> GetRelatorioChamadosDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     select 
                             Chm.idChamado
@@ -346,21 +355,23 @@ namespace SGA.Models.DAO.ManterDAO
                         ListRelat.Add(Obj);
                     }
                     return ListRelat;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Relatorio> GetRelatorioSLADAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     select 
                         Chm.idChamado, Srv.nome as Servico, datediff(SECOND,dataAbertura, dataFechamento) as Tempo_Conclusao_Chamado
@@ -384,21 +395,23 @@ namespace SGA.Models.DAO.ManterDAO
                         ListRelat.Add(Obj);
                     }
                     return ListRelat;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Relatorio> GetRelatorioTempoAtendimentoDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     select 
                         Chm.idChamado
@@ -426,21 +439,23 @@ namespace SGA.Models.DAO.ManterDAO
                         ListRelat.Add(Obj);
                     }
                     return ListRelat;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Relatorio> GetRelatorioRecusaAtendimentoDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     select 
                         Chm.idChamado
@@ -464,21 +479,23 @@ namespace SGA.Models.DAO.ManterDAO
                         ListRelat.Add(Obj);
                     }
                     return ListRelat;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Relatorio GetTempoMedioAtendimentoDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"select cast(avg(convert(decimal,tempoAtendimento)) as numeric(15,2)) from atendimento where idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
@@ -490,21 +507,23 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjRelatorio.TempoAtendimento = TimeSpan.FromHours(Convert.ToDouble(Dr[0].ToString()));
                     }
                     return ObjRelatorio;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Relatorio> GetAtendimentoPorRegiaoDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     select 
                         top 10 Rg.Regiao
@@ -527,11 +546,12 @@ namespace SGA.Models.DAO.ManterDAO
                         ListRelat.Add(Obj);
                     }
                     return ListRelat;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

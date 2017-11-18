@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterStatusChamado
+    public class ManterStatusChamado : StatusChamado
     {
         StatusChamado ObjStatusChm = null;
         public ManterStatusChamado(StatusChamado ObjStatusChm)
@@ -20,7 +20,14 @@ namespace SGA.Models.Manter
         }
         public StatusChamado ConsultaStatusChamadoById()
         {
-            return new ManterStatusChamadoDAO(ObjStatusChm).ConsultaStatusChamadoByIdDAO();
+            try
+            {
+                return new ManterStatusChamadoDAO(ObjStatusChm).ConsultaStatusChamadoByIdDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -11,12 +11,11 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterAtendimento
+    public class ManterAtendimento : Atendimento
     {
         Atendimento ObjAtend;
         Usuario ObjUsuario;
         Chamado ObjChamado;
-        public string Msg;
         Notificacao ObjNotificacao = FactoryNotificacao.GetNew();
         public ManterAtendimento()
         {
@@ -44,28 +43,53 @@ namespace SGA.Models.Manter
         }
         public List<Atendimento> ConsultaAtendimentos()
         {
-            return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentosDAO();
+            try
+            {
+                return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentosDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Usuario> ConsultaTecnicoAtendByChamado()
         {
-            return new ManterAtendimentoDAO(ObjAtend, ObjUsuario).ConsultaTecnicoAtendByChamadoDAO();
+            try
+            {
+                return new ManterAtendimentoDAO(ObjAtend, ObjUsuario).ConsultaTecnicoAtendByChamadoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Atendimento ConsultaAtendimentoById()
         {
-            return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentoByIdDAO();
+            try
+            {
+                return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentoByIdDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Atendimento ConsultaAtendimentoByIdChamado()
         {
-            return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentoByIdChamadoDAO();
+            try
+            {
+                return new ManterAtendimentoDAO(ObjAtend).ConsultaAtendimentoByIdChamadoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public bool CadastraAtendimento()
         {
             try
             {
-                foreach (var Tecnico in new ManterUsuario(ObjUsuario, ObjChamado).GetTecnicoByRegiaoEspec())
-                {
-                    ObjAtend.IdTecnico = Tecnico.Id;
-                }
+                ObjAtend.IdTecnico = new ManterUsuario(ObjUsuario, ObjChamado).GetTecnicoByRegiaoEspec().Id;
 
                 ObjAtend.IdChamado = ObjChamado.Id;
                 ObjAtend.IdCliente = ObjChamado.IdCliente;
@@ -73,7 +97,6 @@ namespace SGA.Models.Manter
 
                 if (new ManterAtendimentoDAO(ObjAtend).CadastraAtendimentoDAO())
                 {
-                    //Notificação de atendimento
                     ObjNotificacao.IdOrigem = 0;
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                     ObjNotificacao.IdMensagem = 3;
@@ -81,21 +104,17 @@ namespace SGA.Models.Manter
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                    ObjNotificacao.IdMensagem = 3;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     return true;
                 }
                 else
                 {
-                    new ManterChamado(ObjChamado).DeletaChamado();
                     return false;
                 }
             }
             catch (Exception)
             {
-                new ManterChamado(ObjChamado).DeletaChamado();
-
                 throw;
             }
         }
@@ -105,7 +124,6 @@ namespace SGA.Models.Manter
             {
                 if (new ManterAtendimentoDAO(ObjAtend).CadastraAtendimentoReaberturaChamadoDAO())
                 {
-                    //Notificação de atendimento
                     ObjNotificacao.IdOrigem = 0;
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                     ObjNotificacao.IdMensagem = 8;
@@ -113,7 +131,6 @@ namespace SGA.Models.Manter
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                    ObjNotificacao.IdMensagem = 8;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     return true;
@@ -140,41 +157,25 @@ namespace SGA.Models.Manter
 
                 ObjAtend.IdTecnico = new ManterAtendimentoDAO(ObjAtend, ObjChamado).RecusaAtendimentoChamadoDAO().IdTecnico;
 
-                if (ObjAtend != null)
+                ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                ObjUsuario.Id = ObjAtend.IdTecnico;
+                ObjUsuario.IdStatus = 2;
+
+                if (ObjAtend != null && new ManterAtendimentoDAO(ObjAtend, ObjChamado).CadastraAtendimentoReaberturaChamadoDAO() && new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
                 {
-                    if (new ManterAtendimentoDAO(ObjAtend, ObjChamado).CadastraAtendimentoReaberturaChamadoDAO())
+                    ObjNotificacao.IdOrigem = 0;
+                    ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                    ObjNotificacao.IdMensagem = 3;
+                    ObjNotificacao.IdTipo = 4;
+                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                    foreach (var Gestor in new ManterUsuario(ObjUsuario).ConsultaUsuariosGestores())
                     {
-                        Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-                        ObjUsuario.Id = ObjAtend.IdTecnico;
-                        ObjUsuario.IdStatus = 2;
-
-                        if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
-                        {
-                            //Notificação de atendimento
-                            ObjNotificacao.IdOrigem = 0;
-                            ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                            ObjNotificacao.IdMensagem = 3;
-                            ObjNotificacao.IdTipo = 4;
-                            new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
-
-                            foreach (var Gestor in new ManterUsuario(ObjUsuario).ConsultaUsuariosGestores())
-                            {
-                                ObjNotificacao.IdDest = Gestor.Id;
-                                ObjNotificacao.IdMensagem = 3;
-                                new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
-                            }
-
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
+                        ObjNotificacao.IdDest = Gestor.Id;
+                        new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
                     }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return true;
                 }
                 else
                 {
@@ -190,15 +191,15 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if(new ManterAtendimentoDAO(ObjAtend).AlterarTecnicoAtendimentoDAO())
+                if (new ManterAtendimentoDAO(ObjAtend).AlterarTecnicoAtendimentoDAO())
                 {
-                    //Notificação de atendimento
                     ObjNotificacao.IdOrigem = 0;
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                     ObjNotificacao.IdMensagem = 3;
                     ObjNotificacao.IdTipo = 4;
                     return new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
-                }else
+                }
+                else
                 {
                     return false;
                 }
@@ -212,37 +213,27 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterAtendimentoDAO(ObjAtend).IniciaAtendimentoDAO())
+                ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
+                ObjUsuario.Id = ObjAtend.IdTecnico;
+                ObjUsuario.IdStatus = 2;
+
+                if (new ManterAtendimentoDAO(ObjAtend).IniciaAtendimentoDAO() && new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
                 {
-                    ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
-                    ObjUsuario.Id = ObjAtend.IdTecnico;
+                    ObjChamado = FactoryChamado.GetNew();
+                    ObjChamado.Id = ObjAtend.IdChamado;
+                    ObjChamado = new ManterChamado(ObjChamado).ConsultaChamadoById();
+                    ObjAtend.IdCliente = ObjChamado.IdCliente;
 
-                    ObjUsuario.IdStatus = 2;
+                    ObjNotificacao.IdOrigem = 0;
+                    ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                    ObjNotificacao.IdMensagem = 4;
+                    ObjNotificacao.IdTipo = 4;
+                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
-                    if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
-                    {
-                        ObjChamado = FactoryChamado.GetNew();
-                        ObjChamado.Id = ObjAtend.IdChamado;
-                        ObjChamado = new ManterChamado(ObjChamado).ConsultaChamadoById();
-                        ObjAtend.IdCliente = ObjChamado.IdCliente;
+                    ObjNotificacao.IdDest = ObjAtend.IdCliente;
+                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
-                        //Notificação de atendimento
-                        ObjNotificacao.IdOrigem = 0;
-                        ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                        ObjNotificacao.IdMensagem = 4;
-                        ObjNotificacao.IdTipo = 4;
-                        new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
-
-                        ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                        ObjNotificacao.IdMensagem = 4;
-                        new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
-
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return true;
                 }
                 else
                 {
@@ -251,7 +242,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -263,7 +253,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -271,53 +260,26 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterAtendimentoDAO(ObjAtend, ObjChamado).EncerraAtendimentoDAO())
+                ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                ObjUsuario.Id = ObjAtend.IdTecnico;
+                ObjUsuario.IdStatus = 1;
+
+                if (new ManterAtendimentoDAO(ObjAtend, ObjChamado).EncerraAtendimentoDAO() && new ManterChamadoDAO(ObjChamado).EncerraChamadoDAO() && new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
                 {
-                    if (new ManterChamadoDAO(ObjChamado).EncerraChamadoDAO())
+                    if (ObjChamado.Pendencia)
                     {
-                        ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-                        ObjUsuario.Id = ObjAtend.IdTecnico;
-                        ObjUsuario.IdStatus = 1;
-
-                        if (new ManterUsuario(ObjUsuario).AlteraDisponibilidade())
+                        if (new ManterAtendimentoDAO(ObjAtend, ObjChamado).CadastraAtendimentoDAO())
                         {
-                            if (ObjChamado.Pendencia)
-                            {
-                                if (new ManterAtendimentoDAO(ObjAtend, ObjChamado).CadastraAtendimentoDAO())
-                                {
-                                    //Notificação de atendimento
-                                    ObjNotificacao.IdOrigem = 0;
-                                    ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                                    ObjNotificacao.IdMensagem = 7;
-                                    ObjNotificacao.IdTipo = 4;
-                                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+                            ObjNotificacao.IdOrigem = 0;
+                            ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                            ObjNotificacao.IdMensagem = 7;
+                            ObjNotificacao.IdTipo = 4;
+                            new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
-                                    ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                                    ObjNotificacao.IdMensagem = 7;
-                                    new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+                            ObjNotificacao.IdDest = ObjAtend.IdCliente;
+                            new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            }
-                            else
-                            {
-                                //Notificação de atendimento
-                                ObjNotificacao.IdOrigem = 0;
-                                ObjNotificacao.IdDest = ObjAtend.IdTecnico;
-                                ObjNotificacao.IdMensagem = 5;
-                                ObjNotificacao.IdTipo = 4;
-                                new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
-
-                                ObjNotificacao.IdDest = ObjAtend.IdCliente;
-                                ObjNotificacao.IdMensagem = 5;
-                                new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
-
-                                return true;
-                            }
+                            return true;
                         }
                         else
                         {
@@ -326,7 +288,16 @@ namespace SGA.Models.Manter
                     }
                     else
                     {
-                        return false;
+                        ObjNotificacao.IdOrigem = 0;
+                        ObjNotificacao.IdDest = ObjAtend.IdTecnico;
+                        ObjNotificacao.IdMensagem = 5;
+                        ObjNotificacao.IdTipo = 4;
+                        new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                        ObjNotificacao.IdDest = ObjAtend.IdCliente;
+                        new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
+
+                        return true;
                     }
                 }
                 else
@@ -336,7 +307,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

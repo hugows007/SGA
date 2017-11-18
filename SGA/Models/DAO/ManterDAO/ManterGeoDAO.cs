@@ -23,11 +23,11 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public List<Geo> InformaGeoDAO()
         {
-            List<Geo> List = new List<Geo>();
-            SqlDataReader Dr = null;
-
             try
             {
+                List<Geo> List = new List<Geo>();
+                SqlDataReader Dr = null;
+
                 using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
 
@@ -61,8 +61,6 @@ namespace SGA.Models.DAO.ManterDAO
             }
             catch (SqlException)
             {
-                
-
                 throw;
             }
         }
@@ -96,7 +94,6 @@ namespace SGA.Models.DAO.ManterDAO
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }

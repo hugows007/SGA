@@ -1,4 +1,5 @@
 ﻿using SGA.Models.Atendimentos;
+using SGA.Models.DAO.Log;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
@@ -14,15 +15,22 @@ namespace SGA.Views.SGA.VChamado
         Atendimento ObjAtend = FactoryAtendimento.GetNew();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Request.QueryString["Chamado"].Equals("") && !Request.QueryString["Tecnico"].Equals(""))
+            try
             {
-                ObjAtend.IdChamado = Convert.ToInt32(Request.QueryString["Chamado"]);
-                ObjAtend.IdTecnico = Convert.ToInt32(Request.QueryString["Tecnico"]);
-
-                if (new ManterAtendimento(ObjAtend).AlterarTecnicoAtendimento())
+                if (!Request.QueryString["Chamado"].Equals("") && !Request.QueryString["Tecnico"].Equals(""))
                 {
-                    Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjAtend.IdChamado + "&Troca=true", false);
+                    ObjAtend.IdChamado = Convert.ToInt32(Request.QueryString["Chamado"]);
+                    ObjAtend.IdTecnico = Convert.ToInt32(Request.QueryString["Tecnico"]);
+
+                    if (new ManterAtendimento(ObjAtend).AlterarTecnicoAtendimento())
+                    {
+                        Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjAtend.IdChamado + "&Troca=true", false);
+                    }
                 }
+            }
+            catch (Exception Ex)
+            {
+                LogException.InsereLogBd(Ex);
             }
         }
     }

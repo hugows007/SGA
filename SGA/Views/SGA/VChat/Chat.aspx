@@ -79,6 +79,7 @@
                         <div class="chat-about">
                             <div class="chat-with">Chat Técnico</div>
                             <div class="chat-num-messages">Mensagens</div>
+                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
                         </div>
                         <div class="message-data align-right clearfix">
                             <%if (!EntrarChat)

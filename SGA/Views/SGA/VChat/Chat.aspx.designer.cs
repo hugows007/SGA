@@ -13,6 +13,15 @@ namespace SGA.Views.SGA.VChat {
     public partial class Chat {
         
         /// <summary>
+        /// MsgLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label MsgLabel;
+        
+        /// <summary>
         /// ButtonEntrar control.
         /// </summary>
         /// <remarks>

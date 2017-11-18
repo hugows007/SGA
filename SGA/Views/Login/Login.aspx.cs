@@ -21,19 +21,11 @@ namespace SGA
             try
             {
                 GC.Collect();
-
-                /*Membership.CreateUser("Admin", "123$$Abc");
-                Roles.CreateRole("Administrador");
-                Roles.CreateRole("Técnico");
-                Roles.CreateRole("Gestor");
-                Roles.CreateRole("Cliente Físico");
-                Roles.CreateRole("Cliente Jurídico");
-                Roles.CreateRole("Atendente");*/
-
             }
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 
@@ -61,7 +53,7 @@ namespace SGA
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
-                MsgLabel.Text = "Erro interno.";
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 

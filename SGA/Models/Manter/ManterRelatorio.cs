@@ -10,7 +10,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterRelatorio
+    public class ManterRelatorio : Relatorio
     {
         Relatorio ObjRelatorio;
 
@@ -25,57 +25,128 @@ namespace SGA.Models.Manter
 
         public List<Relatorio> GetQtdChamados()
         {
-            return new ManterRelatorioDAO(ObjRelatorio).GetQtdChamadosDAO();
+            try
+            {
+                return new ManterRelatorioDAO(ObjRelatorio).GetQtdChamadosDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<Relatorio> GetTopTecnicos()
         {
-            return new ManterRelatorioDAO(ObjRelatorio).GetTopTecnicosDAO();
+            try
+            {
+                return new ManterRelatorioDAO(ObjRelatorio).GetTopTecnicosDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Relatorio> GetTopSolucoes()
         {
-            return new ManterRelatorioDAO(ObjRelatorio).GetTopSolucoesDAO();
+            try
+            {
+                return new ManterRelatorioDAO(ObjRelatorio).GetTopSolucoesDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Relatorio> GetQtdPorServico()
         {
-            return new ManterRelatorioDAO(ObjRelatorio).GetQtdPorServicoDAO();
+            try
+            {
+                return new ManterRelatorioDAO(ObjRelatorio).GetQtdPorServicoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
-        
+
         public List<Relatorio> GetRelatorioChamados()
         {
-            switch (ObjRelatorio.FiltroRelatorio)
+            try
             {
-                case "":
-                    ObjRelatorio.FiltroRelatorio = "";
-                    break;
-                case "a":
-                    ObjRelatorio.FiltroRelatorio = "";
-                    break;
-                default:
-                    ObjRelatorio.FiltroRelatorio = "";
-                    break;
+                switch (ObjRelatorio.FiltroRelatorio)
+                {
+                    case "":
+                        ObjRelatorio.FiltroRelatorio = "";
+                        break;
+                    case "a":
+                        ObjRelatorio.FiltroRelatorio = "";
+                        break;
+                    default:
+                        ObjRelatorio.FiltroRelatorio = "";
+                        break;
+                }
+
+                return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioChamadosDAO();
             }
-            return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioChamadosDAO();
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Relatorio> GetGetRelatorioSLA()
         {
-            return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioSLADAO();
+            try
+            {
+                return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioSLADAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Relatorio> GetRelatorioTempoAtendimento()
         {
-            return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioTempoAtendimentoDAO();
+            try
+            {
+                return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioTempoAtendimentoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Relatorio> GetRelatorioRecusaAtendimento()
         {
-            return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioRecusaAtendimentoDAO();
+            try
+            {
+                return new ManterRelatorioDAO(ObjRelatorio).GetRelatorioRecusaAtendimentoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Relatorio GetTempoMedioAtendimento()
         {
-            return new ManterRelatorioDAO(ObjRelatorio).GetTempoMedioAtendimentoDAO();
+            try
+            {
+                return new ManterRelatorioDAO(ObjRelatorio).GetTempoMedioAtendimentoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Relatorio> GetAtendimentoPorRegiao()
         {
-            return new ManterRelatorioDAO(ObjRelatorio).GetAtendimentoPorRegiaoDAO();
+            try
+            {
+                return new ManterRelatorioDAO(ObjRelatorio).GetAtendimentoPorRegiaoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

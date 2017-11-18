@@ -9,7 +9,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterServico
+    public class ManterServico : Servico
     {
         private Servico ObjServico;
         private TipoServico ObjTpServico;
@@ -32,40 +32,67 @@ namespace SGA.Models.Manter
         }
         public List<TipoServico> ConsultaTpServicos()
         {
-            return new ManterServicoDAO().ConsultaTpServicosDAO();
+            try
+            {
+                return new ManterServicoDAO().ConsultaTpServicosDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public TipoServico ConsultaTpServicoById()
         {
-            return new ManterServicoDAO(ObjServico, ObjTpServico).ConsultaTpServicoByIdDAO();
+            try
+            {
+                return new ManterServicoDAO(ObjServico, ObjTpServico).ConsultaTpServicoByIdDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Servico> ConsultaServicos()
         {
-            return new ManterServicoDAO().ConsultaServicosDAO();
+            try
+            {
+                return new ManterServicoDAO().ConsultaServicosDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Servico> ConsultaServicosByTipo()
         {
-            return new ManterServicoDAO(ObjServico).ConsultaServicosByTipoDAO();
+            try
+            {
+                return new ManterServicoDAO(ObjServico).ConsultaServicosByTipoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Servico ConsultaServicoById()
         {
-            return new ManterServicoDAO(ObjServico).ConsultaServicoByIdDAO();
+            try
+            {
+                return new ManterServicoDAO(ObjServico).ConsultaServicoByIdDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public bool CadastraServico()
         {
             try
             {
-                if (new ManterServicoDAO(ObjServico).CadastraServicoDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterServicoDAO(ObjServico).CadastraServicoDAO();
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -73,18 +100,10 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterServicoDAO(ObjServico).AlteraServicoDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterServicoDAO(ObjServico).AlteraServicoDAO();
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -96,7 +115,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }

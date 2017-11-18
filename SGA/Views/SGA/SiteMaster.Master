@@ -384,6 +384,9 @@
         });
     </script>
     <script src="<%# ResolveClientUrl("~/Scripts/google.js") %>"></script>
+    <footer>
+        <center><asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></center>
+    </footer>
 </body>
 </html>
 

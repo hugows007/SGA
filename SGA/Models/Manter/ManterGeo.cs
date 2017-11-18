@@ -11,7 +11,7 @@ using SGA.Models.Usuarios;
 
 namespace SGA.Models.Manter
 {
-    public class ManterGeo
+    public class ManterGeo : Geo
     {
         Geo ObjGeo;
         Notificacao ObjNotificacao = FactoryNotificacao.GetNew();
@@ -59,18 +59,10 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterGeoDAO(ObjGeo).GravaGeoDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterGeoDAO(ObjGeo).GravaGeoDAO();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

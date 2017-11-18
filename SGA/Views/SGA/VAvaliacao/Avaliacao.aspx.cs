@@ -35,6 +35,7 @@ namespace SGA.Views.SGA.VAvaliacao
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
 
@@ -65,6 +66,7 @@ namespace SGA.Views.SGA.VAvaliacao
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
     }

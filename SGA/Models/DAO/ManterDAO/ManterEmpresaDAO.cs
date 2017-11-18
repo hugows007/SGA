@@ -22,13 +22,14 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public List<Empresa> ConsultaEmpresasDAO()
         {
-            List<Empresa> EmpresaList = new List<Empresa>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Empresa> EmpresaList = new List<Empresa>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Empresa]
@@ -52,21 +53,21 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return EmpresaList;
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Empresa ConsultaEmpresaByIdDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Empresa] WHERE
@@ -88,20 +89,21 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjEmpresa;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool CadastraEmpresaDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[Empresa]
                   ([nome]
@@ -133,19 +135,19 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool AlteraEmpresaDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Empresa] SET 
@@ -169,21 +171,20 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.ExecuteNonQuery();
                     return true;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool InativaEmpresaDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
-
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                  [dbo].[Empresa] SET
@@ -199,12 +200,12 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
 
                     return true;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

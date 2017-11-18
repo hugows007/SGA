@@ -9,7 +9,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterRegiaoAtendimento
+    public class ManterRegiaoAtendimento : RegiaoAtendimento
     {
         public RegiaoAtendimento ObjRegiao;
         public ManterRegiaoAtendimento()
@@ -22,28 +22,34 @@ namespace SGA.Models.Manter
         }
         public List<RegiaoAtendimento> ConsultaRegiaoAtendimentos()
         {
-            return new ManterRegiaoAtendimentoDAO(ObjRegiao).ConsultaRegiaoAtendimentosDAO();
+            try
+            {
+                return new ManterRegiaoAtendimentoDAO(ObjRegiao).ConsultaRegiaoAtendimentosDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public RegiaoAtendimento ConsultaRegiaoAtendimentoById()
         {
-            return new ManterRegiaoAtendimentoDAO(ObjRegiao).ConsultaRegiaoAtendimentoByIdDAO();
+            try
+            {
+                return new ManterRegiaoAtendimentoDAO(ObjRegiao).ConsultaRegiaoAtendimentoByIdDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public bool CadastraRegiaoAtendimento()
         {
             try
             {
-                if (new ManterRegiaoAtendimentoDAO(ObjRegiao).CadastraRegiaoAtendimentoDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterRegiaoAtendimentoDAO(ObjRegiao).CadastraRegiaoAtendimentoDAO();
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -51,18 +57,10 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterRegiaoAtendimentoDAO(ObjRegiao).AlteraRegiaoAtendimentoDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterRegiaoAtendimentoDAO(ObjRegiao).AlteraRegiaoAtendimentoDAO();
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -74,7 +72,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }

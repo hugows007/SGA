@@ -30,13 +30,14 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public bool NotificaUsuariosChatDAO()
         {
-            SqlDataReader Dr = null;
-            List<Notificacao> ListaNot = new List<Notificacao>();
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+                List<Notificacao> ListaNot = new List<Notificacao>();
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand CmdConsult = new SqlCommand(@"
                         SELECT Usr.idUsuario
                           FROM Usuario Usr inner join 
@@ -117,23 +118,22 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return true;
-
                 }
-                catch (SqlException)
-                {
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool AtualizaNotificacaoDAO()
         {
-            SqlCommand Cmd;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     if (!ObjNotificacao.Id.Equals(0))
                     {
                         Cmd = new SqlCommand(@"
@@ -162,21 +162,22 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return true;
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool NotificaUsuariosSistemDAO()
         {
-            SqlCommand Cmd;
-            SqlDataReader Dr;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd;
+                SqlDataReader Dr;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                         select * 
                             from Notificacao where 
@@ -225,23 +226,23 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return true;
-
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Notificacao> InformaNotificacaoDAO()
         {
-            SqlDataReader Dr = null;
-            List<Notificacao> ListaNot = new List<Notificacao>();
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+                List<Notificacao> ListaNot = new List<Notificacao>();
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                         SELECT * FROM 
                             Notificacao Nt inner join 
@@ -276,10 +277,10 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ListaNot;
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

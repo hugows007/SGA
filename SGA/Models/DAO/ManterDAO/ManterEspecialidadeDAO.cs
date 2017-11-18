@@ -29,13 +29,14 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public List<Especialidade> ConsultaEspecialidadesDAO()
         {
-            List<Especialidade> EspecialidadeList = new List<Especialidade>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Especialidade> EspecialidadeList = new List<Especialidade>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[Especialidade]
@@ -57,22 +58,23 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return EspecialidadeList;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Especialidade ConsultaEspecialidadeByIdDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[especialidade] WHERE
@@ -92,20 +94,21 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjEspec;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool CadastraEspecialidadeDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[especialidade]
                   ([especialidade]
@@ -130,20 +133,21 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.ExecuteNonQuery();
                     return true;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool AlteraEspecialidadeDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[especialidade] SET 
@@ -162,20 +166,21 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.ExecuteNonQuery();
                     return true;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool InativaEspecialidadeDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
@@ -193,20 +198,21 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
 
                     return true;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool RelacionaEspecServDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[ServicoXEspecialidade]
                 ([idEspecialidade]
@@ -229,12 +235,10 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
                     return true;
                 }
-                catch (SqlException)
-                {
-                    
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

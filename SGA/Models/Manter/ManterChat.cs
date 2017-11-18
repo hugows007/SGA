@@ -9,7 +9,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterChat
+    public class ManterChat : Chat
     {
         Chat ObjChat;
         Usuario ObjUsuario;
@@ -36,7 +36,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -49,7 +48,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -62,7 +60,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -74,7 +71,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -86,7 +82,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -98,7 +93,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -110,7 +104,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }

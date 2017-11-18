@@ -54,7 +54,6 @@ namespace SGA.Models.DAO.ManterDAO
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -84,17 +83,16 @@ namespace SGA.Models.DAO.ManterDAO
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
         public bool GravaChatPrivadoDAO()
         {
-            SqlDataReader Dr;
-            SqlCommand Cmd;
-
             try
             {
+                SqlDataReader Dr;
+                SqlCommand Cmd;
+
                 using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
                     Cmd = new SqlCommand(@"
@@ -144,19 +142,19 @@ namespace SGA.Models.DAO.ManterDAO
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
         public List<Chat> RetornaSalasDAO()
         {
-            SqlDataReader Dr = null;
-            List<Chat> ChatList = new List<Chat>();
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+                List<Chat> ChatList = new List<Chat>();
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                        SELECT	    MsgP.idChatPrivado
 	                               ,MsgP.idUsuarioOrig
@@ -184,23 +182,24 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ChatList;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Chat> RetornaChatDAO()
         {
-            SqlDataReader Dr = null;
-            List<Chat> ChatList = new List<Chat>();
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+                List<Chat> ChatList = new List<Chat>();
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM Mensagem Msg WHERE
@@ -224,12 +223,12 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ChatList;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Chat> RetornaChatPrivadoDAO()
@@ -274,20 +273,21 @@ namespace SGA.Models.DAO.ManterDAO
                 }
                 catch (SqlException)
                 {
-                    
+
                     throw;
                 }
             }
         }
         public bool ValidaChatCriadoDAO()
         {
-            SqlDataReader Dr = null;
-            List<Chat> ChatList = new List<Chat>();
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+                List<Chat> ChatList = new List<Chat>();
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                         SELECT [idChatPrivado]
                               ,[idUsuarioOrig]
@@ -308,12 +308,12 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return false;
+
                 }
-                catch (SqlException)
-                {
-                    
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

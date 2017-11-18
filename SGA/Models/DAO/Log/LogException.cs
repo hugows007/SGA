@@ -13,10 +13,11 @@ namespace SGA.Models.DAO.Log
     {
         public static void InsereLogBd(Exception Ex)
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[LogExcecoesTratadas]
@@ -42,11 +43,33 @@ namespace SGA.Models.DAO.Log
                     Cmd.Parameters.AddWithValue("@exUser", new ManterUsuario().GetUsuarioLogado());
 
                     Cmd.ExecuteNonQuery();
-                }
-                catch (Exception)
-                {
 
                 }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        public static string CodigoErroBd()
+        {
+            try
+            {
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+                    SqlCommand Cmd = new SqlCommand(@"
+                        select max(id) from LogExcecoesTratadas;", Con);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    return "Ocorreu um problema. Favor informar o código de erro " + Dr.GetInt32(0) + " para o suporte SGA TI.";
+                }
+            }
+            catch (Exception)
+            {
+                return "Ocorreu um problema sistêmico. Não foi possível obter o código do erro. Favor entrar em contato com o suporte do SGA TI.";
             }
         }
     }

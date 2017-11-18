@@ -24,13 +24,14 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public List<RegiaoAtendimento> ConsultaRegiaoAtendimentosDAO()
         {
-            List<RegiaoAtendimento> AreaList = new List<RegiaoAtendimento>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<RegiaoAtendimento> AreaList = new List<RegiaoAtendimento>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[RegiaoDeAtendimento]
@@ -53,23 +54,23 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return AreaList;
-                }
-                catch (SqlException)
-                {
-                    
 
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public RegiaoAtendimento ConsultaRegiaoAtendimentoByIdDAO()
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT *
                   FROM [dbo].[RegiaoDeAtendimento]
@@ -89,21 +90,21 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjRegiao;
-                }
-                catch (SqlException)
-                {
-                    
 
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool CadastraRegiaoAtendimentoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[RegiaoDeAtendimento]
                 ([regiao]
@@ -131,21 +132,21 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.ExecuteNonQuery();
                     return true;
-                }
-                catch (SqlException)
-                {
-                    
 
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool AlteraRegiaoAtendimentoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[RegiaoDeAtendimento] SET 
@@ -167,21 +168,21 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
 
                     return true;
-                }
-                catch (SqlException)
-                {
-                    
 
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool InativarRegiaoAtendimentoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[RegiaoDeAtendimento] SET
@@ -197,13 +198,12 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.ExecuteNonQuery();
                     return true;
-                }
-                catch (SqlException)
-                {
-                    
 
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

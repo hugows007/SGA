@@ -25,9 +25,9 @@ namespace SGA.Models.DAO.ManterDAO
 
         public bool IncluiAvaliacaoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[Avaliacao]
@@ -60,22 +60,24 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.ExecuteNonQuery();
                     return true;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
 
         public bool IncluiAvaliacaoSolucaoDAO()
         {
-            SqlCommand Cmd;
-            SqlDataReader Dr;
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd;
+                SqlDataReader Dr;
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"SELECT * FROM AvaliacaoSolucao WHERE idAtendimento = @IdAtend and idChamado = @IdChamad;", Con);
 
                     Cmd.Parameters.AddWithValue("@IdAtend", ObjAvaliacao.IdAtend);
@@ -139,11 +141,12 @@ namespace SGA.Models.DAO.ManterDAO
                         Cmd.ExecuteNonQuery();
                         return true;
                     }
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

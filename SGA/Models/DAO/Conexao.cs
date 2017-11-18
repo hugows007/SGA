@@ -22,9 +22,8 @@ namespace SGA.DAO
 
                 return Cn;
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                LogException.InsereLogBd(Ex);
                 throw;
             }
         }

@@ -14,7 +14,7 @@ using System.Data.SqlClient;
 
 namespace SGA.Models.Manter
 {
-    public class ManterUsuario
+    public class ManterUsuario : Usuario
     {
         string UserId;
         string Msg;
@@ -47,33 +47,29 @@ namespace SGA.Models.Manter
                     ObjUsuario.Login,
                     ObjUsuario.Regra);
 
-                if (newUser != null)
+                MembershipUser Mu = Membership.GetUser(ObjUsuario.Login);
+                UserId = Mu.ProviderUserKey.ToString();
+
+                if (newUser != null && new ManterUsuarioDAO(ObjUsuario, UserId).CadastraUsuarioDAO())
                 {
-                    MembershipUser Mu = Membership.GetUser(ObjUsuario.Login);
-                    UserId = Mu.ProviderUserKey.ToString();
+                    ObjUsuario.Id = Convert.ToInt32(new ManterUsuarioDAO().GetUltimoIdUsuarioDAO());
 
-                    if (new ManterUsuarioDAO
-                        (ObjUsuario, UserId).CadastraUsuarioDAO())
+                    if (ObjUsuario.Regra.Equals("Técnico"))
                     {
-                        ObjUsuario.Id = Convert.ToInt32(new ManterUsuarioDAO().GetUltimoIdUsuarioDAO());
-
-                        if (ObjUsuario.Regra.Equals("Técnico"))
-                        {
-                            RelacionaUsuarioAreaAtendimento();
-                            RelacionaUsuarioEspecialidade();
-                        }
-                        if (ObjUsuario.Regra.Equals("Cliente Físico") || ObjUsuario.Regra.Equals("Cliente Jurídico"))
-                        {
-                            RelacionaUsuarioAreaAtendimento();
-                        }
-
-                        Msg = "Usuário cadastrado com sucesso!";
+                        RelacionaUsuarioAreaAtendimento();
+                        RelacionaUsuarioEspecialidade();
                     }
-                    else
+                    else if (ObjUsuario.Regra.Equals("Cliente Físico") || ObjUsuario.Regra.Equals("Cliente Jurídico"))
                     {
-                        Membership.DeleteUser(ObjUsuario.Login);
-                        Msg = "Ocorreu um erro ao efetuar o cadastro do usuário!";
+                        RelacionaUsuarioAreaAtendimento();
                     }
+
+                    Msg = "Usuário cadastrado com sucesso!";
+                }
+                else
+                {
+                    Membership.DeleteUser(ObjUsuario.Login);
+                    Msg = "Ocorreu um erro ao efetuar o cadastro do usuário!";
                 }
 
                 return Msg;
@@ -95,48 +91,97 @@ namespace SGA.Models.Manter
         }
         public List<Usuario> ConsultaUsuarios()
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosDAO();
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Usuario> ConsultaUsuariosGestores()
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosGestoresDAO();
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosGestoresDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<Usuario> ConsultaUsuariosByPerfil(List<string> Perfil)
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosByPerfilDAO(Perfil);
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosByPerfilDAO(Perfil);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Usuario ConsultaUsuarioById()
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByIdDAO();
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByIdDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Usuario ConsultaUsuarioByEmail()
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByEmailDAO();
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByEmailDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Usuario ConsultaUsuarioByLogin()
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByLoginDAO();
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByLoginDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Usuario ConsultaIdUsuarioByIdMB()
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaIdUsuarioByIdMBDAO();
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).ConsultaIdUsuarioByIdMBDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public Usuario ConsultaUsuarioByNome()
         {
-            return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByNomeDAO();
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByNomeDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public bool AlteraUsuario()
         {
             try
             {
-                if (new ManterUsuarioDAO(ObjUsuario).AlteraUsuarioDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterUsuarioDAO(ObjUsuario).AlteraUsuarioDAO();
             }
             catch (Exception)
             {
@@ -159,14 +204,7 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterUsuarioDAO(ObjUsuario).AlteraDisponibilidadeDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterUsuarioDAO(ObjUsuario).AlteraDisponibilidadeDAO();
             }
             catch (Exception)
             {
@@ -193,7 +231,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -201,18 +238,10 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioAreaAtendimentoDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioAreaAtendimentoDAO();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -220,14 +249,7 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioEspecialidadeDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterUsuarioDAO(ObjUsuario).RelacionaUsuarioEspecialidadeDAO();
             }
             catch (Exception)
             {
@@ -240,16 +262,16 @@ namespace SGA.Models.Manter
             switch (Status)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "Username already exists. Please enter a different user name.";
+                    return "Este login já existe. Favor escolher outro.";
 
                 case MembershipCreateStatus.DuplicateEmail:
-                    return "A username for that e-mail address already exists. Please enter a different e-mail address.";
+                    return "Este e-mail já existe cadastrado. Favor escolher outro";
 
                 case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
+                    return "A senha é inválida. Favor rever.";
 
                 case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
+                    return "E-mail inválido. Favor rever";
 
                 case MembershipCreateStatus.InvalidAnswer:
                     return "The password retrieval answer provided is invalid. Please check the value and try again.";
@@ -258,7 +280,7 @@ namespace SGA.Models.Manter
                     return "The password retrieval question provided is invalid. Please check the value and try again.";
 
                 case MembershipCreateStatus.InvalidUserName:
-                    return "The user name provided is invalid. Please check the value and try again.";
+                    return "Login inválido. Favor rever.";
 
                 case MembershipCreateStatus.ProviderError:
                     return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
@@ -267,7 +289,7 @@ namespace SGA.Models.Manter
                     return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
 
                 default:
-                    return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+                    return "Erro desconhecido. Caso continue, favor entrar em contato com o administrador.";
             }
         }
         public string[] GetRegrasUsuario()
@@ -279,7 +301,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
 
@@ -306,7 +327,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -318,7 +338,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -330,11 +349,10 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-        public List<Usuario> GetTecnicoByRegiaoEspec()
+        public Usuario GetTecnicoByRegiaoEspec()
         {
             try
             {
@@ -342,7 +360,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -354,7 +371,6 @@ namespace SGA.Models.Manter
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -378,7 +394,6 @@ namespace SGA.Models.Manter
                 {
                     return false;
                 }
-
             }
             catch (Exception)
             {

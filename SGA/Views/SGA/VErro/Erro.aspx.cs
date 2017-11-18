@@ -74,6 +74,7 @@ namespace SGA.Views.SGA.VErro
             }
 
             LogException.InsereLogBd(Ex);
+            MsgLabel.Text = LogException.CodigoErroBd();
 
             Server.ClearError();
 

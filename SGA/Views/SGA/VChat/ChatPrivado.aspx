@@ -66,6 +66,7 @@
                         <div class="chat-about">
                             <div class="chat-with">Chat Privado</div>
                             <div class="chat-num-messages">Conversas</div>
+                            <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
                         </div>
                         <div class="message-data align-right clearfix">
                         </div>

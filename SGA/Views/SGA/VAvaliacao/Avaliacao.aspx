@@ -35,6 +35,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Avaliação de atendimento e chamado: <%=ObjAtend.IdChamado %>
+                        <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
                     </div>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">

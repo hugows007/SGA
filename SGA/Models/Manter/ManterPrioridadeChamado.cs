@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterPrioridadeChamado
+    public class ManterPrioridadeChamado : PrioridadeChamado
     {
         PrioridadeChamado ObjPrioridade;
         public ManterPrioridadeChamado(PrioridadeChamado ObjPrioridade)
@@ -20,11 +20,25 @@ namespace SGA.Models.Manter
         }
         public PrioridadeChamado ConsultaPrioridadeChamadoById()
         {
-            return new ManterPrioridadeChamadoDAO(ObjPrioridade).ConsultaPrioridadeChamadoByIdDAO();
+            try
+            {
+                return new ManterPrioridadeChamadoDAO(ObjPrioridade).ConsultaPrioridadeChamadoByIdDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public List<PrioridadeChamado> ConsultaPrioridadesChamado()
         {
-            return new ManterPrioridadeChamadoDAO(ObjPrioridade).ConsultaPrioridadesChamadoDAO();
+            try
+            {
+                return new ManterPrioridadeChamadoDAO(ObjPrioridade).ConsultaPrioridadesChamadoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

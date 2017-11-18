@@ -8,10 +8,9 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterAvaliacao
+    public class ManterAvaliacao : Avaliacao
     {
         Avaliacao ObjAvaliacao;
-
         public ManterAvaliacao()
         {
 
@@ -24,14 +23,7 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterAvaliacaoDAO(ObjAvaliacao).IncluiAvaliacaoDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterAvaliacaoDAO(ObjAvaliacao).IncluiAvaliacaoDAO();
             }
             catch (Exception)
             {
@@ -43,14 +35,7 @@ namespace SGA.Models.Manter
         {
             try
             {
-                if (new ManterAvaliacaoDAO(ObjAvaliacao).IncluiAvaliacaoSolucaoDAO())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return new ManterAvaliacaoDAO(ObjAvaliacao).IncluiAvaliacaoSolucaoDAO();
             }
             catch (Exception)
             {

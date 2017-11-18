@@ -37,10 +37,11 @@ namespace SGA.Models.DAO.ManterDAO
         }
         public bool CadastraUsuarioDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand CmdUsr = new SqlCommand(@"
             INSERT INTO [dbo].[Usuario]
@@ -169,20 +170,19 @@ namespace SGA.Models.DAO.ManterDAO
                             return false;
                     }
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool RelacionaUsuarioAreaAtendimentoDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[UsuarioXRegiaoAtendimento]
@@ -205,20 +205,21 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.ExecuteNonQuery();
                     return true;
-                }
-                catch (SqlException)
-                {
 
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool RelacionaUsuarioEspecialidadeDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
 
                     SqlCommand Cmd = new SqlCommand(@"
             INSERT INTO [dbo].[UsuarioXEspecialidade]
@@ -241,23 +242,24 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.ExecuteNonQuery();
                     return true;
-                }
-                catch (SqlException)
-                {
 
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Usuario> ConsultaUsuariosDAO()
         {
-            List<Usuario> UsrList = new List<Usuario>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Usuario> UsrList = new List<Usuario>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand CmdUsrs = new SqlCommand(@"
                 SELECT usr.idUsuario, usr.nome, usr.endereco, usr.numero, usr.cep, usr.telefone, emp.nome
                   FROM [dbo].[Usuario] Usr left join [dbo].[Empresa] Emp on (Usr.idEmpresa = Emp.idEmpresa)
@@ -288,23 +290,22 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return UsrList;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Usuario> ConsultaUsuariosGestoresDAO()
         {
-            List<Usuario> UsrList = new List<Usuario>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Usuario> UsrList = new List<Usuario>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand CmdUsrs = new SqlCommand(@"
               SELECT * 
                     FROM Usuario Usr INNER JOIN 
@@ -332,22 +333,24 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return UsrList;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<Usuario> ConsultaUsuariosByPerfilDAO(List<string> Perfil)
         {
-            List<Usuario> UsrList = new List<Usuario>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Usuario> UsrList = new List<Usuario>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     foreach (var P in Perfil)
                     {
                         SqlCommand Cmd = new SqlCommand(@"
@@ -415,24 +418,24 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return UsrList;
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Usuario ConsultaUsuarioByIdDAO()
         {
-            SqlCommand Cmd = null;
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd = null;
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     SELECT 
                         usr.idUsuario
@@ -479,22 +482,24 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjUsuario;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Usuario ConsultaUsuarioByEmailDAO()
         {
-            SqlCommand Cmd = null;
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd = null;
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     SELECT 
                         usr.idUsuario
@@ -541,23 +546,25 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjUsuario;
+
                 }
-                catch (SqlException)
-                {
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         //Consulta usuário para o aplicativo
         public Usuario ConsultaUsuarioByLoginDAO()
         {
-            SqlCommand Cmd = null;
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd = null;
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     SELECT 
                         usr.idUsuario
@@ -601,23 +608,22 @@ namespace SGA.Models.DAO.ManterDAO
 
                     return ObjUsuario;
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Usuario ConsultaIdUsuarioByIdMBDAO()
         {
-            SqlCommand Cmd = null;
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd = null;
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                         SELECT [idUsuario]
                               ,[IdUsrMemberShip]
@@ -635,24 +641,24 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjUsuario;
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Usuario ConsultaUsuarioByNomeDAO()
         {
-            SqlCommand Cmd = null;
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlCommand Cmd = null;
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     SELECT 
                         usr.idUsuario
@@ -692,21 +698,21 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjUsuario;
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool AlteraUsuarioDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Usuario] SET 
@@ -732,21 +738,21 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
 
                     return true;
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool AlteraUsuarioAusenteDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Usuario] SET 
@@ -762,21 +768,21 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
 
                     return true;
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool AlteraDisponibilidadeDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 UPDATE 
 	                [dbo].[Funcionario] SET 
@@ -789,20 +795,19 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
 
                     return true;
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public bool InativaUsuarioDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
 
                     SqlCommand Cmd = new SqlCommand(@"
@@ -821,23 +826,23 @@ namespace SGA.Models.DAO.ManterDAO
                     Cmd.ExecuteNonQuery();
 
                     return true;
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public string GetRegraUserDAO(int Id)
         {
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                 SELECT Usr.UserName
                   FROM [dbo].[UsuarioXMemberShipUser] UsMb
@@ -858,42 +863,41 @@ namespace SGA.Models.DAO.ManterDAO
                     return RegraForUser;
 
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public string GetUltimoIdUsuarioDAO()
         {
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                  SELECT MAX ([idUsuario]) FROM [dbo].[Usuario]", Con);
 
                     return Convert.ToString(Cmd.ExecuteScalar());
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public List<int> GetIdRegiaoAtendByUsrDAO()
         {
-            SqlDataReader Dr = null;
-            List<int> ListRegAtend = new List<int>();
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                SqlDataReader Dr = null;
+                List<int> ListRegAtend = new List<int>();
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"
                     SELECT *
                         FROM UsuarioXRegiaoAtendimento
@@ -909,25 +913,25 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ListRegAtend;
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
             }
-        }
-        public List<Usuario> GetTecnicoByRegiaoEspecDAO()
-        {
-            List<Usuario> List = new List<Usuario>();
-            SqlDataReader Dr = null;
-            SqlCommand Cmd;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            catch (SqlException)
             {
-                try
+                throw;
+            }
+        }
+        public Usuario GetTecnicoByRegiaoEspecDAO()
+        {
+            try
+            {
+                List<Usuario> List = new List<Usuario>();
+                SqlDataReader Dr = null;
+                SqlCommand Cmd;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     Cmd = new SqlCommand(@"
                     SELECT top 1 UsrReg.idUsuario
                           ,UsrReg.idRegiaoAtendimento
@@ -953,12 +957,8 @@ namespace SGA.Models.DAO.ManterDAO
 
                     while (Dr.Read())
                     {
-                        Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-
-                        Usr.Id = Dr.GetInt32(0);
-                        Usr.ObjRegiao.Id = Dr.GetInt32(1);
-
-                        List.Add(Usr);
+                        ObjUsuario.Id = Dr.GetInt32(0);
+                        ObjUsuario.ObjRegiao.Id = Dr.GetInt32(1);
                     }
 
                     if (!Dr.Read())
@@ -989,34 +989,30 @@ namespace SGA.Models.DAO.ManterDAO
 
                         while (Dr.Read())
                         {
-                            Usuario Usr = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-
-                            Usr.Id = Dr.GetInt32(0);
-                            Usr.ObjRegiao.Id = Dr.GetInt32(1);
-
-                            List.Add(Usr);
+                            ObjUsuario.Id = Dr.GetInt32(0);
+                            ObjUsuario.ObjRegiao.Id = Dr.GetInt32(1);
                         }
-                    }                    
+                    }
 
-                    return List;
+                    return ObjUsuario;
+
                 }
-                catch (SqlException)
-                {
-
-
-                    throw;
-                }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
         public Usuario GetUsuarioEmpresaDAO()
         {
-            List<Usuario> List = new List<Usuario>();
-            SqlDataReader Dr = null;
-
-            using (SqlConnection Con = new Conexao().ConexaoDB())
+            try
             {
-                try
+                List<Usuario> List = new List<Usuario>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
                 {
+
                     SqlCommand Cmd = new SqlCommand(@"select Usr.idUsuario
                                                     ,Usr.nome
                                                     ,Emp.nome
@@ -1041,13 +1037,12 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjUsuario;
-                }
-                catch (SqlException)
-                {
 
-
-                    throw;
                 }
+            }
+            catch (SqlException)
+            {
+                throw;
             }
         }
     }

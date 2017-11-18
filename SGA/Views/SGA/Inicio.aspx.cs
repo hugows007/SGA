@@ -99,6 +99,7 @@ namespace SGA.Views.Site
             catch (Exception Ex)
             {
                 LogException.InsereLogBd(Ex);
+                MsgLabel.Text = LogException.CodigoErroBd();
             }
         }
     }
