@@ -32,7 +32,7 @@ namespace SGA.Views.SGA.VUsuario
                     Nome.Value = ObjUsuario.Nome;
                     Endereco.Value = ObjUsuario.Endereco;
                     Telefone.Value = ObjUsuario.Telefone;
-                    Complemento.Value = ObjUsuario.Numero;
+                    Complemento.Value = ObjUsuario.Complemento;
                     CEP.Value = ObjUsuario.Cep;
                     Email.Value = ObjUsuario.Email;
                 }
@@ -54,7 +54,7 @@ namespace SGA.Views.SGA.VUsuario
                 ObjUsuario.Nome = Nome.Value;
                 ObjUsuario.Endereco = Endereco.Value;
                 ObjUsuario.Telefone = Telefone.Value;
-                ObjUsuario.Numero = Complemento.Value;
+                ObjUsuario.Complemento = Complemento.Value;
                 ObjUsuario.Cep = CEP.Value;
 
                 Usuario = Membership.GetUser(ObjUsuario.Login);
@@ -101,7 +101,7 @@ namespace SGA.Views.SGA.VUsuario
                     Nome.Value = ObjUsuario.Nome;
                     Endereco.Value = ObjUsuario.Endereco;
                     Telefone.Value = ObjUsuario.Telefone;
-                    Complemento.Value = ObjUsuario.Numero;
+                    Complemento.Value = ObjUsuario.Complemento;
                     CEP.Value = ObjUsuario.Cep;
                     Email.Value = ObjUsuario.Email;
                 }
@@ -111,7 +111,7 @@ namespace SGA.Views.SGA.VUsuario
                     Nome.Value = ObjUsuario.Nome;
                     Endereco.Value = ObjUsuario.Endereco;
                     Telefone.Value = ObjUsuario.Telefone;
-                    Complemento.Value = ObjUsuario.Numero;
+                    Complemento.Value = ObjUsuario.Complemento;
                     CEP.Value = ObjUsuario.Cep;
                     Email.Value = ObjUsuario.Email;
                 }

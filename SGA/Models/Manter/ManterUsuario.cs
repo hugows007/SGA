@@ -68,6 +68,7 @@ namespace SGA.Models.Manter
                 }
                 else
                 {
+                    new ManterUsuarioDAO().DeletaRelacionamentoUsrMBDAO(UserId);
                     Membership.DeleteUser(ObjUsuario.Login);
                     Msg = "Ocorreu um erro ao efetuar o cadastro do usuário!";
                 }
@@ -84,6 +85,7 @@ namespace SGA.Models.Manter
             }
             catch (SqlException)
             {
+                new ManterUsuarioDAO().DeletaRelacionamentoUsrMBDAO(UserId);
                 Membership.DeleteUser(ObjUsuario.Login);
                 return "Ocorreu um erro ao efetuar o cadastro do usuário!";
             }

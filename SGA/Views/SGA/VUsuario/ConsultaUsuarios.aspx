@@ -42,7 +42,7 @@
                                     <td><%=a.Nome%></td>
                                     <td><%=a.NomeEmpresa%></td>
                                     <td><%=a.Endereco %></td>
-                                    <td><%=a.Numero %></td>
+                                    <td><%=a.Complemento %></td>
                                     <td><%=a.Cep%></td>
                                     <td><%=a.Telefone%></td>
                                     <td><%=a.Regra%></td>

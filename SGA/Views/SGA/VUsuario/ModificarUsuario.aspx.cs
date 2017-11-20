@@ -26,7 +26,7 @@ namespace SGA.Views.SGA.VUsuario
                         Nome.Value = ObjUsuario.Nome;
                         Endereco.Value = ObjUsuario.Endereco;
                         Telefone.Value = ObjUsuario.Telefone;
-                        Complemento.Value = ObjUsuario.Numero;
+                        Complemento.Value = ObjUsuario.Complemento;
                         CEP.Value = ObjUsuario.Cep;
 
                         if (ObjUsuario.IdStatus.Equals(1))
@@ -48,12 +48,20 @@ namespace SGA.Views.SGA.VUsuario
                                 Complemento.Disabled = true;
                                 CEP.Disabled = true;
                                 AlterarButton.Enabled = false;
+                                Ausente.Enabled = false;
                                 Mensagem = "Consulta de dados do cliente.";
                             }
                         }
                         else if (Session["perfil"].Equals("Técnico"))
                         {
-                            Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                            Nome.Disabled = true;
+                            Endereco.Disabled = true;
+                            Telefone.Disabled = true;
+                            Complemento.Disabled = true;
+                            CEP.Disabled = true;
+                            AlterarButton.Enabled = false;
+                            Ausente.Enabled = false;
+                            Mensagem = "Consulta de dados do cliente.";
                         }
                     }
                 }
@@ -75,7 +83,7 @@ namespace SGA.Views.SGA.VUsuario
                     ObjUsuario.Nome = Nome.Value;
                     ObjUsuario.Endereco = Endereco.Value;
                     ObjUsuario.Telefone = Telefone.Value;
-                    ObjUsuario.Numero = Complemento.Value;
+                    ObjUsuario.Complemento = Complemento.Value;
                     ObjUsuario.Cep = CEP.Value;
 
                     if (new ManterUsuario(ObjUsuario).AlteraUsuario())

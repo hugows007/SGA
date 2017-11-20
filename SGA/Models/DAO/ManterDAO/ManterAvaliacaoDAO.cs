@@ -22,7 +22,39 @@ namespace SGA.Models.DAO.ManterDAO
         {
             this.ObjAvaliacao = ObjAvaliacao;
         }
+        public Avaliacao ConsultaAvaliacaoDAO()
+        {
+            try
+            {
+                SqlDataReader Dr = null;
 
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+
+                    SqlCommand Cmd = new SqlCommand(@"
+                    SELECT *
+                      FROM [dbo].[Avaliacao]
+                      where idChamado = @IdChamado and idEmpresa = @Empresa", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdChamado", ObjAvaliacao.IdChamado);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjAvaliacao.Comentario = Dr.GetString(2);
+                    }
+
+                    return ObjAvaliacao;
+
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
         public bool IncluiAvaliacaoDAO()
         {
             try

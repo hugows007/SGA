@@ -19,6 +19,17 @@ namespace SGA.Models.Manter
         {
             this.ObjAvaliacao = ObjAvaliacao;
         }
+        public Avaliacao ConsultaAvaliacao()
+        {
+            try
+            {
+                return new ManterAvaliacaoDAO(ObjAvaliacao).ConsultaAvaliacaoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public bool IncluiAvaliacao()
         {
             try
@@ -30,7 +41,6 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
-
         public bool IncluiAvaliacaoSolucao()
         {
             try

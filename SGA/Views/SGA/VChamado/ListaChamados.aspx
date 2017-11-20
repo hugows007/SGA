@@ -52,11 +52,11 @@
                                     <td><%=Result.DataAbertura %></td>
                                     <td><%=Result.DataFechamento %></td>
                                     <td><%=NomeServico[Qtd] %></td>
-                                    <%if ((Session["perfil"]).Equals("Técnico") && NomeStatus[Qtd].Equals("Aberto") || NomeStatus[Qtd].Equals("Retrabalho"))
+                                    <%if ((Session["perfil"]).Equals("Técnico") && NomeStatus[Qtd].Equals("Aberto") || Session["perfil"].Equals("Técnico") && NomeStatus[Qtd].Equals("Retrabalho"))
                                         { %>
                                     <td>
-                                        <a href="/Views/SGA/VAtendimento/IniciaAtendimento.aspx?IdChamado=<%=Result.Id %>&StatusChamado=<%=NomeStatus[Qtd] %>">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                                        <a href="/Views/SGA/VAtendimento/IniciaAtendimento.aspx?IdChamado=<%=Result.Id %>&StatusChamado=<%=NomeStatus[Qtd] %>" class="btn btn-success">
+                                            Iniciar atendimento
                                         </a>
                                     </td>
                                     <%}

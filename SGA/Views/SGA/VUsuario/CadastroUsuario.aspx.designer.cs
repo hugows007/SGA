@@ -112,6 +112,15 @@ namespace SGA.Views.SGA.VUsuario {
         protected global::System.Web.UI.HtmlControls.HtmlInputText Nome;
         
         /// <summary>
+        /// CEP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText CEP;
+        
+        /// <summary>
         /// Endereco control.
         /// </summary>
         /// <remarks>
@@ -128,15 +137,6 @@ namespace SGA.Views.SGA.VUsuario {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText Complemento;
-        
-        /// <summary>
-        /// CEP control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText CEP;
         
         /// <summary>
         /// Telefone control.

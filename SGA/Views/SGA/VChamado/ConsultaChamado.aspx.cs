@@ -14,12 +14,14 @@ using SGA.Models.Atendimentos;
 using SGA.Models.Usuarios;
 using SGA.Models.Chamados.PrioridadeChamados;
 using System.Web.Security;
+using SGA.Models.Avaliacoes;
 
 namespace SGA.Views.SGA.VChamado
 {
     public partial class ConsultaChamado : System.Web.UI.Page
     {
         public Chamado ObjChamado;
+        public Avaliacao ObjAvaliacao = FactoryAvaliacao.GetNew();
         public RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
         public PrioridadeChamado ObjPrioridade = FactoryPrioridadeChm.GetNew();
         public Servico ObjServico = FactoryServico.GetNewServico();
@@ -82,6 +84,12 @@ namespace SGA.Views.SGA.VChamado
                         ObjRegiao = new ManterRegiaoAtendimento(ObjRegiao).ConsultaRegiaoAtendimentoById();
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
                         ObjStatusChm = new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById();
+
+                        if (ObjStatusChm.Id.Equals(3))
+                        {
+                            ObjAvaliacao.IdChamado = ObjChamado.Id;
+                            ObjAvaliacao = new ManterAvaliacao(ObjAvaliacao).ConsultaAvaliacao();
+                        }
 
                         if (new ManterChamado(ObjChamado).ValidaTempoFechamento())
                         {

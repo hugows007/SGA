@@ -126,11 +126,11 @@
                                     <textarea rows="5" cols="50" maxlength="100" class="form-control input-sm" disabled="disabled"><%=ObjChamado.Tramite %></textarea>
                                 </div>
                                 <%}
-                                    if (!ObjStatusChm.Id.Equals(5) && !ObjStatusChm.Id.Equals(3) && !EnceButtonClick)
+                                    if (!ObjStatusChm.Id.Equals(5) && !ObjStatusChm.Id.Equals(3) && !EnceButtonClick && !CancButtonClick)
                                     {%>
                                 <asp:Button ID="Tramite" runat="server" Text="Inserir trâmite" class="btn btn-default" OnClick="Tramite_Click" />
                                 <%}
-                                    if (ObjStatusChm.Id.Equals(1) && !Session["perfil"].Equals("Técnico"))
+                                    if (ObjStatusChm.Id.Equals(1) && !Session["perfil"].Equals("Técnico") && !TramiteClick)
                                     {%>
                                 <asp:Button ID="Cancelar" runat="server" Text="Cancelar chamado" class="btn btn-default" OnClick="CancelarButton_Click" />
                                 <%}
@@ -149,26 +149,36 @@
                                     <textarea rows="5" cols="50" maxlength="500" id="MotCancelDesc" class="form-control input-sm" disabled runat="server" placeholder="Máximo de 500 caracteres"><%=ObjChamado.InfoCancelamento %></textarea>
                                 </div>
                                 <%}
-                                    if (ObjStatusChm.Id.Equals(2) && !CancButtonClick && !TramiteClick)
+                                    if (ObjStatusChm.Id.Equals(3))
+                                    {%>
+                                <div class="form-group">
+                                    <label for="ComentAvaliacao" class="control-label">Comentário de avaliação: </label>
+                                    <textarea rows="5" cols="50" maxlength="500" id="ComentAvaliacao" class="form-control input-sm" disabled runat="server" placeholder="Máximo de 500 caracteres"><%=ObjAvaliacao.Comentario %></textarea>
+                                </div>
+                                <%}
+                                    if (ObjStatusChm.Id.Equals(2) && !CancButtonClick && !TramiteClick && !Session["perfil"].Equals("Cliente Físico") && !Session["perfil"].Equals("Cliente Jurídico"))
                                     {%>
 
                                 <asp:Button ID="Encerrar" runat="server" Text="Encerrar atendimento" class="btn btn-default" OnClick="Encerrar_Click" />
                                 <asp:Button ID="Historico" runat="server" Text="Consultar soluções" class="btn btn-default" OnClick="Historico_Click" />
                                 <%}
-                                    else if (ObjStatusChm.Id.Equals(2) && EnceButtonClick && !TramiteClick)
+                                    else if (ObjStatusChm.Id.Equals(2) && EnceButtonClick && !TramiteClick && !Session["perfil"].Equals("Cliente Físico") && !Session["perfil"].Equals("Cliente Jurídico"))
                                     {%>
                                 <div class="form-group">
                                     <label for="RelatorioAtend" class="control-label">Relatório do atendimento: </label>
                                     <textarea rows="5" cols="50" maxlength="500" id="RelatorioAtend" class="form-control input-sm" required runat="server" placeholder="Máximo de 500 caracteres"></textarea>
                                 </div>
                                 <% }
-                                    else if (ObjStatusChm.Id.Equals(3))
+                                    else if (ObjStatusChm.Id.Equals(3) && Session["perfil"].Equals("Cliente Físico") || ObjStatusChm.Id.Equals(3) && Session["perfil"].Equals("Cliente Jurídico"))
                                     {%>
                                 <asp:Button ID="AvaliarChamadoButton" runat="server" CssClass="btn btn-info" OnClick="AvaliarButton_Click" Text="Avaliar este chamado" />
                                 <asp:Button ID="ReaberturaButton" runat="server" CssClass="btn btn-default" Text="Reabrir chamado" OnClick="ReaberturaButton_Click" />
                                 <%}
-                                    } %>
+                                    }
+                                    if (!Session["perfil"].Equals("Cliente Físico") && !Session["perfil"].Equals("Cliente Jurídico"))
+                                    { %>
                                 <asp:Button ID="ConsultarClienteButton" runat="server" CssClass="btn btn-default" Text="Consultar dados do cliente" OnClick="ConsultarClienteButton_Click" />
+                                <%} %>
                                 <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                             </div>
                         </div>

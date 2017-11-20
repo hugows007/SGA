@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="CadastroUsuario.aspx.cs" Inherits="SGA.Views.SGA.VUsuario.Cadastro" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
+    <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
             <div id="page-wrapper">
@@ -18,7 +20,9 @@
                                     <br>
                                     <asp:Label ID="MsgLabel" ForeColor="maroon" runat="server" /></b>
                                 <script>
-                                    alertify.log("<%=Mensagem%>");
+                                    function Alerta(Texto) {
+                                        alertify.log(Texto);
+                                    }
                                 </script>
                             </div>
                             <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
@@ -73,7 +77,7 @@
                                 <div class="panel-body">
                                     <div class="form-group">
                                         <label for="UserName" class="control-label">Usuário: </label>
-                                        <input type="text" id="UserName" required class="form-control input-sm" runat="server" maxlength="10" placeholder="Máximo de 10 caracteres" />
+                                        <input type="text" id="UserName" required class="form-control input-sm" runat="server" maxlength="30" placeholder="Máximo de 30 caracteres" />
                                     </div>
                                     <div class="form-group">
                                         <label for="Password" class="control-label">Senha: </label>
@@ -92,16 +96,16 @@
                                         <input type="text" id="Nome" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
                                     </div>
                                     <div class="form-group">
+                                        <label for="CEP" class="control-label">CEP:</label>
+                                        <input type="text" id="CEP" required class="form-control input-sm" runat="server" minlength="8" maxlength="8" placeholder="Máximo de 8 caracteres" />
+                                    </div>
+                                    <div class="form-group">
                                         <label for="Endereco" class="control-label">Endereço:</label>
-                                        <input type="text" id="Endereco" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
+                                        <input type="text" id="Endereco" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Será preenchido automaticamente com base no CEP informado" />
                                     </div>
                                     <div class="form-group">
                                         <label for="Complemento" class="control-label">Complemento:</label>
                                         <input type="text" id="Complemento" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="CEP" class="control-label">CEP:</label>
-                                        <input type="text" id="CEP" required class="form-control input-sm" runat="server" maxlength="11" placeholder="Máximo de 11 caracteres" />
                                     </div>
                                     <div class="form-group">
                                         <label for="Telefone" class="control-label">Telefone:</label>
@@ -130,7 +134,7 @@
                                     </div>
                                     <% } %>
                                     <div class="form-group">
-                                        <asp:Button ID="BotaoCriarUsuario" Text="Criar Usuário" class="btn btn-default" OnClick="BotaoCriarUsuario_OnClick" runat="server" />
+                                        <asp:Button ID="BotaoCriarUsuario" Text="Criar Usuário" CssClass="btn btn-default" OnClick="BotaoCriarUsuario_OnClick" runat="server" />
                                         <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                                     </div>
                                 </div>

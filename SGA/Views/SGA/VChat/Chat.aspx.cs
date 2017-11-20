@@ -109,5 +109,10 @@ namespace SGA.Views.SGA.VChat
         {
             EntrarChat = false;
         }
+
+        protected void ButtonConversas_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("\\Views\\SGA\\VChat\\ChatPrivado.aspx", false);
+        }
     }
 }

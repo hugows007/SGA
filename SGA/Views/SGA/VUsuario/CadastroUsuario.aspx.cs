@@ -10,6 +10,7 @@ using SGA.Models.Manter;
 using SGA.Models.DAO.Log;
 using SGA.Models.RegiaoAtendimentos;
 using SGA.Models.Especialidades;
+using SGA.Models.Validacoes;
 
 namespace SGA.Views.SGA.VUsuario
 {
@@ -18,6 +19,8 @@ namespace SGA.Views.SGA.VUsuario
         Usuario ObjUsuario;
         public int IdEmpresa;
         bool ValidaInfo;
+        bool CPFValido;
+        bool CNPJValido;
         public string Mensagem;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -32,6 +35,10 @@ namespace SGA.Views.SGA.VUsuario
                     DropDownListTipo.DataSource = new ManterUsuario().GetRegrasUsuario();
                     DropDownListTipo.DataBind();
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
+
+                    Endereco.Disabled = true;
+
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
 
             }
@@ -86,14 +93,35 @@ namespace SGA.Views.SGA.VUsuario
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioClienteFisico);
                     ObjUsuario.ObjCF.DocIdent = Doc.Value;
                     ObjUsuario.ObjCF.OrgEmiss = EmissDoc.Value;
-                    ObjUsuario.ObjCF.Cpf = CPF.Value;
-                    ValidaInfo = true;
+
+                    CPFValido = ValidaDocumento.ValidaCPF(CPF.Value);
+
+                    if (CPFValido)
+                    {
+                        ObjUsuario.ObjCF.Cpf = CPF.Value;
+                        ValidaInfo = true;
+                    }
+                    else
+                    {
+                        CNPJValido = true;
+                        ValidaInfo = false;
+                    }
                 }
                 else if (DropDownListTipo.Text.Equals("Cliente Jurídico") && DropDownListArea.SelectedIndex > 0)
                 {
                     ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioClienteJuridico);
-                    ObjUsuario.ObjCJ.Cnpj = CNPJ.Value;
-                    ValidaInfo = true;
+                    CNPJValido = ValidaDocumento.ValidaCNPJ(CNPJ.Value);
+
+                    if (CNPJValido)
+                    {
+                        ObjUsuario.ObjCJ.Cnpj = CNPJ.Value;
+                        ValidaInfo = true;
+                    }
+                    else
+                    {
+                        CPFValido = true;
+                        ValidaInfo = false;
+                    }
                 }
                 else
                 {
@@ -107,16 +135,47 @@ namespace SGA.Views.SGA.VUsuario
                     ObjUsuario.Email = Email.Value;
                     ObjUsuario.Regra = DropDownListTipo.SelectedValue;
                     ObjUsuario.Nome = Nome.Value;
-                    ObjUsuario.Endereco = Endereco.Value;
-                    ObjUsuario.Numero = Complemento.Value;
+                    ObjUsuario.Endereco = ValidaCEP.GetCEPCorreios(CEP.Value);
+                    ObjUsuario.Complemento = Complemento.Value;
                     ObjUsuario.Cep = CEP.Value;
                     ObjUsuario.Telefone = Telefone.Value;
                     ObjUsuario.ObjRegiao.Id = Convert.ToInt32(DropDownListArea.SelectedValue);
 
-                    Mensagem = new ManterUsuario(ObjUsuario).CadastraUsuario();
-                }else
+                    if (ObjUsuario.Endereco != null)
+                    {
+                        Mensagem = new ManterUsuario(ObjUsuario).CadastraUsuario();
+
+                        if (Mensagem.Equals("Usuário cadastrado com sucesso!"))
+                        {
+                            Endereco.Disabled = false;
+                            Endereco.Value = ObjUsuario.Endereco;
+                            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                        }
+                    }
+                    else
+                    {
+                        Mensagem = "CEP inválido ou incorreto. Favor verificar.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    }
+                }
+                else
                 {
-                    Mensagem = "Informações obrigatórias não preenchidas.";
+                    if (!CPFValido)
+                    {
+                        Mensagem = "O CPF é invalido. Favor verificar.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    }
+                    else if (!CNPJValido)
+                    {
+                        Mensagem = "O CNPJ é invalido. Favor verificar.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    }
+                    else
+                    {
+                        Mensagem = "Informações obrigatórias não preenchidas.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    }
+
                 }
             }
             catch (Exception Ex)

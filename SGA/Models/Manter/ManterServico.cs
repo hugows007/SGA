@@ -96,6 +96,17 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+        public bool CadastraTpServico()
+        {
+            try
+            {
+                return new ManterServicoDAO(ObjTpServico).CadastraTpServicoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public bool AlteraServico()
         {
             try
@@ -107,11 +118,34 @@ namespace SGA.Models.Manter
                 throw;
             }
         }
+        public bool AlteraTipoServico()
+        {
+            try
+            {
+                return new ManterServicoDAO(ObjTpServico).AlteraTipoServicoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public bool InativaServico()
         {
             try
             {
                 return new ManterServicoDAO(ObjServico).InativaServicoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool InativaTpServico()
+        {
+            try
+            {
+                return new ManterServicoDAO(ObjTpServico).InativaTpServicoDAO();
             }
             catch (Exception)
             {

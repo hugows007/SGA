@@ -11,6 +11,7 @@ namespace SGA.Models.DAO.Log
 {
     public abstract class LogException
     {
+        static int Codigo;
         public static void InsereLogBd(Exception Ex)
         {
             try
@@ -55,6 +56,7 @@ namespace SGA.Models.DAO.Log
         {
             try
             {
+
                 SqlDataReader Dr = null;
 
                 using (SqlConnection Con = new Conexao().ConexaoDB())
@@ -64,12 +66,17 @@ namespace SGA.Models.DAO.Log
 
                     Dr = Cmd.ExecuteReader();
 
-                    return "Ocorreu um problema. Favor informar o código de erro " + Dr.GetInt32(0) + " para o suporte SGA TI.";
+                    while (Dr.Read())
+                    {
+                        Codigo = Dr.GetInt32(0);
+                    }
+
+                    return "Ocorreu um problema. Favor informar o código de erro " + Codigo + " para o suporte SGA TI.";
                 }
             }
             catch (Exception)
             {
-                return "Ocorreu um problema sistêmico. Não foi possível obter o código do erro. Favor entrar em contato com o suporte do SGA TI.";
+                return "Ocorreu um problema. Não foi possível obter o código do erro. Favor entrar em contato com o suporte do SGA TI.";
             }
         }
     }

@@ -67,7 +67,7 @@ namespace SGA.Models.DAO.ManterDAO
 
                     CmdUsr.Parameters.AddWithValue("@Nome", ObjUsuario.Nome);
                     CmdUsr.Parameters.AddWithValue("@Endereco", ObjUsuario.Endereco);
-                    CmdUsr.Parameters.AddWithValue("@Numero", ObjUsuario.Numero);
+                    CmdUsr.Parameters.AddWithValue("@Numero", ObjUsuario.Complemento);
                     CmdUsr.Parameters.AddWithValue("@Cep", ObjUsuario.Cep);
                     CmdUsr.Parameters.AddWithValue("@Telefone", ObjUsuario.Telefone);
 
@@ -276,7 +276,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Usr.Id = Dr.GetInt32(0);
                         Usr.Nome = Dr.GetString(1);
                         Usr.Endereco = Dr.GetString(2);
-                        Usr.Numero = Dr.GetString(3);
+                        Usr.Complemento = Dr.GetString(3);
                         Usr.Cep = Dr.GetString(4);
                         Usr.Telefone = Dr.GetString(5);
                         if (!Dr.IsDBNull(6))
@@ -325,7 +325,7 @@ namespace SGA.Models.DAO.ManterDAO
                         Usr.Id = Dr.GetInt32(0);
                         Usr.Nome = Dr.GetString(1);
                         Usr.Endereco = Dr.GetString(2);
-                        Usr.Numero = Dr.GetString(3);
+                        Usr.Complemento = Dr.GetString(3);
                         Usr.Cep = Dr.GetString(4);
                         Usr.Telefone = Dr.GetString(5);
 
@@ -404,7 +404,7 @@ namespace SGA.Models.DAO.ManterDAO
                             Usr.Id = Dr.GetInt32(0);
                             Usr.Nome = Dr.GetString(1);
                             Usr.Endereco = Dr.GetString(2);
-                            Usr.Numero = Dr.GetString(3);
+                            Usr.Complemento = Dr.GetString(3);
                             Usr.Cep = Dr.GetString(4);
                             Usr.Telefone = Dr.GetString(5);
                             Usr.Regra = GetRegraUserDAO(Usr.Id);
@@ -468,7 +468,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.Id = Dr.GetInt32(0);
                         ObjUsuario.Nome = Dr.GetString(1);
                         ObjUsuario.Endereco = Dr.GetString(2);
-                        ObjUsuario.Numero = Dr.GetString(3);
+                        ObjUsuario.Complemento = Dr.GetString(3);
                         ObjUsuario.Cep = Dr.GetString(4);
                         ObjUsuario.Telefone = Dr.GetString(5);
                         ObjUsuario.IdStatus = Dr.GetInt32(6);
@@ -532,7 +532,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.Id = Dr.GetInt32(0);
                         ObjUsuario.Nome = Dr.GetString(1);
                         ObjUsuario.Endereco = Dr.GetString(2);
-                        ObjUsuario.Numero = Dr.GetString(3);
+                        ObjUsuario.Complemento = Dr.GetString(3);
                         ObjUsuario.Cep = Dr.GetString(4);
                         ObjUsuario.Telefone = Dr.GetString(5);
                         ObjUsuario.IdStatus = Dr.GetInt32(6);
@@ -598,7 +598,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.Id = Dr.GetInt32(0);
                         ObjUsuario.Nome = Dr.GetString(1);
                         ObjUsuario.Endereco = Dr.GetString(2);
-                        ObjUsuario.Numero = Dr.GetString(3);
+                        ObjUsuario.Complemento = Dr.GetString(3);
                         ObjUsuario.Cep = Dr.GetString(4);
                         ObjUsuario.Telefone = Dr.GetString(5);
                         ObjUsuario.IdStatus = Dr.GetInt32(6);
@@ -687,7 +687,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.Id = Dr.GetInt32(0);
                         ObjUsuario.Nome = Dr.GetString(1);
                         ObjUsuario.Endereco = Dr.GetString(2);
-                        ObjUsuario.Numero = Dr.GetString(3);
+                        ObjUsuario.Complemento = Dr.GetString(3);
                         ObjUsuario.Cep = Dr.GetString(4);
                         ObjUsuario.Telefone = Dr.GetString(5);
                         ObjUsuario.IdStatus = Dr.GetInt32(6);
@@ -727,7 +727,7 @@ namespace SGA.Models.DAO.ManterDAO
 
                     Cmd.Parameters.AddWithValue("@Nome", ObjUsuario.Nome);
                     Cmd.Parameters.AddWithValue("@Endereco", ObjUsuario.Endereco);
-                    Cmd.Parameters.AddWithValue("@Numero", ObjUsuario.Numero);
+                    Cmd.Parameters.AddWithValue("@Numero", ObjUsuario.Complemento);
                     Cmd.Parameters.AddWithValue("@Cep", ObjUsuario.Cep);
                     Cmd.Parameters.AddWithValue("@Telefone", ObjUsuario.Telefone);
                     Cmd.Parameters.AddWithValue("@Id", ObjUsuario.Id);
@@ -1037,6 +1037,30 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return ObjUsuario;
+
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+        public bool DeletaRelacionamentoUsrMBDAO(string UserId)
+        {
+            try
+            {
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+
+                    SqlCommand Cmd = new SqlCommand(@"
+                DELETE UsuarioXMemberShipUser 
+                        WHERE IdUsrMemberShip = @Id;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Id", UserId);
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
 
                 }
             }

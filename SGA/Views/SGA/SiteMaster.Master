@@ -105,9 +105,10 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </div>
-                <!-- /.navbar-header -->
 
                 <ul class="nav navbar-top-links navbar-right">
+                    <%if (Session["perfil"].Equals("Técnico") || Session["perfil"].Equals("Gestor") || Session["perfil"].Equals("Atendente") || Session["perfil"].Equals("Administrador"))
+                        { %>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-comment fa-fw fa-fw"></i><i class="fa fa-caret-down"></i>
@@ -169,9 +170,8 @@
                                 <div class="divider"></div>
                             </li>
                         </ul>
-                        <!-- /.dropdown-messages -->
                     </li>
-                    <!-- /.dropdown -->
+                    <%} %>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell fa-fw"></i><i class="fa fa-caret-down"></i>
@@ -256,11 +256,25 @@
                                     </i>
                                 </div>
                                 <br />
+                                <%if (!Session["perfil"].Equals("Técnico"))
+                                    {%>
                                 <asp:Button ID="AbrirButton" runat="server" Text="Abrir chamado" CssClass="btn btn-primary btn-lg btn-block" PostBackUrl="/Views/SGA/VChamado/AbrirChamado.aspx" />
+                                <%} %>
                             </li>
                             <li>
-                                <a href="/Views/SGA/Inicio.aspx"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
+                                <a href="/Views/SGA/Inicio.aspx"><i class="fa fa-dashboard fa-fw"></i>
+                                    <%if (Session["perfil"].Equals("Gestor"))
+                                        {%>
+                                   Dashboard
+                                    <%}
+                                        else
+                                        { %>
+                                    Início
+                                    <%} %>
+                                </a>
                             </li>
+                            <%if (Session["perfil"].Equals("Gestor") || Session["perfil"].Equals("Atendente") || Session["perfil"].Equals("Administrador") || Session["perfil"].Equals("Cliente Físico") || Session["perfil"].Equals("Cliente Jurídico"))
+                                { %>
                             <li>
                                 <a href="#"><i class="fa fa-briefcase fa-fw"></i>Chamados<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
@@ -269,6 +283,9 @@
                                     </li>
                                 </ul>
                             </li>
+                            <%}
+                                if (Session["perfil"].Equals("Técnico"))
+                                { %>
                             <li>
                                 <a href="#"><i class="fa fa-tasks"></i>Atendimento<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
@@ -276,13 +293,16 @@
                                         <a href="/Views/SGA/VChamado/ListaChamados.aspx?IdTecnico=<%=Session["id"]%>&Fila=true">Fila de Atendimento</a>
                                     </li>
                                 </ul>
+
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="/Views/SGA/VChamado/ListaChamados.aspx?IdTecnico=<%=Session["id"]%>">Histórico de Atendimentos</a>
                                     </li>
                                 </ul>
                             </li>
-
+                            <%} %>
+                            <%if (Session["perfil"].Equals("Gestor") || Session["perfil"].Equals("Administrador"))
+                                { %>
                             <li>
                                 <a href="#"><i class="glyphicon glyphicon-cog"></i>Manutenção<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
@@ -356,6 +376,12 @@
                                             <li>
                                                 <a href="/Views/SGA/VServico/CadastroServico.aspx">Cadastrar serviço</a>
                                             </li>
+                                            <li>
+                                                <a href="/Views/SGA/VTipoServico/ConsultaTipoServicos.aspx">Consultar tipo de serviços</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VTipoServico/CadastroTipoServico.aspx">Cadastrar tipo de serviço</a>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -368,11 +394,10 @@
                                     </li>
                                 </ul>
                             </li>
+                            <%} %>
                         </ul>
                     </div>
-                    <!-- /.sidebar-collapse -->
                 </div>
-                <!-- /.navbar-static-side -->
             </nav>
         </div>
         <asp:ContentPlaceHolder ID="ContentPlaceHolderInicio" runat="server">

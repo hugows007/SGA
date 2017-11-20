@@ -52,9 +52,9 @@
                             <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" class="btn btn-default" OnClick="AlterarButton_Click" />
                             <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                         </div>
-                        <div class="panel-footer">
-                            Favor alterar os campos e clicar em salvar alterações.<br />
-                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Favor alterar os campos e clicar em salvar alterações.<br />
                     </div>
                 </div>
             </div>

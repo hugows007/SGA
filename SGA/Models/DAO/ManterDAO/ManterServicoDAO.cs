@@ -278,6 +278,43 @@ namespace SGA.Models.DAO.ManterDAO
                 throw;
             }
         }
+        public bool CadastraTpServicoDAO()
+        {
+            try
+            {
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+
+
+                    SqlCommand Cmd = new SqlCommand(@"
+            INSERT INTO [dbo].[TipoServico]
+                ([Tipo]
+                  ,[idEmpresa]
+                  ,[dataRegistro]
+                  ,[usuarioRegistro]
+                  ,[ativo])
+            VALUES
+                (@Tipo
+                ,@Empresa
+                ,@Data
+                ,@Usuario
+                ,1)", Con);
+
+                    Cmd.Parameters.AddWithValue("@Tipo", ObjTpServico.NomeTipoServ);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+                    return true;
+
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
         public bool AlteraServicoDAO()
         {
             try
@@ -317,6 +354,39 @@ namespace SGA.Models.DAO.ManterDAO
                 throw;
             }
         }
+        public bool AlteraTipoServicoDAO()
+        {
+            try
+            {
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+
+
+                    SqlCommand Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[TipoServico] SET 
+                        Tipo = @Tipo
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario  
+                        WHERE idTipoServ = @Id and idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Tipo", ObjTpServico.NomeTipoServ);
+                    Cmd.Parameters.AddWithValue("@Id", ObjTpServico.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
+
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
         public bool InativaServicoDAO()
         {
             try
@@ -333,6 +403,37 @@ namespace SGA.Models.DAO.ManterDAO
                         WHERE idServico = @Id and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Id", ObjServico.Id);
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                    Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                    Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
+
+                    Cmd.ExecuteNonQuery();
+
+                    return true;
+
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+        public bool InativaTpServicoDAO()
+        {
+            try
+            {
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+
+                    SqlCommand Cmd = new SqlCommand(@"
+                UPDATE 
+	                  [dbo].[TipoServico] SET
+                        ativo = 0
+                        ,dataRegistro = @Data
+                        ,usuarioRegistro = @Usuario   
+                        WHERE idTipoServ = @Id and idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Id", ObjTpServico.Id);
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
