@@ -21,11 +21,17 @@ namespace SGA.Views.SGA.VAvaliacao
         {
             try
             {
+                if (!Session["perfil"].Equals("Cliente Físico") || !Session["perfil"].Equals("Cliente Jurídico") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
+
                 if (Request.QueryString["IdChamado"] != null)
                 {
                     ObjAtend.IdChamado = Convert.ToInt32(Request.QueryString["IdChamado"]);
                     ObjAtend = new ManterAtendimento(ObjAtend).ConsultaAtendimentoByIdChamado();
                     Mensagem = "Favor selecionar a nota.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else
                 {
@@ -52,16 +58,18 @@ namespace SGA.Views.SGA.VAvaliacao
                 if (new ManterAvaliacao(ObjAvaliacao).IncluiAvaliacao())
                 {
                     Mensagem = "Avaliado com sucesso!";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else
                 {
                     Mensagem = "Ocorreu um erro ao avaliar.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
-            catch (System.Data.SqlClient.SqlException Ex)
+            catch (System.Data.SqlClient.SqlException)
             {
                 Mensagem = "Este chamado já foi avaliado.";
-                LogException.InsereLogBd(Ex);
+                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
             }
             catch (Exception Ex)
             {

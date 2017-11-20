@@ -20,7 +20,13 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
             {
                 try
                 {
+                    if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
                     Mensagem = "Alteração de informações da região de atendimento.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                     if (Request.QueryString["Id"] != null)
                     {
@@ -55,10 +61,12 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
                     if(new ManterRegiaoAtendimento(ObjRegiao).AlteraRegiaoAtendimento())
                     {
                         Mensagem = "Região de atendimento alterada com sucesso.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else
                     {
                         Mensagem = "Não foi possível alterar a região de atendimento.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
             }

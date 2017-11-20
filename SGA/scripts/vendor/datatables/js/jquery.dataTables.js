@@ -745,7 +745,8 @@
 		/**
 		 * Sort the table by a particular column
 		 *  @param {int} iCol the data index to sort on. Note that this will not match the
-		 *    'display index' if you have hidden data entries
+		 *    'display index' if you have hidden data 
+
 		 *  @dtopt API
 		 *  @deprecated Since v1.10
 		 *
@@ -11396,7 +11397,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "Exibindo _START_ de _END_ de _TOTAL_ entradas",
 	
 	
 			/**
@@ -11417,7 +11418,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "Exibindo 0 de 0 de 0 entradas",
 	
 	
 			/**
@@ -11439,7 +11440,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(filtered from _MAX_ total entries)",
+			"sInfoFiltered": "(Filtrado de _MAX_ entradas no total)",
 	
 	
 			/**
@@ -11557,7 +11558,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			"sLengthMenu": "Exibindo _MENU_ entradas",
 	
 	
 			/**
@@ -11637,7 +11638,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "Pesquisar:",
 	
 	
 			/**
@@ -11695,7 +11696,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "No matching records found"
+			"sZeroRecords": "Sem resultados"
 		},
 	
 	

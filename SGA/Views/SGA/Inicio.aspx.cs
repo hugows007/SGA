@@ -1,9 +1,12 @@
-﻿using SGA.Models.DAO.Log;
+﻿using GoogleMapsGeocoding;
+using GoogleMapsGeocoding.Common;
+using SGA.Models.DAO.Log;
 using SGA.Models.Geos;
 using SGA.Models.Manter;
 using SGA.Models.Relatorios;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Security;

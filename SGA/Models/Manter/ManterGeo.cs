@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SGA.Models.Usuarios;
+using GoogleMapsGeocoding;
+using GoogleMapsGeocoding.Common;
 
 namespace SGA.Models.Manter
 {
@@ -16,6 +18,7 @@ namespace SGA.Models.Manter
         Geo ObjGeo;
         Notificacao ObjNotificacao = FactoryNotificacao.GetNew();
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.UsuarioFuncionario);
+        string ChaveGoogle = "AIzaSyA4ztJWBltNf2pvqnGTDs43xqANBP13MeY";
         public ManterGeo()
         {
 
@@ -60,6 +63,41 @@ namespace SGA.Models.Manter
             try
             {
                 return new ManterGeoDAO(ObjGeo).GravaGeoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public Geo GetClienteLocalizacao()
+        {
+            try
+            {
+                IGeocoder geocoder = new Geocoder(ChaveGoogle);
+
+                ObjUsuario.Id = ObjGeo.IdUsr;
+                ObjUsuario = new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByIdDAO();
+                
+                GeocodeResponse response = geocoder.Geocode(ObjUsuario.Endereco);
+                ObjGeo.NomeUsuario = ObjUsuario.Nome;
+                ObjGeo.Endereco = ObjUsuario.Endereco;
+                ObjGeo.Latitude = response.Results[0].Geometry.Location.Lat.ToString().Replace(",",".");
+                ObjGeo.Longitude = response.Results[0].Geometry.Location.Lng.ToString().Replace(",", ".");
+
+                return ObjGeo;
+                
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public Geo GetTecnicoLocalizacao()
+        {
+            try
+            {
+                return new ManterGeoDAO(ObjGeo).GetTecnicoLocalizacaoDAO();
             }
             catch (Exception)
             {

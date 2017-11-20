@@ -3,6 +3,7 @@ using SGA.Models.Manter;
 using SGA.Models.Usuarios;
 using System;
 using System.Web.Security;
+using System.Web.UI;
 
 namespace SGA.Views.SGA.VUsuario
 {
@@ -17,6 +18,8 @@ namespace SGA.Views.SGA.VUsuario
                 try
                 {
                     Mensagem = "Alteração de dados do usuário.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+
                     if (Request.QueryString["Id"] != null)
                     {
                         ObjUsuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
@@ -50,6 +53,7 @@ namespace SGA.Views.SGA.VUsuario
                                 AlterarButton.Enabled = false;
                                 Ausente.Enabled = false;
                                 Mensagem = "Consulta de dados do cliente.";
+                                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                             }
                         }
                         else if (Session["perfil"].Equals("Técnico"))
@@ -62,6 +66,7 @@ namespace SGA.Views.SGA.VUsuario
                             AlterarButton.Enabled = false;
                             Ausente.Enabled = false;
                             Mensagem = "Consulta de dados do cliente.";
+                            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                         }
                     }
                 }
@@ -89,10 +94,12 @@ namespace SGA.Views.SGA.VUsuario
                     if (new ManterUsuario(ObjUsuario).AlteraUsuario())
                     {
                         Mensagem = "Usuário alterado com sucesso.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else
                     {
                         Mensagem = "Não foi possível alterar o usuário";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
             }
@@ -124,15 +131,18 @@ namespace SGA.Views.SGA.VUsuario
                     if (ObjUsuario.IdStatus.Equals(1))
                     {
                         Mensagem = "Usuário agora está marcado como disponível.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else if (ObjUsuario.IdStatus.Equals(4))
                     {
                         Mensagem = "Usuário agora está marcado como ausente.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
                 else
                 {
                     Mensagem = "Não foi possível alterar o usuário";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)

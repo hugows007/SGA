@@ -20,6 +20,11 @@ namespace SGA.Views.SGA.VHistorico
         {
             try
             {
+                if (Session["perfil"].Equals("Cliente Físico") || Session["perfil"].Equals("Cliente Jurídico"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
+
                 if (Request.QueryString.AllKeys.Contains("IdServico"))
                 {
                     if (!"".Equals(Request.QueryString["IdServico"]))

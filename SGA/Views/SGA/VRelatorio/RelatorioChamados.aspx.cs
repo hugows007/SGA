@@ -22,6 +22,11 @@ namespace SGA.Views.SGA.VRelatorio
         {
             try
             {
+                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
+
                 if (!"".Equals(Request.QueryString["Relatorio"]) && "Chamados".Equals(Request.QueryString["Relatorio"]))
                 {
                     TipoRelatorio = Request.QueryString["Relatorio"];

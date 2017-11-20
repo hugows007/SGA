@@ -27,8 +27,12 @@
     <script src="<%# ResolveUrl("~/Scripts/bootstrap.js") %>"></script>
     <link href="<%# ResolveUrl("~/Scripts/bootstrap.min.css") %>" rel="stylesheet" />
 
-    <script src="<%# ResolveUrl("~/Scripts/dataTables.bootstrap.min.js") %>"></script>
-    <script src="<%# ResolveUrl("~/Scripts/jquery.dataTables.min.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/vendor/datatables/js/jquery.dataTables.min.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/vendor/datatables-plugins/dataTables.bootstrap.min.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/vendor/datatables-responsive/dataTables.responsive.js") %>"></script>
+    <link href="<%# ResolveUrl("~/Scripts/vendor/datatables-plugins/dataTables.bootstrap.css") %>" rel="stylesheet" />
+    <link href="<%# ResolveUrl("~/Scripts/vendor/datatables-responsive/dataTables.responsive.css") %>" rel="stylesheet" />
+
     <link href="<%# ResolveUrl("~/Content/Site.css") %>" rel="stylesheet" />
 
     <script src="<%# ResolveUrl("~/Scripts/select/bootstrap-select.min.js") %>"></script>
@@ -180,9 +184,6 @@
                             <%if (!ListaNotificacao.Count.Equals(0))
                                     foreach (var Lista in ListaNotificacao)
                                     {
-                                        //
-                                        // Colocar outras notificações aqui
-                                        //
                                         if (Lista.IdTipo.Equals(4))
                                         {
                                             ContaListaNotificacao += 1;
@@ -390,7 +391,16 @@
                                 <a href="#"><i class="fa  fa-file-text fa-fw"></i>Relatórios<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="/Views/SGA/VRelatorio/Relatorio.aspx">Relatório de atendimentos</a>
+                                        <a href="/Views/SGA/VRelatorio/RelatorioChamados.aspx?Relatorio=Chamados">Relatório de atendimento e chamados</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Views/SGA/VRelatorio/RelatorioChamados.aspx?Relatorio=SLA">Relatório de SLA</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Views/SGA/VRelatorio/RelatorioChamados.aspx?Relatorio=TempoAtend">Relatório de tempo de atendimento</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Views/SGA/VRelatorio/RelatorioChamados.aspx?Relatorio=RecusaAtend">Relatório de atendimentos recusados</a>
                                     </li>
                                 </ul>
                             </li>

@@ -97,5 +97,47 @@ namespace SGA.Models.DAO.ManterDAO
                 throw;
             }
         }
+        public Geo GetTecnicoLocalizacaoDAO()
+        {
+            try
+            {
+                List<Geo> List = new List<Geo>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+
+                    SqlCommand Cmd = new SqlCommand(@"
+                SELECT L1.*, L3.nome FROM Geolocalizacao As L1
+                    INNER JOIN (
+                        SELECT idUsuario, MAX(dataRegistro) As UltimaData
+                        FROM Geolocalizacao  WHERE
+							LATITUDE <> '0.0' AND LONGITUDE <> '0.0' AND idUsuario = @IdTecnico GROUP BY idUsuario) As L2
+                            ON (L1.idUsuario = L2.idUsuario AND L1.dataRegistro = L2.UltimaData) 
+		                    INNER JOIN Usuario As L3 on (L1.idUsuario = L3.idUsuario)
+                    ORDER BY L1.idUsuario;", Con);
+
+                    Cmd.Parameters.AddWithValue("@IdTecnico", ObjGeo.IdUsr);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        ObjGeo.Id = Dr.GetInt32(0);
+                        ObjGeo.Latitude = Dr.GetString(1);
+                        ObjGeo.Longitude = Dr.GetString(2);
+                        ObjGeo.IdUsr = Dr.GetInt32(3);
+                        ObjGeo.Data = Dr.GetDateTime(4);
+                        ObjGeo.NomeUsuario = Dr.GetString(5);
+                    }
+
+                    return ObjGeo;
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
     }
 }

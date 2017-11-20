@@ -19,6 +19,11 @@ namespace SGA.Views.SGA.VTipoServico
 
             try
             {
+                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
+
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjTpServico.Id = Convert.ToInt32(Request.QueryString["Id"]);

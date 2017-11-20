@@ -249,6 +249,7 @@
     <Content Include="Views\SGA\VAvaliacao\Avaliacao.aspx" />
     <Content Include="Views\SGA\VChamado\AlterarTecnico.aspx" />
     <Content Include="Views\SGA\VHistorico\Historico.aspx" />
+    <Content Include="Views\SGA\VMapa\Mapa.aspx" />
     <Content Include="Views\SGA\VRelatorio\Relatorio.aspx" />
     <Content Include="Views\SGA\VRelatorio\RelatorioChamados.aspx" />
     <Content Include="Views\SGA\VTipoServico\CadastroTipoServico.aspx" />
@@ -724,6 +725,13 @@
     </Compile>
     <Compile Include="Views\SGA\VHistorico\Historico.aspx.designer.cs">
       <DependentUpon>Historico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VMapa\Mapa.aspx.cs">
+      <DependentUpon>Mapa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VMapa\Mapa.aspx.designer.cs">
+      <DependentUpon>Mapa.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\SGA\VRelatorio\Relatorio.aspx.cs">
       <DependentUpon>Relatorio.aspx</DependentUpon>

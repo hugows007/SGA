@@ -19,6 +19,11 @@ namespace SGA.Views.SGA.VUsuario
 
             try
             {
+                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
+
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjUsr.Id = Convert.ToInt32(Request.QueryString["Id"]);

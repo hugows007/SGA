@@ -13,5 +13,6 @@ namespace SGA.Models.Geos
         public string Longitude { get; set; }
         public DateTime Data { get; set; }
         public string NomeUsuario { get; set; }
+        public string Endereco { get; set; }
     }
 }

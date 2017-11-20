@@ -3,6 +3,7 @@ using SGA.Models.Especialidades;
 using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
+using System.Web.UI;
 
 namespace SGA.Views.SGA.VEspecialidade
 {
@@ -15,7 +16,13 @@ namespace SGA.Views.SGA.VEspecialidade
         {
             try
             {
+                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
+
                 Mensagem = "Consulta de especialidades.";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                 foreach (var ObjAT in new ManterEspecialidade(ObjEspec).ConsultaEspecialidades())
                 {
@@ -25,10 +32,12 @@ namespace SGA.Views.SGA.VEspecialidade
                 if (Request.QueryString["OpInatEspecialidade"] != null && Request.QueryString["OpInatEspecialidade"].Equals("True"))
                 {
                     Mensagem = "Especialidade inativada com sucesso!";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else if (Request.QueryString["OpInatEspecialidade"] != null && Request.QueryString["OpInatEspecialidade"].Equals("False"))
                 {
                     Mensagem = "Ocorreu um erro ao inativar a especialidade!";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)

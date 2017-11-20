@@ -99,24 +99,24 @@ namespace SGA.Models.Manter
 
             Mail.Body = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou. <br/> O chamado agora está com o status: <br/><br/>";
 
-            switch (ObjNotificacao.Mensagem)
+            switch (ObjNotificacao.IdMensagem)
             {
-                case "Novo atendimento":
+                case 3:
                     Mail.Body += "Novo atendimento iniciado com sucesso. <br/> Favor acompanhar o andamento no sistema SGA TI.<br/>";
                     break;
-                case "Início de atendimento":
+                case 4:
                     Mail.Body += "O atendimento do chamado está sendo iniciado. <br/> Favor acompanhar o andamento no sistema SGA TI.<br/>";
                     break;
-                case "Atendimento finalizado":
+                case 5:
                     Mail.Body += "O atendimento do seu chamado foi finalizado. <br/> Favor avalia-lo no sistema SGA TI.<br/>";
                     break;
-                case "Chamado cancelado":
+                case 6:
                     Mail.Body += "Seu chamado foi cancelado com sucesso. <br/>";
                     break;
-                case "Retrabalho":
+                case 7:
                     Mail.Body += "Houve pendências no atendimento do seu chamado. <br/> Favor acompanhar o andamento no sistema SGA TI. <br/>";
                     break;
-                case "Reabertura de chamado":
+                case 8:
                     Mail.Body += "Seu chamado foi reaberto com sucesso. <br/> Favor acompanhar o andamento no sistema SGA TI. <br/>";
                     break;
                 default:

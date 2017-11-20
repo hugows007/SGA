@@ -22,6 +22,10 @@ namespace SGA.Views.SGA.VAtendimento
         {
             try
             {
+                if (!Session["perfil"].Equals("Técnico") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
                 if (!"".Equals(Request.QueryString["IdChamado"]) && !"".Equals(Request.QueryString["StatusChamado"]) && !"Cancelado".Equals(Request.QueryString["StatusChamado"]))
                 {
                     ObjAtend.IdChamado = Convert.ToInt32(Request.QueryString["IdChamado"]);

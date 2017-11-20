@@ -20,8 +20,14 @@ namespace SGA.Views.SGA.VServico
             {
                 try
                 {
+                    if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
                     Mensagem = "Cadastro de serviço.";
-                                    
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+
                     DropDownListTpServico.DataSource = new ManterServico().ConsultaTpServicos();
                     DropDownListTpServico.DataTextField = "NomeTipoServ";
                     DropDownListTpServico.DataValueField = "Id";
@@ -51,10 +57,12 @@ namespace SGA.Views.SGA.VServico
                     if (new ManterServico(ObjServico).CadastraServico())
                     {
                         Mensagem = "Serviço cadastrado com sucesso.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else
                     {
                         Mensagem = "Não foi possível cadastrar o serviço";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
                 

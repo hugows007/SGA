@@ -15,7 +15,13 @@ namespace SGA.Views.SGA.VEmpresa
         public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+            {
+                Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+            }
+
             Mensagem = "Cadastro de empresa.";
+            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
         }
 
         protected void CadastrarButton_Click(object sender, EventArgs e)
@@ -32,12 +38,14 @@ namespace SGA.Views.SGA.VEmpresa
                 if (new ManterEmpresa(ObjEmpresa).CadastraEmpresa())
                 {
                     Mensagem = "Empresa cadastrada com sucesso.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else
                 {
                     Mensagem = "Não foi possível cadastrar a especialidade.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
-                
+
             }
             catch (Exception Ex)
             {

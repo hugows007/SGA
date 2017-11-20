@@ -23,7 +23,13 @@ namespace SGA.Views.SGA.VUsuario
             {
                 try
                 {
+                    if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
                     Mensagem = "Relacionamento de usuário e região.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                     Perfis.Add("Técnico");
                     Perfis.Add("Cliente");
@@ -80,10 +86,12 @@ namespace SGA.Views.SGA.VUsuario
                     if (new ManterUsuario(ObjUsuario).RelacionaUsuarioAreaAtendimento())
                     {
                         Mensagem = "Usuário e região relacionados com sucesso.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else
                     {
                         Mensagem = "Não foi possível relacionar usuário e região.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
             }

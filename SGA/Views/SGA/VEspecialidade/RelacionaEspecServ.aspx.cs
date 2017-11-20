@@ -22,6 +22,14 @@ namespace SGA.Views.SGA.VEspecialidade
             {
                 try
                 {
+                    if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
+                    Mensagem = "Relacionamento entre serviço e especialidade.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+
                     DropDownListServ.DataSource = new ManterServico().ConsultaServicos();
                     DropDownListServ.DataTextField = "NomeServ";
                     DropDownListServ.DataValueField = "Id";
@@ -54,14 +62,17 @@ namespace SGA.Views.SGA.VEspecialidade
                     if (new ManterEspecialidade(ObjEspec, ObjServ).RelacionaEspecServ())
                     {
                         Mensagem = "Especialidade e serviço relacionados com sucesso.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else
                     {
                         Mensagem = "Não foi possível relacionar a especialidade e o serviço";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }else
                 {
                     Mensagem = "Selecione as opções.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)

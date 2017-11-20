@@ -59,6 +59,7 @@ namespace SGA.Views.SGA.VChamado
                             if (Request.QueryString["Troca"].Equals("true"))
                             {
                                 Mensagem = "Técnico alocado com sucesso.";
+                                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                             }
                         }
                         ObjServico.Id = ObjChamado.IdServico;
@@ -106,11 +107,13 @@ namespace SGA.Views.SGA.VChamado
                     {
                         ObjChamado = null;
                         Mensagem = "Chamado não encontrado ou inexistente.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
                 else
                 {
                     Mensagem = "Nenhum número de chamado foi informado.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)
@@ -141,16 +144,19 @@ namespace SGA.Views.SGA.VChamado
                     if (new ManterChamado(ObjChamado, ObjAtend).CancelaChamado())
                     {
                         Mensagem = "Chamado cancelado com sucesso.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                         Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
                     }
                     else
                     {
                         Mensagem = "Ocorreu um problema no cancelamento do chamado.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
                 else
                 {
                     Mensagem = "Informe o motivo do cancelamento.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)
@@ -186,16 +192,19 @@ namespace SGA.Views.SGA.VChamado
                         if (new ManterAtendimento(ObjAtend, ObjChamado).EncerraAtendimento())
                         {
                             Mensagem = "Chamado encerrado com sucesso.";
+                            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                             Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
                         }
                         else
                         {
                             Mensagem = "Ocorreu um problema no encerramento do chamado.";
+                            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                         }
                     }
                     else
                     {
                         Mensagem = "Informe as pendências.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
 
                     if (!CheckBoxPend.Checked)
@@ -208,12 +217,14 @@ namespace SGA.Views.SGA.VChamado
                         else
                         {
                             Mensagem = "Ocorreu um problema no encerramento do chamado.";
+                            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                         }
                     }
                 }
                 else
                 {
                     Mensagem = "Informe o relatório do atendimento.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
 
             }
@@ -275,10 +286,12 @@ namespace SGA.Views.SGA.VChamado
                     new ManterChamado(ObjChamado).AtualizaTramite();
                     Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
                     Mensagem = "Trâmite adicionado com sucesso.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else
                 {
                     Mensagem = "Digite alguma informação para adicionar ao chamado.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)
@@ -295,10 +308,12 @@ namespace SGA.Views.SGA.VChamado
                 if (new ManterChamado(ObjChamado, ObjAtend).ReabreChamado())
                 {
                     Mensagem = "Chamado reaberto com sucesso.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else
                 {
                     Mensagem = "Digite alguma informação.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)
@@ -324,15 +339,18 @@ namespace SGA.Views.SGA.VChamado
                     if (new ManterAtendimento(ObjAtend, ObjChamado).RecusaAtendimentoChamado())
                     {
                         Mensagem = "Atendimento deste chamado recusado.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else
                     {
                         Mensagem = "Ocorreu um problema ao recusar o atendimento deste chamado.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
                 else
                 {
                     Mensagem = "Justifique o motivo de recusar o atendimento deste chamado.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
 
             }

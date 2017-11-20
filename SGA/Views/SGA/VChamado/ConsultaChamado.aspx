@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" EnableEventValidation="false" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ConsultaChamado.aspx.cs" Inherits="SGA.Views.SGA.VChamado.ConsultaChamado" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
+    <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -17,7 +19,9 @@
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
                     </div>
                     <script>
-                        alertify.log("<%=Mensagem%>");
+                        function Alerta(Texto) {
+                            alertify.log(Texto);
+                        }
                     </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
@@ -26,7 +30,23 @@
                                     { %>
                                 <div class="alert alert-info">
                                     <label for="Chamado" class="control-label">Código do chamado: <%=ObjChamado.Id %></label><br />
-                                    <label for="Prioridade" class="control-label">Prioridade: <%=ObjPrioridade.DescPrioridade%>&nbsp;<span class="glyphicon glyphicon-flag"></span></label>
+                                    <label for="Prioridade" class="control-label">Prioridade: <%=ObjPrioridade.DescPrioridade%>&nbsp;<span class="glyphicon glyphicon-flag"></span></label><br />
+                                    <%if (ObjStatusChm.Id.Equals(2) && Session["perfil"].Equals("Técnico"))
+                                        {%>
+                                    <label for="Mapa" class="control-label">
+                                        Ver localização do cliente:
+                                        <a href="/Views/SGA/VMapa/Mapa.aspx?IdCliente=<%=ObjAtend.IdCliente%>" class="btn btn-success">Clique aqui
+                                        </a>
+                                    </label>
+                                    <%}
+                                        else if (ObjStatusChm.Id.Equals(2) && Session["perfil"].Equals("Cliente Físico") || ObjStatusChm.Id.Equals(2) && Session["perfil"].Equals("Cliente Jurídico"))
+                                        {%>
+                                    <label for="Mapa" class="control-label">
+                                        Ver localização do técnico:
+                                        <a href="/Views/SGA/VMapa/Mapa.aspx?IdTecnico=<%=ObjAtend.IdTecnico%>" class="btn btn-success">Clique aqui
+                                        </a>
+                                    </label>
+                                    <%} %>
                                 </div>
                                 <div class="alert alert-warning">
                                     <label for="Status" class="control-label">Status atual: <%=ObjStatusChm.NomeStatus %></label>
@@ -62,7 +82,7 @@
                                         <%foreach (var Lista in ListaTecnicos)
                                             {
                                         %>
-                                        <option value="/Views/SGA/VChamado/AlterarTecnico.aspx?Chamado=<%=ObjChamado.Id%>&Tecnico=<%=Lista.Id %>"><%=Lista.Login%></option>
+                                        <option value="/Views/SGA/VChamado/AlterarTecnico.aspx?Chamado=<%=ObjChamado.Id%>&TecnicoAntigo=<%=ObjAtend.IdTecnico %>&TecnicoNovo=<%=Lista.Id %>"><%=Lista.Login%></option>
                                         <%} %>
                                     </select>
                                 </div>
@@ -174,11 +194,11 @@
                                 <asp:Button ID="AvaliarChamadoButton" runat="server" CssClass="btn btn-info" OnClick="AvaliarButton_Click" Text="Avaliar este chamado" />
                                 <asp:Button ID="ReaberturaButton" runat="server" CssClass="btn btn-default" Text="Reabrir chamado" OnClick="ReaberturaButton_Click" />
                                 <%}
-                                    }
                                     if (!Session["perfil"].Equals("Cliente Físico") && !Session["perfil"].Equals("Cliente Jurídico"))
                                     { %>
                                 <asp:Button ID="ConsultarClienteButton" runat="server" CssClass="btn btn-default" Text="Consultar dados do cliente" OnClick="ConsultarClienteButton_Click" />
-                                <%} %>
+                                <%}
+                                    } %>
                                 <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                             </div>
                         </div>

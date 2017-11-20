@@ -15,14 +15,18 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
         public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+            {
+                Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+            }
 
+            Mensagem = "Cadastro de região de atendimento.";
+            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
         }
         protected void CadastrarButton_Click(object sender, EventArgs e)
         {
             try
             {
-                Mensagem = "Cadastro de região de atendimento.";
-
                 RegiaoAtendimento ObjRegiao = FactoryRegiao.GetNew();
                 ObjRegiao.Regiao = Regiao.Value;
                 ObjRegiao.Cidade = Cidade.Value;
@@ -31,10 +35,12 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
                 if(new ManterRegiaoAtendimento(ObjRegiao).CadastraRegiaoAtendimento())
                 {
                     Mensagem = "Região de atendimento cadastrada com sucesso.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else
                 {
                     Mensagem = "Não foi possível cadastrar a região de atendimento.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 
             }

@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Avaliacao.aspx.cs" Inherits="SGA.Views.SGA.VAvaliacao.Avaliacao" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="headInicio" runat="server">
+    <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
     <style>
         .starRating {
             width: 50px;
@@ -55,13 +57,15 @@
                             </asp:UpdatePanel>
                         </div>
                         <label for="ComentarioTextBox" class="control-label">Se quiser, também pode comentar: </label>
-                        <textarea rows="5" cols ="50" id="Comentario" name="Comentario" maxlength="100" class="form-control input-sm" placeholder="Digite seu comentário (máximo de 100 caracteres)" runat="server"></textarea>
+                        <textarea rows="5" cols="50" id="Comentario" name="Comentario" maxlength="100" class="form-control input-sm" placeholder="Digite seu comentário (máximo de 100 caracteres)" runat="server"></textarea>
                         <br />
                         <asp:Button ID="AvaliarButton" runat="server" Text="Avaliar!" CssClass="btn btn-success" OnClick="AvaliarButton_Click" />
                     </div>
                     <div class="panel-footer">
                         <script>
-                            alertify.log("<%=Mensagem%>");
+                            function Alerta(Texto) {
+                                alertify.log(Texto);
+                            }
                         </script>
                     </div>
                 </div>

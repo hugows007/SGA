@@ -20,7 +20,13 @@ namespace SGA.Views.SGA.VEmpresa
             {
                 try
                 {
+                    if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
                     Mensagem = "Alteração de informação de uma empresa.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                     if (Request.QueryString["Id"] != null)
                     {
@@ -58,10 +64,12 @@ namespace SGA.Views.SGA.VEmpresa
                     if (new ManterEmpresa(ObjEmpresa).AlteraEmpresa())
                     {
                         Mensagem = "Empresa alterada com sucesso.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else
                     {
                         Mensagem = "Não foi possível alterar a especialidade.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
             }

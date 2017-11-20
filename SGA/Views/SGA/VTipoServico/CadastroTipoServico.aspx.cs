@@ -20,7 +20,13 @@ namespace SGA.Views.SGA.VTipoServico
             {
                 try
                 {
+                    if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
                     Mensagem = "Cadastro tipo de serviço.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 catch (Exception Ex)
                 {
@@ -39,10 +45,12 @@ namespace SGA.Views.SGA.VTipoServico
                 if (new ManterServico(ObjTpServico).CadastraTpServico())
                 {
                     Mensagem = "Serviço cadastrado com sucesso.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else
                 {
                     Mensagem = "Não foi possível cadastrar o serviço";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)

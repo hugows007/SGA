@@ -20,9 +20,15 @@ namespace SGA.Views.SGA.VTipoServico
             {
                 try
                 {
+                    if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
                     if (Request.QueryString["Id"] != null)
                     {
                         Mensagem = "Alteração de informações de um serviço.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                         ObjTpServico.Id = Convert.ToInt32(Request.QueryString["Id"]);
                         ObjTpServico = new ManterServico(ObjTpServico).ConsultaTpServicoById();
@@ -49,14 +55,17 @@ namespace SGA.Views.SGA.VTipoServico
                     if (new ManterServico(ObjTpServico).AlteraTipoServico())
                     {
                         Mensagem = "Tipo de serviço modificado com sucesso.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else
                     {
                         Mensagem = "Não foi possível modificar o tipo de serviço.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }else
                 {
                     Mensagem = "Selecione todas as opções.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)

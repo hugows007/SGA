@@ -27,12 +27,15 @@ namespace SGA.Views.SGA.VChamado
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Mensagem = "Abertura de chamado.";
-
             if (!Page.IsPostBack)
             {
                 try
                 {
+                    if (Session["perfil"].Equals("Técnico"))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
                     DropDownListTpServico.DataSource = new ManterServico().ConsultaTpServicos();
                     DropDownListTpServico.DataTextField = "NomeTipoServ";
                     DropDownListTpServico.DataValueField = "Id";
@@ -49,6 +52,9 @@ namespace SGA.Views.SGA.VChamado
                         DropDownListCliente.DataBind();
                         DropDownListCliente.Items.Insert(0, new ListItem("Selecione o cliente", "0"));
                     }
+
+                    Mensagem = "Abertura de chamado.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 catch (Exception Ex)
                 {
@@ -129,6 +135,7 @@ namespace SGA.Views.SGA.VChamado
                 else
                 {
                     Mensagem = "Selecione as opções para abertura do chamado.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)

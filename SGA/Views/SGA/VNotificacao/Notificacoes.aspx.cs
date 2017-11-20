@@ -39,10 +39,17 @@ namespace SGA.Views.SGA.VNotificacao
                         new ManterNotificacao(ObjNotificacao).AtualizaNotificacao();
                         Response.Redirect("\\Views\\SGA\\VChat\\ChatPrivado.aspx", false);
                     }
+                    if (Request.QueryString["Alerta"].Equals("LimparChat") && Request.QueryString["Id"] != null)
+                    {
+                        ObjNotificacao.IdDest = Convert.ToInt32(Request.QueryString["Id"]);
+                        ObjNotificacao.IdTipo = 1;
+                        new ManterNotificacao(ObjNotificacao).AtualizaNotificacao();
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
                     if (Request.QueryString["Alerta"].Equals("LimparNotif") && Request.QueryString["Id"] != null)
                     {
                         ObjNotificacao.IdDest = Convert.ToInt32(Request.QueryString["Id"]);
-                        ObjNotificacao.IdTipo = 2;
+                        ObjNotificacao.IdTipo = 4;
                         new ManterNotificacao(ObjNotificacao).AtualizaNotificacao();
                         Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                     }

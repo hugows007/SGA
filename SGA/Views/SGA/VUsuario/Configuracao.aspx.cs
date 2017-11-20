@@ -24,6 +24,7 @@ namespace SGA.Views.SGA.VUsuario
                 if (!Page.IsPostBack)
                 {
                     Mensagem = "Suas configurações.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                     ObjUsuario.Id = Convert.ToInt32(Session["id"]);
 
@@ -68,10 +69,12 @@ namespace SGA.Views.SGA.VUsuario
                     }
 
                     Mensagem = "Seus dados foram alterado com sucesso.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else
                 {
                     Mensagem = "Não foi possível alterar seus dados.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)
@@ -98,6 +101,7 @@ namespace SGA.Views.SGA.VUsuario
                 if (new ManterUsuario(ObjUsuario).AlteraSenha())
                 {
                     Mensagem = "Senha alterada com sucesso.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     Nome.Value = ObjUsuario.Nome;
                     Endereco.Value = ObjUsuario.Endereco;
                     Telefone.Value = ObjUsuario.Telefone;
@@ -108,6 +112,7 @@ namespace SGA.Views.SGA.VUsuario
                 else
                 {
                     Mensagem = "Não foi possível alterar sua senha.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     Nome.Value = ObjUsuario.Nome;
                     Endereco.Value = ObjUsuario.Endereco;
                     Telefone.Value = ObjUsuario.Telefone;

@@ -20,7 +20,13 @@ namespace SGA.Views.SGA.VEspecialidade
             {
                 try
                 {
+                    if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
                     Mensagem = "Alteração de informações da especialidade.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                     if (Request.QueryString["Id"] != null)
                     {
@@ -52,10 +58,12 @@ namespace SGA.Views.SGA.VEspecialidade
                     if (new ManterEspecialidade(ObjEspec).AlteraEspecialidade())
                     {
                         Mensagem = "Especialidade alterada com sucesso.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                     else
                     {
                         Mensagem = "Não foi possível alterar a especialidade.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
                 }
             }

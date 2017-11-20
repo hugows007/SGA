@@ -247,8 +247,11 @@ namespace SGA.Models.DAO.ManterDAO
                         SELECT * FROM 
                             Notificacao Nt inner join 
                             NotificacaoMensagem NtMsg on (Nt.idMsgNotificacao = NtMsg.idMsgNotificacao) inner join 
-                            Usuario Usr on (Nt.idUsuarioOrigem = Usr.idUsuario) WHERE 
-                            idUsuarioDestino = @IdDest and 
+                            Usuario Usr on (Nt.idUsuarioDestino = Usr.idUsuario)  left join 
+							Usuario Usr2 on (Nt.idUsuarioOrigem = Usr2.idUsuario) left join
+							UsuarioXMemberShipUser UsrMb on (Usr2.idUsuario = UsrMb.idUsuario) left join
+							aspnet_Users Mb on (Usrmb.IdUsrMemberShip = Mb.UserId) where
+							idUsuarioDestino = @IdDest and 
                             vista = 0;", Con);
 
                     Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
@@ -265,7 +268,10 @@ namespace SGA.Models.DAO.ManterDAO
                         Obj.Vista = Dr.GetInt32(5);
                         Obj.Data = Dr.GetDateTime(6);
                         Obj.Mensagem = Dr.GetString(8);
-                        Obj.NomeUsuario = Dr.GetString(10);
+                        if (!Dr.IsDBNull(33))
+                        {
+                            Obj.NomeUsuario = Dr.GetString(33);
+                        }
 
                         if (Obj.IdMensagem.Equals(10))
                         {

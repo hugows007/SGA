@@ -21,7 +21,13 @@ namespace SGA.Views.SGA.VUsuario
         {
             try
             {
+                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
+
                 Mensagem = "Usuários do sistema.";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                 foreach (var ObjUsr in new ManterUsuario(ObjUsuario).ConsultaUsuarios())
                 {
@@ -31,10 +37,12 @@ namespace SGA.Views.SGA.VUsuario
                 if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("True"))
                 {
                     Mensagem = "Usuário inativado com sucesso!";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else if (Request.QueryString["OpInatUsr"] != null && Request.QueryString["OpInatUsr"].Equals("False"))
                 {
                     Mensagem = "Ocorreu um erro ao inativar o usuário!";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)

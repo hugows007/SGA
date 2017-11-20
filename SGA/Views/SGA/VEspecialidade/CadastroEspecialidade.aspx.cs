@@ -15,15 +15,19 @@ namespace SGA.Views.SGA.VEspecialidade
         public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+            {
+                Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+            }
 
+            Mensagem = "Cadastro de especialidade.";
+            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
         }
 
         protected void CadastrarButton_Click(object sender, EventArgs e)
         {
             try
             {
-                Mensagem = "Cadastro de especialidade.";
-                
                 Especialidade ObjEspec = FactoryEspecialidade.GetNew();
                 ObjEspec.NomeEspec = Espec.Value;
                 ObjEspec.DescEspec = DetalhesEspec.Value;
@@ -31,12 +35,14 @@ namespace SGA.Views.SGA.VEspecialidade
                 if(new ManterEspecialidade(ObjEspec).CadastraEspecialidade())
                 {
                     Mensagem = "Especialidade cadastrada com sucesso.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else
                 {
                     Mensagem = "Não foi possível cadastrar a especialidade.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
-                
+
             }
             catch (Exception Ex)
             {

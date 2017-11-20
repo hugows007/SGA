@@ -11,8 +11,9 @@ namespace SGA.Models.Validacoes
         static string Bairro { get; set; }
         static string Cidade { get; set; }
         static string UF { get; set; }
+        static string EnderecoCompleto { get; set; }
 
-        public static string GetCEPCorreios(string CEP)
+        public static string GetCEPCorreios(string CEP, string Complemento)
         {
             try
             {
@@ -24,7 +25,9 @@ namespace SGA.Models.Validacoes
                 Cidade = Resposta.cidade;
                 UF = Resposta.uf;
 
-                return Endereco + ", " + Bairro + ", " + Cidade + ", " + UF;
+                EnderecoCompleto = Endereco + " " + Complemento + " " + Bairro + " " + Cidade + " " + UF;
+
+                return EnderecoCompleto.Replace(",", "");
             }
             catch (Exception)
             {

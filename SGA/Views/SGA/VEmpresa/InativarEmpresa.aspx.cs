@@ -19,6 +19,11 @@ namespace SGA.Views.SGA.VEmpresa
 
             try
             {
+                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
+
                 if (Request.QueryString["Id"] != null)
                 {
                     ObjEmpresa.Id = Convert.ToInt32(Request.QueryString["Id"]);

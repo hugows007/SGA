@@ -27,6 +27,11 @@ namespace SGA.Views.SGA.VUsuario
         {
             try
             {
+                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+
+                }
                 IdEmpresa = (int)(Session["idEmpresa"]);
 
                 if (!Page.IsPostBack)
@@ -135,7 +140,7 @@ namespace SGA.Views.SGA.VUsuario
                     ObjUsuario.Email = Email.Value;
                     ObjUsuario.Regra = DropDownListTipo.SelectedValue;
                     ObjUsuario.Nome = Nome.Value;
-                    ObjUsuario.Endereco = ValidaCEP.GetCEPCorreios(CEP.Value);
+                    ObjUsuario.Endereco = ValidaCEP.GetCEPCorreios(CEP.Value, Complemento.Value);
                     ObjUsuario.Complemento = Complemento.Value;
                     ObjUsuario.Cep = CEP.Value;
                     ObjUsuario.Telefone = Telefone.Value;

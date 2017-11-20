@@ -22,7 +22,13 @@ namespace SGA.Views.SGA.VTipoServico
         {
             try
             {
+                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                {
+                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                }
+
                 Mensagem = "Consulta de tipos de serviços.";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                 foreach (var Result in new ManterServico().ConsultaTpServicos())
                 {
@@ -35,10 +41,12 @@ namespace SGA.Views.SGA.VTipoServico
                 if (Request.QueryString["OpInatTpServico"] != null && Request.QueryString["OpInatTpServico"].Equals("True"))
                 {
                     Mensagem = "Tipo de serviço inativado com sucesso.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
                 else if (Request.QueryString["OpInatTpServico"] != null && Request.QueryString["OpInatTpServico"].Equals("False"))
                 {
                     Mensagem = "Ocorreu um erro ao inativar o tipo de serviço.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
             catch (Exception Ex)

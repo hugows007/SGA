@@ -89,7 +89,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="Email" class="control-label">E-mail:</label>
-                                        <input type="email" id="Email" required class="form-control input-sm" runat="server" maxlength="30" placeholder="Máximo de 30 caracteres" />
+                                        <input type="email" id="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="E-mail inválido" required class="form-control input-sm" runat="server" maxlength="30" placeholder="Máximo de 30 caracteres" />
                                     </div>
                                     <div class="form-group">
                                         <label for="Nome" class="control-label">Nome:</label>
@@ -97,11 +97,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="CEP" class="control-label">CEP:</label>
-                                        <input type="text" id="CEP" required class="form-control input-sm" runat="server" minlength="8" maxlength="8" placeholder="Máximo de 8 caracteres" />
+                                        <input type="text" id="CEP" pattern="[0-9]+$" title="Somente números" required class="form-control input-sm" runat="server" minlength="8" maxlength="8" placeholder="Máximo de 8 caracteres" />
                                     </div>
                                     <div class="form-group">
                                         <label for="Endereco" class="control-label">Endereço:</label>
-                                        <input type="text" id="Endereco" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Será preenchido automaticamente com base no CEP informado" />
+                                        <input type="text" id="Endereco" class="form-control input-sm" runat="server" maxlength="50" placeholder="Será preenchido automaticamente com base no CEP informado" />
                                     </div>
                                     <div class="form-group">
                                         <label for="Complemento" class="control-label">Complemento:</label>
