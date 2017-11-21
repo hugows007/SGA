@@ -86,6 +86,9 @@ namespace SGA.Views.SGA.VChamado
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
                         ObjStatusChm = new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById();
 
+                        Mensagem = "Informações do chamado.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+
                         if (ObjStatusChm.Id.Equals(3))
                         {
                             ObjAvaliacao.IdChamado = ObjChamado.Id;

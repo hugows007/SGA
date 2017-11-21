@@ -1,6 +1,7 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
 using SGA.Models.Geos;
+using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -12,7 +13,6 @@ namespace SGA.Models.DAO.ManterDAO
     public class ManterGeoDAO
     {
         Geo ObjGeo;
-
         public ManterGeoDAO()
         {
 
@@ -36,10 +36,12 @@ namespace SGA.Models.DAO.ManterDAO
                     INNER JOIN (
                         SELECT idUsuario, MAX(dataRegistro) As UltimaData
                         FROM Geolocalizacao  WHERE
-							LATITUDE <> '0.0' AND LONGITUDE <> '0.0' GROUP BY idUsuario) As L2
+							LATITUDE <> '0.0' AND LONGITUDE <> '0.0' and idEmpresa = @Empresa GROUP BY idUsuario) As L2
                             ON (L1.idUsuario = L2.idUsuario AND L1.dataRegistro = L2.UltimaData) 
 		                    INNER JOIN Usuario As L3 on (L1.idUsuario = L3.idUsuario)
                     ORDER BY L1.idUsuario;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
 
@@ -51,8 +53,8 @@ namespace SGA.Models.DAO.ManterDAO
                         GeoLoc.Latitude = Dr.GetString(1);
                         GeoLoc.Longitude = Dr.GetString(2);
                         GeoLoc.IdUsr = Dr.GetInt32(3);
-                        GeoLoc.Data = Dr.GetDateTime(4);
-                        GeoLoc.NomeUsuario = Dr.GetString(5);
+                        GeoLoc.Data = Dr.GetDateTime(5);
+                        GeoLoc.NomeUsuario = Dr.GetString(6);
                         List.Add(GeoLoc);
                     }
 
@@ -75,16 +77,19 @@ namespace SGA.Models.DAO.ManterDAO
                                     ([latitude]
                                       ,[longitude]
                                       ,[idUsuario]
+                                      ,[idEmpresa]
                                       ,[dataRegistro])
                                 VALUES
                                     (@Lat
                                     ,@Long
                                     ,@IdUsuario
+                                    ,@IdEmpresa
                                     ,@Data);", Con);
 
                     Cmd.Parameters.AddWithValue("@Lat", ObjGeo.Latitude);
                     Cmd.Parameters.AddWithValue("@Long", ObjGeo.Longitude);
                     Cmd.Parameters.AddWithValue("@IdUsuario", ObjGeo.IdUsr);
+                    Cmd.Parameters.AddWithValue("@IdEmpresa", ObjGeo.IdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
 
                     Cmd.ExecuteNonQuery();
@@ -127,8 +132,8 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjGeo.Latitude = Dr.GetString(1);
                         ObjGeo.Longitude = Dr.GetString(2);
                         ObjGeo.IdUsr = Dr.GetInt32(3);
-                        ObjGeo.Data = Dr.GetDateTime(4);
-                        ObjGeo.NomeUsuario = Dr.GetString(5);
+                        ObjGeo.Data = Dr.GetDateTime(5);
+                        ObjGeo.NomeUsuario = Dr.GetString(6);
                     }
 
                     return ObjGeo;

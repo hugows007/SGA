@@ -19,7 +19,7 @@ namespace SGA.Views.SGA.VServico
 
             try
             {
-                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                if (!Session["perfil"].Equals("Gestor") && !Session["perfil"].Equals("Administrador"))
                 {
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }

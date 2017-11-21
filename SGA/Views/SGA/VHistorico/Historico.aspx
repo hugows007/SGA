@@ -20,7 +20,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <div class="alert alert-info">
-                                    <center><label class="control-label">Histórico de resoluções deste tipo de serviço: </label></center>
+                                    <center><label class="control-label">Histórico de soluções deste tipo de serviço: </label></center>
                                 </div>
                                 <br>
                                 <table class="table table-hover">

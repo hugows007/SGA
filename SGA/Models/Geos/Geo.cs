@@ -9,6 +9,7 @@ namespace SGA.Models.Geos
     {
         public int Id { get; set; }
         public int IdUsr { get; set; }
+        public int IdEmpresa { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public DateTime Data { get; set; }

@@ -29,7 +29,7 @@ namespace SGA.Views.SGA.VChat
         {
             try
             {
-                if (Session["perfil"].Equals("Cliente Físico") || Session["perfil"].Equals("Cliente Jurídico"))
+                if (Session["perfil"].Equals("Cliente Físico") && Session["perfil"].Equals("Cliente Jurídico"))
                 {
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }

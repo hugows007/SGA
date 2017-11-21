@@ -15,7 +15,7 @@ namespace SGA.Views.SGA.VEmpresa
         public string Mensagem;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+            if (!Session["perfil"].Equals("Gestor") && !Session["perfil"].Equals("Administrador"))
             {
                 Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
             }

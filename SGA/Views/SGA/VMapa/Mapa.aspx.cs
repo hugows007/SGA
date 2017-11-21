@@ -18,7 +18,7 @@ namespace SGA.Views.SGA.VMapa
         {
             try
             {
-                if (!Session["perfil"].Equals("Cliente Físico") || !Session["perfil"].Equals("Cliente Jurídico") || !Session["perfil"].Equals("Técnico") || !Session["perfil"].Equals("Administrador"))
+                if (!Session["perfil"].Equals("Cliente Físico") && !Session["perfil"].Equals("Cliente Jurídico") && !Session["perfil"].Equals("Técnico") && !Session["perfil"].Equals("Administrador"))
                 {
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }

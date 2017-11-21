@@ -22,7 +22,7 @@ namespace SGA.Views.SGA.VAtendimento
         {
             try
             {
-                if (!Session["perfil"].Equals("Técnico") || !Session["perfil"].Equals("Administrador"))
+                if (!Session["perfil"].Equals("Técnico") && !Session["perfil"].Equals("Administrador"))
                 {
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }

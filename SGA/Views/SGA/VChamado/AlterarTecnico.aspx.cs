@@ -19,7 +19,7 @@ namespace SGA.Views.SGA.VChamado
         {
             try
             {
-                if (!Session["perfil"].Equals("Gestor") || !Session["perfil"].Equals("Administrador"))
+                if (!Session["perfil"].Equals("Gestor") && !Session["perfil"].Equals("Administrador"))
                 {
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }
@@ -30,7 +30,7 @@ namespace SGA.Views.SGA.VChamado
                     ObjAtend.IdTecnico = Convert.ToInt32(Request.QueryString["TecnicoNovo"]);
 
                     ObjNotificacao.IdOrigem = 0;
-                    ObjNotificacao.IdDest = Convert.ToInt32(Request.QueryString["Chamado"]);
+                    ObjNotificacao.IdDest = Convert.ToInt32(Request.QueryString["TecnicoNovo"]);
                     ObjNotificacao.IdMensagem = 11;
                     ObjNotificacao.IdTipo = 4;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
