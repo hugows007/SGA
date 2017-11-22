@@ -77,7 +77,7 @@
                         </table>
                     </div>
                     <div class="panel-footer">
-                        Clique no número do chamado para ve-lo em detalhe<br />
+                        Clique no número do chamado para detalhes.<br />
                     </div>
                 </div>
             </div>

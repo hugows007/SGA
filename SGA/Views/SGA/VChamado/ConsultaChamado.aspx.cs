@@ -55,7 +55,7 @@ namespace SGA.Views.SGA.VChamado
                     if (ObjChamado != null)
                     {
                         if (Request.QueryString.AllKeys.Contains("Troca"))
-                        {   
+                        {
                             if (Request.QueryString["Troca"].Equals("true"))
                             {
                                 Mensagem = "Técnico alocado com sucesso.";
@@ -85,6 +85,14 @@ namespace SGA.Views.SGA.VChamado
                         ObjRegiao = new ManterRegiaoAtendimento(ObjRegiao).ConsultaRegiaoAtendimentoById();
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
                         ObjStatusChm = new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById();
+
+                        if (Session["perfil"].Equals("Cliente Físico") && Session["perfil"].Equals("Cliente Jurídico"))
+                        {
+                            if (!ObjAtend.IdCliente.Equals(Session["id"]))
+                            {
+                                Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                            }
+                        }
 
                         Mensagem = "Informações do chamado.";
                         ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);

@@ -17,6 +17,7 @@ namespace SGA.Views.SGA.VAvaliacao
         public Atendimento ObjAtend = FactoryAtendimento.GetNew();
         public Models.Avaliacoes.Avaliacao ObjAvaliacao = FactoryAvaliacao.GetNew();
         public string Mensagem;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -30,6 +31,12 @@ namespace SGA.Views.SGA.VAvaliacao
                 {
                     ObjAtend.IdChamado = Convert.ToInt32(Request.QueryString["IdChamado"]);
                     ObjAtend = new ManterAtendimento(ObjAtend).ConsultaAtendimentoByIdChamado();
+
+                    if (!ObjAtend.IdCliente.Equals(Session["id"]))
+                    {
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+
                     Mensagem = "Favor selecionar a nota.";
                     ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }

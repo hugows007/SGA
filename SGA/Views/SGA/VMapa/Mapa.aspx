@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Mapa.aspx.cs" Inherits="SGA.Views.SGA.VMapa.Mapa" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
-    <script> 
+    <script>
         google.maps.event.addDomListener(window, 'load', init);
         var map, markersArray = [];
 
         function bindInfoWindow(marker, map, location) {
-            google.maps.event.addListener(marker, 'click', function() {
+            google.maps.event.addListener(marker, 'click', function () {
                 function close(location) {
                     location.ib.close();
                     location.infoWindowVisible = false;
@@ -16,7 +16,7 @@
                 if (location.infoWindowVisible === true) {
                     close(location);
                 } else {
-                    markersArray.forEach(function(loc, index){
+                    markersArray.forEach(function (loc, index) {
                         if (loc.ib && loc.ib !== null) {
                             close(loc);
                         }
@@ -30,9 +30,9 @@
                         if (location[part] === '') {
                             return '';
                         } else if (location.iw[part]) {
-                            switch(el){
+                            switch (el) {
                                 case 'photo':
-                                    if (location.photo){
+                                    if (location.photo) {
                                         return '<div class="iw-photo" style="background-image: url(' + location.photo + ');"></div>';
                                     } else {
                                         return '';
@@ -42,7 +42,7 @@
                                     return '<div class="iw-toolbar"><h3 class="md-subhead">' + location.title + '</h3></div>';
                                     break;
                                 case 'div':
-                                    switch(part){
+                                    switch (part) {
                                         case 'email':
                                             return '<div class="iw-details"><i class="material-icons" style="color:#4285f4;"><img src="//cdn.mapkit.io/v1/icons/' + icon + '.svg"/></i><span><a href="mailto:' + location.email + '" target="_blank">' + location.email + '</a></span></div>';
                                             break;
@@ -59,12 +59,12 @@
                                     break;
                                 case 'open_hours':
                                     var items = '';
-                                    if (location.open_hours.length > 0){
+                                    if (location.open_hours.length > 0) {
                                         for (var i = 0; i < location.open_hours.length; ++i) {
-                                            if (i !== 0){
-                                                items += '<li><strong>' + location.open_hours[i].day + '</strong><strong>' + location.open_hours[i].hours +'</strong></li>';
+                                            if (i !== 0) {
+                                                items += '<li><strong>' + location.open_hours[i].day + '</strong><strong>' + location.open_hours[i].hours + '</strong></li>';
                                             }
-                                            var first = '<li><label for="cb_hours"><input type="checkbox" id="cb_hours"/><strong>' + location.open_hours[0].day + '</strong><strong>' + location.open_hours[0].hours +'</strong><i class="material-icons toggle-open-hours"><img src="//cdn.mapkit.io/v1/icons/keyboard_arrow_down.svg"/></i><ul>' + items + '</ul></label></li>';
+                                            var first = '<li><label for="cb_hours"><input type="checkbox" id="cb_hours"/><strong>' + location.open_hours[0].day + '</strong><strong>' + location.open_hours[0].hours + '</strong><i class="material-icons toggle-open-hours"><img src="//cdn.mapkit.io/v1/icons/keyboard_arrow_down.svg"/></i><ul>' + items + '</ul></label></li>';
                                         }
                                         return '<div class="iw-list"><i class="material-icons first-material-icons" style="color:#4285f4;"><img src="//cdn.mapkit.io/v1/icons/' + icon + '.svg"/></i><ul>' + first + '</ul></div>';
                                     } else {
@@ -77,7 +77,7 @@
                         }
                     }
 
-                    boxText.innerHTML = 
+                    boxText.innerHTML =
                         buildPieces(location, 'photo', 'photo', '') +
                         buildPieces(location, 'iw-toolbar', 'title', '') +
                         buildPieces(location, 'div', 'address', 'location_on') +
@@ -114,11 +114,14 @@
         }
 
         function init() {
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var directionsService = new google.maps.DirectionsService;
+
             var mapOptions = {
-                center: new google.maps.LatLng(-22.90864599436547,-43.170069586694325),
-                zoom: 11,
+                center: new google.maps.LatLng(-22.81416198339641, -43.15796003125001),
+                zoom: 10,
                 gestureHandling: 'auto',
-                fullscreenControl: true,
+                fullscreenControl: false,
                 zoomControl: true,
                 disableDoubleClickZoom: true,
                 mapTypeControl: true,
@@ -128,15 +131,29 @@
                 scaleControl: true,
                 scrollwheel: true,
                 streetViewControl: true,
-                draggable : true,
+                draggable: true,
                 clickableIcons: false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
-                styles: [{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#C6E2FF"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#C5E3BF"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#D1D1B8"}]}]
             }
             var mapElement = document.getElementById('mapnew1');
             var map = new google.maps.Map(mapElement, mapOptions);
+                <%if (!ObjGeoCliente.Id.Equals(0))
+        {%>
+            directionsDisplay.setMap(map);
+            directionsDisplay.setOptions({ suppressMarkers: true });
+
+            calculateAndDisplayRoute(directionsService, directionsDisplay);
+            document.getElementById('mode').addEventListener('change', function () {
+                calculateAndDisplayRoute(directionsService, directionsDisplay);
+            });
+            <%}%>
+
             var locations = [
                 {"title":"<%=ObjGeo.NomeUsuario%>","address":"","desc":"Endereço: <%=ObjGeo.Endereco%>","tel":"","int_tel":"","email":"","web":"","web_formatted":"","open":"","time":"","lat":<%=ObjGeo.Latitude%>,"lng":<%=ObjGeo.Longitude%>,"vicinity":"Brazil","open_hours":"","marker":{"fillColor":"#F44336","fillOpacity":1,"strokeWeight":0,"scale":1.5,"path":"M10.2,2.5v4.2c0,0,0,0,0,0L10.2,2.5c-6,0-10.9,4.9-10.9,10.9s10.9,23.8,10.9,23.8v0c0,0,10.9-17.8,10.9-23.8 S16.2,2.5,10.2,2.5z M10.2,17.9c-2.5,0-4.6-2.1-4.6-4.6s2.1-4.6,4.6-4.6s4.6,2.1,4.6,4.6S12.8,17.9,10.2,17.9z M16.8,14.1 c0-0.2,0-0.3,0-0.5C16.9,13.8,16.9,14,16.8,14.1z","anchor":{"x":10,"y":30},"origin":{"x":0,"y":0},"style":0},"iw":{"address":true,"desc":true,"email":true,"enable":true,"int_tel":true,"open":true,"open_hours":true,"photo":true,"tel":true,"title":true,"web":true}}
+                <%if (!ObjGeoCliente.Id.Equals(0))
+        {%>
+                ,{"title":"<%=ObjGeoCliente.NomeUsuario%>","address":"","desc":" <%=ObjGeoCliente.Endereco%>","tel":"","int_tel":"","email":"","web":"","web_formatted":"","open":"","time":"","lat":<%=ObjGeoCliente.Latitude%>,"lng":<%=ObjGeoCliente.Longitude%>,"vicinity":"Brazil","open_hours":"","marker":{"fillColor":"#F44336","fillOpacity":1,"strokeWeight":0,"scale":1.5,"path":"M10.2,2.5v4.2c0,0,0,0,0,0L10.2,2.5c-6,0-10.9,4.9-10.9,10.9s10.9,23.8,10.9,23.8v0c0,0,10.9-17.8,10.9-23.8 S16.2,2.5,10.2,2.5z M10.2,17.9c-2.5,0-4.6-2.1-4.6-4.6s2.1-4.6,4.6-4.6s4.6,2.1,4.6,4.6S12.8,17.9,10.2,17.9z M16.8,14.1 c0-0.2,0-0.3,0-0.5C16.9,13.8,16.9,14,16.8,14.1z","anchor":{"x":10,"y":30},"origin":{"x":0,"y":0},"style":0},"iw":{"address":true,"desc":true,"email":true,"enable":true,"int_tel":true,"open":true,"open_hours":true,"photo":true,"tel":true,"title":true,"web":true}}
+                <%}%>
             ];
             for (i = 0; i < locations.length; i++) {
                 marker = new google.maps.Marker({
@@ -159,18 +176,37 @@
                 });
                 markersArray.push(marker);
 
-                if (locations[i].iw.enable === true){
+                if (locations[i].iw.enable === true) {
                     bindInfoWindow(marker, map, locations[i]);
                 }
             }
         }
+
+                        <%if (!ObjGeoCliente.Id.Equals(0))
+        {%>
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            var selectedMode = document.getElementById('mode').value;
+            directionsService.route({
+                origin: { lat: <%=ObjGeo.Latitude%>, lng: <%=ObjGeo.Longitude%> },  
+                destination: { lat: <%=ObjGeoCliente.Latitude%>, lng: <%=ObjGeoCliente.Longitude%> },
+                travelMode: google.maps.TravelMode[selectedMode]
+            }, function (response, status) {
+                if (status == 'OK') {
+                    directionsDisplay.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+        <%}%>
     </script>
     <meta http-equiv="refresh" content="30">
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Mapa</h1>
-                <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a><br /><br />
+                <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a><br />
+                <br />
                 <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
             </div>
             <script>
@@ -185,6 +221,13 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-map-marker fa-fw"></i>Localização:
+                                            <div id="floating-panel">
+                                                <b>Modo de viagem: </b>
+                                                <select id="mode">
+                                                    <option value="DRIVING">Carro</option>
+                                                    <option value="TRANSIT">Transporte público</option>
+                                                </select>
+                                            </div>
                         </div>
                         <div class="panel-body google-maps" id="mapnew1"></div>
                     </div>

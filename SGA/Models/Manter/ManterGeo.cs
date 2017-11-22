@@ -78,8 +78,9 @@ namespace SGA.Models.Manter
 
                 ObjUsuario.Id = ObjGeo.IdUsr;
                 ObjUsuario = new ManterUsuarioDAO(ObjUsuario).ConsultaUsuarioByIdDAO();
-                
+
                 GeocodeResponse response = geocoder.Geocode(ObjUsuario.Endereco);
+
                 ObjGeo.NomeUsuario = ObjUsuario.Nome;
                 ObjGeo.Endereco = ObjUsuario.Endereco;
                 ObjGeo.Latitude = response.Results[0].Geometry.Location.Lat.ToString().Replace(",",".");

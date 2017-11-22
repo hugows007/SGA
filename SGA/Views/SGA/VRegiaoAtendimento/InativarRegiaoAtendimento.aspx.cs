@@ -28,7 +28,7 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
                 {
                     ObjRegiao.Id = Convert.ToInt32(Request.QueryString["Id"]);
                     OperInativar = new ManterRegiaoAtendimento(ObjRegiao).InativarRegiaoAtendimento();
-                    Response.Redirect("\\Views\\SGA\\VAreaAtendimento\\ConsultaAreaAtendimentos.aspx?OpInatArea=" + OperInativar.ToString());
+                    Response.Redirect("\\Views\\SGA\\VAreaAtendimento\\ConsultaRegiaoAtendimentos.aspx?OpInatArea=" + OperInativar.ToString());
                 }
             }
             catch (Exception Ex)

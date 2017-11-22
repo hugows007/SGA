@@ -2,9 +2,6 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
     <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
-
-    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-        <ContentTemplate>
             <div id="page-wrapper">
                 <div class="row">
                     <div class="col-lg-12">
@@ -212,6 +209,4 @@
                     </div>
                 </div>
             </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
 </asp:Content>

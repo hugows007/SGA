@@ -14,6 +14,7 @@ namespace SGA.Views.SGA.VMapa
     {
         string Mensagem;
         public Geo ObjGeo = FactoryGeo.GetNew();
+        public Geo ObjGeoCliente = FactoryGeo.GetNew();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -34,6 +35,9 @@ namespace SGA.Views.SGA.VMapa
                 {
                     ObjGeo.IdUsr = Convert.ToInt32(Request.QueryString["IdTecnico"]);
                     ObjGeo = new ManterGeo(ObjGeo).GetTecnicoLocalizacao();
+                    ObjGeoCliente.IdUsr = Convert.ToInt32(Session["id"]);
+                    ObjGeoCliente = new ManterGeo(ObjGeoCliente).GetClienteLocalizacao();
+
                     Mensagem = "Localização do técnico.";
                 }
 

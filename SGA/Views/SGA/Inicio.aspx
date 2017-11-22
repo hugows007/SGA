@@ -532,7 +532,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        Navegue atravéz dos menus a sua esquerda.
+                        Navegue através dos menus a sua esquerda.
                         <br />
                     </div>
                 </div>

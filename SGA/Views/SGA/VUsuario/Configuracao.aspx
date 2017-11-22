@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        Favor alterar os campos e clicar em salvar.<br />
+                        Para salvar as alterações, clicar em Modificar informações.<br />
                     </div>
                 </div>
             </div>
