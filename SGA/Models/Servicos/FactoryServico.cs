@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Servicos
 {
-    public class FactoryServico
+    public class FactoryServico : Servico
     {
         internal static Servico GetNewServico()
         {

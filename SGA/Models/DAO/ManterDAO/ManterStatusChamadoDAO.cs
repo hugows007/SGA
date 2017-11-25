@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using SGA.Models.Manter;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterStatusChamadoDAO
+    public class ManterStatusChamadoDAO : ManterStatusChamado
     {
         StatusChamado ObjStatusChm;
         public ManterStatusChamadoDAO(StatusChamado ObjStatusChm)

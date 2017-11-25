@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Relatorios
 {
-    public class FactoryRelatorio
+    public class FactoryRelatorio : Relatorio
     {
         internal static Relatorio GetNew()
         {

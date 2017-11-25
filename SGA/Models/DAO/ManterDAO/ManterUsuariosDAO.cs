@@ -9,10 +9,11 @@ using System.Web.Security;
 using SGA.Models.Especialidades;
 using SGA.Models.Chamados;
 using SGA.Models.Atendimentos;
+using SGA.Models.Manter;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterUsuarioDAO
+    public class ManterUsuarioDAO : ManterUsuario
     {
         string LastId;
         string MembershipId;
@@ -603,7 +604,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.Telefone = Dr.GetString(5);
                         ObjUsuario.IdStatus = Dr.GetInt32(6);
                         ObjUsuario.Regra = GetRegraUserDAO(ObjUsuario.Id);
-                        ObjUsuario.IdEmpresa = Dr.GetInt32(9);
+                        ObjUsuario.IdEmpresa = Dr.GetInt32(7);
                     }
 
                     return ObjUsuario;

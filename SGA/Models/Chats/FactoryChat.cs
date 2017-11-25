@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Chats
 {
-    public class FactoryChat
+    public class FactoryChat : Chat
     {
         internal static Chat GetNew(TipoChat TpChat)
         {

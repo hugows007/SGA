@@ -26,29 +26,28 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
-            <div id="page-wrapper">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header"></h1>
+    <script>
+        function Alerta(Texto) {
+            alertify.log(Texto);
+        }
+    </script>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Avaliação de atendimento e chamado: <%=ObjAtend.IdChamado %>
+                        <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Avaliação de atendimento e chamado: <%=ObjAtend.IdChamado %>
-                                <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
-                            </div>
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        <ContentTemplate>
                             <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                                 <div class="panel-body">
-
-                                    <script>
-                                        function Alerta(Texto) {
-                                            alertify.log(Texto);
-                                        }
-                                    </script>
                                     <label for="RatingAtendimento" class="control-label">Avaliação do atendimento do técnico:</label>
                                     <ajaxToolkit:Rating ID="RatingAtendimento" runat="server" StarCssClass="starRating" FilledStarCssClass="FilledStars" EmptyStarCssClass="EmptyStars" WaitingStarCssClass="WaitingStars" CurrentRating="2" MaxRating="5">
                                     </ajaxToolkit:Rating>
@@ -66,12 +65,12 @@
                                 <br />
                                 <asp:Button ID="AvaliarButton" runat="server" Text="Avaliar!" CssClass="btn btn-success" OnClick="AvaliarButton_Click" />
                             </div>
-                            <div class="panel-footer">
-                            </div>
-                        </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                    <div class="panel-footer">
                     </div>
                 </div>
             </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+        </div>
+    </div>
 </asp:Content>

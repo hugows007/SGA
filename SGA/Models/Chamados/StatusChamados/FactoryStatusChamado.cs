@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Chamados.StatusChamados
 {
-    public class FactoryStatusChamado
+    public class FactoryStatusChamado : StatusChamado
     {
         internal static StatusChamado GetNew()
         {

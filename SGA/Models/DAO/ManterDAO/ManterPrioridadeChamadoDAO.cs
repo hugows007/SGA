@@ -1,6 +1,7 @@
 ﻿using SGA.DAO;
 using SGA.Models.Chamados.PrioridadeChamados;
 using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -9,7 +10,7 @@ using System.Web;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterPrioridadeChamadoDAO
+    public class ManterPrioridadeChamadoDAO : ManterPrioridadeChamado
     {
         PrioridadeChamado ObjPrioridade;
         public ManterPrioridadeChamadoDAO(PrioridadeChamado ObjPrioridade)

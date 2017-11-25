@@ -21,8 +21,11 @@ namespace SGA.Views.SGA.VEspecialidade
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }
 
-                Mensagem = "Consulta de especialidades.";
-                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                if (!Page.IsPostBack)
+                {
+                    Mensagem = "Consulta de especialidades.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                }
 
                 foreach (var ObjAT in new ManterEspecialidade(ObjEspec).ConsultaEspecialidades())
                 {

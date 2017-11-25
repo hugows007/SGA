@@ -48,6 +48,12 @@ namespace SGA.Views.SGA.VChamado
             {
                 if (!"".Equals(Request.QueryString["IdChamado"]))
                 {
+                    if (!Page.IsPostBack)
+                    {
+                        Mensagem = "Informações do chamado.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    }
+
                     ObjChamado = FactoryChamado.GetNew();
                     ObjChamado.Id = Convert.ToInt32(Request.QueryString["IdChamado"]);
                     ObjChamado = new ManterChamado(ObjChamado).ConsultaChamadoById();
@@ -93,9 +99,6 @@ namespace SGA.Views.SGA.VChamado
                                 Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                             }
                         }
-
-                        Mensagem = "Informações do chamado.";
-                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                         if (ObjStatusChm.Id.Equals(3))
                         {

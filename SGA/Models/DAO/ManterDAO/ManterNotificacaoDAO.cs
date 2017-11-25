@@ -1,5 +1,6 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Notificacoes;
 using SGA.Models.Usuarios;
 using System;
@@ -11,10 +12,8 @@ using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterNotificacaoDAO
+    public class ManterNotificacaoDAO : ManterNotificacao
     {
-        public Notificacao ObjNotificacao;
-        Usuario ObjUsuario;
         public ManterNotificacaoDAO()
         {
 

@@ -11,9 +11,8 @@ using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterRegiaoAtendimentoDAO
+    public class ManterRegiaoAtendimentoDAO : ManterRegiaoAtendimento
     {
-        private RegiaoAtendimento ObjRegiao;
         public ManterRegiaoAtendimentoDAO()
         {
 

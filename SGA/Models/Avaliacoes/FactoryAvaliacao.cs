@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Avaliacoes
 {
-    public class FactoryAvaliacao
+    public class FactoryAvaliacao : Avaliacao
     {
         internal static Avaliacao GetNew()
         {

@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
     <script>
+        //Google:
         google.maps.event.addDomListener(window, 'load', init);
         var map, markersArray = [];
 

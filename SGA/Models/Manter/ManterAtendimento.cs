@@ -11,7 +11,7 @@ using System.Web;
 
 namespace SGA.Models.Manter
 {
-    public class ManterAtendimento : Atendimento
+    public class ManterAtendimento
     {
         Atendimento ObjAtend;
         Usuario ObjUsuario;

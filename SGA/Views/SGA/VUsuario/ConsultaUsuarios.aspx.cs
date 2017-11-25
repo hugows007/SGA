@@ -26,8 +26,11 @@ namespace SGA.Views.SGA.VUsuario
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }
 
-                Mensagem = "Usuários do sistema.";
-                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                if (!Page.IsPostBack)
+                {
+                    Mensagem = "Usuários do sistema.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                }
 
                 foreach (var ObjUsr in new ManterUsuario(ObjUsuario).ConsultaUsuarios())
                 {

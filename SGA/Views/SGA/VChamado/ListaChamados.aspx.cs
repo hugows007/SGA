@@ -33,7 +33,11 @@ namespace SGA.Views.SGA.VChamado
         {
             try
             {
-                Mensagem = "Consulta de chamados.";
+                if (!Page.IsPostBack)
+                {
+                    Mensagem = "Consulta de chamados.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                }
 
                 if (!"".Equals(Request.QueryString["IdTecnico"]) && Session["perfil"].Equals("Técnico"))
                 {

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Notificacoes
 {
-    public class FactoryNotificacao
+    public class FactoryNotificacao : Notificacao
     {
         internal static Notificacao GetNew()
         {

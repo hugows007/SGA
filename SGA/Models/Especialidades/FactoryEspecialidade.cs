@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Especialidades
 {
-    public class FactoryEspecialidade
+    public class FactoryEspecialidade : Especialidade
     {
         internal static Especialidade GetNew()
         {

@@ -239,6 +239,8 @@
     <Content Include="Scripts\morris\raphael-min.js" />
     <Content Include="Scripts\select\bootstrap-select.js" />
     <Content Include="Scripts\select\bootstrap-select.min.js" />
+    <Content Include="ClassDiagram3.cd" />
+    <Content Include="ClassDiagram4.cd" />
     <None Include="Service References\WSCorreios\configuration91.svcinfo" />
     <None Include="Service References\WSCorreios\configuration.svcinfo" />
     <None Include="Service References\WSCorreios\Reference.svcmap">

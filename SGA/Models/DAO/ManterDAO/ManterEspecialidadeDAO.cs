@@ -1,6 +1,7 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
 using SGA.Models.Especialidades;
+using SGA.Models.Manter;
 using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterEspecialidadeDAO
+    public class ManterEspecialidadeDAO : ManterEspecialidade
     {
         private Especialidade ObjEspec;
         private Servico ObjServ;

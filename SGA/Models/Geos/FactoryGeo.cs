@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Geos
 {
-    public class FactoryGeo
+    public class FactoryGeo : Geo
     {
         public static Geo GetNew()
         {

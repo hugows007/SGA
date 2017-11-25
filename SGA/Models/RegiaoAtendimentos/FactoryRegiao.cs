@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.RegiaoAtendimentos
 {
-    public class FactoryRegiao
+    public class FactoryRegiao : RegiaoAtendimento
     {
         internal static RegiaoAtendimento GetNew()
         {

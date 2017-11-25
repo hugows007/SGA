@@ -2,6 +2,7 @@
 using SGA.Models.Atendimentos;
 using SGA.Models.Chamados;
 using SGA.Models.DAO.Log;
+using SGA.Models.Manter;
 using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterChamadoDAO
+    public class ManterChamadoDAO : ManterChamado
     {
         private Chamado ObjChamado;
         private Usuario ObjUsuario;

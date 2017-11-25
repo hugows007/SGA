@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Chamados
 {
-    public class FactoryChamado
+    public class FactoryChamado : Chamado
     {
         internal static Chamado GetNew()
         {

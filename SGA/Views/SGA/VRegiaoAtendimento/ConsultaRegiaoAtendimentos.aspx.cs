@@ -24,9 +24,12 @@ namespace SGA.Views.SGA.VRegiaoAtendimento
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }
 
-                Mensagem = "Consulta de região de atendimento";
-                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
-
+                if (!Page.IsPostBack)
+                {
+                    Mensagem = "Consulta de região de atendimento";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                }
+                
                 foreach (var ObjAT in new ManterRegiaoAtendimento(ObjRegiao).ConsultaRegiaoAtendimentos())
                 {
                     ListaAreaSelect.Add(ObjAT);

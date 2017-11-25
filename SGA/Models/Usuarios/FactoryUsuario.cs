@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SGA.Models.Usuarios
 {
-    public abstract class FactoryUsuario
+    public abstract class FactoryUsuario : Usuario
     {
         public static Usuario GetNew(TipoUsuario TpUsr)
         {

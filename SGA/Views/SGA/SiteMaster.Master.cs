@@ -22,15 +22,13 @@ namespace SGA.Views.SGA
         public List<Notificacao> ListaNotificacao = new List<Notificacao>();
 
         protected void Page_Init(object sender, EventArgs e)
-        {
+        {           
             this.ID = "Master";
         }
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                new Exception();
-
                 Page.DataBind();
                 ListaNotificacao.Clear();
 

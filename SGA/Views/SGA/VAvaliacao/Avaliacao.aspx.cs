@@ -37,8 +37,11 @@ namespace SGA.Views.SGA.VAvaliacao
                         Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                     }
 
-                    Mensagem = "Favor selecionar a nota.";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    if (!Page.IsPostBack)
+                    {
+                        Mensagem = "Favor selecionar a nota.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    }
                 }
                 else
                 {

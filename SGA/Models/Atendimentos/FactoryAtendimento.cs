@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Atendimentos
 {
-    public class FactoryAtendimento
+    public class FactoryAtendimento : Atendimento
     {
         internal static Atendimento GetNew()
         {

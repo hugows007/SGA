@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Historicos
 {
-    public class FactoryHistorico
+    public class FactoryHistorico : Historico
     {
         internal static Historico GetNew()
         {

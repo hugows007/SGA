@@ -1,6 +1,7 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
 using SGA.Models.Geos;
+using SGA.Models.Manter;
 using SGA.Models.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Web;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterGeoDAO
+    public class ManterGeoDAO : ManterGeo
     {
         Geo ObjGeo;
         public ManterGeoDAO()

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Chamados.PrioridadeChamados
 {
-    public class FactoryPrioridadeChm
+    public class FactoryPrioridadeChm : PrioridadeChamado
     {
         internal static PrioridadeChamado GetNew()
         {

@@ -53,8 +53,11 @@ namespace SGA.Views.SGA.VChamado
                         DropDownListCliente.Items.Insert(0, new ListItem("Selecione o cliente", "0"));
                     }
 
-                    Mensagem = "Abertura de chamado.";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    if (!Page.IsPostBack)
+                    {
+                        Mensagem = "Abertura de chamado.";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    }
                 }
                 catch (Exception Ex)
                 {

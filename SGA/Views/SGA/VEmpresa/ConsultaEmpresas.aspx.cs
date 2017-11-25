@@ -22,8 +22,11 @@ namespace SGA.Views.SGA.VEmpresa
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }
 
-                Mensagem = "Consulta de empresas.";
-                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                if (!Page.IsPostBack)
+                {
+                    Mensagem = "Consulta de empresas.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                }
 
                 foreach (var ObjAT in new ManterEmpresa(ObjEmpresa).ConsultaEmpresas())
                 {

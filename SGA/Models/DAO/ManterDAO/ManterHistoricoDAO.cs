@@ -1,5 +1,6 @@
 ﻿using SGA.DAO;
 using SGA.Models.Historicos;
+using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -8,7 +9,7 @@ using System.Web;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterHistoricoDAO
+    public class ManterHistoricoDAO : ManterHistorico
     {
         Historico ObjHistorico;
         public ManterHistoricoDAO()

@@ -1,6 +1,7 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
 using SGA.Models.Empresas;
+using SGA.Models.Manter;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,7 +11,7 @@ using System.Web.Security;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterEmpresaDAO
+    public class ManterEmpresaDAO : ManterEmpresa
     {
         private Empresa ObjEmpresa;
         public ManterEmpresaDAO(Empresa objEmpresa)

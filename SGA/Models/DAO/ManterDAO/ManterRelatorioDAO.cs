@@ -1,4 +1,5 @@
 ﻿using SGA.DAO;
+using SGA.Models.Manter;
 using SGA.Models.Relatorios;
 using SGA.Models.Usuarios;
 using System;
@@ -11,7 +12,7 @@ using System.Web;
 
 namespace SGA.Models.DAO.ManterDAO
 {
-    public class ManterRelatorioDAO
+    public class ManterRelatorioDAO : ManterRelatorio
     {
         Relatorio ObjRelatorio;
         SqlCommand Cmd;

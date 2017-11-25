@@ -20,8 +20,11 @@ namespace SGA.Views.SGA.VEspecialidade
                 Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
             }
 
-            Mensagem = "Cadastro de especialidade.";
-            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+            if (!Page.IsPostBack)
+            {
+                Mensagem = "Cadastro de especialidade.";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+            }
         }
 
         protected void CadastrarButton_Click(object sender, EventArgs e)

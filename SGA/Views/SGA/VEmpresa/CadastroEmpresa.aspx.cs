@@ -20,8 +20,11 @@ namespace SGA.Views.SGA.VEmpresa
                 Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
             }
 
-            Mensagem = "Cadastro de empresa.";
-            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+            if (!Page.IsPostBack)
+            {
+                Mensagem = "Cadastro de empresa.";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+            }
         }
 
         protected void CadastrarButton_Click(object sender, EventArgs e)

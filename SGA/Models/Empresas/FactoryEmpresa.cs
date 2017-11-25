@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SGA.Models.Empresas
 {
-    public class FactoryEmpresa
+    public class FactoryEmpresa : Empresa
     {
         internal static Empresa GetNew()
         {

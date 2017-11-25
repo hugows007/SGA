@@ -27,8 +27,11 @@ namespace SGA.Views.SGA.VTipoServico
                     Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
                 }
 
-                Mensagem = "Consulta de tipos de serviços.";
-                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                if (!Page.IsPostBack)
+                {
+                    Mensagem = "Consulta de tipos de serviços.";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                }
 
                 foreach (var Result in new ManterServico().ConsultaTpServicos())
                 {
