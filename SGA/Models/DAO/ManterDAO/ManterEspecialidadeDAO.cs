@@ -1,6 +1,7 @@
 ﻿using SGA.DAO;
 using SGA.Models.DAO.Log;
 using SGA.Models.Especialidades;
+using SGA.Models.EspecServs;
 using SGA.Models.Manter;
 using SGA.Models.Servicos;
 using System;
@@ -16,9 +17,15 @@ namespace SGA.Models.DAO.ManterDAO
     {
         private Especialidade ObjEspec;
         private Servico ObjServ;
+        private EspecServ ObjEspecServ;
         public ManterEspecialidadeDAO(Especialidade objEspec)
         {
             ObjEspec = objEspec;
+        }
+
+        public ManterEspecialidadeDAO(EspecServ ObjEspecServ)
+        {
+            this.ObjEspecServ = ObjEspecServ;
         }
         public ManterEspecialidadeDAO(Especialidade ObjEspec, Servico ObjServ)
         {
@@ -59,6 +66,43 @@ namespace SGA.Models.DAO.ManterDAO
                     }
 
                     return EspecialidadeList;
+
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+        public List<EspecServ> ConsultaEspecialidadesServicosDAO()
+        {
+            try
+            {
+                List<EspecServ> ListaEspecServ = new List<EspecServ>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+
+                    SqlCommand Cmd = new SqlCommand(@"
+                select Srv.nome, Esp.especialidade from ServicoXEspecialidade SvEs inner join
+                    Servico Srv on (SvEs.idServico = Srv.idServico) inner join
+                    Especialidade Esp on (SvEs.idEspecialidade = Esp.idEspecialidade) where
+                    Srv.idEmpresa = @Empresa;", Con);
+
+                    Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = Cmd.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        EspecServ EspecServ = FactoryEspecServ.GetNew();
+                        EspecServ.Especialidade = Dr.GetString(0);
+                        EspecServ.Servico = Dr.GetString(1);
+                        ListaEspecServ.Add(EspecServ);
+                    }
+
+                    return ListaEspecServ;
 
                 }
             }

@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Cadastrar Área de atendimento
+                        Cadastrar Região de atendimento
                         <b>
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
@@ -29,7 +29,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="Regiao" class="control-label">Região: </label>
-                                <input type="text" id="Regiao" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 20 caracteres" />
+                                <input type="text" id="Regiao" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
                             </div>
                             <div class="form-group">
                                 <label for="Cidade" class="control-label">Cidade: </label>

@@ -20,11 +20,16 @@ namespace SGA.Models.DAO.ManterDAO
         Usuario ObjUsuario;
         Chamado ObjChamado;
         string RegraForUser;
+        UsuarioRelacionamento ObjUsrReg;
 
         public ManterUsuarioDAO() { }
         public ManterUsuarioDAO(Usuario ObjUsuario)
         {
             this.ObjUsuario = ObjUsuario;
+        }
+        public ManterUsuarioDAO(UsuarioRelacionamento ObjUsrReg)
+        {
+            this.ObjUsrReg = ObjUsrReg;
         }
         public ManterUsuarioDAO(Usuario ObjUsuario, string MbId)
         {
@@ -285,6 +290,82 @@ namespace SGA.Models.DAO.ManterDAO
                             Usr.NomeEmpresa = Dr.GetString(6);
                         }
                         Usr.Regra = GetRegraUserDAO(Usr.Id);
+
+                        UsrList.Add(Usr);
+                    }
+
+                    return UsrList;
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+        public List<UsuarioRelacionamento> ConsultaUsuarioRegiaoDAO()
+        {
+            try
+            {
+                List<UsuarioRelacionamento> UsrList = new List<UsuarioRelacionamento>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+
+                    SqlCommand CmdUsrs = new SqlCommand(@"
+               select Usr.nome, Rg.regiao from UsuarioXRegiaoAtendimento UsRg inner join
+                Usuario Usr on (UsRg.idUsuario = Usr.idUsuario) inner join
+                RegiaoDeAtendimento Rg on (UsRg.idRegiaoAtendimento = Rg.idRegiaoAtendimento) where
+                Usr.idEmpresa = @Empresa;", Con);
+
+                    CmdUsrs.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = CmdUsrs.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        UsuarioRelacionamento Usr = FactoryUsuarioRegiao.GetNew();
+
+                        Usr.Nome = Dr.GetString(0);
+                        Usr.Regiao = Dr.GetString(1);
+
+                        UsrList.Add(Usr);
+                    }
+
+                    return UsrList;
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+        public List<UsuarioRelacionamento> ConsultaUsuarioEspecialidadeDAO()
+        {
+            try
+            {
+                List<UsuarioRelacionamento> UsrList = new List<UsuarioRelacionamento>();
+                SqlDataReader Dr = null;
+
+                using (SqlConnection Con = new Conexao().ConexaoDB())
+                {
+
+                    SqlCommand CmdUsrs = new SqlCommand(@"
+               select Usr.nome, Esp.especialidade from UsuarioXEspecialidade UsEsp inner join
+                    Usuario Usr on (UsEsp.idUsuario = Usr.idUsuario) inner join
+                    Especialidade Esp on (Esp.idEspecialidade = UsEsp.idEspecialidade) where
+                    Usr.idEmpresa = @Empresa;", Con);
+
+                    CmdUsrs.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                    Dr = CmdUsrs.ExecuteReader();
+
+                    while (Dr.Read())
+                    {
+                        UsuarioRelacionamento Usr = FactoryUsuarioRegiao.GetNew();
+
+                        Usr.Nome = Dr.GetString(0);
+                        Usr.Especialidade = Dr.GetString(1);
 
                         UsrList.Add(Usr);
                     }
@@ -993,10 +1074,40 @@ namespace SGA.Models.DAO.ManterDAO
                             ObjUsuario.Id = Dr.GetInt32(0);
                             ObjUsuario.ObjRegiao.Id = Dr.GetInt32(1);
                         }
+
+                        if (!Dr.Read())
+                        {
+                            Dr.Close();
+
+                            Cmd = new SqlCommand(@"
+                    SELECT top 1 UsrReg.idUsuario
+                          ,UsrReg.idRegiaoAtendimento
+						  ,ServEspec.idServico
+                      FROM UsuarioXRegiaoAtendimento UsrReg inner join 
+                      Funcionario UsrFunc on (UsrFunc.idUsuario = UsrReg.idUsuario) inner join 
+                      Usuario Usr on (UsrFunc.idUsuario = Usr.idUsuario) inner join 
+                      UsuarioXEspecialidade UsrEspec on (Usr.idUsuario = UsrEspec.idUsuario) inner join
+					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade)
+                      WHERE Usr.idStatusUsuario in (1, 2) and 
+                      UsrReg.idRegiaoAtendimento = @IdRegiao and 
+                      ServEspec.idServico = @IdServ and 
+					  Usr.idEmpresa = @Empresa
+					  order by NEWID();", Con);
+
+                            Cmd.Parameters.AddWithValue("@IdRegiao", ObjUsuario.ObjRegiao.Id);
+                            Cmd.Parameters.AddWithValue("@IdServ", ObjChamado.IdServico);
+                            Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+
+                            Dr = Cmd.ExecuteReader();
+
+                            while (Dr.Read())
+                            {
+                                ObjUsuario.Id = Dr.GetInt32(0);
+                                ObjUsuario.ObjRegiao.Id = Dr.GetInt32(1);
+                            }
+                        }
                     }
-
                     return ObjUsuario;
-
                 }
             }
             catch (SqlException)

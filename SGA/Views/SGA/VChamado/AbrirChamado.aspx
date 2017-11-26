@@ -49,7 +49,7 @@
                                                             <label for="DropDownListTpServico" class="control-label">Tipo de serviço:</label>
                                                         </td>
                                                         <td>
-                                                            <asp:DropDownList ID="DropDownListTpServico" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListTpServico_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList ID="DropDownListTpServico"  AppendDataBoundItems="true" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListTpServico_SelectedIndexChanged"></asp:DropDownList>
                                                         </td>
                                                     </tr>
                                                     <%if (DropDownListTpServico.SelectedIndex > 0)
@@ -59,7 +59,7 @@
                                                             <label for="DropDownListServico" class="control-label">Descrição do serviço:</label>
                                                         </td>
                                                         <td>
-                                                            <asp:DropDownList ID="DropDownListServico" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
+                                                            <asp:DropDownList ID="DropDownListServico"  AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                                         </td>
                                                     </tr>
                                                     <tr>

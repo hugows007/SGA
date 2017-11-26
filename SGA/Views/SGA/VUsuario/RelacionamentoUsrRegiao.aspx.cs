@@ -34,17 +34,14 @@ namespace SGA.Views.SGA.VUsuario
                     Perfis.Add("Técnico");
                     Perfis.Add("Cliente");
 
-                    DropDownListTipo.DataSource = new ManterUsuario().GetRegrasUsuario();
-                    DropDownListTipo.DataBind();
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Administrador"));
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Atendente"));
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Gestor"));
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
+                    DropDownListTipo.Items.Insert(1, new ListItem("Técnico", "1"));
+                    DropDownListTipo.Items.Insert(2, new ListItem("Cliente Físico", "2"));
+                    DropDownListTipo.Items.Insert(3, new ListItem("Cliente Jurídico", "3"));
 
                     DropDownListRegiao.DataSource = new ManterRegiaoAtendimento().ConsultaRegiaoAtendimentos();
                     DropDownListRegiao.DataTextField = "Regiao";
                     DropDownListRegiao.DataValueField = "Id";
-                    DropDownListRegiao.DataBind();
                     DropDownListRegiao.Items.Insert(0, new ListItem("Selecione a regiao", "0"));
                 }
                 catch (Exception Ex)

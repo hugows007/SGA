@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
     <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
-    
+
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
             <div id="page-wrapper">
@@ -35,7 +35,8 @@
                                                         <label for="DropDownListTpServico" class="control-label">Tipo de serviço:</label>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="DropDownListTpServico" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
+                                                        <asp:DropDownList ID="DropDownListTpServico" AppendDataBoundItems="true" AutoPostBack="True" runat="server" CssClass="dropdown-toggle">
+                                                        </asp:DropDownList>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -53,7 +54,7 @@
                                         <label for="SLA" class="control-label">SLA em horas: </label>
                                         <input type="number" id="SLA" required class="form-control input-sm" runat="server" max="100" placeholder="Máximo de 100 horas" />
                                     </div>
-                                    <asp:Button ID="Cadastrar" runat="server" Text="Cadastrar" class="btn btn-default" OnClick="CadastrarButton_Click" />
+                                    <asp:Button ID="Cadastrar" runat="server" ClientIDMode="Static" Text="Cadastrar" class="btn btn-default submit" OnClick="CadastrarButton_Click" />
                                     <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                                 </div>
                             </div>
@@ -64,6 +65,12 @@
                     </div>
                 </div>
             </div>
+            <script type="text/javascript">
+                function DisableButton() {
+                    document.getElementById("<%=Cadastrar.ClientID %>").disabled = true;
+                }
+                window.onbeforeunload = DisableButton;
+            </script>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

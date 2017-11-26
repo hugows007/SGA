@@ -33,13 +33,11 @@ namespace SGA.Views.SGA.VEspecialidade
                     DropDownListServ.DataSource = new ManterServico().ConsultaServicos();
                     DropDownListServ.DataTextField = "NomeServ";
                     DropDownListServ.DataValueField = "Id";
-                    DropDownListServ.DataBind();
                     DropDownListServ.Items.Insert(0, new ListItem("Selecione o serviço", "0"));
 
                     DropDownListEspec.DataSource = new ManterEspecialidade().ConsultaEspecialidades();
                     DropDownListEspec.DataTextField = "NomeEspec";
                     DropDownListEspec.DataValueField = "Id";
-                    DropDownListEspec.DataBind();
                     DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
                 }
                 catch (Exception Ex)

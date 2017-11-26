@@ -39,7 +39,6 @@ namespace SGA.Views.SGA.VChamado
                     DropDownListTpServico.DataSource = new ManterServico().ConsultaTpServicos();
                     DropDownListTpServico.DataTextField = "NomeTipoServ";
                     DropDownListTpServico.DataValueField = "Id";
-                    DropDownListTpServico.DataBind();
                     DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
 
                     if (PerfilFunc)
@@ -49,7 +48,6 @@ namespace SGA.Views.SGA.VChamado
                         DropDownListCliente.DataSource = new ManterUsuario(ObjUsuario).ConsultaUsuariosByPerfil(Perfis);
                         DropDownListCliente.DataTextField = "Nome";
                         DropDownListCliente.DataValueField = "Id";
-                        DropDownListCliente.DataBind();
                         DropDownListCliente.Items.Insert(0, new ListItem("Selecione o cliente", "0"));
                     }
 

@@ -27,7 +27,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="Nome" class="control-label">Tipo: </label>
-                                <input type="text" id="Nome" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 50 caracteres" />
+                                <input type="text" id="Nome" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 20 caracteres" />
                             </div>
                             <asp:Button ID="Cadastrar" runat="server" Text="Cadastrar" class="btn btn-default" OnClick="CadastrarButton_Click" />
                             <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>

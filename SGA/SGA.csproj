@@ -239,8 +239,6 @@
     <Content Include="Scripts\morris\raphael-min.js" />
     <Content Include="Scripts\select\bootstrap-select.js" />
     <Content Include="Scripts\select\bootstrap-select.min.js" />
-    <Content Include="ClassDiagram3.cd" />
-    <Content Include="ClassDiagram4.cd" />
     <None Include="Service References\WSCorreios\configuration91.svcinfo" />
     <None Include="Service References\WSCorreios\configuration.svcinfo" />
     <None Include="Service References\WSCorreios\Reference.svcmap">
@@ -248,8 +246,10 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="SQL\script.sql" />
+    <Content Include="SQL\script_HML.sql" />
     <Content Include="Views\SGA\VAvaliacao\Avaliacao.aspx" />
     <Content Include="Views\SGA\VChamado\AlterarTecnico.aspx" />
+    <Content Include="Views\SGA\VEspecialidade\ConsultaEspecServ.aspx" />
     <Content Include="Views\SGA\VHistorico\Historico.aspx" />
     <Content Include="Views\SGA\VMapa\Mapa.aspx" />
     <Content Include="Views\SGA\VRelatorio\Relatorio.aspx" />
@@ -259,6 +259,8 @@
     <Content Include="Views\SGA\VTipoServico\InativarTipoServico.aspx" />
     <Content Include="Views\SGA\VTipoServico\ModificarTipoServico.aspx" />
     <Content Include="Views\SGA\VUsuario\Configuracao.aspx" />
+    <Content Include="Views\SGA\VUsuario\ConsultaUsuarioEspecialidade.aspx" />
+    <Content Include="Views\SGA\VUsuario\ConsultaUsuarioRegiao.aspx" />
     <Content Include="WebServiceSGA.asmx" />
     <Content Include="packages.config" />
     <Content Include="Scripts\chat\index.js" />
@@ -680,6 +682,8 @@
     <Compile Include="Models\DAO\ManterDAO\ManterRelatorioDAO.cs" />
     <Compile Include="Models\Empresas\Empresa.cs" />
     <Compile Include="Models\Empresas\FactoryEmpresa.cs" />
+    <Compile Include="Models\EspecServs\EspecServ.cs" />
+    <Compile Include="Models\EspecServs\FactoryEspecServ.cs" />
     <Compile Include="Models\Geos\FactoryGeo.cs" />
     <Compile Include="Models\Geos\Geo.cs" />
     <Compile Include="Models\Historicos\FactoryHistorico.cs" />
@@ -699,6 +703,8 @@
     <Compile Include="Models\Notificacoes\Notificacao.cs" />
     <Compile Include="Models\Relatorios\FactoryRelatorio.cs" />
     <Compile Include="Models\Relatorios\Relatorio.cs" />
+    <Compile Include="Models\Usuarios\FactoryUsuarioRegiao.cs" />
+    <Compile Include="Models\Usuarios\UsuarioRegiao.cs" />
     <Compile Include="Models\Validacoes\ValidaCEP.cs" />
     <Compile Include="Models\Validacoes\ValidaDocumento.cs" />
     <Compile Include="Models\WebAPI\LoginController.cs" />
@@ -720,6 +726,13 @@
     </Compile>
     <Compile Include="Views\SGA\VChamado\AlterarTecnico.aspx.designer.cs">
       <DependentUpon>AlterarTecnico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\ConsultaEspecServ.aspx.cs">
+      <DependentUpon>ConsultaEspecServ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VEspecialidade\ConsultaEspecServ.aspx.designer.cs">
+      <DependentUpon>ConsultaEspecServ.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\SGA\VHistorico\Historico.aspx.cs">
       <DependentUpon>Historico.aspx</DependentUpon>
@@ -783,6 +796,20 @@
     </Compile>
     <Compile Include="Views\SGA\VUsuario\Configuracao.aspx.designer.cs">
       <DependentUpon>Configuracao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\ConsultaUsuarioEspecialidade.aspx.cs">
+      <DependentUpon>ConsultaUsuarioEspecialidade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\ConsultaUsuarioEspecialidade.aspx.designer.cs">
+      <DependentUpon>ConsultaUsuarioEspecialidade.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\ConsultaUsuarioRegiao.aspx.cs">
+      <DependentUpon>ConsultaUsuarioRegiao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SGA\VUsuario\ConsultaUsuarioRegiao.aspx.designer.cs">
+      <DependentUpon>ConsultaUsuarioRegiao.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebServiceSGA.asmx.cs">
       <DependentUpon>WebServiceSGA.asmx</DependentUpon>

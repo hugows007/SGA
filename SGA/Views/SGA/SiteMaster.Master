@@ -317,6 +317,12 @@
                                                 <a href="/Views/SGA/VUsuario/CadastroUsuario.aspx">Cadastrar usuário</a>
                                             </li>
                                             <li>
+                                                <a href="/Views/SGA/VUsuario/ConsultaUsuarioRegiao.aspx">Consulta relacionamento entre usuário e região</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VUsuario/ConsultaUsuarioEspecialidade.aspx">Consulta relacionamento entre usuário e especialidade</a>
+                                            </li>
+                                            <li>
                                                 <a href="/Views/SGA/VUsuario/RelacionamentoUsrRegiao.aspx">Relacionar usuário e região de atendimento</a>
                                             </li>
                                             <li>
@@ -325,6 +331,8 @@
                                         </ul>
                                     </li>
                                 </ul>
+                                <%if (Session["perfil"].Equals("Administrador"))
+                                    { %>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="#">Empresas<span class="fa arrow"></span></a>
@@ -338,6 +346,7 @@
                                         </ul>
                                     </li>
                                 </ul>
+                                <%} %>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="#">Região de atendimentos<span class="fa arrow"></span></a>
@@ -357,6 +366,9 @@
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VEspecialidade/ConsultaEspecialidades.aspx">Consultar especialidades</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Views/SGA/VEspecialidade/ConsultaEspecServ.aspx">Consultar relacionamento entre especialidade e serviço</a>
                                             </li>
                                             <li>
                                                 <a href="/Views/SGA/VEspecialidade/CadastroEspecialidade.aspx">Cadastrar especialidade</a>

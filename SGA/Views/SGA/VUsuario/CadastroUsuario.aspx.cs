@@ -38,7 +38,6 @@ namespace SGA.Views.SGA.VUsuario
                 {
                     Mensagem = "Cadastro de usuário.";
                     DropDownListTipo.DataSource = new ManterUsuario().GetRegrasUsuario();
-                    DropDownListTipo.DataBind();
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
 
                     Endereco.Disabled = true;
@@ -180,7 +179,6 @@ namespace SGA.Views.SGA.VUsuario
                         Mensagem = "Informações obrigatórias não preenchidas.";
                         ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                     }
-
                 }
             }
             catch (Exception Ex)

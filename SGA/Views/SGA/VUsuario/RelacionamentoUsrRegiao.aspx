@@ -34,7 +34,7 @@
                                                     <label for="DropDownListTipo" class="control-label">Selecione o tipo de usuário:</label>
                                                 </td>
                                                 <td>
-                                                    <asp:DropDownList ID="DropDownListTipo" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListTipo_SelectedIndexChanged"></asp:DropDownList>
+                                                    <asp:DropDownList ID="DropDownListTipo" AppendDataBoundItems="true" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListTipo_SelectedIndexChanged"></asp:DropDownList>
                                                 </td>
                                             </tr>
                                             <%if (DropDownListTipo.SelectedIndex > 0)
@@ -52,7 +52,7 @@
                                                     <label for="DropDownListRegiao" class="control-label">Região de atendimento:</label>
                                                 </td>
                                                 <td>
-                                                    <asp:DropDownList ID="DropDownListRegiao" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
+                                                    <asp:DropDownList ID="DropDownListRegiao" AppendDataBoundItems="true" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                                 </td>
                                             </tr>
                                             <%} %>

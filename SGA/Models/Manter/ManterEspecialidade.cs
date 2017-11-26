@@ -1,6 +1,7 @@
 ﻿using SGA.Models.DAO.Log;
 using SGA.Models.DAO.ManterDAO;
 using SGA.Models.Especialidades;
+using SGA.Models.EspecServs;
 using SGA.Models.Servicos;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,15 @@ namespace SGA.Models.Manter
     {
         Especialidade ObjEspec;
         Servico ObjServ;
+        EspecServ ObjEspecServ;
         public ManterEspecialidade()
         {
 
+        }
+
+        public ManterEspecialidade(EspecServ ObjEspecServ)
+        {
+            this.ObjEspecServ = ObjEspecServ;
         }
         public ManterEspecialidade(Especialidade ObjEspec)
         {
@@ -32,6 +39,17 @@ namespace SGA.Models.Manter
             try
             {
                 return new ManterEspecialidadeDAO(ObjEspec).ConsultaEspecialidadesDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public List<EspecServ> ConsultaEspecialidadesServicos()
+        {
+            try
+            {
+                return new ManterEspecialidadeDAO(ObjEspecServ).ConsultaEspecialidadesServicosDAO();
             }
             catch (Exception)
             {

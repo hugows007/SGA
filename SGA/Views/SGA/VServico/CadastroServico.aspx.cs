@@ -31,7 +31,6 @@ namespace SGA.Views.SGA.VServico
                     DropDownListTpServico.DataSource = new ManterServico().ConsultaTpServicos();
                     DropDownListTpServico.DataTextField = "NomeTipoServ";
                     DropDownListTpServico.DataValueField = "Id";
-                    DropDownListTpServico.DataBind();
                     DropDownListTpServico.Items.Insert(0, new ListItem("Selecione o tipo de serviço", "0"));
                 }
                 catch (Exception Ex)

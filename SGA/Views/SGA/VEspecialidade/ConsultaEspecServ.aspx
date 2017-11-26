@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ModificarTipoServico.aspx.cs" Inherits="SGA.Views.SGA.VTipoServico.ModificarTipoServico" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/SGA/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ConsultaEspecServ.aspx.cs" Inherits="SGA.Views.SGA.VEspecialidade.ConsultaEspecServ" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
     <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
@@ -13,7 +13,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Tipos de serviços do sistema
+                        Especialidades e seus serviços
                         <b>
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
@@ -24,17 +24,26 @@
                         }
                     </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="Nome" class="control-label">Nome: </label>
-                                <input type="text" id="Nome" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 20 caracteres" />
-                            </div>
-                            <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" CssClass="btn btn-default" OnClick="AlterarButton_Click" />
-                            <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
-                        </div>
+                        <table id="example" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Serviço</th>
+                                    <th>Especialidade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%foreach (var Espec in ListaEspecSelect)
+                                    {%>
+                                <tr>
+                                    <td><%=Espec.Especialidade%></td>
+                                    <td><%=Espec.Servico %></td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="panel-footer">
-                        Favor alterar os campos e clicar em salvar alterações.<br />
+                        <br />
                     </div>
                 </div>
             </div>

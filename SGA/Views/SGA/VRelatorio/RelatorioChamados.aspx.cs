@@ -17,6 +17,7 @@ namespace SGA.Views.SGA.VRelatorio
         Models.Relatorios.Relatorio ObjRelatorio = FactoryRelatorio.GetNew();
         public List<Models.Relatorios.Relatorio> ListaRelatorio = new List<Models.Relatorios.Relatorio>();
         public string TipoRelatorio;
+        public string NomeRelatorio;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,21 +32,25 @@ namespace SGA.Views.SGA.VRelatorio
                 {
                     TipoRelatorio = Request.QueryString["Relatorio"];
                     ListaRelatorio = new ManterRelatorio(ObjRelatorio).GetRelatorioChamados();
+                    NomeRelatorio = Request.QueryString["Relatorio"];
                 }
                 else if (!"".Equals(Request.QueryString["Relatorio"]) && "SLA".Equals(Request.QueryString["Relatorio"]))
                 {
                     TipoRelatorio = Request.QueryString["Relatorio"];
                     ListaRelatorio = new ManterRelatorio(ObjRelatorio).GetGetRelatorioSLA();
+                    NomeRelatorio = Request.QueryString["Relatorio"];
                 }
                 else if (!"".Equals(Request.QueryString["Relatorio"]) && "TempoAtend".Equals(Request.QueryString["Relatorio"]))
                 {
                     TipoRelatorio = Request.QueryString["Relatorio"];
                     ListaRelatorio = new ManterRelatorio(ObjRelatorio).GetRelatorioTempoAtendimento();
+                    NomeRelatorio = "Tempo de Atendimento";
                 }
                 else if (!"".Equals(Request.QueryString["Relatorio"]) && "RecusaAtend".Equals(Request.QueryString["Relatorio"]))
                 {
                     TipoRelatorio = Request.QueryString["Relatorio"];
                     ListaRelatorio = new ManterRelatorio(ObjRelatorio).GetRelatorioRecusaAtendimento();
+                    NomeRelatorio = "Recusa de Atendimento";
                 }
             }
             catch (Exception Ex)

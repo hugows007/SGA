@@ -34,7 +34,7 @@
                                                     <label for="DropDownListServ" class="control-label">Serviço:</label>
                                                 </td>
                                                 <td>
-                                                    <asp:DropDownList ID="DropDownListServ" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
+                                                    <asp:DropDownList ID="DropDownListServ" AppendDataBoundItems="true" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -42,7 +42,7 @@
                                                     <label for="DropDownListEspec" class="control-label">Especialidade:</label>
                                                 </td>
                                                 <td>
-                                                    <asp:DropDownList ID="DropDownListEspec" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
+                                                    <asp:DropDownList ID="DropDownListEspec" AppendDataBoundItems="true" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                                 </td>
                                             </tr>
                                         </tbody>

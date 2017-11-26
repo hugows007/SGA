@@ -33,7 +33,7 @@
                                                 <label for="DropDownListTipo" class="control-label">Tipo de usuário:</label>
                                             </td>
                                             <td>
-                                                <asp:DropDownList ID="DropDownListTipo" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListTipo_SelectedIndexChanged"></asp:DropDownList>
+                                                <asp:DropDownList ID="DropDownListTipo" AppendDataBoundItems="true" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListTipo_SelectedIndexChanged"></asp:DropDownList>
                                             </td>
                                         </tr>
                                         <%

@@ -20,6 +20,7 @@ namespace SGA.Models.Manter
         string Msg;
         Usuario ObjUsuario;
         Chamado ObjChamado;
+        UsuarioRelacionamento ObjUsrReg;
         bool Result;
         MembershipUser newUser;
         public ManterUsuario()
@@ -28,6 +29,10 @@ namespace SGA.Models.Manter
         public ManterUsuario(Usuario ObjUsuario)
         {
             this.ObjUsuario = ObjUsuario;
+        }
+        public ManterUsuario(UsuarioRelacionamento ObjUsrReg)
+        {
+            this.ObjUsrReg = ObjUsrReg;
         }
         public ManterUsuario(Usuario ObjUsuario, Chamado ObjChamado)
         {
@@ -107,6 +112,30 @@ namespace SGA.Models.Manter
             try
             {
                 return new ManterUsuarioDAO(ObjUsuario).ConsultaUsuariosGestoresDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<UsuarioRelacionamento> ConsultaUsuarioRegiao()
+        {
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsrReg).ConsultaUsuarioRegiaoDAO();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<UsuarioRelacionamento> ConsultaUsuarioEspecialidade()
+        {
+            try
+            {
+                return new ManterUsuarioDAO(ObjUsrReg).ConsultaUsuarioEspecialidadeDAO();
             }
             catch (Exception)
             {

@@ -33,21 +33,13 @@ namespace SGA.Views.SGA.VUsuario
                     ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
 
                     Perfis.Add("Técnico");
-                    Perfis.Add("Cliente");
 
-                    DropDownListTipo.DataSource = new ManterUsuario().GetRegrasUsuario();
-                    DropDownListTipo.DataBind();
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Administrador"));
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Atendente"));
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Gestor"));
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Cliente Físico"));
-                    DropDownListTipo.Items.Remove(DropDownListTipo.Items.FindByValue("Cliente Jurídico"));
                     DropDownListTipo.Items.Insert(0, new ListItem("Selecione o tipo de usuário", "0"));
+                    DropDownListTipo.Items.Insert(1, new ListItem("Técnico", "1"));
 
                     DropDownListEspec.DataSource = new ManterEspecialidade().ConsultaEspecialidades();
                     DropDownListEspec.DataTextField = "NomeEspec";
                     DropDownListEspec.DataValueField = "Id";
-                    DropDownListEspec.DataBind();
                     DropDownListEspec.Items.Insert(0, new ListItem("Selecione a especialidade", "0"));
                 }
                 catch (Exception Ex)
@@ -67,8 +59,8 @@ namespace SGA.Views.SGA.VUsuario
                 DropDownListUsuario.DataSource = new ManterUsuario().ConsultaUsuariosByPerfil(Perfis);
                 DropDownListUsuario.DataTextField = "Nome";
                 DropDownListUsuario.DataValueField = "Id";
-                DropDownListUsuario.DataBind();
                 DropDownListUsuario.Items.Insert(0, new ListItem("Selecione o usuário", "0"));
+                DropDownListUsuario.DataBind();
             }
             catch (Exception Ex)
             {

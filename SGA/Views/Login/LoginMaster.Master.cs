@@ -15,7 +15,16 @@ namespace SGA.Views
         {
             try
             {
+                MembershipUser newUser;
 
+                newUser = Membership.CreateUser(
+                "Admin",
+                "12345678",
+                "admin@admin.com");
+
+                Roles.AddUserToRole(
+                    "Admin",
+                    "Administrador");
             }
             catch (Exception Ex)
             {

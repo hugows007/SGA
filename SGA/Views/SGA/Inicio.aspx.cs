@@ -94,7 +94,7 @@ namespace SGA.Views.Site
 
                     ListTopTempo = new ManterRelatorio(ObjRelatorio).GetRelatorioTempoAtendimento();
 
-                    ListTopTempo.RemoveRange(5, ListTopTempo.Count - 5);
+                    ListTopTempo.RemoveRange(5, ListTopTempo.Count - 5); //Verificar quando a lista tem menos de 5 da erro
 
                     ObjRelatorioTempoMedio = new ManterRelatorio(ObjRelatorioTempoMedio).GetTempoMedioAtendimento();
                 }
