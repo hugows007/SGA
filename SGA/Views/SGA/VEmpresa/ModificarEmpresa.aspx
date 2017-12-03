@@ -21,6 +21,14 @@
                             function Alerta(Texto) {
                                 alertify.log(Texto);
                             }
+
+                            $("form").submit(function () {
+                                $(this).submit(function () {
+                                    $(this).find(':submit').prop('disabled', true)
+                                    return false;
+                                });
+                                return true;
+                            });
                         </script>
                     </div>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
@@ -46,7 +54,7 @@
                                 <input type="tel" id="Telefone" required class="form-control input-sm" runat="server" maxlength="10" placeholder="Máximo de 10 caracteres" />
                             </div>
                             <asp:Button ID="AlterarButton" runat="server" Text="Salvar alterações" class="btn btn-default" OnClick="AlterarButton_Click" />
-                            <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                            <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                         </div>
                         <div class="panel-footer">
                             Favor alterar os campos e clicar em salvar alterações.<br />

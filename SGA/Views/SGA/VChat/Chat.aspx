@@ -42,7 +42,7 @@
             });
         });
 
-        conterstart = 0;
+        conterstart = 1;
         function checa(counter) {
             cont = conterstart;
             if (cont == counter) {
@@ -55,9 +55,17 @@
                 conterstart = 0;
             }
         }
+
+        $("form").submit(function () {
+            $(this).submit(function () {
+                $(this).find(':submit').prop('disabled', true);
+                return false;
+            });
+            return true;
+        });
     </script>
 
-        <!-- Chat -->
+    <!-- Chat -->
     <link href="<%= ResolveClientUrl("~/Content/chat/style.css") %>" rel="stylesheet" />
     <script src="<%= ResolveClientUrl("~/Scripts/chat/index.js") %>"></script>
     <script src="<%= ResolveClientUrl("~/Scripts/chat/index.js") %>"></script>
@@ -67,7 +75,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
-    
+
     <div id="page-wrapper">
         <div class="row">
         </div>
@@ -84,16 +92,16 @@
                         <div class="message-data align-right clearfix">
                             <%if (!EntrarChat)
                                 { %>
-                            <asp:Button ID="ButtonEntrar" runat="server" Text="Entrar" ClientIDMode="Static" CssClass="btn btn-success btn-lg" OnClick="ButtonEntrar_Click" />
+                            <asp:Button ID="ButtonEntrar" runat="server" Text="Entrar" ClientIDMode="Static" CssClass="btn btn-success btn-lg" OnClick="ButtonEntrar_Click"  />
                             <%}
                                 else
                                 {
                             %>
-                            <asp:Button ID="ButtonSair" runat="server" Text="Sair" ClientIDMode="Static" CssClass="btn btn-warning btn-lg" OnClick="ButtonSair_Click" />
+                            <asp:Button ID="ButtonSair" runat="server" Text="Sair" ClientIDMode="Static" CssClass="btn btn-warning btn-lg" OnClick="ButtonSair_Click"  />
                             <%} %>
-                            <asp:Button ID="ButtonConversas" runat="server" Text="Conversas" CssClass="btn btn-info btn-lg" OnClick="ButtonConversas_Click"/>
-                            <asp:Button ID="ButtonConvocar" runat="server" Text="Convocar Técnicos" CssClass="btn btn-info btn-lg" OnClick="ButtonConvocar_Click" />
-                            <asp:Button ID="ButtonChamar" runat="server" ClientIDMode="Static" Text="Chamar Técnico" CssClass="btn btn-info btn-lg" OnClick="ButtonChamar_Click" />
+                            <asp:Button ID="ButtonConversas" runat="server" Text="Conversas" CssClass="btn btn-info btn-lg" OnClick="ButtonConversas_Click"  />
+                            <asp:Button ID="ButtonConvocar" runat="server" Text="Convocar" CssClass="btn btn-info btn-lg" OnClick="ButtonConvocar_Click"  />
+                            <asp:Button ID="ButtonChamar" runat="server" ClientIDMode="Static" Text="Chamar Técnico" CssClass="btn btn-info btn-lg" OnClick="ButtonChamar_Click"  />
                         </div>
                     </div>
 
@@ -101,8 +109,11 @@
                         { %>
                     <div class="chat-history">
                         <div class="message-data">
+                            <a class="btn btn-info btn-lg" onclick="checa(0)" style="float: right">Visualizar/Ocultar</a>
                             <span class="message-data-time">Mensagens anteriores: </span>
-                            <a href="#" onclick="checa(0)">Ocultar/Visualizar</a>
+                            <br />
+                            <br />
+                            <br />
                         </div>
                         <div id="mensagens" class="message my-message w3-container w3-half">
                             <%foreach (var Lista in ListaMensagens)
@@ -145,7 +156,7 @@
                         if (NotificaTecnicos)
                         { %>
                     <script>
-                        alertify.log("Técnicos notificados");
+                        alertify.log("Técnicos e Gestores notificados");
                     </script>
                     <%} %>
                 </div>

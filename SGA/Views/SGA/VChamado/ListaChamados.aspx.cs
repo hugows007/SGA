@@ -33,11 +33,7 @@ namespace SGA.Views.SGA.VChamado
         {
             try
             {
-                if (!Page.IsPostBack)
-                {
-                    Mensagem = "Consulta de chamados.";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
-                }
+                Mensagem = "Consulta de chamados.";
 
                 if (!"".Equals(Request.QueryString["IdTecnico"]) && Session["perfil"].Equals("Técnico"))
                 {
@@ -54,7 +50,7 @@ namespace SGA.Views.SGA.VChamado
                 {
                     ObjChamado.Fila = false;
                 }
-                if(Session["perfil"].Equals("Cliente Físico") || Session["perfil"].Equals("Cliente Jurídico"))
+                if (Session["perfil"].Equals("Cliente Físico") || Session["perfil"].Equals("Cliente Jurídico"))
                 {
                     ObjUsuario.Id = Convert.ToInt32(Session["id"]);
                     ObjUsuario.Perfil = "Cliente";

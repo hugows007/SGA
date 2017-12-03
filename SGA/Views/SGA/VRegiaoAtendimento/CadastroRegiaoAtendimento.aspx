@@ -24,6 +24,13 @@
                         function Alerta(Texto) {
                             alertify.log(Texto);
                         }
+                        $("form").submit(function () {
+                            $(this).submit(function () {
+                                $(this).find(':submit').prop('disabled', true)
+                                return false;
+                            });
+                            return true;
+                        });
                     </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
@@ -40,7 +47,7 @@
                                 <input type="text" id="Estado" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 20 caracteres" />
                             </div>
                             <asp:Button ID="Cadastrar" runat="server" Text="Cadastrar" class="btn btn-default" OnClick="CadastrarButton_Click" />
-                            <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                            <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                         </div>
                     </div>
                     <div class="panel-footer">

@@ -327,8 +327,9 @@ namespace SGA.Models.Manter
         {
             try
             {
-                string[] rolesArray;
-                return rolesArray = Roles.GetAllRoles();
+                string[] rolesArray = Roles.GetAllRoles();
+                rolesArray = rolesArray.Where(item => item != "Administrador").ToArray();
+                return rolesArray;
             }
             catch (Exception)
             {

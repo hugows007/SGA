@@ -22,6 +22,14 @@
                         function Alerta(Texto) {
                             alertify.log(Texto);
                         }
+
+                        $("form").submit(function () {
+                            $(this).submit(function () {
+                                $(this).find(':submit').prop('disabled', true)
+                                return false;
+                            });
+                            return true;
+                        });
                     </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
@@ -49,7 +57,7 @@
                                                             <label for="DropDownListTpServico" class="control-label">Tipo de serviço:</label>
                                                         </td>
                                                         <td>
-                                                            <asp:DropDownList ID="DropDownListTpServico"  AppendDataBoundItems="true" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListTpServico_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList ID="DropDownListTpServico" AppendDataBoundItems="true" AutoPostBack="True" runat="server" CssClass="dropdown-toggle" OnSelectedIndexChanged="DropDownListTpServico_SelectedIndexChanged"></asp:DropDownList>
                                                         </td>
                                                     </tr>
                                                     <%if (DropDownListTpServico.SelectedIndex > 0)
@@ -59,7 +67,7 @@
                                                             <label for="DropDownListServico" class="control-label">Descrição do serviço:</label>
                                                         </td>
                                                         <td>
-                                                            <asp:DropDownList ID="DropDownListServico"  AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
+                                                            <asp:DropDownList ID="DropDownListServico" AutoPostBack="True" runat="server" CssClass="dropdown-toggle"></asp:DropDownList>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -99,14 +107,14 @@
                                     <textarea rows="5" cols="50" id="Descricao" maxlength="500" class="form-control input-sm" required placeholder="Descrição do chamado (máximo de 500 caracteres)" runat="server"></textarea>
                                 </div>
                                 <asp:Button ID="Abrir" runat="server" Text="Abrir Chamado" class="btn btn-default" OnClick="AbrirButton_Click" />
-                                <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                                <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                             </div>
-                    </div>
-                    <div class="panel-footer">
-                        Favor preencher os dados e clicar em Abrir Chamado.<br />
+                        </div>
+                        <div class="panel-footer">
+                            Favor preencher os dados e clicar em Abrir Chamado.<br />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </asp:Content>

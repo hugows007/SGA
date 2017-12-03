@@ -40,6 +40,8 @@ namespace SGA.Views.SGA.VChat
                     ListaMensagens.Add(ObjChat);
                 }
 
+                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "checa(0)", true);
+
                 ListaMensagens.Reverse();
             }
             catch (Exception Ex)

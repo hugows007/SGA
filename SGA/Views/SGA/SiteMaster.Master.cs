@@ -17,12 +17,14 @@ namespace SGA.Views.SGA
     {
         public string NomeUsuario;
         public int ContaListaNotificacao;
+        public bool TemNotificacao;
+        public bool TemNotificacaoChat;
         public Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         public Notificacao ObjNotificacao = FactoryNotificacao.GetNew();
         public List<Notificacao> ListaNotificacao = new List<Notificacao>();
 
         protected void Page_Init(object sender, EventArgs e)
-        {           
+        {
             this.ID = "Master";
         }
         protected void Page_Load(object sender, EventArgs e)
@@ -59,6 +61,15 @@ namespace SGA.Views.SGA
 
                     foreach (var Notifica in new ManterNotificacao(ObjNotificacao).InformaNotificacao())
                     {
+                        if (Notifica.IdTipo.Equals(4))
+                        {
+                            TemNotificacao = true;
+                        }
+                        if (Notifica.IdTipo.Equals(1) || Notifica.IdTipo.Equals(2))
+                        {
+                            TemNotificacaoChat = true;
+                        }
+
                         ListaNotificacao.Add(Notifica);
                     }
                 }

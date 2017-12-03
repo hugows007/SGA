@@ -21,12 +21,6 @@
                             <label for="EspecTextBox" class="control-label">Selecione os filtros: </label>
                             <div class="form-group">
                                 <div class="col-sm-12 panel-heading">
-                                    <%--<asp:CheckBox ID="CheckBoxChmAbert" runat="server" Text="Chamados abertos" />
-                                    <asp:CheckBox ID="CheckBoxChmEmAnd" runat="server" Text="Chamados em andamento" />
-                                    <asp:CheckBox ID="CheckBoxChmRetr" runat="server" Text="Chamados em retrabalho" />
-                                    <asp:CheckBox ID="CheckBoxChmConc" runat="server" Text="Chamados concluídos" />
-                                    <asp:CheckBox ID="CheckBoxChmCanc" runat="server" Text="Chamados cancelados" />--%>
-
                                     <select id="filtrosChm" class="selectpicker" multiple runat="server" clientidmode="Static">
                                         <option value="1">Chamados abertos</option>
                                         <option value="2">Chamados em andamento</option>
@@ -70,7 +64,7 @@
                             </div>
                             <asp:Button ID="GerarRelatorioRecusa" runat="server" Text="Gerar relatório de recusa de atendimento" class="btn btn-default" OnClick="GerarRelatorioRecusa_Click" />
                         </div>
-                        <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                        <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                     </div>
                     <div class="panel-footer">
                     </div>

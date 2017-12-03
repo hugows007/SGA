@@ -206,7 +206,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Mapa</h1>
-                <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a><br />
+                <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a><br />
                 <br />
                 <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
             </div>

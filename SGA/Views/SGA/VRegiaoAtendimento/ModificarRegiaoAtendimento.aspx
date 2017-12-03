@@ -22,6 +22,13 @@
                         function Alerta(Texto) {
                             alertify.log(Texto);
                         }
+                        $("form").submit(function () {
+                            $(this).submit(function () {
+                                $(this).find(':submit').prop('disabled', true)
+                                return false;
+                            });
+                            return true;
+                        });
                     </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">

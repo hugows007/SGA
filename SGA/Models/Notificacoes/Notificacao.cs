@@ -8,6 +8,7 @@ namespace SGA.Models.Notificacoes
     public class Notificacao
     {
         public int Id { get; set; }
+        public int IdChamado { get; set; }
         public int IdMensagem { get; set; }
         public int IdOrigem { get; set; }
         public int IdDest { get; set; }

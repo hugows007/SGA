@@ -67,8 +67,7 @@ namespace SGA.Views.SGA.VAvaliacao
 
                 if (new ManterAvaliacao(ObjAvaliacao).IncluiAvaliacao())
                 {
-                    Mensagem = "Avaliado com sucesso!";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjAtend.IdChamado + "&Mensagem=Avaliado", false);
                 }
                 else
                 {
@@ -78,8 +77,7 @@ namespace SGA.Views.SGA.VAvaliacao
             }
             catch (System.Data.SqlClient.SqlException)
             {
-                Mensagem = "Este chamado já foi avaliado.";
-                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjAtend.IdChamado + "&Mensagem=AvaliadoAnt", false);
             }
             catch (Exception Ex)
             {

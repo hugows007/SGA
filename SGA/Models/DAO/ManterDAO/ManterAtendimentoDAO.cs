@@ -169,6 +169,11 @@ namespace SGA.Models.DAO.ManterDAO
                     while (Dr.Read())
                     {
                         ObjAtend.Id = Dr.GetInt32(0);
+
+                        if (!Dr.IsDBNull(3))
+                        {
+                            ObjAtend.Relatorio = Dr.GetString(3);
+                        }
                         ObjAtend.IdChamado = Dr.GetInt32(4);
                         ObjAtend.IdTecnico = Dr.GetInt32(5);
                         ObjAtend.IdCliente = Dr.GetInt32(6);
@@ -361,14 +366,14 @@ namespace SGA.Models.DAO.ManterDAO
                                 VALUES
                                     (@IdChamado
                                     ,@IdTecnico
-                                    ,@IdCliente
+                                    ,@Motivo
                                     ,@Empresa
                                     ,@Data
                                     ,@Usuario);", Con);
 
                     Cmd.Parameters.AddWithValue("@IdChamado", ObjAtend.IdChamado);
                     Cmd.Parameters.AddWithValue("@IdTecnico", ObjAtend.IdTecnico);
-                    Cmd.Parameters.AddWithValue("@IdCliente", ObjAtend.IdCliente);
+                    Cmd.Parameters.AddWithValue("@Motivo", ObjAtend.MotivoRecusa);
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
                     Cmd.Parameters.AddWithValue("@Data", DateTime.Now);
                     Cmd.Parameters.AddWithValue("@Usuario", Membership.GetUser().ToString());
@@ -384,7 +389,7 @@ namespace SGA.Models.DAO.ManterDAO
                       Usuario Usr on (UsrFunc.idUsuario = Usr.idUsuario) inner join 
                       UsuarioXEspecialidade UsrEspec on (Usr.idUsuario = UsrEspec.idUsuario) inner join
 					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade)
-                      WHERE Usr.idStatusUsuario = 1 and 
+                      WHERE Usr.idStatusUsuario in (1,2) and 
                       UsrReg.idRegiaoAtendimento = @IdRegiao and 
                       ServEspec.idServico = @IdServ and 
 					  Usr.idEmpresa = @Empresa and
@@ -402,6 +407,37 @@ namespace SGA.Models.DAO.ManterDAO
                     while (Dr.Read())
                     {
                         ObjAtend.IdTecnico = Dr.GetInt32(0);
+                    }
+
+                    if (!Dr.Read())
+                    {
+                        Dr.Close();
+
+                        Cmd = new SqlCommand(@"
+                    SELECT top 1 UsrReg.idUsuario
+                          ,UsrReg.idRegiaoAtendimento
+						  ,ServEspec.idServico
+                      FROM UsuarioXRegiaoAtendimento UsrReg inner join 
+                      Funcionario UsrFunc on (UsrFunc.idUsuario = UsrReg.idUsuario) inner join 
+                      Usuario Usr on (UsrFunc.idUsuario = Usr.idUsuario) inner join 
+                      UsuarioXEspecialidade UsrEspec on (Usr.idUsuario = UsrEspec.idUsuario) inner join
+					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade)
+                      WHERE Usr.idStatusUsuario in (1, 2) and 
+                      ServEspec.idServico = @IdServ and 
+					  Usr.idEmpresa = @Empresa and
+                      UsrReg.idUsuario <> @Tecnico
+					  order by NEWID();", Con);
+
+                        Cmd.Parameters.AddWithValue("@IdServ", ObjChamado.IdServico);
+                        Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
+                        Cmd.Parameters.AddWithValue("@Tecnico", ObjAtend.IdTecnico);
+
+                        Dr = Cmd.ExecuteReader();
+
+                        while (Dr.Read())
+                        {
+                            ObjAtend.IdTecnico = Dr.GetInt32(0);
+                        }
                     }
 
                     Dr.Close();
@@ -458,7 +494,11 @@ namespace SGA.Models.DAO.ManterDAO
                         dataInicioAtendimento = @Data
                         ,dataRegistro = @Data
                         ,usuarioRegistro = @Usuario
-                        WHERE idChamado = @IdChamado and idTecnico = @Tecnico;
+                        WHERE idChamado = @IdChamado and idTecnico = @Tecnico and idAtendimento = 
+	                                        (select max(idAtendimento) 
+		                                        from Atendimento where 
+		                                        idChamado = @IdChamado
+	                                        );
 
                 UPDATE 
 	                [dbo].[Chamado] SET 

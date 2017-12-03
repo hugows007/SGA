@@ -13,7 +13,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Especialidades e seus serviços
+                        Serviços e suas especialidades
                         <b>
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
@@ -22,6 +22,13 @@
                         function Alerta(Texto) {
                             alertify.log(Texto);
                         }
+                        $("form").submit(function () {
+                            $(this).submit(function () {
+                                $(this).find(':submit').prop('disabled', true)
+                                return false;
+                            });
+                            return true;
+                        });
                     </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <table id="example" class="table table-striped table-bordered table-hover">

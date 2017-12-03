@@ -7,7 +7,7 @@
             <br />
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <div class="panel-title">Bem vindo! Favor efetuar o login</div>
+                    <div class="panel-title">Bem-vindo! Favor efetuar o login</div>
                 </div>
                 <%if (!EsqueciSenha)
                     { %>
@@ -47,7 +47,7 @@
                         <div style="margin-top: 10px" class="form-group">
                             <div class="col-sm-12 controls">
                                 <asp:Button ID="RecuperarButton" Text="   Recuperar   " runat="server" class="btn btn-success" OnClick="RecuperarButton_Click" />
-                                <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                                <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                             </div>
                         </div>
                     </form>

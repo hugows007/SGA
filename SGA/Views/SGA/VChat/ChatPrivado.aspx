@@ -29,7 +29,7 @@
             });
         });
 
-        conterstart = 0;
+        conterstart = 1;
         function checa(counter) {
             cont = conterstart;
             if (cont == counter) {
@@ -99,8 +99,11 @@
                             {
                         %>
                         <div class="message-data">
+                            <a class="btn btn-info btn-lg" onclick="checa(0)" style="float: right">Visualizar/Ocultar</a>
                             <span class="message-data-time">Mensagens anteriores: </span>
-                            <a href="#" onclick="checa(0)">Ocultar/Visualizar</a>
+                            <br />
+                            <br />
+                            <br />
                         </div>
                         <div id="mensagens" class="message my-message w3-container w3-half">
                             <%foreach (var Lista in ListaMensagens)

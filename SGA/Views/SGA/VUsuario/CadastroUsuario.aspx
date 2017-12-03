@@ -15,7 +15,7 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Usuários do sistema
+                                Cadastrar Usuário
                                 <b>
                                     <br>
                                     <asp:Label ID="MsgLabel" ForeColor="maroon" runat="server" /></b>
@@ -23,6 +23,13 @@
                                     function Alerta(Texto) {
                                         alertify.log(Texto);
                                     }
+                                    $("form").submit(function () {
+                                        $(this).submit(function () {
+                                            $(this).find(':submit').prop('disabled', true)
+                                            return false;
+                                        });
+                                        return true;
+                                    });
                                 </script>
                             </div>
                             <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
@@ -109,7 +116,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="Telefone" class="control-label">Telefone:</label>
-                                        <input type="tel" id="Telefone" required class="form-control input-sm" runat="server" maxlength="10" placeholder="Máximo de 10 caracteres" />
+                                        <input type="tel" id="Telefone" required class="form-control input-sm" runat="server" maxlength="11" placeholder="Máximo de 11 caracteres" />
                                     </div>
                                     <%  if (DropDownListTipo.Text.Equals("Cliente Físico"))
                                         { %>
@@ -134,8 +141,8 @@
                                     </div>
                                     <% } %>
                                     <div class="form-group">
-                                        <asp:Button ID="BotaoCriarUsuario" Text="Criar Usuário" CssClass="btn btn-default" OnClick="BotaoCriarUsuario_OnClick" runat="server" />
-                                        <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                                        <asp:Button ID="BotaoCriarUsuario" Text="Criar Usuário" CssClass="btn btn-default" OnClick="BotaoCriarUsuario_OnClick" runat="server"  />
+                                        <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                                     </div>
                                 </div>
                             </div>

@@ -26,26 +26,34 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderInicio" runat="server">
-    <script>
-        function Alerta(Texto) {
-            alertify.log(Texto);
-        }
-    </script>
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header"></h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Avaliação de atendimento e chamado: <%=ObjAtend.IdChamado %>
-                        <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+            <script>
+                function Alerta(Texto) {
+                    alertify.log(Texto);
+                }
+
+                $("form").submit(function () {
+                    $(this).submit(function () {
+                        $(this).find(':submit').prop('disabled', true)
+                        return false;
+                    });
+                    return true;
+                });
+            </script>
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"></h1>
                     </div>
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                        <ContentTemplate>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Avaliação de atendimento e chamado: <%=ObjAtend.IdChamado %>
+                                <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label>
+                            </div>
                             <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                                 <div class="panel-body">
                                     <label for="RatingAtendimento" class="control-label">Avaliação do atendimento do técnico:</label>
@@ -65,12 +73,12 @@
                                 <br />
                                 <asp:Button ID="AvaliarButton" runat="server" Text="Avaliar!" CssClass="btn btn-success" OnClick="AvaliarButton_Click" />
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                    <div class="panel-footer">
+                            <div class="panel-footer">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>

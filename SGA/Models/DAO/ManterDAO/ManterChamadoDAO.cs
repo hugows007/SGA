@@ -70,8 +70,8 @@ namespace SGA.Models.DAO.ManterDAO
                     else if (ObjUsuario.Perfil != null && ObjUsuario.Perfil.Equals("Cliente"))
                     {
                         Cmd = new SqlCommand(@"
-                SELECT * FROM Chamado Chm inner join Atendimento Atd on (Chm.idChamado = Atd.idChamado) WHERE
-                    Atd.idCliente = @IdCliente;", Con);
+                SELECT * FROM Chamado  WHERE
+                    idCliente = @IdCliente;", Con);
 
                         Cmd.Parameters.AddWithValue("@IdCliente", ObjUsuario.Id);
                     }
@@ -378,10 +378,12 @@ namespace SGA.Models.DAO.ManterDAO
                         idStatusChamado = 4
                         ,usuarioRegistro = @Usuario
                         ,contPendencia = @CPend
+                        ,infoPendencias = @Pend
                         ,dataRegistro = @Data
                         WHERE idChamado = @Id and idEmpresa = @Empresa;", Con);
 
                         Cmd.Parameters.AddWithValue("@CPend", GetContPendenciaDAO());
+                        Cmd.Parameters.AddWithValue("@Pend", ObjChamado.InfoPendencia);
                     }
                     else
                     {

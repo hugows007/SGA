@@ -1089,12 +1089,10 @@ namespace SGA.Models.DAO.ManterDAO
                       UsuarioXEspecialidade UsrEspec on (Usr.idUsuario = UsrEspec.idUsuario) inner join
 					  ServicoXEspecialidade ServEspec on (UsrEspec.idEspecialidade = ServEspec.idEspecialidade)
                       WHERE Usr.idStatusUsuario in (1, 2) and 
-                      UsrReg.idRegiaoAtendimento = @IdRegiao and 
                       ServEspec.idServico = @IdServ and 
 					  Usr.idEmpresa = @Empresa
 					  order by NEWID();", Con);
 
-                            Cmd.Parameters.AddWithValue("@IdRegiao", ObjUsuario.ObjRegiao.Id);
                             Cmd.Parameters.AddWithValue("@IdServ", ObjChamado.IdServico);
                             Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 

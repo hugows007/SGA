@@ -48,18 +48,60 @@ namespace SGA.Views.SGA.VChamado
             {
                 if (!"".Equals(Request.QueryString["IdChamado"]))
                 {
-                    if (!Page.IsPostBack)
-                    {
-                        Mensagem = "Informações do chamado.";
-                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
-                    }
-
                     ObjChamado = FactoryChamado.GetNew();
                     ObjChamado.Id = Convert.ToInt32(Request.QueryString["IdChamado"]);
                     ObjChamado = new ManterChamado(ObjChamado).ConsultaChamadoById();
 
                     if (ObjChamado != null)
                     {
+                        if (!Page.IsPostBack)
+                        {
+                            if (Request.QueryString.AllKeys.Contains("Mensagem"))
+                            {
+                                if (Request.QueryString["Mensagem"].Equals("Cancelado"))
+                                {
+                                    Mensagem = "Chamado cancelado com sucesso.";
+                                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                                }
+                                else if (Request.QueryString["Mensagem"].Equals("Encerrado"))
+                                {
+                                    Mensagem = "Chamado encerrado com sucesso.";
+                                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                                }
+                                else if (Request.QueryString["Mensagem"].Equals("Tramite"))
+                                {
+                                    Mensagem = "Trâmite adicionado com sucesso.";
+                                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                                }
+                                else if (Request.QueryString["Mensagem"].Equals("Reaberto"))
+                                {
+                                    Mensagem = "Chamado reaberto com sucesso.";
+                                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                                }
+                                else if (Request.QueryString["Mensagem"].Equals("Recusado"))
+                                {
+                                    Mensagem = "Atendimento deste chamado recusado.";
+                                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                                }
+                                else if (Request.QueryString["Mensagem"].Equals("Avaliado"))
+                                {
+                                    Mensagem = "Avaliado com sucesso!";
+                                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                                }
+                                else if (Request.QueryString["Mensagem"].Equals("AvaliadoAnt"))
+                                {
+                                    Mensagem = "Este chamado já foi avaliado.";
+                                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                                }
+                                
+                            }
+                            else
+                            {
+                                Mensagem = "Informações do chamado.";
+                                ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                            }
+                        }
+
                         if (Request.QueryString.AllKeys.Contains("Troca"))
                         {
                             if (Request.QueryString["Troca"].Equals("true"))
@@ -68,6 +110,7 @@ namespace SGA.Views.SGA.VChamado
                                 ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                             }
                         }
+
                         ObjServico.Id = ObjChamado.IdServico;
                         ObjStatusChm.Id = ObjChamado.IdStatus;
                         ObjAtend.IdChamado = ObjChamado.Id;
@@ -157,9 +200,7 @@ namespace SGA.Views.SGA.VChamado
 
                     if (new ManterChamado(ObjChamado, ObjAtend).CancelaChamado())
                     {
-                        Mensagem = "Chamado cancelado com sucesso.";
-                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
-                        Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
+                        Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id + "&Mensagem=Cancelado", false);
                     }
                     else
                     {
@@ -187,7 +228,7 @@ namespace SGA.Views.SGA.VChamado
             {
                 EnceButtonClick = true;
 
-                if (!EnceRelat.Value.Equals(""))
+                if (!EnceRelat.Value.Equals("") && !CheckBoxPend.Checked || !PendRelat.Value.Equals("") && CheckBoxPend.Checked)
                 {
                     ObjAtend = FactoryAtendimento.GetNew();
                     ObjChamado = FactoryChamado.GetNew();
@@ -196,18 +237,15 @@ namespace SGA.Views.SGA.VChamado
                     ObjAtend.IdChamado = ObjChamado.Id;
                     ObjAtend = new ManterAtendimento(ObjAtend).ConsultaAtendimentoByIdChamado();
 
-                    ObjAtend.Relatorio = EnceRelat.Value;
-
                     if (CheckBoxPend.Checked && !PendRelat.Value.Equals(""))
                     {
+                        ObjAtend.Relatorio = PendRelat.Value;
                         ObjChamado.Pendencia = true;
                         ObjChamado.InfoPendencia = PendRelat.Value;
 
                         if (new ManterAtendimento(ObjAtend, ObjChamado).EncerraAtendimento())
                         {
-                            Mensagem = "Chamado encerrado com sucesso.";
-                            ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
-                            Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
+                            Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id + "&Mensagem=Encerrado", false);
                         }
                         else
                         {
@@ -223,10 +261,11 @@ namespace SGA.Views.SGA.VChamado
 
                     if (!CheckBoxPend.Checked)
                     {
+                        ObjAtend.Relatorio = EnceRelat.Value;
+
                         if (new ManterAtendimento(ObjAtend, ObjChamado).EncerraAtendimento())
                         {
-                            Mensagem = "Chamado encerrado com sucesso.";
-                            Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
+                            Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id + "&Mensagem=Encerrado", false);
                         }
                         else
                         {
@@ -298,14 +337,12 @@ namespace SGA.Views.SGA.VChamado
                 {
                     ObjChamado.Tramite = "  " + DateTime.Now + " " + Membership.GetUser() + ": " + TramiteTextBox.Value;
                     new ManterChamado(ObjChamado).AtualizaTramite();
-                    Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id, false);
-                    Mensagem = "Trâmite adicionado com sucesso.";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id + "&Mensagem=Tramite", false);
                 }
                 else
                 {
                     Mensagem = "Digite alguma informação para adicionar ao chamado.";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('Digite alguma informação para adicionar ao chamado.')", true);
                 }
             }
             catch (Exception Ex)
@@ -319,14 +356,14 @@ namespace SGA.Views.SGA.VChamado
         {
             try
             {
+
                 if (new ManterChamado(ObjChamado, ObjAtend).ReabreChamado())
                 {
-                    Mensagem = "Chamado reaberto com sucesso.";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                    Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id + "&Mensagem=Reaberto", false);
                 }
                 else
                 {
-                    Mensagem = "Digite alguma informação.";
+                    Mensagem = "Ocorreu um erro ao reabrir o chamado.";
                     ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                 }
             }
@@ -344,16 +381,17 @@ namespace SGA.Views.SGA.VChamado
 
         protected void Recusar_Click(object sender, EventArgs e)
         {
-            RecusarClick = true;
-
             try
             {
+                RecusarClick = true;
+
                 if (!RecusarMotivo.Value.Equals(""))
                 {
+                    ObjAtend.MotivoRecusa = RecusarMotivo.Value;
+
                     if (new ManterAtendimento(ObjAtend, ObjChamado).RecusaAtendimentoChamado())
                     {
-                        Mensagem = "Atendimento deste chamado recusado.";
-                        ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
+                        Response.Redirect("\\Views\\SGA\\VChamado\\ConsultaChamado.aspx?IdChamado=" + ObjChamado.Id + "&Mensagem=Recusado", false);
                     }
                     else
                     {

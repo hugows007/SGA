@@ -368,7 +368,7 @@
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-star fa-fw"></i>Ranking tempo de atendimento
+                        <i class="fa fa-star fa-fw"></i>Ranking de tempo de atendimento
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -527,8 +527,7 @@
                             <center><img style="max-width: 100%; height: auto;" src="<%# ResolveClientUrl("~/Image/Logo.jpeg") %>" alt=""></center>
                         </div>
                         <div class="col-lg-8">
-                            <h3>Olá, <%=Session["nome"].ToString()%>, seja muito bem vindo ao SGA TI - Sistema de Gestão de Atendimento em Tecnologia da informação.</h3>
-                            <p>Com grandes funcionalidades, o SGA TI permite gerir e controlar os chamados e seus respectivos atendimentos com facilidade e pontualidade.</p>
+                            <h3>Olá, <%=Session["nome"].ToString()%>, seja muito bem-vindo ao SGA TI - Sistema de Gestão de Atendimento em Tecnologia da informação.</h3>
                         </div>
                     </div>
                     <div class="panel-footer">

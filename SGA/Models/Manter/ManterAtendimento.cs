@@ -101,6 +101,7 @@ namespace SGA.Models.Manter
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                     ObjNotificacao.IdMensagem = 3;
                     ObjNotificacao.IdTipo = 4;
+                    ObjNotificacao.IdChamado = ObjAtend.IdChamado;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     ObjNotificacao.IdDest = ObjAtend.IdCliente;
@@ -128,6 +129,7 @@ namespace SGA.Models.Manter
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                     ObjNotificacao.IdMensagem = 8;
                     ObjNotificacao.IdTipo = 4;
+                    ObjNotificacao.IdChamado = ObjAtend.IdChamado;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     ObjNotificacao.IdDest = ObjAtend.IdCliente;
@@ -153,6 +155,7 @@ namespace SGA.Models.Manter
                 ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                 ObjNotificacao.IdMensagem = 9;
                 ObjNotificacao.IdTipo = 4;
+                ObjNotificacao.IdChamado = ObjAtend.IdChamado;
                 new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                 ObjAtend.IdTecnico = new ManterAtendimentoDAO(ObjAtend, ObjChamado).RecusaAtendimentoChamadoDAO().IdTecnico;
@@ -167,6 +170,7 @@ namespace SGA.Models.Manter
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                     ObjNotificacao.IdMensagem = 3;
                     ObjNotificacao.IdTipo = 4;
+                    ObjNotificacao.IdChamado = ObjAtend.IdChamado;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     foreach (var Gestor in new ManterUsuario(ObjUsuario).ConsultaUsuariosGestores())
@@ -197,6 +201,7 @@ namespace SGA.Models.Manter
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                     ObjNotificacao.IdMensagem = 3;
                     ObjNotificacao.IdTipo = 4;
+                    ObjNotificacao.IdChamado = ObjAtend.IdChamado;
                     return new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
                 }
                 else
@@ -228,6 +233,7 @@ namespace SGA.Models.Manter
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                     ObjNotificacao.IdMensagem = 4;
                     ObjNotificacao.IdTipo = 4;
+                    ObjNotificacao.IdChamado = ObjAtend.IdChamado;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     ObjNotificacao.IdDest = ObjAtend.IdCliente;
@@ -274,6 +280,7 @@ namespace SGA.Models.Manter
                             ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                             ObjNotificacao.IdMensagem = 7;
                             ObjNotificacao.IdTipo = 4;
+                            ObjNotificacao.IdChamado = ObjAtend.IdChamado;
                             new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                             ObjNotificacao.IdDest = ObjAtend.IdCliente;
@@ -292,6 +299,7 @@ namespace SGA.Models.Manter
                         ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                         ObjNotificacao.IdMensagem = 5;
                         ObjNotificacao.IdTipo = 4;
+                        ObjNotificacao.IdChamado = ObjAtend.IdChamado;
                         new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                         ObjNotificacao.IdDest = ObjAtend.IdCliente;

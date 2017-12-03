@@ -138,6 +138,7 @@ namespace SGA.Models.Manter
                     ObjNotificacao.IdDest = ObjAtend.IdTecnico;
                     ObjNotificacao.IdMensagem = 6;
                     ObjNotificacao.IdTipo = 4;
+                    ObjNotificacao.IdChamado = ObjChamado.Id;
                     new ManterNotificacao(ObjNotificacao).NotificaUsuariosSistem();
 
                     ObjNotificacao.IdDest = ObjAtend.IdCliente;

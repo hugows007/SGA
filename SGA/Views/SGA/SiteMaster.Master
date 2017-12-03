@@ -115,8 +115,16 @@
                         { %>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-comment fa-fw fa-fw"></i><i class="fa fa-caret-down"></i>
-                        </a>
+                            <%if (!ListaNotificacao.Count.Equals(0) && TemNotificacaoChat)
+                                {%>
+                            <i class="fa fa-comment fa-fw fa-fw" style="color: red">
+                                <%}
+                                else
+                                { %>
+                                <i class="fa fa-comment fa-fw fa-fw">
+                                    <%} %>
+
+                                </i><i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu dropdown-messages nav nav-second-level">
                             <%if (!ListaNotificacao.Count.Equals(0))
                                     foreach (var Lista in ListaNotificacao)
@@ -178,7 +186,16 @@
                     <%} %>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-bell fa-fw"></i><i class="fa fa-caret-down"></i>
+                            <%if (!ListaNotificacao.Count.Equals(0) && TemNotificacao)
+                                {%>
+                            <i class="fa fa-bell fa-fw" style="color: red"></i>
+                            <%}
+                                else
+                                {%>
+                            <i class="fa fa-bell fa-fw">
+                                <%} %>
+
+                            </i><i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <%if (!ListaNotificacao.Count.Equals(0))
@@ -317,10 +334,10 @@
                                                 <a href="/Views/SGA/VUsuario/CadastroUsuario.aspx">Cadastrar usuário</a>
                                             </li>
                                             <li>
-                                                <a href="/Views/SGA/VUsuario/ConsultaUsuarioRegiao.aspx">Consulta relacionamento entre usuário e região</a>
+                                                <a href="/Views/SGA/VUsuario/ConsultaUsuarioRegiao.aspx">Consultar relacionamento entre usuário e região</a>
                                             </li>
                                             <li>
-                                                <a href="/Views/SGA/VUsuario/ConsultaUsuarioEspecialidade.aspx">Consulta relacionamento entre usuário e especialidade</a>
+                                                <a href="/Views/SGA/VUsuario/ConsultaUsuarioEspecialidade.aspx">Consultar relacionamento entre usuário e especialidade</a>
                                             </li>
                                             <li>
                                                 <a href="/Views/SGA/VUsuario/RelacionamentoUsrRegiao.aspx">Relacionar usuário e região de atendimento</a>
@@ -349,7 +366,7 @@
                                 <%} %>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Região de atendimentos<span class="fa arrow"></span></a>
+                                        <a href="#">Regiões de atendimento<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
                                                 <a href="/Views/SGA/VRegiaoAtendimento/ConsultaRegiaoAtendimentos.aspx">Consultar região de atendimentos</a>
@@ -368,7 +385,7 @@
                                                 <a href="/Views/SGA/VEspecialidade/ConsultaEspecialidades.aspx">Consultar especialidades</a>
                                             </li>
                                             <li>
-                                                <a href="/Views/SGA/VEspecialidade/ConsultaEspecServ.aspx">Consultar relacionamento entre especialidade e serviço</a>
+                                                <a href="/Views/SGA/VEspecialidade/ConsultaEspecServ.aspx">Consultar relacionamento entre serviço e especialidade</a>
                                             </li>
                                             <li>
                                                 <a href="/Views/SGA/VEspecialidade/CadastroEspecialidade.aspx">Cadastrar especialidade</a>

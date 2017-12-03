@@ -47,7 +47,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                            <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                         </div>
                     </div>
                     <div class="panel-footer">

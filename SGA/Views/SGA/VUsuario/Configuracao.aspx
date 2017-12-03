@@ -22,6 +22,13 @@
                         function Alerta(Texto) {
                             alertify.log(Texto);
                         }
+                        $("form").submit(function () {
+                            $(this).submit(function () {
+                                $(this).find(':submit').prop('disabled', true)
+                                return false;
+                            });
+                            return true;
+                        });
                     </script>
                     <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <div class="panel-body">
@@ -66,7 +73,7 @@
                             </div>
                             <asp:Button ID="SalvarSenhaButton" runat="server" Text="Salvar Senha" class="btn btn-default" OnClick="SalvarSenhaButton_Click" />
                             <%} %>
-                            <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                            <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                         </div>
                     </div>
                     <div class="panel-footer">

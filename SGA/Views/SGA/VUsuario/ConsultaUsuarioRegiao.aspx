@@ -11,7 +11,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Especialidades e seus serviços
+                        Usuários e suas regiões de atuação
                         <b>
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>
