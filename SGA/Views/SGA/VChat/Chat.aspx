@@ -100,8 +100,8 @@
                             <asp:Button ID="ButtonSair" runat="server" Text="Sair" ClientIDMode="Static" CssClass="btn btn-warning btn-lg" OnClick="ButtonSair_Click"  />
                             <%} %>
                             <asp:Button ID="ButtonConversas" runat="server" Text="Conversas" CssClass="btn btn-info btn-lg" OnClick="ButtonConversas_Click"  />
-                            <asp:Button ID="ButtonConvocar" runat="server" Text="Convocar" CssClass="btn btn-info btn-lg" OnClick="ButtonConvocar_Click"  />
-                            <asp:Button ID="ButtonChamar" runat="server" ClientIDMode="Static" Text="Convocar Equipe" CssClass="btn btn-info btn-lg" OnClick="ButtonChamar_Click"  />
+                            <asp:Button ID="ButtonConvocar" runat="server" Text="Convocar Equipe" CssClass="btn btn-info btn-lg" OnClick="ButtonConvocar_Click"  />
+                            <asp:Button ID="ButtonChamar" runat="server" ClientIDMode="Static" Text="Chamar técnico" CssClass="btn btn-info btn-lg" OnClick="ButtonChamar_Click"  />
                         </div>
                     </div>
 

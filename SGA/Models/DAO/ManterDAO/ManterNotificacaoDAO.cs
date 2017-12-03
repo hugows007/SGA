@@ -145,6 +145,18 @@ namespace SGA.Models.DAO.ManterDAO
 
                         Cmd.ExecuteNonQuery();
                     }
+                    else if (ObjNotificacao.IdTipo.Equals(1))
+                    {
+                        Cmd = new SqlCommand(@"
+                UPDATE 
+	                [dbo].[Notificacao] SET 
+	                    vista = 1
+                        WHERE idUsuarioDestino = @IdDest and idTipo in (1,2);", Con);
+
+                        Cmd.Parameters.AddWithValue("@IdDest", ObjNotificacao.IdDest);
+
+                        Cmd.ExecuteNonQuery();
+                    }
                     else
                     {
                         Cmd = new SqlCommand(@"

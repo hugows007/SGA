@@ -22,8 +22,8 @@
                         function Alerta(Texto) {
                             alertify.log(Texto);
                         }
-                    </script>
-                    <div class="panel-body">
+                    </script> 
+                    <div class="panel-body table table-striped table-bordered table-hover" style="overflow-x: auto;">
                         <table id="example" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
