@@ -22,6 +22,7 @@ namespace SGA.Views.SGA.VChamado
         public List<string> NomeStatus = new List<string>();
         public List<string> NomeTecnico = new List<string>();
         string Mensagem;
+        public string MensagemTela;
 
         Chamado ObjChamado = FactoryChamado.GetNew();
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
@@ -34,17 +35,20 @@ namespace SGA.Views.SGA.VChamado
             try
             {
                 Mensagem = "Consulta de chamados.";
+                MensagemTela = Mensagem;
 
                 if (!"".Equals(Request.QueryString["IdTecnico"]) && Session["perfil"].Equals("Técnico"))
                 {
                     ObjUsuario.Id = Convert.ToInt32(Request.QueryString["IdTecnico"]);
                     Mensagem = "Histórico de atendimentos.";
+                    MensagemTela = Mensagem;
                 }
 
                 if ("true".Equals(Request.QueryString["Fila"]))
                 {
                     ObjChamado.Fila = true;
                     Mensagem = "Fila de atendimento.";
+                    MensagemTela = Mensagem;
                 }
                 else
                 {
@@ -55,6 +59,7 @@ namespace SGA.Views.SGA.VChamado
                     ObjUsuario.Id = Convert.ToInt32(Session["id"]);
                     ObjUsuario.Perfil = "Cliente";
                     Mensagem = "Lista de seus chamados e seus respectivos atendimentos.";
+                    MensagemTela = Mensagem;
                 }
 
                 foreach (var Result in new ManterChamado(ObjChamado, ObjUsuario).ConsultaChamados())

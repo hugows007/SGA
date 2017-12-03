@@ -33,21 +33,27 @@ namespace SGA
         {
             try
             {
-                if (ManterLogin.Logar(TxtLogin.Text, TxtSenha.Text))
+                if (!TxtLogin.Text.Equals("") && !TxtSenha.Text.Equals(""))
                 {
-                    ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
-                    ObjUsuario.Login = TxtLogin.Text;
+                    if (ManterLogin.Logar(TxtLogin.Text, TxtSenha.Text))
+                    {
+                        ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+                        ObjUsuario.Login = TxtLogin.Text;
 
-                    TxtLogin.Visible = true;
-                    ObjUsuario = new ManterUsuario(ObjUsuario).GetUsuarioEmpresa();
-                    Session["usuario"] = TxtLogin.Text;
-                    InfoGlobal.GlobalIdEmpresa = ObjUsuario.IdEmpresa;
-                    FormsAuthentication.RedirectFromLoginPage(TxtLogin.Text, true);
-                    Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
-                }
-                else
+                        TxtLogin.Visible = true;
+                        ObjUsuario = new ManterUsuario(ObjUsuario).GetUsuarioEmpresa();
+                        Session["usuario"] = TxtLogin.Text;
+                        InfoGlobal.GlobalIdEmpresa = ObjUsuario.IdEmpresa;
+                        FormsAuthentication.RedirectFromLoginPage(TxtLogin.Text, true);
+                        Response.Redirect("\\Views\\SGA\\Inicio.aspx", false);
+                    }
+                    else
+                    {
+                        MsgLabel.Text = "Login ou senha inválidos.";
+                    }
+                }else
                 {
-                    MsgLabel.Text = "Login ou senha inválidos.";
+                    MsgLabel.Text = "Login ou senha não preenchidos.";
                 }
             }
             catch (Exception Ex)

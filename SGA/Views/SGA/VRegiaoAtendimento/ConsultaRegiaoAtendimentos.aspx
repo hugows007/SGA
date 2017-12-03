@@ -13,7 +13,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Áreas cadastradas
+                        Regiões cadastradas
                         <b>
                             <br>
                             <asp:Label ID="MsgLabel" runat="server" ForeColor="maroon" Text=""></asp:Label></b>

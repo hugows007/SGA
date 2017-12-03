@@ -11,6 +11,7 @@ namespace SGA.Views.SGA.VUsuario
     {
         Usuario ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         public string Mensagem;
+        public string MensagemTela;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -22,6 +23,7 @@ namespace SGA.Views.SGA.VUsuario
 
                     if (Request.QueryString["Id"] != null)
                     {
+                        MensagemTela = "Usuário do sistema";
                         ObjUsuario.Id = Convert.ToInt32(Request.QueryString["Id"]);
 
                         ObjUsuario = new ManterUsuario(ObjUsuario).ConsultaUsuarioById();
@@ -53,6 +55,7 @@ namespace SGA.Views.SGA.VUsuario
                                 AlterarButton.Enabled = false;
                                 Ausente.Enabled = false;
                                 Mensagem = "Consulta de dados do cliente.";
+                                MensagemTela = "Consulta de dados do cliente";
                                 ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                             }
                         }
@@ -66,6 +69,7 @@ namespace SGA.Views.SGA.VUsuario
                             AlterarButton.Enabled = false;
                             Ausente.Enabled = false;
                             Mensagem = "Consulta de dados do cliente.";
+                            MensagemTela = "Consulta de dados do cliente";
                             ScriptManager.RegisterStartupScript(this, GetType(), "CallMyFunction", "Alerta('" + Mensagem + "')", true);
                         }
                     }
