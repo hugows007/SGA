@@ -7,7 +7,7 @@
             <br />
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <div class="panel-title">Bem-vindo! Favor efetuar o login - Teste</div>
+                    <div class="panel-title">Bem-vindo! Favor efetuar o login</div>
                 </div>
                 <%if (!EsqueciSenha)
                     { %>

@@ -328,7 +328,7 @@
                                         <a href="#">Usuários do sistema<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
-                                                <a href="/Views/SGA/VUsuario/ConsultaUsuarios.aspx">Consultar Usuários</a>
+                                                <a href="/Views/SGA/VUsuario/ConsultaUsuarios.aspx">Consultar usuários</a>
                                             </li>
                                             <li>
                                                 <a href="/Views/SGA/VUsuario/CadastroUsuario.aspx">Cadastrar usuário</a>
