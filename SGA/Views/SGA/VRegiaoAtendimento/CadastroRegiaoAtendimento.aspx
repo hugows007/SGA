@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        Favor alterar os campos e clicar em salvar.<br />
+                        Favor preencher os campos e clicar em cadastrar.<br />
                     </div>
                 </div>
             </div>

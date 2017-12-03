@@ -100,7 +100,7 @@ namespace SGA.Models.Manter
             {
                 case 3:
                     Mail.Subject = "NO-REPLY - Abertura de chamado: " + ObjNotificacao.IdChamado;
-                    Mail.Body = @"<b>SGA TI informa:</b><br/><br/> O chamado foi aberto com sucesso. <br/> Favor guardar o número: " + ObjNotificacao.IdChamado + "< br/><br/>";
+                    Mail.Body = @"<b>SGA TI informa:</b><br/><br/> O chamado foi aberto com sucesso. <br/> Favor guardar o número: " + ObjNotificacao.IdChamado + "<br/><br/>";
 
                     Mail.Body += "Favor acompanhar o andamento no sistema SGA TI.<br/>";
                     break;
