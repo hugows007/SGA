@@ -42,7 +42,8 @@ namespace SGA.Models.DAO.ManterDAO
                             Chamado Chm on (Atd.idChamado = Chm.idChamado) inner join 
                             Servico Srv on (Chm.idServico = Srv.idServico) left join
 							AvaliacaoSolucao Av on (Av.idChamado = Chm.idChamado) where
-                            Chm.idStatusChamado = 3 and Chm.idEmpresa = @Empresa and Chm.idServico = @Servico
+                            Chm.idStatusChamado = 3 and Chm.idEmpresa = 13 and Chm.idServico = 33 and
+							Atd.idAtendimento = (select max(A.idAtendimento) from Atendimento A where A.idChamado = Atd.idChamado)
                             order by 6 desc;", Con);
 
                     Cmd.Parameters.AddWithValue("@Servico", ObjHistorico.IdServico);

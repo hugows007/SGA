@@ -54,10 +54,10 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <asp:Button ID="RelacionarButton" runat="server" Text="Relacionar itens" class="btn btn-default" OnClick="RelacionarButton_Click" />
+                                <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                         </ContentTemplate>
                     </asp:UpdatePanel>
-                    <asp:Button ID="RelacionarButton" runat="server" Text="Relacionar itens" class="btn btn-default" OnClick="RelacionarButton_Click" />
-                    <a class="btn btn-default" onclick="location.href = document.referrer; return false;">Voltar</a>
                 </div>
                 <div class="panel-footer">
                     Favor selecionar as opções e quando finalizado, clicar em relacionar itens.<br />

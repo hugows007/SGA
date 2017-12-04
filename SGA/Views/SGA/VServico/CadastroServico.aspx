@@ -52,11 +52,11 @@
                             </asp:UpdatePanel>
                             <div class="form-group">
                                 <label for="Nome" class="control-label">Nome: </label>
-                                <input type="text" id="Nome" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 50 caracteres" />
+                                <input type="text" id="Nome" required class="form-control input-sm" runat="server" maxlength="50" placeholder="Máximo de 50 caracteres" />
                             </div>
                             <div class="form-group">
                                 <label for="DescServ" class="control-label">Descrição: </label>
-                                <input type="text" id="DescServ" required class="form-control input-sm" runat="server" maxlength="20" placeholder="Máximo de 100 caracteres" />
+                                <input type="text" id="DescServ" required class="form-control input-sm" runat="server" maxlength="100" placeholder="Máximo de 100 caracteres" />
                             </div>
                             <div class="form-group">
                                 <label for="SLA" class="control-label">SLA em horas: </label>

@@ -311,12 +311,12 @@ namespace SGA.Models.DAO.ManterDAO
 	                [dbo].[Chamado] SET 
 	                    dataFechamento = '2000-01-01 00:00:00.000'
                         ,idStatusChamado = 4
-                        ,ContPendencia = @ContPendencia
+                        ,ContReabertura = @ContReabertura
                         WHERE idChamado = @Chamado and idEmpresa = @Empresa;", Con);
 
                     Cmd.Parameters.AddWithValue("@Chamado", ObjChamado.Id);
                     Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
-                    Cmd.Parameters.AddWithValue("@ContPendencia", new ManterChamadoDAO(ObjChamado).GetContReaberturaDAO() + 1);
+                    Cmd.Parameters.AddWithValue("@ContReabertura", new ManterChamadoDAO(ObjChamado).GetContReaberturaDAO() + 1);
 
                     Cmd.ExecuteNonQuery();
                     return true;

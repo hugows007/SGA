@@ -14,6 +14,8 @@ namespace SGA.Models.Manter
     {
         public Notificacao ObjNotificacao;
         public Usuario ObjUsuario;
+        string Cabecalho;
+        string Corpo;
 
         public Usuario ObjUsuarioEmail = FactoryUsuario.GetNew(TipoUsuario.Usuario);
         public Usuario ObjUsuarioCliente = FactoryUsuario.GetNew(TipoUsuario.Usuario);
@@ -99,49 +101,51 @@ namespace SGA.Models.Manter
             switch (ObjNotificacao.IdMensagem)
             {
                 case 3:
-                    Mail.Subject = "NO-REPLY - Abertura de chamado: " + ObjNotificacao.IdChamado;
-                    Mail.Body = @"<b>SGA TI informa:</b><br/><br/> O chamado foi aberto com sucesso. <br/> Favor guardar o número: " + ObjNotificacao.IdChamado + "<br/><br/>";
+                    Cabecalho = "NO-REPLY - Abertura de chamado: " + ObjNotificacao.IdChamado;
+                    Corpo = @"<b>SGA TI informa:</b><br/><br/> O chamado de número <b>" + ObjNotificacao.IdChamado + "</b> foi aberto com sucesso.<br/><br/>";
 
-                    Mail.Body += "Favor acompanhar o andamento no sistema SGA TI.<br/>";
+                    Corpo += "Favor acompanhar o andamento no sistema SGA TI.<br/>";
                     break;
                 case 4:
-                    Mail.Subject = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
-                    Mail.Body = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
+                    Cabecalho = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
+                    Corpo = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
 
-                    Mail.Body += "O atendimento do chamado está sendo iniciado pelo técnico. <br/> Favor acompanhar o andamento no sistema SGA TI.<br/>";
+                    Corpo += "O atendimento do chamado foi iniciado.<br/> Favor acompanhar o andamento no sistema SGA TI.<br/>";
                     break;
                 case 5:
-                    Mail.Subject = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
-                    Mail.Body = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
+                    Cabecalho = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
+                    Corpo = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
 
-                    Mail.Body += "O atendimento do seu chamado foi finalizado. <br/> Favor avalia-lo no sistema SGA TI.<br/>";
+                    Corpo += "O atendimento do chamado foi finalizado com sucesso. <br/>";
                     break;
                 case 6:
-                    Mail.Subject = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
-                    Mail.Body = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
+                    Cabecalho = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
+                    Corpo = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
 
-                    Mail.Body += "Seu chamado foi cancelado com sucesso. <br/>";
+                    Corpo += "O chamado foi cancelado com sucesso. <br/>";
                     break;
                 case 7:
-                    Mail.Subject = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
-                    Mail.Body = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
+                    Cabecalho = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
+                    Corpo = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
 
-                    Mail.Body += "Houve pendências no atendimento do seu chamado. Um novo atendimento será iniciado em seguida.<br/> Favor acompanhar o andamento no sistema SGA TI. <br/>";
+                    Corpo += "Houve pendências no atendimento do chamado. Um novo atendimento será iniciado em seguida.<br/> Favor acompanhar o andamento no sistema SGA TI. <br/>";
                     break;
                 case 8:
-                    Mail.Subject = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
-                    Mail.Body = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
+                    Cabecalho = "NO-REPLY - Mudança de status do chamado: " + ObjNotificacao.IdChamado;
+                    Corpo = @"<b>SGA TI informa:</b><br/><br/> O status do chamado mudou: ";
 
-                    Mail.Body += "Seu chamado foi reaberto com sucesso. <br/> Favor acompanhar o andamento no sistema SGA TI. <br/>";
+                    Corpo += "O chamado foi reaberto com sucesso. <br/> Favor acompanhar o andamento no sistema SGA TI. <br/>";
                     break;
                 default:
                     return true; //Retorna verdadeiro para não enviar e-mail na notificação de "sem contato geográfico".
             }
 
-            Mail.Body += "<br/> Para dúvidas ou problemas, favor contatar o suporte técnico.<br/><br/> <b>Equipe SGA TI</b>";
+            Corpo += "<br/> Para dúvidas ou problemas, favor contatar o suporte técnico.<br/><br/> <b>Equipe SGA TI</b><br/><i>Este e-mail foi gerado automaticamente. <br/>Favor não responde-lo.";
 
             try
             {
+                Mail.Subject = Cabecalho;
+                Mail.Body = Corpo;
                 Client.Send(Mail);
                 return true;
             }

@@ -33,7 +33,7 @@ namespace SGA.Models.Manter
             {
                 foreach (var Lista in new ManterGeoDAO(ObjGeo).InformaGeoDAO())
                 {
-                    if (Lista.Data < DateTime.Now || Lista.Data == DateTime.Now && Lista.Data.Hour < (DateTime.Now.Hour - 1))
+                    if (Lista.Data.Date < DateTime.Now.Date || Lista.Data.Date == DateTime.Now.Date && Lista.Data.Hour < (DateTime.Now.Hour - 1))
                     {
                         foreach (var Gestores in new ManterUsuario(ObjUsuario).ConsultaUsuariosGestores())
                         {
