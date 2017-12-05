@@ -1043,7 +1043,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjUsuario.ObjRegiao.Id = Dr.GetInt32(1);
                     }
 
-                    if (!Dr.Read())
+                    if (!Dr.HasRows)
                     {
                         Dr.Close();
 
@@ -1075,7 +1075,7 @@ namespace SGA.Models.DAO.ManterDAO
                             ObjUsuario.ObjRegiao.Id = Dr.GetInt32(1);
                         }
 
-                        if (!Dr.Read())
+                        if (!Dr.HasRows)
                         {
                             Dr.Close();
 

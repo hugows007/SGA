@@ -409,7 +409,7 @@ namespace SGA.Models.DAO.ManterDAO
                         ObjAtend.IdTecnico = Dr.GetInt32(0);
                     }
 
-                    if (!Dr.Read())
+                    if (!Dr.HasRows)
                     {
                         Dr.Close();
 

@@ -135,7 +135,7 @@ namespace SGA.Views.SGA.VChamado
                         ObjServico = new ManterServico(ObjServico).ConsultaServicoById();
                         ObjStatusChm = new ManterStatusChamado(ObjStatusChm).ConsultaStatusChamadoById();
 
-                        if (Session["perfil"].Equals("Cliente Físico") && Session["perfil"].Equals("Cliente Jurídico"))
+                        if (Session["perfil"].Equals("Cliente Físico") || Session["perfil"].Equals("Cliente Jurídico"))
                         {
                             if (!ObjAtend.IdCliente.Equals(Session["id"]))
                             {
