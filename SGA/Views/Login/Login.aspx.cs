@@ -74,6 +74,7 @@ namespace SGA
             MsgLabel.Text = "";
 
             ObjUsuario = FactoryUsuario.GetNew(TipoUsuario.Usuario);
+            ObjUsuario.Login = TxtLoginRecup.Text;
             ObjUsuario.Email = TxtEmail.Text;
 
             if (new ManterUsuario(ObjUsuario).RecuperarSenha())
@@ -83,7 +84,7 @@ namespace SGA
 
             else
             {
-                MsgLabel.Text = "E-mail não encontrado ou é inválido. Favor rever.";
+                MsgLabel.Text = "Login/E-mail não encontrado ou inválido. Favor rever.";
             }
         }
     }

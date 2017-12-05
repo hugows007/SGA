@@ -169,8 +169,9 @@ namespace SGA.Models.Manter
             Mail.IsBodyHtml = true;
             Mail.Priority = MailPriority.High;
 
-            Mail.Body = @"<b>SGA TI informa:</b><br/><br/> Você solicitou uma mudança de senha as " + DateTime.Now + ". <br/> Sua senha agora é: <b>" + ObjUsuario.Senha + "</b>.<br/><br/> Favor altera-la no próximo login.";
-            Mail.Body += "<br/> Para dúvidas ou problemas, favor contatar o suporte técnico.<br/><br/> <b>Equipe SGA TI</b>";
+            Mail.Body = @"<b>SGA TI informa:</b><br/><br/> Você solicitou uma mudança de senha em " + DateTime.Now + ". <br/> Sua senha agora é: <b><br><br>" + ObjUsuario.Senha + "</b><br/><br/> Favor altera-la no próximo login.";
+
+            Mail.Body += "<br/> Para dúvidas ou problemas, favor contatar o suporte técnico.<br/><br/> <b>Equipe SGA TI</b><br/><i>Este e-mail foi gerado automaticamente. <br/>Favor não responde-lo.";
 
             try
             {

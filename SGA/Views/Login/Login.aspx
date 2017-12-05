@@ -17,7 +17,7 @@
 
                         <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <asp:TextBox ID="TxtLogin" runat="server" CssClass="form-control" placeholder="Insira seu login"  />
+                            <asp:TextBox ID="TxtLogin" runat="server" CssClass="form-control" placeholder="Insira seu login" />
                         </div>
 
                         <div style="margin-bottom: 25px" class="input-group">
@@ -41,8 +41,12 @@
                 <div style="padding-top: 30px" class="panel-body">
                     <form class="form-horizontal" role="form">
                         <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <asp:TextBox ID="TxtLoginRecup" runat="server" CssClass="form-control" required="required" placeholder="Insira seu login" />
+                        </div>
+                        <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                            <asp:TextBox ID="TxtEmail" runat="server" TextMode="Email" CssClass="form-control" placeholder="Insira seu e-mail" />
+                            <asp:TextBox ID="TxtEmail" runat="server" TextMode="Email" CssClass="form-control" required="required" placeholder="Insira seu e-mail" />
                         </div>
                         <div style="margin-top: 10px" class="form-group">
                             <div class="col-sm-12 controls">

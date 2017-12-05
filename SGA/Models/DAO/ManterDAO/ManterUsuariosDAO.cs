@@ -602,9 +602,10 @@ namespace SGA.Models.DAO.ManterDAO
                         aspnet_Users membusr on (membxusr.IdUsrMemberShip = membusr.UserId) left join
 						UsuarioxRegiaoAtendimento usrReg on (usr.idUsuario = usrreg.idUsuario) left join
 						UsuarioXEspecialidade usrEspec on (usr.idUsuario = usrEspec.idUsuario) WHERE
-                        membship.Email = @Email and usr.idStatusUsuario = 1;", Con); //Não coloquei empresa pois uso para recuperar senha!
+                        membship.Email = @Email and membusr.UserName = @Usuario and usr.idStatusUsuario = 1;", Con); //Não coloquei empresa pois uso para recuperar senha!
 
                     Cmd.Parameters.AddWithValue("@Email", ObjUsuario.Email);
+                    Cmd.Parameters.AddWithValue("@Usuario", ObjUsuario.Login);
                     //Cmd.Parameters.AddWithValue("@Empresa", InfoGlobal.GlobalIdEmpresa);
 
                     Dr = Cmd.ExecuteReader();
